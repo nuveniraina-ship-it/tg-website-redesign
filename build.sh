@@ -32,6 +32,9 @@ done
 STAMP=$(date +%Y%m%d%H%M%S)
 perl -pi -e "s#(href=\"css/[^\"]+\.css|src=\"js/[^\"]+\.js)\"#\$1?v=$STAMP\"#g" "$OUT"/*.html
 
+# 2c. Any address that doesn't exist shows the coming-soon page too
+cp "$OUT/coming-soon.html" "$OUT/404.html"
+
 # 3. JS
 for JS in js/*.js; do
   npx --yes esbuild@0.24.0 "$JS" --minify --log-level=warning --outfile="$OUT/$JS"

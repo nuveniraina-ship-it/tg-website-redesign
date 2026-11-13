@@ -1,6 +1,18 @@
 (() => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* ---------- Pages that aren't redesigned yet go to the coming-soon page ---------- */
+  // Only the homepage and pricing exist so far: links to other pages of the Ticket Generator
+  // site, and placeholder links with nowhere to go, all open coming-soon.html instead.
+  document.querySelectorAll('a[href]').forEach((a) => {
+    const href = a.getAttribute('href');
+    const otherPage = /^https:\/\/(support\.)?ticket-generator\.com(\/|$)/.test(href);
+    const deadHash = /^#[\w-]+$/.test(href) && !document.getElementById(href.slice(1));
+    if (!otherPage && !deadHash) return;
+    a.setAttribute('href', 'coming-soon.html');
+    a.removeAttribute('target');
+  });
+
   /* ---------- Header: border on scroll + mobile menu ---------- */
   const header = document.querySelector('[data-header]');
   const toggle = document.querySelector('[data-menu-toggle]');

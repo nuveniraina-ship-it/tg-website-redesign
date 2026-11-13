@@ -1,0 +1,153 @@
+/* =========================================================
+   Coming soon — shown for every page that isn't redesigned yet.
+   A ticket terminal with Mira (the pixel host) at her laptop;
+   a portrait ticket prints out of the top with the message.
+   ========================================================= */
+.cs-page {
+  --m-navy-950: var(--brand-950); --m-blue-200: var(--brand-200); --m-sky: var(--brand-300);
+  --m-sky-deep: var(--brand-400); --m-tg-blue: var(--brand-600); --m-blue-700: var(--brand-700);
+  --m-blue-800: var(--brand-800); --m-blue-900: var(--brand-900); --m-ink: #0b1a3a; --m-white: #fff;
+  --m-lilac: #c3b4ff; --m-cyan: #9fe7ff; --m-skin-t3: #d9a271; --m-skin-t3-shadow: #b37a4c;
+  --m-silver: #e9eaeb; --m-silver-shadow: #a4a7ae;
+  --desk: #e2e9f4;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(circle at 1px 1px, rgba(21, 112, 239, .09) 1px, transparent 1.5px) 0 0 / 22px 22px fixed, var(--desk);
+}
+
+.cs-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: min(100% - 20px, 1100px);
+  margin: 10px auto 0;
+  padding: 14px 20px;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(10, 13, 18, .06), 0 18px 28px -18px rgba(10, 13, 18, .3);
+}
+.cs-top .logo { display: flex; align-items: center; gap: 10px; }
+.cs-top nav { display: flex; gap: 22px; font-size: 15px; line-height: 22px; font-weight: 500; color: var(--text-secondary); }
+.cs-top nav a:hover { color: var(--brand-700); }
+
+.cs { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 28px 16px 44px; }
+.cs-rig { --w: min(320px, 100%); width: var(--w); display: flex; flex-direction: column; align-items: center; }
+
+/* ---------- the ticket ---------- */
+.cs-print { position: relative; z-index: 0; width: calc(100% - 44px); overflow: hidden; padding: 12px 12px 0; margin: -12px -12px 0; box-sizing: content-box; }
+.cs-ticket {
+  --notch: 9px;
+  position: relative;
+  padding: 18px 20px 0;
+  border-radius: 16px 16px 0 0;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(16, 24, 40, .06), 0 -6px 14px -6px rgba(16, 24, 40, .18);
+  text-align: center;
+  transform: translateY(102%);
+}
+.cs.is-printing .cs-ticket { transform: none; transition: transform 1.7s steps(17, end); }
+.cs.is-printed .cs-ticket { transform: none; }
+.cs-label { font-size: 10px; line-height: 16px; text-transform: uppercase; letter-spacing: .14em !important; color: var(--brand-700); }
+.cs-ticket h1 { margin-top: 8px; font-size: 22px; line-height: 28px; font-weight: 600; letter-spacing: -0.02em; color: var(--text-primary); text-wrap: balance; }
+.cs-copy { margin-top: 8px; font-size: 14px; line-height: 21px; color: var(--text-tertiary); }
+/* portrait ticket: the tear line and notches sit at the bottom, where the stub joins */
+.cs-stub {
+  position: relative;
+  margin: 16px -20px 0;
+  padding: 14px 20px 16px;
+  border-top: 2px dashed var(--gray-300);
+}
+.cs-stub::before, .cs-stub::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--notch) * -1 - 1px);
+  width: calc(var(--notch) * 2);
+  height: calc(var(--notch) * 2);
+  border-radius: 50%;
+  background: var(--desk);
+  box-shadow: inset 0 0 0 1px rgba(16, 24, 40, .06);
+}
+.cs-stub::before { left: calc(var(--notch) * -1); }
+.cs-stub::after { right: calc(var(--notch) * -1); }
+.cs-barcode {
+  display: block;
+  height: 26px;
+  margin: 0 auto 8px;
+  width: 78%;
+  background: repeating-linear-gradient(90deg, var(--gray-900) 0 2px, transparent 2px 4px, var(--gray-900) 4px 5px, transparent 5px 9px, var(--gray-900) 9px 12px, transparent 12px 14px);
+}
+.cs-stub p { font-size: 10px; line-height: 14px; text-transform: uppercase; letter-spacing: .12em !important; color: var(--text-quaternary); }
+
+/* ---------- the terminal ---------- */
+.cs-device {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 26px 22px 18px;
+  border-radius: 34px;
+  background: linear-gradient(170deg, #1b2f66, #0e1b40 55%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14), inset 0 0 0 1px rgba(255, 255, 255, .05), 0 30px 40px -22px rgba(10, 13, 18, .55), 0 2px 4px rgba(10, 13, 18, .2);
+}
+.cs.is-printing .cs-device { animation: cs-rattle .14s steps(2, end) 12; }
+@keyframes cs-rattle { 50% { transform: translateY(1px); } }
+.cs-slot {
+  position: absolute;
+  top: 0;
+  left: 16px;
+  right: 16px;
+  height: 9px;
+  border-radius: 0 0 6px 6px;
+  background: #060d22;
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, .12);
+}
+.cs-screen {
+  display: grid;
+  place-items: end center;
+  aspect-ratio: 1 / .86;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 1px 1px, rgba(159, 231, 255, .12) 1px, transparent 1.5px) 0 0 / 14px 14px,
+    radial-gradient(90% 70% at 50% 100%, rgba(83, 177, 253, .28), transparent 70%),
+    #0b1634;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08), inset 0 10px 24px rgba(0, 0, 0, .35);
+  overflow: hidden;
+}
+.cs-mira { display: block; width: min(208px, 76%); height: auto; image-rendering: pixelated; }
+.cs-status { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 14px; font-size: 12px; line-height: 18px; color: var(--brand-200); }
+.cs-status i { width: 7px; height: 7px; border-radius: 50%; background: #47cd89; box-shadow: 0 0 0 3px rgba(71, 205, 137, .2); animation: cs-led 1.2s steps(2, end) infinite; }
+@keyframes cs-led { 50% { opacity: .35; } }
+
+/* ---------- Mira ---------- */
+.m-pose { display: none; }
+.cs[data-state="typing"] .m-down,
+.cs[data-state="front"] .m-front,
+.cs[data-state="sorry"] .m-sorry { display: inline; }
+.m-hands-b { opacity: 0; }
+.m-sparks { opacity: 0; }
+.cs[data-state="typing"] .m-bob { animation: m-bob .36s steps(2, end) infinite; }
+.cs[data-state="typing"] .m-hands-a { animation: m-swap-a .24s steps(1, end) infinite; }
+.cs[data-state="typing"] .m-hands-b { animation: m-swap-b .24s steps(1, end) infinite; }
+.cs[data-state="typing"] .m-sparks { animation: m-swap-b .48s steps(1, end) infinite; }
+/* while she blinks in the "front" pose, the eyes-down frame shows for a moment */
+.cs[data-state="front"].is-blink .m-front { display: none; }
+.cs[data-state="front"].is-blink .m-down { display: inline; }
+@keyframes m-bob { 50% { transform: translateY(1px); } }
+@keyframes m-swap-a { 0% { opacity: 1; } 50% { opacity: 0; } }
+@keyframes m-swap-b { 0% { opacity: 0; } 50% { opacity: 1; } }
+
+.cs-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 26px; }
+
+@media (max-width: 480px) {
+  .cs-top { padding: 12px 16px; }
+  .cs-top .logo-type { width: 128px; height: auto; }
+  .cs-top nav { gap: 16px; font-size: 14px; }
+  .cs { padding: 18px 16px 32px; justify-content: flex-start; }
+  .cs-actions { width: 100%; }
+  .cs-actions .btn { flex: 1 1 140px; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cs-ticket { transform: none; transition: none !important; }
+  .cs-device, .cs-status i, .m-bob, .m-hands, .m-sparks { animation: none !important; }
+}
