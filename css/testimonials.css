@@ -1,0 +1,187 @@
+/* =========================================================
+   Testimonials — a messy deck of review tickets. The section pins;
+   each scroll step slides the top ticket out, tucks it under the
+   pile and brings the next review to the top. (Positions per depth
+   are set by JS as --tx/--ty/--tr/--ts/--to/--tz.)
+   ========================================================= */
+.tm.tkt { padding-top: 64px; }
+.tm {
+  background:
+    radial-gradient(60% 70% at 85% 40%, rgba(132, 202, 255, .35), transparent 70%),
+    radial-gradient(50% 60% at 10% 90%, rgba(178, 221, 255, .35), transparent 70%),
+    linear-gradient(180deg, #f7fbff 0%, #eaf3ff 100%);
+}
+
+/* scroll runway: one viewport + ~46vh per shuffle */
+.tm-scroll { position: relative; height: calc(100vh + 8 * 46vh); }
+.tm-pin {
+  position: sticky;
+  top: 84px;
+  height: calc(100vh - 84px);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.tm-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+  gap: var(--space-7xl);
+  align-items: center;
+}
+
+/* ---------- Side ---------- */
+.tm-side h2 {
+  margin-top: var(--space-lg);
+  font-size: 36px;
+  line-height: 44px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.tm-sub { margin-top: var(--space-lg); font-size: 18px; line-height: 28px; color: var(--text-tertiary); }
+
+/* ---------- The deck ---------- */
+.tm-deck { position: relative; height: min(420px, calc(100vh - 220px)); }
+
+.tq {
+  --stub: 200px;
+  --notch: 13px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  max-width: 720px;
+  margin-inline: auto;
+  color: var(--ink);
+  z-index: var(--tz, 1);
+  opacity: var(--to, 1);
+  transform: translate(var(--tx, 0), calc(-50% + var(--ty, 0px))) rotate(var(--tr, 0deg)) scale(var(--ts, 1));
+  transition: transform .62s cubic-bezier(.2, .8, .2, 1), opacity .35s;
+  filter: drop-shadow(0 20px 26px rgba(21, 70, 140, .12)) drop-shadow(0 2px 5px rgba(21, 70, 140, .06));
+  will-change: transform;
+}
+.tq.is-buried { pointer-events: none; }
+
+.tq-body {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--stub);
+  min-height: 300px;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--ink) 3.5%, transparent) 1px, transparent 1.4px) 0 0 / 12px 12px,
+    var(--paper);
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at calc(100% - var(--stub)) 0, transparent 98%, #000),
+    radial-gradient(circle var(--notch) at calc(100% - var(--stub)) 100%, transparent 98%, #000);
+  -webkit-mask-composite: source-in;
+          mask:
+    radial-gradient(circle var(--notch) at calc(100% - var(--stub)) 0, transparent 98%, #000),
+    radial-gradient(circle var(--notch) at calc(100% - var(--stub)) 100%, transparent 98%, #000);
+          mask-composite: intersect;
+}
+
+.tq-main { position: relative; padding: 28px 32px 30px; }
+.tq-main::before {
+  content: "“";
+  position: absolute;
+  top: -6px;
+  right: 22px;
+  font-size: 140px;
+  line-height: 1;
+  font-weight: 800;
+  opacity: .1;
+  pointer-events: none;
+}
+.tq-kicker { font-size: 11px; line-height: 16px; letter-spacing: .14em; text-transform: uppercase; opacity: .65; }
+.tq-quote {
+  margin: 14px 0 0;
+  font-size: 18px;
+  line-height: 29px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+.tq-quote mark {
+  color: inherit;
+  font-weight: 700;
+  background: linear-gradient(transparent 55%, rgba(46, 144, 250, .22) 55%);
+  padding: 0 1px;
+}
+
+.tq-stub {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 22px 22px 20px;
+  border-left: 2px dashed color-mix(in srgb, var(--ink) 30%, transparent);
+}
+.tq-no { align-self: flex-end; font-size: 11px; letter-spacing: .06em; }
+.tq-avatar {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin-top: auto;
+  border-radius: 50%;
+  object-fit: cover;
+  background: color-mix(in srgb, var(--ink) 8%, var(--paper));
+  box-shadow: 0 0 0 3px #fff, 0 4px 10px rgba(16, 24, 40, .12);
+}
+.tq-who { margin-top: 12px; font-size: 13px; line-height: 18px; opacity: .78; }
+.tq-who b { display: block; margin-bottom: 2px; font-size: 16px; line-height: 22px; font-weight: 700; opacity: 1; }
+.tq-admit { margin-top: 14px; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; opacity: .6; }
+.tq-qr {
+  align-self: flex-end;
+  width: 52px;
+  height: 52px;
+  color: var(--ink);
+  opacity: .8;
+}
+
+/* ---------- Reduced motion: a plain list, no pinning ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .tm-scroll { height: auto; }
+  .tm-pin { position: static; height: auto; overflow: visible; padding: var(--space-8xl) 0; }
+  .tm-layout { align-items: start; }
+  .tm-deck { height: auto; display: grid; gap: var(--space-3xl); }
+  .tq { position: relative; top: auto; transform: none !important; opacity: 1 !important; transition: none; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .tm-layout { grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: var(--space-5xl); }
+  .tq { --stub: 170px; }
+  .tq-quote { font-size: 16px; line-height: 26px; }
+}
+@media (max-width: 960px) {
+  .tm.tkt { padding-top: 40px; }
+  .tm-pin { top: 64px; height: calc(100vh - 64px); align-items: stretch; padding: var(--space-3xl) 0; }
+  .tm-layout { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; gap: var(--space-lg); }
+  .tm-side h2 { font-size: 26px; line-height: 32px; }
+  .tm-sub { margin-top: 4px; font-size: 15px; line-height: 22px; }
+  .tm-deck { height: auto; }
+
+  /* portrait review ticket: stub tears off the bottom */
+  .tq-body {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+    -webkit-mask: none;
+            mask: none;
+  }
+  .tq-main { padding: 18px 18px 16px; }
+  .tq-main::before { font-size: 96px; right: 14px; }
+  .tq-quote { margin-top: 10px; font-size: 15px; line-height: 23px; }
+  .tq-stub {
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px 14px;
+    border-left: 0;
+    border-top: 2px dashed color-mix(in srgb, var(--ink) 30%, transparent);
+  }
+  .tq-avatar { grid-column: 1; grid-row: 1; width: 44px; height: 44px; margin: 0; font-size: 15px; }
+  .tq-who { grid-column: 2; grid-row: 1; margin: 0; }
+  .tq-who b { font-size: 15px; }
+  .tq-no { grid-column: 3; grid-row: 1; align-self: center; }
+  .tq-admit, .tq-qr { display: none; }
+}

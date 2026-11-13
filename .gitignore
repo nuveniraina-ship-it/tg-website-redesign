@@ -1,0 +1,5 @@
+.vercel
+.env*
+dist/
+.claude/
+.DS_Store

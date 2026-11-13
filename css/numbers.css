@@ -1,0 +1,245 @@
+/* =========================================================
+   The numbers — stat stubs + pay-as-you-go receipt
+   ========================================================= */
+.numbers {
+  padding: var(--space-9xl) 0 calc(var(--space-9xl) + 16px);
+  background: var(--bg-primary);
+}
+.numbers-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: var(--space-7xl);
+  align-items: center;
+}
+
+/* ---------- Copy ---------- */
+.numbers-copy h2 {
+  margin-top: var(--space-lg);
+  max-width: 560px;
+  font-size: 36px;
+  line-height: 44px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.numbers-lede {
+  margin-top: var(--space-xl);
+  max-width: 520px;
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--text-tertiary);
+}
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: var(--space-3xl);
+  font-weight: 600;
+  color: var(--brand-700);
+}
+.text-link svg { transition: transform .2s; }
+.text-link:hover svg { transform: translateX(3px); }
+
+/* ---------- Stat stubs ---------- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-xl);
+  margin-top: var(--space-6xl);
+}
+.stat {
+  --notch: 9px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 18px 18px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-xl);
+  /* side notches like a torn admission stub */
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at 0 62%, transparent 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% 62%, transparent 98%, #000) right / 51% 100% no-repeat;
+          mask:
+    radial-gradient(circle var(--notch) at 0 62%, transparent 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% 62%, transparent 98%, #000) right / 51% 100% no-repeat;
+}
+.stat-no {
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: .06em;
+  color: var(--gray-400);
+}
+.stat-value {
+  margin-top: 10px;
+  padding-bottom: 12px;
+  border-bottom: 2px dashed var(--gray-200);
+  font-family: var(--font-body);
+  font-size: clamp(24px, 2.3vw, 32px);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--brand-700);
+  white-space: nowrap;
+}
+.stat-label {
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* ---------- Receipt ---------- */
+.receipt-wrap {
+  position: relative;
+  justify-self: center;
+  width: min(380px, calc(100% - 36px));
+  padding-top: 14px;
+  filter: drop-shadow(0 20px 28px rgba(10, 13, 18, .10)) drop-shadow(0 3px 6px rgba(10, 13, 18, .06));
+}
+/* printer slot the receipt feeds out of */
+.receipt-wrap::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -18px;
+  right: -18px;
+  z-index: 2;
+  height: 22px;
+  border-radius: 12px;
+  background: linear-gradient(var(--gray-800), var(--gray-900));
+  box-shadow: inset 0 -6px 0 var(--gray-950);
+}
+.receipt {
+  --tooth: 10px;
+  position: relative;
+  padding: 36px 28px 34px;
+  background: #fff;
+  transform: rotate(1.5deg);
+  transform-origin: 50% 0;
+  /* zig-zag torn bottom edge */
+  -webkit-mask:
+    linear-gradient(#000 0 0) top / 100% calc(100% - var(--tooth)) no-repeat,
+    conic-gradient(from -45deg at bottom, transparent, #000 1deg 89deg, transparent 90deg) bottom / calc(var(--tooth) * 2) var(--tooth) repeat-x;
+          mask:
+    linear-gradient(#000 0 0) top / 100% calc(100% - var(--tooth)) no-repeat,
+    conic-gradient(from -45deg at bottom, transparent, #000 1deg 89deg, transparent 90deg) bottom / calc(var(--tooth) * 2) var(--tooth) repeat-x;
+}
+
+.receipt-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 18px;
+  border-bottom: 2px dashed var(--gray-200);
+}
+.receipt-brand { display: block; font-weight: 600; color: var(--text-primary); }
+.receipt-sub { display: block; font-size: 11px; line-height: 16px; letter-spacing: .08em; color: var(--text-quaternary); }
+
+.receipt-lines {
+  display: grid;
+  gap: 12px;
+  padding: 20px 0;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--text-secondary);
+}
+.receipt-lines li { display: flex; align-items: baseline; gap: 8px; }
+.receipt-lines li::after {
+  content: "";
+  order: 1;
+  flex: 1;
+  min-width: 16px;
+  border-bottom: 2px dotted var(--gray-300);
+  transform: translateY(-4px);
+}
+.receipt-lines span { order: 0; }
+.receipt-lines b { order: 2; font-weight: 500; color: var(--text-primary); }
+.receipt-lines b.pos { color: var(--success-700); }
+.receipt-lines--plus { padding-top: 18px; border-top: 2px dashed var(--gray-200); }
+
+.receipt-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 16px 0 0;
+  border-top: 3px double var(--gray-300);
+}
+.receipt-total span { font-size: 14px; color: var(--text-tertiary); }
+.receipt-total b { font-size: 16px; font-weight: 700; color: var(--text-primary); text-align: right; }
+
+.receipt-foot {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  margin-top: 26px;
+}
+.barcode {
+  width: 100%;
+  height: 40px;
+  background: repeating-linear-gradient(90deg,
+    var(--gray-900) 0 2px, transparent 2px 4px,
+    var(--gray-900) 4px 5px, transparent 5px 8px,
+    var(--gray-900) 8px 11px, transparent 11px 12px,
+    var(--gray-900) 12px 13px, transparent 13px 17px);
+}
+.receipt-foot .mono { font-size: 10px; line-height: 14px; letter-spacing: .16em; color: var(--text-quaternary); }
+
+/* ---------- The receipt prints out of the slot as you scroll ----------
+   --print (0→1) is set by JS from the scroll position, in printer-like steps.
+   The paper's zig-zag edge is always the leading edge: the mask is only as tall
+   as what has printed so far, with the teeth along its bottom. */
+@property --print { syntax: "<number>"; inherits: true; initial-value: 0; }
+.js [data-print] .receipt {
+  transform: rotate(calc(var(--print, 0) * var(--tilt, 1.5deg)));
+  -webkit-mask:
+    linear-gradient(#000 0 0) top / 100% max(0px, calc(var(--print, 0) * 100% - var(--tooth))) no-repeat,
+    conic-gradient(from -45deg at bottom, transparent, #000 1deg 89deg, transparent 90deg)
+      0 calc(var(--print, 0) * 100% - (1 - var(--print, 0)) * var(--tooth)) / calc(var(--tooth) * 2) var(--tooth) repeat-x;
+          mask:
+    linear-gradient(#000 0 0) top / 100% max(0px, calc(var(--print, 0) * 100% - var(--tooth))) no-repeat,
+    conic-gradient(from -45deg at bottom, transparent, #000 1deg 89deg, transparent 90deg)
+      0 calc(var(--print, 0) * 100% - (1 - var(--print, 0)) * var(--tooth)) / calc(var(--tooth) * 2) var(--tooth) repeat-x;
+}
+/* finishing the print in one go (e.g. when the estimator is used before scrolling) */
+.js [data-print].is-flush { transition: --print .7s steps(12, end); }
+.js .numbers .stat { opacity: 0; transform: translateY(12px); transition: opacity .5s, transform .5s; }
+.js .numbers.is-in .stat { opacity: 1; transform: none; }
+.js .numbers.is-in .stat:nth-child(2) { transition-delay: .1s; }
+.js .numbers.is-in .stat:nth-child(3) { transition-delay: .2s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .js .numbers .stat { transition: none; }
+  .js [data-print] { --print: 1; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 960px) {
+  .numbers { padding: var(--space-8xl) 0; }
+  .numbers-grid { grid-template-columns: minmax(0, 1fr); gap: var(--space-7xl); }
+  .numbers-copy h2 { font-size: 30px; line-height: 38px; }
+}
+@media (max-width: 600px) {
+  .numbers-lede { font-size: 16px; line-height: 24px; }
+  .stats { grid-template-columns: minmax(0, 1fr); gap: var(--space-lg); }
+  .stat {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "value no" "label label";
+    align-items: baseline;
+    -webkit-mask:
+      radial-gradient(circle var(--notch) at 0 50%, transparent 98%, #000) left / 51% 100% no-repeat,
+      radial-gradient(circle var(--notch) at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat;
+            mask:
+      radial-gradient(circle var(--notch) at 0 50%, transparent 98%, #000) left / 51% 100% no-repeat,
+      radial-gradient(circle var(--notch) at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat;
+  }
+  .stat-no { grid-area: no; justify-self: end; }
+  .stat-value { grid-area: value; margin-top: 0; font-size: 28px; }
+  .stat-label { grid-area: label; margin-top: 10px; }
+  .receipt { padding: 32px 22px 30px; }
+  .receipt-total { flex-direction: column; align-items: flex-start; gap: 2px; }
+  .receipt-total b { text-align: left; }
+}

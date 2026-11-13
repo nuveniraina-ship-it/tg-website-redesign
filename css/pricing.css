@@ -1,0 +1,453 @@
+/* =========================================================
+   Pricing page — box office estimator, "what a credit gets you"
+   ticket, pricing FAQs. Shared pieces (receipt, FAQ, logos,
+   testimonials, final ticket, footer) come from the homepage CSS.
+   ========================================================= */
+.main-nav a[aria-current="page"] { color: var(--brand-700); font-weight: 600; }
+
+/* ---------- Box office ---------- */
+.pr-hero {
+  padding: 120px 0 var(--space-8xl);
+  background: var(--bg-primary);
+}
+.pr-head { max-width: 760px; margin-inline: auto; text-align: center; }
+.pr-head h1 {
+  margin-top: var(--space-lg);
+  font-size: 56px;
+  line-height: 64px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.pr-lede { margin-top: var(--space-xl); font-size: 20px; line-height: 30px; color: var(--text-tertiary); }
+
+.est {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 400px;
+  gap: var(--space-7xl);
+  align-items: start;
+  margin-top: var(--space-7xl);
+}
+.est-title { font-size: 24px; line-height: 32px; font-weight: 600; }
+
+.est-field { display: block; margin-top: var(--space-xl); }
+.est-label { display: block; font-size: 14px; line-height: 20px; color: var(--text-tertiary); }
+.est-input {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+  height: 56px;
+  padding: 0 18px;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-xl);
+  background: #fff;
+  color: var(--text-quaternary);
+  box-shadow: var(--shadow-xs);
+  transition: border-color .2s, box-shadow .2s;
+}
+.est-input:focus-within { border-color: var(--brand-500); box-shadow: 0 0 0 4px var(--brand-100); }
+.est-input input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: none;
+  font: inherit;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.est-input input::placeholder { color: var(--text-quaternary); font-weight: 400; }
+.est-unit { font-size: 12px; text-transform: uppercase; letter-spacing: .1em; }
+.est-msg { min-height: 20px; margin-top: 8px; font-size: 13px; line-height: 20px; color: var(--text-tertiary); }
+.est-msg.is-warn { color: #b54708; }
+
+/* "or" divider as a perforation */
+.est-or { display: flex; align-items: center; gap: 14px; margin-top: var(--space-xl); font-size: 13px; color: var(--text-tertiary); }
+.est-or::before, .est-or::after { content: ""; flex: 1; border-top: 2px dashed var(--gray-200); }
+.est-or sup, .est-notes sup { font-size: 10px; }
+
+/* ---------- Credit packs: small vertical tickets ---------- */
+.packs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-xl);
+  margin-top: var(--space-3xl);
+}
+.pack {
+  --notch: 9px;
+  display: flex;
+  flex-direction: column;
+  filter: drop-shadow(0 10px 18px rgba(16, 24, 40, .08)) drop-shadow(0 1px 2px rgba(16, 24, 40, .08));
+}
+.pack-top,
+.pack-bottom { position: relative; background: #fff; }
+.pack-top {
+  display: grid;
+  gap: 2px;
+  padding: 18px 18px 16px;
+  border-radius: 16px 16px 0 0;
+  transition: background-color .3s, color .3s;
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000),
+    radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000);
+  -webkit-mask-composite: source-in;
+          mask:
+    radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000),
+    radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000);
+          mask-composite: intersect;
+}
+.pack-bottom {
+  display: grid;
+  gap: 14px;
+  padding: 16px 18px 18px;
+  border-radius: 0 0 16px 16px;
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000),
+    radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000);
+  -webkit-mask-composite: source-in;
+          mask:
+    radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000),
+    radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000);
+          mask-composite: intersect;
+}
+/* perforation between the halves */
+.pack-bottom::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: calc(var(--notch) + 4px);
+  right: calc(var(--notch) + 4px);
+  border-top: 2px dashed var(--gray-200);
+}
+.pack-kicker { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 10px; line-height: 16px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-quaternary); }
+.pack-tag {
+  padding: 0 6px;
+  border-radius: var(--radius-full);
+  background: var(--success-50);
+  color: var(--success-700);
+  letter-spacing: .04em;
+}
+.pack-credits { margin-top: 6px; font-size: 32px; line-height: 38px; font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; color: var(--text-primary); }
+.pack-unit { font-size: 14px; line-height: 20px; color: var(--text-tertiary); }
+
+.pack-price b { display: block; font-size: 22px; line-height: 28px; font-weight: 700; color: var(--text-primary); }
+.pack-price span { font-size: 12px; line-height: 18px; color: var(--text-tertiary); }
+
+.stepper { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.stepper-btn {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--gray-100);
+  color: var(--text-secondary);
+  transition: background-color .2s, transform .15s;
+}
+.stepper-btn:hover { background: var(--gray-200); }
+.stepper-btn:active { transform: scale(.92); }
+.stepper-btn:disabled { opacity: .4; cursor: default; transform: none; }
+.stepper-btn--add { background: var(--brand-600); color: #fff; }
+.stepper-btn--add:hover { background: var(--brand-700); }
+.stepper-qty { min-width: 32px; text-align: center; font-size: 16px; font-weight: 500; color: var(--text-primary); }
+
+/* a pack in the basket: its stub turns brand blue */
+.pack.is-on .pack-top { background: var(--brand-600); }
+.pack.is-on .pack-credits,
+.pack.is-on .pack-unit,
+.pack.is-on .pack-kicker { color: #fff; }
+.pack.is-on .pack-tag { background: rgba(255, 255, 255, .18); color: #fff; }
+.pack.is-bump .pack-top { animation: pack-bump .35s cubic-bezier(.3, 1.6, .5, 1); }
+@keyframes pack-bump { 40% { transform: translateY(-4px); } }
+
+.est-notes { display: grid; gap: 6px; margin-top: var(--space-3xl); font-size: 13px; line-height: 20px; color: var(--text-tertiary); }
+.est-notes a { color: var(--brand-700); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--brand-200); }
+
+/* ---------- The receipt prints the estimate ---------- */
+.est-side { position: sticky; top: 108px; }
+.est-receipt { width: 100%; justify-self: stretch; }
+.est-receipt .receipt { --tilt: 0deg; padding-bottom: 30px; }
+.est-lines { min-height: 64px; }
+.est-lines .est-empty { color: var(--text-quaternary); }
+.est-lines .est-empty::after { display: none; }
+.est-lines li:not(.est-empty) { animation: line-print .4s cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes line-print { from { opacity: 0; transform: translateY(-8px); clip-path: inset(0 0 100% 0); } to { clip-path: inset(0); } }
+.receipt-total .est-total { font-size: 32px; line-height: 38px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.receipt-total { align-items: center; }
+.est-buy { width: 100%; justify-content: center; margin-top: 22px; }
+.est-free { margin-top: 12px; text-align: center; font-size: 10px; line-height: 14px; letter-spacing: .16em; color: var(--text-quaternary); }
+
+/* ---------- What a credit gets you: a row of vertical tickets that slides
+   sideways as you scroll (the section pins while it plays). The middle
+   ticket is in focus; neighbours peek in, smaller and fading, at both edges. ---------- */
+.pr-inc {
+  padding: 64px 0 0;
+  background:
+    radial-gradient(60% 70% at 85% 40%, rgba(132, 202, 255, .35), transparent 70%),
+    radial-gradient(50% 60% at 10% 90%, rgba(178, 221, 255, .35), transparent 70%),
+    linear-gradient(180deg, #f7fbff 0%, #eaf3ff 100%);
+  overflow: clip;
+}
+/* the shared section label (homepage gets it from journey.css) */
+.eyebrow { font-size: 14px; line-height: 20px; font-weight: 600; color: var(--brand-700); } /* clip, not hidden: hidden would break the sticky pin */
+.pr-sec-head { max-width: 880px; margin-inline: auto; padding-inline: 20px; text-align: center; }
+.pr-sec-head h2 { margin-top: var(--space-lg); font-size: 36px; line-height: 44px; font-weight: 600; letter-spacing: -0.02em; text-wrap: balance; }
+.pr-sec-head p:last-child { margin-top: var(--space-lg); font-size: 18px; line-height: 28px; color: var(--text-tertiary); }
+
+/* runway: about half a viewport of scroll per ticket */
+.fc-scroll { position: relative; height: calc(100vh + 10 * 45vh); }
+.fc-pin {
+  position: sticky;
+  top: 84px;
+  height: calc(100vh - 84px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(20px, 3.6vh, 40px);
+  padding: clamp(32px, 6vh, 56px) 0;   /* same room above the heading as below the progress bar */
+}
+.fc-stage { position: relative; height: clamp(380px, 100vh - 420px, 420px); flex: none; }
+.fc-track { position: absolute; inset: 0; }
+
+.fc {
+  --notch: 13px;
+  --tint: var(--brand-50);
+  --accent: var(--brand-700);
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 330px;
+  height: 100%;
+  margin-left: -165px;
+  display: flex;
+  flex-direction: column;
+  filter: drop-shadow(0 22px 30px rgba(16, 24, 40, .10)) drop-shadow(0 2px 4px rgba(16, 24, 40, .06));
+  will-change: transform, opacity;
+  transform-origin: 50% 100%;
+}
+.fc-top,
+.fc-bottom { position: relative; }
+.fc-top {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 50%;
+  justify-content: flex-end;
+  padding: 22px 26px 22px;
+  border-radius: 22px 22px 0 0;
+  background:
+    radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--accent) 14%, transparent) 1px, transparent 1.5px) 0 0 / 14px 14px,
+    var(--tint);
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000),
+    radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000);
+  -webkit-mask-composite: source-in;
+          mask:
+    radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000),
+    radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000);
+          mask-composite: intersect;
+}
+.fc-bottom {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 50%;
+  padding: 22px 26px 20px;
+  border-radius: 0 0 22px 22px;
+  background: #fff;
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000),
+    radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000);
+  -webkit-mask-composite: source-in;
+          mask:
+    radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000),
+    radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000);
+          mask-composite: intersect;
+}
+.fc-bottom::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: calc(var(--notch) + 6px);
+  right: calc(var(--notch) + 6px);
+  border-top: 2px dashed var(--gray-200);
+}
+.fc-no { font-size: 11px; line-height: 16px; letter-spacing: .12em; text-transform: uppercase; color: color-mix(in srgb, var(--accent) 70%, transparent); }
+.fc-icon {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  background: #fff;
+  color: var(--accent);
+  box-shadow: 0 8px 18px color-mix(in srgb, var(--accent) 16%, transparent);
+}
+.fc h3 { margin-top: 16px; font-size: 22px; line-height: 28px; font-weight: 600; letter-spacing: -0.01em; color: var(--text-primary); text-wrap: balance; }
+.fc-bottom p { font-size: 14px; line-height: 21px; color: var(--text-tertiary); }
+.fc-bottom a { color: var(--text-secondary); text-decoration: underline; text-decoration-color: var(--gray-300); text-underline-offset: 3px; }
+.fc-bottom a:hover { color: var(--brand-700); text-decoration-color: currentColor; }
+.fc-admit { margin-top: auto; padding-top: 12px; font-size: 10px; line-height: 14px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-quaternary); }
+
+/* the opening ticket: one wide blue ticket, 1 credit = 1 ticket, shown
+   alone when the section arrives; it steps back as the feature tickets come in */
+.fc-hero {
+  --notch: 14px;
+  position: absolute;
+  z-index: 200;
+  top: 50%;
+  left: 50%;
+  width: 760px;
+  height: 280px;
+  margin: -140px 0 0 -380px;
+  display: flex;
+  color: #fff;
+  filter: drop-shadow(0 26px 36px rgba(21, 94, 239, .22)) drop-shadow(0 2px 4px rgba(16, 24, 40, .08));
+  will-change: transform, opacity;
+}
+.fch-main,
+.fch-stub {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, .13) 1px, transparent 1.5px) 0 0 / 14px 14px,
+    linear-gradient(135deg, var(--brand-600), var(--brand-800));
+  background-attachment: local;
+}
+.fch-main {
+  flex: 1;
+  padding: 30px 36px 32px;
+  border-radius: 24px 0 0 24px;
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000),
+    radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000);
+  -webkit-mask-composite: source-in;
+          mask:
+    radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000),
+    radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000);
+          mask-composite: intersect;
+}
+.fch-stub {
+  flex: 0 0 270px;
+  padding: 30px 32px 32px;
+  border-radius: 0 24px 24px 0;
+  background:
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, .13) 1px, transparent 1.5px) 0 0 / 14px 14px,
+    linear-gradient(135deg, var(--brand-700), var(--brand-900, #194185));
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000),
+    radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000);
+  -webkit-mask-composite: source-in;
+          mask:
+    radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000),
+    radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000);
+          mask-composite: intersect;
+}
+/* perforation between the two halves */
+.fch-stub::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: calc(var(--notch) + 8px);
+  bottom: calc(var(--notch) + 8px);
+  border-left: 2px dashed rgba(255, 255, 255, .35);
+}
+.fch-kicker { font-size: 12px; line-height: 16px; letter-spacing: .14em; text-transform: uppercase; color: rgba(255, 255, 255, .75); }
+.fch-eq { display: flex; align-items: flex-end; gap: 22px; margin-top: auto; }
+.fch-eq span { display: grid; gap: 6px; }
+.fch-eq b { font-size: 132px; line-height: 108px; font-weight: 700; letter-spacing: -0.04em; }
+.fch-eq small { font-size: 13px; line-height: 18px; letter-spacing: .16em; text-transform: uppercase; opacity: .8; }
+.fch-eq i { font-style: normal; font-size: 60px; line-height: 84px; opacity: .5; }
+.fch-stamp {
+  align-self: flex-start;
+  padding: 7px 12px;
+  border: 2px solid rgba(255, 255, 255, .85);
+  border-radius: 8px;
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  transform: rotate(-4deg);
+}
+.fch-zero { display: grid; gap: 12px; margin-top: auto; font-size: 13px; line-height: 18px; color: rgba(255, 255, 255, .8); }
+.fch-zero li { display: flex; align-items: baseline; gap: 8px; }
+.fch-zero li::after { content: ""; order: 1; flex: 1; border-bottom: 2px dotted rgba(255, 255, 255, .3); transform: translateY(-4px); }
+.fch-zero b { order: 2; font-weight: 500; color: #fff; }
+
+/* progress under the row */
+.fc-foot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-quaternary);
+}
+.fc-hint { letter-spacing: .12em; text-transform: uppercase; }
+.fc-bar { position: relative; width: 180px; height: 4px; border-radius: 4px; background: var(--gray-200); overflow: hidden; }
+.fc-bar i { position: absolute; inset: 0; border-radius: inherit; background: var(--brand-500); transform-origin: 0 50%; transform: scaleX(var(--fc-p, 0)); }
+.fc-count { font-variant-numeric: tabular-nums; }
+.fc-count b { font-weight: 500; color: var(--text-primary); }
+
+/* no pinning / no motion: a plain scrollable row */
+@media (prefers-reduced-motion: reduce) {
+  .fc-scroll { height: auto; }
+  .fc-pin { position: static; height: auto; padding: var(--space-6xl) 0; }
+  .fc-stage { height: auto; overflow-x: auto; }
+  .fc-track { position: static; display: flex; gap: 24px; width: max-content; padding: 10px 40px 30px; }
+  .fc { position: relative; left: auto; margin: 0; height: 420px; transform: none !important; opacity: 1 !important; }
+  .fc-foot { display: none; }
+  .fc-hero { position: relative; top: auto; left: auto; margin: 0 auto 40px; }
+}
+
+/* FAQ contact card with two buttons */
+.faq-help-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* ---------- Responsive (desktop first; mobile gets its own pass later) ---------- */
+@media (max-width: 1240px) {
+  .packs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .est { grid-template-columns: minmax(0, 1fr) 360px; gap: var(--space-5xl); }
+}
+@media (max-width: 1080px) {
+}
+@media (max-width: 960px) {
+  .pr-hero { padding-top: 96px; }
+  .pr-head h1 { font-size: 38px; line-height: 46px; }
+  .pr-lede { font-size: 17px; line-height: 26px; }
+  .est { grid-template-columns: minmax(0, 1fr); }
+  .est-side { position: static; }
+  .pr-sec-head h2 { font-size: 30px; line-height: 38px; }
+  .fc-pin { top: 64px; height: calc(100vh - 64px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .est-lines li:not(.est-empty), .pack.is-bump .pack-top { animation: none; }
+}
+
+
+/* ---------- Section rhythm for this page ----------
+   Every ticket's label strip is ~62px tall. Content starts 56px under the
+   strip and stops 88px above the ticket's bottom edge, on every section. */
+.pr-hero { padding: 118px 0 88px; }
+.faq { padding: 118px 0 88px; }
+.logos { padding: 118px 0 64px; }       /* the logo row carries ~24px of its own shadow room */
+.site-footer { padding-top: 118px; }
+.final { padding: 36px 0 64px; }        /* a loose ticket between two cards, not a whole section of air */
+
+/* pinned sections: the pin is only as tall as its content and sits in the
+   middle of the screen, so the gaps above and below match the other tickets */
+@media (prefers-reduced-motion: no-preference) and (min-width: 961px) {
+  .fc-pin {
+    height: auto;
+    top: max(84px, calc(50vh + 42px - 366px));
+    justify-content: flex-start;
+    gap: 40px;
+    padding: 56px 0 88px;
+  }
+  .tm-pin {
+    height: auto;
+    top: max(84px, calc(50vh + 42px - 234px));
+    padding: 20px 0 28px;   /* the card pile already has ~35-60px of air inside its box */
+  }
+}

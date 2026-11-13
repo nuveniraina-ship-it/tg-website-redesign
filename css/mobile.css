@@ -1,0 +1,613 @@
+/* =========================================================
+   Mobile (≤ 768px) — most visitors are here.
+   A stack of real tickets: every section is its own ticket with
+   its own colour, a stub strip, a perforation and side notches.
+   Nothing pins and nothing scrolls sideways — steps are tabs,
+   reviews are a deck you flick through, lists are compact rows.
+   Copy is shortened with .d-only / .m-only pairs in the HTML.
+   Loaded last so it wins over the per-section stylesheets.
+   ========================================================= */
+.m-only { display: none; }
+
+@keyframes ticket-rise {
+  0%   { transform: translateY(46px) rotate(calc(var(--fr, 10deg) * .2)) scale(.965); opacity: 0; }
+  45%  { opacity: 1; }
+  100% { transform: none; opacity: 1; }
+}
+
+@keyframes tab-timer { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes tear-down {
+  0%   { transform: none; }
+  30%  { transform: translate(0, 2px) rotate(.3deg); }
+  100% { transform: translate(3px, 12px) rotate(1.6deg); }
+}
+
+@media (max-width: 768px) {
+  .d-only { display: none; }
+  .m-only { display: inline; }
+
+  /* ---------- The ticket card ---------- */
+  :root { --m-shadow: 0 1px 2px rgba(10, 13, 18, .06), 0 18px 28px -18px rgba(10, 13, 18, .3); }
+  main { padding-top: 10px; }
+  .tkt.tkt {
+    --notch: 11px;
+    width: calc(100% - 20px);
+    margin: 0 auto 14px;
+    padding-top: 72px;
+    padding-bottom: 36px;
+    border-radius: 24px;
+    box-shadow: var(--m-shadow);
+  }
+  .tkt-stub { padding: 13px 18px; font-size: 10px; letter-spacing: .14em; }
+
+  /* each ticket rises into place — a short lift, not the big desktop flight */
+  .fly, .no-sda .fly:not(.is-landed) { animation: none; transform: none; opacity: 1; }
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .fly {
+        animation: ticket-rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 34%;
+      }
+    }
+    .no-sda .fly:not(.is-landed) { transform: translateY(40px) scale(.97); opacity: 0; }
+    .no-sda .fly.is-landed { transition: transform .55s cubic-bezier(.2, .9, .25, 1), opacity .4s; }
+  }
+
+  /* shared type scale */
+  .numbers-copy h2, .uc-side h2, .trust-copy h2, .api-head h3, .tm-side h2,
+  .faq-side h2, .blogs-head h2, .pr-sec-head h2, .j-intro h2 { margin-top: 8px; font-size: 26px; line-height: 32px; }
+
+  /* ---------- Hero + steps: one section, two tickets (wrapped by JS) ---------- */
+  .tkt--hero.tkt:has(.m-card) { padding: 0; border-radius: 0; background: none; box-shadow: none; }
+  .tkt--hero:has(.m-card) > .tkt-stub { display: none; }
+  .journey { display: block; }
+  .journey:has(.m-card) { padding-inline: 0; }
+  .m-card {
+    --notch: 11px;
+    position: relative;
+    border-radius: 24px;
+    background: #fff;
+    box-shadow: var(--m-shadow);
+    overflow: clip;
+  }
+  .m-card + .m-card { margin-top: 14px; }
+
+  /* hero ticket: the pitch, a perforation, then the product shot as its stub */
+  .j-hero {
+    position: relative;
+    min-height: 0;
+    padding: 26px 20px 26px;
+    border-bottom: 2px dashed var(--gray-200);
+  }
+  .m-card--hero .j-hero::before,
+  .m-card--hero .j-hero::after {
+    content: "";
+    position: absolute;
+    bottom: calc(var(--notch) * -1 - 1px);
+    width: calc(var(--notch) * 2);
+    height: calc(var(--notch) * 2);
+    border-radius: 50%;
+    background: var(--desk-paper);
+  }
+  .m-card--hero .j-hero::before { left: calc(var(--notch) * -1); }
+  .m-card--hero .j-hero::after { right: calc(var(--notch) * -1); }
+  .hero-stat-label { font-size: 13px; line-height: 17px; }
+  .hero-title { margin-top: 16px; font-size: 36px; line-height: 41px; }
+  .hero-lede { margin-top: 12px; font-size: 17px; line-height: 26px; }
+  .hero-cta { margin-top: 22px; }
+  .hero-cta .btn-xl { width: 100%; }
+  .assurances { flex-direction: row; flex-wrap: wrap; gap: 6px 16px; font-size: 14px; }
+  .stage-panel.m-shot {
+    height: auto;
+    aspect-ratio: 560 / 530;
+    border: 0;
+    border-radius: 0;
+  }
+  .tracker { display: none; }
+
+  /* steps ticket: blue, tabs over the animation, one short line per step */
+  .m-card--steps {
+    color: #fff;
+    background:
+      radial-gradient(120% 60% at 100% 0, rgba(83, 177, 253, .35), transparent 60%),
+      linear-gradient(165deg, var(--brand-800), var(--brand-600));
+  }
+  .j-steps { padding: 68px 20px 20px; }
+  .j-intro { padding: 0; }
+  .j-intro .eyebrow { color: var(--brand-200); }
+  .j-intro h2 { color: #fff; }
+  .j-intro p:last-child { display: none; }
+  .m-tabs {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 2px;
+    margin-top: 18px;
+    padding: 4px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, .16);
+  }
+  .m-tabs button {
+    height: 40px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, .85);
+    transition: background-color .2s, color .2s;
+  }
+  .m-tabs button { position: relative; overflow: hidden; }
+  .m-tabs button.is-on { background: #fff; color: var(--brand-700); box-shadow: 0 2px 6px rgba(10, 13, 18, .18); }
+  /* while the steps play by themselves, the current tab fills like a timer */
+  .m-tabs.is-auto button.is-on::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--brand-500);
+    transform-origin: 0 50%;
+    animation: tab-timer 4.5s linear both;
+  }
+  .j-stage { position: static; margin: 12px 0 0; padding: 0; background: none; }
+  .stage-sticky { position: static; height: auto; padding: 0; }
+  .j-stage .stage-panel { height: auto; aspect-ratio: 560 / 500; border: 0; border-radius: 16px; }
+  .step-row { display: block; min-height: 128px; margin-top: 18px; }
+  .step, .step.is-active { min-height: 0; padding: 0; opacity: 1; }
+  .step { display: none; }
+  .step.is-active { display: block; }
+  .step-num { background: rgba(255, 255, 255, .16); color: #fff; }
+  .step h3 { margin-top: 6px; font-size: 21px; line-height: 27px; color: #fff; }
+  .step p { margin-top: 6px; font-size: 16px; line-height: 24px; color: rgba(255, 255, 255, .88); }
+  .checks { display: none; }
+  .j-end {
+    display: block;
+    margin: 24px 0 0;
+    padding: 18px;
+    border: 0;
+    border-radius: 18px;
+    background: #fff;
+    color: var(--text-primary);
+  }
+  .j-end h3 { font-size: 20px; line-height: 26px; }
+  .j-end-meta { margin-top: 6px; font-size: 14px; line-height: 20px; }
+  .j-end-cta { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: auto; margin-top: 14px; }
+  .j-end-cta .btn { padding-inline: 8px; font-size: 15px; white-space: nowrap; }
+
+  /* ---------- Logos ---------- */
+  .logos.tkt { padding-bottom: 24px; }
+  .logos-title { font-size: 16px; line-height: 24px; }
+
+  /* ---------- Numbers: an ink ticket, stats as receipt lines ---------- */
+  .numbers.tkt {
+    color: #fff;
+    background:
+      radial-gradient(90% 50% at 0 0, rgba(46, 144, 250, .22), transparent 70%),
+      linear-gradient(170deg, #1d2433, #10141d);
+  }
+  .numbers .eyebrow { color: var(--brand-300); }
+  .numbers-copy h2 { color: #fff; }
+  .numbers-lede { margin-top: 10px; color: rgba(255, 255, 255, .72); }
+  .numbers .text-link { margin-top: 14px; color: var(--brand-300); }
+  .numbers-grid { gap: 30px; }
+  .stats { display: block; margin-top: 22px; border-top: 1px dashed rgba(255, 255, 255, .22); }
+  .stat {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+    border-radius: 0;
+    border-bottom: 1px dashed rgba(255, 255, 255, .22);
+    background: none;
+    -webkit-mask: none;
+            mask: none;
+  }
+  .stat-no { display: none; }
+  .stat-value { margin: 0; padding: 0; border: 0; font-size: 20px; color: #fff; }
+  .stat-label { margin: 0; font-size: 14px; color: rgba(255, 255, 255, .7); }
+  .receipt-wrap { width: min(340px, 100%); }
+
+  /* ---------- Use cases: five compact tickets, photo stub on the left ---------- */
+  .uc.tkt { padding-bottom: 24px; }
+  .uc-scroll { height: auto; }
+  .uc-pin { position: static; height: auto; overflow: visible; padding: 0; display: block; }
+  .uc-layout { display: block; }
+  .uc-pile { display: grid; gap: 10px; height: auto; margin: 18px 0 0; }
+  .uct, .uct.is-in {
+    --media: 104px;
+    --notch: 8px;
+    position: relative;
+    top: auto;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    transform: none;
+    scale: 1;
+    transition: none;
+    pointer-events: auto;
+    filter: drop-shadow(0 4px 8px rgba(20, 22, 28, .08));
+  }
+  .uct-body {
+    grid-template-columns: var(--media) minmax(0, 1fr);
+    min-height: 104px;
+    border-radius: 16px;
+    -webkit-mask:
+      radial-gradient(circle var(--notch) at var(--media) 0, transparent 98%, #000),
+      radial-gradient(circle var(--notch) at var(--media) 100%, transparent 98%, #000);
+    -webkit-mask-composite: source-in;
+            mask:
+      radial-gradient(circle var(--notch) at var(--media) 0, transparent 98%, #000),
+      radial-gradient(circle var(--notch) at var(--media) 100%, transparent 98%, #000);
+            mask-composite: intersect;
+  }
+  .uct-body::after { display: none; }
+  .uct-media { height: auto; padding: 8px; border-bottom: 0; border-right: 2px dashed rgba(20, 22, 28, .18); }
+  .uct-media img { border-radius: 4px 16px 4px 16px; }
+  .uct-main { justify-content: center; padding: 12px 14px; }
+  .uct-kicker { font-size: 10px; line-height: 14px; }
+  .uct-title { margin-top: 4px; font-size: 16px; line-height: 21px; }
+  .uct-desc { display: none; }
+  .uct-link { margin-top: 6px; padding-top: 0; font-size: 13px; }
+  .uct-link::after { content: ""; position: absolute; inset: 0; }   /* the whole ticket is the link */
+
+  /* ---------- Security + API ---------- */
+  .trust-row { gap: 22px; }
+  .trust-copy p:last-child, .api-head-copy p { margin-top: 10px; }
+  .seals { gap: 8px; }
+  .seal-disc { width: 76px; height: 76px; outline-offset: 4px; }
+  .seal-disc img { width: 64px; height: 64px; }
+  .seal-disc img[src*="iso-27001"] { width: 50px; height: 50px; }
+  .trust-tear { margin-block: 30px; }
+  .api-head { gap: 0; }
+  .flow { margin-top: 18px; padding: 12px; gap: 0; }
+  .wire { height: 20px; }
+  .reg-list { min-height: 150px; }
+  .reg-list li { padding-block: 8px; }
+  .node-core { padding: 4px 0 0; }
+  /* the three channels sit side by side */
+  .node-dests { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: auto; gap: 6px; }
+  .dest { display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 0; padding: 10px 4px; text-align: center; }
+  .dest-body { font-size: 13px; line-height: 18px; }
+  .dest-body .mono { display: none; }
+  .dest-check { position: static; font-size: 10px; }
+  .api-foot { margin-top: 14px; }
+  .api-fire { width: 100%; justify-content: center; padding: 13px 16px; }
+  .api-json { display: none; }
+
+  /* ---------- Testimonials: a deck you flick through ---------- */
+  .tm.tkt { padding-top: 72px; overflow: clip; }
+  .tm-scroll { height: auto; }
+  .tm-pin { position: static; height: auto; overflow: visible; padding: 0; display: block; }
+  .tm-layout { display: block; }
+  .tm-sub { display: none; }
+  .tm-deck { position: relative; height: calc(var(--card-h, 360px) + 46px); margin-top: 14px; }
+  .tq { left: 6px; right: 6px; }
+  .tq-body { display: flex; flex-direction: column; min-height: var(--card-h, 0); }
+  .tq-main { flex: 1; }
+  .tq-quote { font-size: 16px; line-height: 25px; }
+  .m-deck-nav { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 4px; }
+  .m-deck-nav button {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--brand-700);
+    box-shadow: 0 0 0 1px rgba(21, 70, 140, .08), 0 6px 14px rgba(21, 70, 140, .16);
+  }
+  .m-deck-nav span { min-width: 64px; text-align: center; font-size: 13px; color: var(--text-tertiary); }
+  .m-deck-nav b { font-weight: 600; color: var(--text-primary); }
+
+  /* ---------- FAQ ---------- */
+  .faq-sub { display: none; }
+
+  /* ---------- Blog: three compact rows ---------- */
+  .blogs.tkt { padding-bottom: 24px; }
+  .blogs-head p:last-child { display: none; }
+  .blog-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    gap: 10px;
+    margin: 18px 0 0;
+    padding: 0;
+    overflow: visible;
+  }
+  .post-link { display: grid; grid-template-columns: 108px minmax(0, 1fr); border-radius: 16px; overflow: hidden; }
+  .post-cover { aspect-ratio: auto; height: 100%; min-height: 100px; border-radius: 0; }
+  .post-body { justify-content: center; padding: 12px 14px; border-top: 0; border-left: 2px dashed var(--gray-300); }
+  .post-body::before, .post-body::after { display: none; }
+  .post-body h3 { font-size: 15px; line-height: 21px; }
+  .post-body p { display: none; }
+  .post-more { margin-top: 6px; padding-top: 0; font-size: 13px; }
+
+  /* ---------- Closing ticket ---------- */
+  .final { padding: 4px 0 40px; }
+  .final .container { padding-inline: 10px; }
+  @media (max-width: 720px) {
+    /* portrait ticket: the tear runs along the join at the bottom of the main part
+       and the top of the stub — never down the side */
+    .final-main::before {
+      -webkit-mask: radial-gradient(circle var(--bite) at 50% 100%, transparent 98%, #000) 0 0 / 10px 100% repeat-x;
+              mask: radial-gradient(circle var(--bite) at 50% 100%, transparent 98%, #000) 0 0 / 10px 100% repeat-x;
+    }
+    .final-stub::before {
+      -webkit-mask: radial-gradient(circle var(--bite) at 50% 0, transparent 98%, #000) 5px 0 / 10px 100% repeat-x;
+              mask: radial-gradient(circle var(--bite) at 50% 0, transparent 98%, #000) 5px 0 / 10px 100% repeat-x;
+    }
+    .final-stub { transform: translate(3px, 12px) rotate(1.6deg); }
+    @media (prefers-reduced-motion: no-preference) {
+      @supports (animation-timeline: view()) { .final-stub { animation-name: tear-down; } }
+    }
+  }
+
+  /* ---------- Footer ---------- */
+  .site-footer.tkt { padding-bottom: 28px; }
+  .footer-grid { gap: 26px 20px; }
+  .footer-tagline { margin-top: 10px; font-size: 15px; }
+  /* the Validator downloads sit together on one card */
+  .footer-validator {
+    margin-top: 20px;
+    padding: 14px;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: inset 0 0 0 1px var(--border-secondary);
+  }
+  .validator-btn { display: flex; margin-top: 10px; }
+  .store-badges { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+  .store-badges a { display: block; }
+  .store-badges img { display: block; width: 100%; height: auto; }
+  /* links: full 44px touch rows */
+  .footer-col ul { gap: 0; margin-top: 6px; }
+  .footer-col li a { display: inline-flex; align-items: center; min-height: 44px; }
+  /* other Trycon tools: a 2 × 2 set of chips, not four more rows */
+  .footer-col:last-child ul { grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+  .footer-col:last-child .tool-link {
+    display: flex;
+    min-height: 48px;
+    padding: 0 12px;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: inset 0 0 0 1px var(--border-secondary);
+  }
+  .tool-link img { box-shadow: none; padding: 0; width: 24px; height: 24px; }
+  .footer-bottom { margin-top: 26px; padding-top: 18px; gap: 6px; font-size: 13px; }
+
+  /* ---------- Sticky action bar ---------- */
+  .m-cta {
+    position: fixed;
+    left: 8px;
+    right: 8px;
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 10px 10px 16px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, .92);
+    -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+    box-shadow: 0 0 0 1px rgba(10, 13, 18, .06), 0 12px 28px rgba(10, 13, 18, .18);
+    transform: translateY(140%);
+    transition: transform .35s cubic-bezier(.2, .8, .2, 1);
+  }
+  .m-cta.is-on { transform: none; }
+  .m-cta-text { min-width: 0; font-size: 13px; line-height: 18px; color: var(--text-tertiary); }
+  .m-cta-text b { display: block; font-size: 15px; line-height: 20px; font-weight: 600; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+  .m-cta .btn { flex: none; padding: 11px 16px; font-size: 15px; }
+  body { padding-bottom: 0; }
+
+  /* ================= Pricing page ================= */
+  /* top ticket: a blue stub with the headline and three numbers, a perforation,
+     then the estimator with the credit packs as compact ticket rows */
+  .pr-hero.tkt { padding-top: 0; padding-bottom: 28px; overflow: clip; }
+  .pr-hero > .tkt-stub { color: #fff; }
+  .pr-head {
+    position: relative;
+    margin: 0 calc(var(--gutter) * -1);
+    padding: 66px 20px 26px;
+    text-align: left;
+    color: #fff;
+    background:
+      radial-gradient(120% 70% at 100% 0, rgba(83, 177, 253, .4), transparent 60%),
+      linear-gradient(165deg, var(--brand-800), var(--brand-600));
+  }
+  .pr-head::before,
+  .pr-head::after {
+    content: "";
+    position: absolute;
+    bottom: -11px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--desk-paper);
+  }
+  .pr-head::before { left: -11px; }
+  .pr-head::after { right: -11px; }
+  .pr-head .eyebrow { color: var(--brand-200); }
+  .pr-head h1 { margin-top: 8px; font-size: 31px; line-height: 37px; }
+  .pr-lede { margin-top: 10px; font-size: 16px; line-height: 24px; color: rgba(255, 255, 255, .82); }
+  .pr-chips {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 2px dashed rgba(255, 255, 255, .3);
+    font-size: 10px;
+    line-height: 14px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, .78);
+  }
+  .pr-chips li + li { padding-left: 12px; border-left: 1px dashed rgba(255, 255, 255, .3); }
+  .pr-chips b {
+    display: block;
+    margin-bottom: 2px;
+    font-family: var(--font-body);
+    font-size: 24px;
+    line-height: 30px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+
+  .est { margin-top: 24px; gap: 24px; }
+  .est-title { font-size: 21px; line-height: 27px; }
+  .est-field { margin-top: 8px; }
+  .est-msg:empty { display: none; }
+  .est-or { margin-top: 16px; font-size: 12px; }
+  .est-or::before, .est-or::after { display: none; }
+  .packs { grid-template-columns: minmax(0, 1fr); gap: 8px; margin-top: 12px; }
+  .pack { --notch: 7px; --stub: 98px; flex-direction: row; filter: drop-shadow(0 4px 8px rgba(16, 24, 40, .08)) drop-shadow(0 0 1px rgba(16, 24, 40, .2)); }
+  .pack-top {
+    flex: 0 0 var(--stub);
+    align-content: center;
+    gap: 0;
+    padding: 9px 8px 9px 14px;
+    border-radius: 14px 0 0 14px;
+    -webkit-mask:
+      radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000),
+      radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000);
+    -webkit-mask-composite: source-in;
+            mask:
+      radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000),
+      radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000);
+            mask-composite: intersect;
+  }
+  .pack-kicker:not(:has(.pack-tag)) { display: none; }
+  .pack-kicker { font-size: 9px; line-height: 14px; }
+  .pack-credits { margin-top: 0; font-size: 22px; line-height: 26px; }
+  .pack-unit { font-size: 12px; line-height: 16px; }
+  .pack-bottom {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    min-width: 0;
+    padding: 9px 12px 9px 14px;
+    border-radius: 0 14px 14px 0;
+    -webkit-mask:
+      radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000),
+      radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000);
+    -webkit-mask-composite: source-in;
+            mask:
+      radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000),
+      radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000);
+            mask-composite: intersect;
+  }
+  .pack-bottom::before {
+    top: calc(var(--notch) + 3px);
+    bottom: calc(var(--notch) + 3px);
+    left: 0;
+    right: auto;
+    border-top: 0;
+    border-left: 2px dashed var(--gray-200);
+  }
+  .pack-price b { font-size: 19px; line-height: 24px; }
+  .pack-price span { font-size: 11px; line-height: 16px; white-space: nowrap; }
+  .stepper { flex: none; gap: 2px; }
+  .stepper-qty { min-width: 26px; }
+  .est-notes { margin-top: 14px; gap: 4px; font-size: 12px; line-height: 18px; }
+  /* price breakdown: a short receipt — one-line header, tight rows, total on one line */
+  .est-receipt .receipt { padding: 26px 18px 24px; }
+  .est-receipt .receipt-head { gap: 10px; padding-bottom: 12px; }
+  .est-receipt .receipt-head img { width: 22px; height: 22px; }
+  .est-receipt .receipt-sub { display: none; }
+  .est-receipt .receipt-lines { gap: 8px; padding: 12px 0; }
+  .est-lines { min-height: 0; }
+  .est-receipt .receipt-total { flex-direction: row; align-items: center; gap: 12px; padding-top: 12px; }
+  .receipt-total .est-total { font-size: 26px; line-height: 32px; }
+  .est-buy { margin-top: 14px; }
+  .est-free { margin-top: 8px; }
+
+  /* features: the blue "1 credit = 1 ticket" ticket, then eight compact rows */
+  .pr-inc.tkt { padding-top: 72px; padding-bottom: 24px; }
+  .fc-scroll { height: auto; }
+  .fc-pin { position: static; height: auto; display: block; padding: 0; }
+  .pr-sec-head { padding-inline: var(--gutter); text-align: left; }
+  .pr-sec-head p:last-child { margin-top: 10px; font-size: 16px; line-height: 24px; }
+  .fc-stage { height: auto; margin-top: 20px; }
+  .fc-hero {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: auto;
+    height: auto;
+    margin: 0 var(--gutter);
+    flex-direction: column;
+    transform: none;
+    opacity: 1;
+  }
+  .fch-main {
+    padding: 22px 22px 24px;
+    border-radius: 20px 20px 0 0;
+    -webkit-mask:
+      radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000),
+      radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000);
+    -webkit-mask-composite: source-in;
+            mask:
+      radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000),
+      radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000);
+            mask-composite: intersect;
+  }
+  .fch-eq { margin-top: 22px; gap: 16px; }
+  .fch-eq b { font-size: 88px; line-height: 74px; }
+  .fch-eq i { font-size: 44px; line-height: 60px; }
+  .fch-stub {
+    flex: none;
+    gap: 18px;
+    padding: 22px 22px 24px;
+    border-radius: 0 0 20px 20px;
+    -webkit-mask:
+      radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000),
+      radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000);
+    -webkit-mask-composite: source-in;
+            mask:
+      radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000),
+      radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000);
+            mask-composite: intersect;
+  }
+  .fch-stub::before {
+    left: calc(var(--notch) + 8px);
+    right: calc(var(--notch) + 8px);
+    top: 0;
+    bottom: auto;
+    border-left: 0;
+    border-top: 2px dashed rgba(255, 255, 255, .35);
+  }
+  .fc-track { position: static; display: grid; gap: 10px; margin-top: 14px; padding: 0 var(--gutter); }
+  .fc {
+    position: relative;
+    top: auto;
+    left: auto;
+    display: block;
+    width: auto;
+    height: auto;
+    margin: 0;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 0 0 1px rgba(16, 24, 40, .05), 0 4px 8px rgba(16, 24, 40, .06);
+    transform: none;
+    opacity: 1;
+    filter: none;
+  }
+  .fc-top, .fc-bottom { border-radius: 0; background: none; -webkit-mask: none; mask: none; }
+  .fc-top { flex-direction: row; align-items: center; justify-content: flex-start; gap: 12px; padding: 14px 14px 0; }
+  .fc-icon { flex: none; width: 40px; height: 40px; border-radius: 12px; background: var(--tint); box-shadow: none; }
+  .fc-icon svg { width: 22px; height: 22px; }
+  .fc h3 { margin: 0; font-size: 16px; line-height: 22px; }
+  .fc-bottom { padding: 6px 14px 14px 66px; }
+  .fc-bottom::before { display: none; }
+  .fc-admit { display: none; }
+}
+
+/* phone-only pieces */
+@media (min-width: 769px) { .pr-chips { display: none; } }
+/* the action bar only exists on phones */
+@media (min-width: 769px) { .m-cta { display: none; } }

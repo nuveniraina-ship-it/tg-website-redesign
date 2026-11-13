@@ -1,0 +1,269 @@
+/* =========================================================
+   Blogs + final CTA
+   ========================================================= */
+
+/* ---------- Blogs ---------- */
+.blogs {
+  --b-bg: var(--bg-secondary);
+  padding: var(--space-9xl) 0;
+  background: var(--b-bg);
+  border-top: 1px solid var(--border-secondary);
+}
+.blogs-head { max-width: 640px; }
+.blogs-head h2 {
+  margin-top: var(--space-lg);
+  font-size: 36px;
+  line-height: 44px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.blogs-head p:last-child {
+  margin-top: var(--space-lg);
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--text-tertiary);
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4xl);
+  margin-top: var(--space-6xl);
+}
+.post-link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #fff;
+  border: 1px solid var(--border-secondary);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-xs);
+  transition: transform .3s cubic-bezier(.2, .8, .2, 1), box-shadow .3s;
+}
+.post-link:hover { transform: translateY(-4px); box-shadow: var(--shadow-xl); }
+
+/* cover image from the live blog */
+.post-cover {
+  aspect-ratio: 16 / 10;
+  border-radius: calc(var(--radius-2xl) - 1px) calc(var(--radius-2xl) - 1px) 0 0;
+  background: var(--gray-100);
+  overflow: hidden;
+}
+.post-cover img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s cubic-bezier(.2, .8, .2, 1); }
+.post-link:hover .post-cover img { transform: scale(1.04); }
+
+/* tear line between cover and text */
+.post-body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 22px 24px 24px;
+  border-top: 2px dashed var(--gray-300);
+}
+.post-body::before,
+.post-body::after {
+  content: "";
+  position: absolute;
+  top: -12px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--b-bg);
+  border: 1px solid var(--border-secondary);
+}
+.post-body::before { left: -12px; clip-path: inset(0 0 0 50%); }
+.post-body::after  { right: -12px; clip-path: inset(0 50% 0 0); }
+.post-body h3 { font-size: 20px; line-height: 30px; font-weight: 600; color: var(--text-primary); text-wrap: balance; }
+.post-body p { margin-top: 8px; color: var(--text-tertiary); }
+.post-more {
+  margin-top: auto;
+  padding-top: var(--space-xl);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--brand-700);
+}
+.post-more span { display: inline-block; transition: transform .2s; }
+.post-link:hover .post-more span { transform: translateX(3px); }
+
+/* ---------- Final CTA: the visitor's own admission ticket ---------- */
+.final {
+  padding: var(--space-8xl) 0 var(--space-9xl);
+}
+/* the ticket is torn along its perforation: the stub sits apart, knocked askew */
+.final-ticket {
+  --stub: 260px;
+  --notch: 18px;
+  --bite: 3.5px;
+  display: grid;
+  grid-template-columns: 1fr var(--stub);
+}
+.final-main, .final-stub {
+  filter: drop-shadow(0 30px 40px rgba(21, 112, 239, .2)) drop-shadow(0 6px 12px rgba(10, 13, 18, .08));
+}
+.final-main > *, .final-stub > * { position: relative; }
+.final-main {
+  padding: var(--space-7xl) var(--space-7xl) var(--space-6xl);
+  border-radius: 28px 0 0 28px;
+  background:
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, .05) 0 2px, transparent 2px 12px),
+    linear-gradient(120deg, var(--brand-600), var(--brand-700));
+  color: #fff;
+}
+.final-kicker { font-size: 12px; line-height: 18px; letter-spacing: .2em; color: rgba(255, 255, 255, .72); }
+.final-main h2 {
+  margin-top: var(--space-xl);
+  max-width: 620px;
+  font-size: clamp(32px, 3.6vw, 48px);
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.final-meta {
+  margin-top: var(--space-xl);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  font-size: 18px;
+  line-height: 28px;
+  color: rgba(255, 255, 255, .85);
+}
+.final-meta i { width: 5px; height: 5px; border-radius: 50%; background: rgba(255, 255, 255, .45); }
+.final-cta { display: flex; flex-wrap: wrap; gap: var(--space-lg); margin-top: var(--space-5xl); }
+
+.btn-light { background: #fff; color: var(--brand-700); box-shadow: var(--shadow-xs); }
+.btn-light:hover { background: var(--brand-25); }
+.btn-ghost-light { color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .55); }
+.btn-ghost-light:hover { background: rgba(255, 255, 255, .1); }
+
+.final-stub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xl);
+  padding: var(--space-4xl) var(--space-3xl);
+  border-radius: 0 28px 28px 0;
+  background: #fff;
+  transition: transform .9s cubic-bezier(.2, .9, .25, 1.08);
+}
+/* the paper itself is drawn on ::before so its torn edge can be masked
+   without clipping the drop shadow on the parent */
+.final-main, .final-stub { position: relative; background: none !important; }
+.final-main::before, .final-stub::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.final-main::before {
+  background:
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, .05) 0 2px, transparent 2px 12px),
+    linear-gradient(120deg, var(--brand-600), var(--brand-700));
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000),
+    radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000),
+    radial-gradient(circle var(--bite) at 100% 50%, transparent 98%, #000) 0 0 / 100% 10px repeat-y;
+  -webkit-mask-composite: source-in;
+          mask:
+    radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000),
+    radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000),
+    radial-gradient(circle var(--bite) at 100% 50%, transparent 98%, #000) 0 0 / 100% 10px repeat-y;
+          mask-composite: intersect;
+}
+.final-stub::before {
+  background: #fff;
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000),
+    radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000),
+    radial-gradient(circle var(--bite) at 0 50%, transparent 98%, #000) 0 5px / 100% 10px repeat-y;
+  -webkit-mask-composite: source-in;
+          mask:
+    radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000),
+    radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000),
+    radial-gradient(circle var(--bite) at 0 50%, transparent 98%, #000) 0 5px / 100% 10px repeat-y;
+          mask-composite: intersect;
+}
+/* Torn state. On scroll the ticket arrives whole, then the stub rips
+   away along the perforation as it reaches the middle of the screen. */
+.final-stub { transform: translate(26px, 16px) rotate(5deg); transform-origin: 0 0; }
+@keyframes tear {
+  0%   { transform: none; }
+  30%  { transform: translate(3px, 1px) rotate(.6deg); }   /* first tug */
+  45%  { transform: translate(2px, 0) rotate(.3deg); }
+  100% { transform: translate(26px, 16px) rotate(5deg); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .final-stub {
+      transition: none;
+      animation: tear linear both;
+      animation-timeline: view();
+      animation-range: cover 34% cover 52%;
+    }
+  }
+  /* fallback: whole until it's well in view, then it tears once */
+  .no-sda .final:not(.is-torn) .final-stub { transform: none; }
+}
+.final-free { display: flex; align-items: center; gap: 10px; }
+.final-free b { font-size: 64px; line-height: 1; font-weight: 800; letter-spacing: -0.04em; color: var(--brand-600); }
+.final-free .mono { font-size: 12px; line-height: 16px; letter-spacing: .14em; color: var(--text-secondary); }
+.final-qr { width: 104px; height: 104px; color: var(--gray-900); }
+.final-no { font-size: 11px; letter-spacing: .1em; color: var(--text-quaternary); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .blog-grid { gap: var(--space-3xl); }
+  .final-ticket { --stub: 220px; }
+  .final-main { padding: var(--space-6xl) var(--space-5xl); }
+}
+@media (max-width: 960px) {
+  .blogs, .final { padding: var(--space-8xl) 0; }
+  .blogs-head h2 { font-size: 30px; line-height: 38px; }
+  .blog-grid {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(280px, 78%);
+    margin-inline: calc(var(--gutter) * -1);
+    padding: 4px var(--gutter) 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+  .blog-grid::-webkit-scrollbar { display: none; }
+  .post { scroll-snap-align: start; }
+}
+@media (max-width: 720px) {
+  /* ticket turns portrait: stub tears off the bottom */
+  .final-ticket { grid-template-columns: 1fr; }
+  .final-main {
+    padding: var(--space-5xl) var(--space-3xl) var(--space-4xl);
+    border-radius: 24px 24px 0 0;
+    -webkit-mask:
+      radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000) left / 51% 100% no-repeat,
+      radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000) right / 51% 100% no-repeat;
+            mask:
+      radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000) left / 51% 100% no-repeat,
+      radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000) right / 51% 100% no-repeat;
+  }
+  .final-meta { font-size: 16px; line-height: 24px; }
+  .final-cta .btn { flex: 1; }
+  .final-stub {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: var(--space-3xl);
+    border-radius: 0 0 24px 24px;
+    background: linear-gradient(90deg, var(--gray-300) 50%, transparent 0) 0 0 / 12px 2px repeat-x, #fff;
+    -webkit-mask:
+      radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000) left / 51% 100% no-repeat,
+      radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000) right / 51% 100% no-repeat;
+            mask:
+      radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000) left / 51% 100% no-repeat,
+      radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000) right / 51% 100% no-repeat;
+  }
+  .final-free b { font-size: 48px; }
+  .final-qr { width: 72px; height: 72px; }
+  .final-no { display: none; }
+}

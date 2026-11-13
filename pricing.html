@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pricing — Ticket Generator</title>
+  <meta name="description" content="Pay-as-you-go event ticketing. Buy credit packs from 10 to 10,000 credits, one ticket per credit, every feature included. First 10 tickets free.">
+  <link rel="canonical" href="https://tg-website-revamp.vercel.app/pricing">
+  <meta name="theme-color" content="#1570ef">
+
+  <!-- Social share previews -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Ticket Generator">
+  <meta property="og:title" content="Pricing — Ticket Generator">
+  <meta property="og:description" content="Create, sell, distribute, and validate personalized event tickets. Predictable pricing, no hidden fees, no commissions.">
+  <meta property="og:url" content="https://tg-website-revamp.vercel.app/pricing">
+  <meta property="og:image" content="https://tg-website-revamp.vercel.app/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Ticket Generator — your all-in-one event ticketing platform">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pricing — Ticket Generator">
+  <meta name="twitter:description" content="Create, sell, distribute, and validate personalized event tickets. No hidden fees, no commissions.">
+  <meta name="twitter:image" content="https://tg-website-revamp.vercel.app/assets/og-image.png">
+
+  <link rel="icon" href="assets/tg-icon.svg" type="image/svg+xml">
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/tickets.css">
+  <link rel="stylesheet" href="css/logos.css">
+  <link rel="stylesheet" href="css/numbers.css">
+  <link rel="stylesheet" href="css/testimonials.css">
+  <link rel="stylesheet" href="css/faq.css">
+  <link rel="stylesheet" href="css/closing.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/pricing.css">
+  <link rel="stylesheet" href="css/mobile.css">
+</head>
+<body>
+
+  <!-- ================= Header ================= -->
+  <header class="site-header" data-header>
+    <div class="container header-inner">
+      <a href="/" class="logo" aria-label="Ticket Generator home">
+        <img src="assets/tg-icon.svg" alt="" width="32" height="32">
+        <img src="assets/tg-logotype.svg" alt="Ticket Generator" class="logo-type" width="150" height="14">
+      </a>
+
+      <nav class="main-nav" id="main-nav" aria-label="Main">
+        <ul>
+          <li><a href="./#how-it-works">How It Works</a></li>
+          <li><a href="./#features">Features</a></li>
+          <li><a href="./#use-cases">Use Cases</a></li>
+          <li><a href="./#resources">Resources</a></li>
+          <li><a href="pricing.html" aria-current="page">Pricing</a></li>
+          <li><a href="./#support">Support</a></li>
+        </ul>
+        <div class="nav-actions nav-actions--mobile">
+          <a href="https://app.ticket-generator.com/#/auth/signup" class="btn btn-primary">Sign Up Free</a>
+          <a href="#login" class="btn btn-secondary">Log In</a>
+          <p class="nav-note">First 10 tickets free · No credit card required</p>
+        </div>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#login" class="btn btn-link">Log In</a>
+        <a href="#signup" class="btn btn-dark">Sign Up</a>
+      </div>
+
+      <button class="menu-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Open menu" data-menu-toggle>
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= Box office · price estimator ================= -->
+    <section class="tkt pr-hero" data-tkt="Pricing" aria-labelledby="pr-title">
+      <div class="container">
+        <header class="pr-head">
+          <p class="eyebrow">1 credit = 1 ticket · Pay as you go</p>
+          <h1 id="pr-title">Keep costs low and impact high</h1>
+          <p class="pr-lede">With Ticket Generator’s pay-as-you-go pricing, you only pay for what you use.</p>
+          <ul class="pr-chips mono" aria-label="Pricing at a glance">
+            <li><b>$0.30</b>lowest per ticket</li>
+            <li><b>10</b>tickets free</li>
+            <li><b>$0</b>subscription</li>
+          </ul>
+        </header>
+
+        <div class="est" data-est>
+          <div class="est-main">
+            <h2 class="est-title">Get price estimate</h2>
+            <label class="est-field" for="est-tickets">
+              <span class="est-label">Enter estimated number of tickets (minimum 10) to auto-select a credit pack</span>
+              <span class="est-input">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9a3 3 0 0 0 0 6v4h18v-4a3 3 0 0 1 0-6V5H3v4Z"/><path d="M14 5v2M14 11v2M14 17v2"/></svg>
+                <input id="est-tickets" type="text" inputmode="numeric" autocomplete="off" placeholder="e.g. 250" aria-describedby="est-msg" data-est-input>
+                <span class="est-unit mono">tickets</span>
+              </span>
+            </label>
+            <p class="est-msg" id="est-msg" data-est-msg aria-live="polite"></p>
+
+            <p class="est-or"><span>Or pick credit packs yourself · one ticket = one credit<sup>**</sup></span></p>
+
+            <ul class="packs">
+              <li class="pack" data-pack data-credits="10" data-price="10">
+                <div class="pack-top">
+                  <span class="pack-kicker mono">Credit pack</span>
+                  <span class="pack-credits">10</span>
+                  <span class="pack-unit">credits</span>
+                </div>
+                <div class="pack-bottom">
+                  <div class="pack-price"><b>$10</b><span class="mono">$1.00 / ticket</span></div>
+                  <div class="stepper">
+                    <button type="button" class="stepper-btn" data-dec aria-label="Remove one 10-credit pack">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+                    </button>
+                    <output class="stepper-qty mono" data-qty aria-label="10-credit packs selected">0</output>
+                    <button type="button" class="stepper-btn stepper-btn--add" data-inc aria-label="Add one 10-credit pack">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+                    </button>
+                  </div>
+                </div>
+              </li>
+              <li class="pack" data-pack data-credits="100" data-price="50">
+                <div class="pack-top">
+                  <span class="pack-kicker mono">Credit pack</span>
+                  <span class="pack-credits">100</span>
+                  <span class="pack-unit">credits</span>
+                </div>
+                <div class="pack-bottom">
+                  <div class="pack-price"><b>$50</b><span class="mono">$0.50 / ticket</span></div>
+                  <div class="stepper">
+                    <button type="button" class="stepper-btn" data-dec aria-label="Remove one 100-credit pack">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+                    </button>
+                    <output class="stepper-qty mono" data-qty aria-label="100-credit packs selected">0</output>
+                    <button type="button" class="stepper-btn stepper-btn--add" data-inc aria-label="Add one 100-credit pack">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+                    </button>
+                  </div>
+                </div>
+              </li>
+              <li class="pack" data-pack data-credits="1000" data-price="500">
+                <div class="pack-top">
+                  <span class="pack-kicker mono">Credit pack</span>
+                  <span class="pack-credits">1,000</span>
+                  <span class="pack-unit">credits</span>
+                </div>
+                <div class="pack-bottom">
+                  <div class="pack-price"><b>$500</b><span class="mono">$0.50 / ticket</span></div>
+                  <div class="stepper">
+                    <button type="button" class="stepper-btn" data-dec aria-label="Remove one 1,000-credit pack">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+                    </button>
+                    <output class="stepper-qty mono" data-qty aria-label="1,000-credit packs selected">0</output>
+                    <button type="button" class="stepper-btn stepper-btn--add" data-inc aria-label="Add one 1,000-credit pack">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+                    </button>
+                  </div>
+                </div>
+              </li>
+              <li class="pack" data-pack data-credits="10000" data-price="3000">
+                <div class="pack-top">
+                  <span class="pack-kicker mono"><span class="pack-tag"><span class="d-only">Lowest per ticket</span><span class="m-only">Lowest</span></span></span>
+                  <span class="pack-credits">10,000</span>
+                  <span class="pack-unit">credits</span>
+                </div>
+                <div class="pack-bottom">
+                  <div class="pack-price"><b>$3,000</b><span class="mono">$0.30 / ticket</span></div>
+                  <div class="stepper">
+                    <button type="button" class="stepper-btn" data-dec aria-label="Remove one 10,000-credit pack">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+                    </button>
+                    <output class="stepper-qty mono" data-qty aria-label="10,000-credit packs selected">0</output>
+                    <button type="button" class="stepper-btn stepper-btn--add" data-inc aria-label="Add one 10,000-credit pack">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+                    </button>
+                  </div>
+                </div>
+              </li>
+            </ul>
+
+            <ul class="est-notes">
+              <li><sup>*</sup> For events with a venue layout, one ticket requires two credits. <a href="https://support.ticket-generator.com/hc/en-us/articles/54660482257945-Venue-Layout">Learn more</a></li>
+              <li><sup>**</sup> Sending a ticket via SMS may use additional credits depending on the recipient's country, and some countries are not supported. <a href="https://app.ticket-generator.com/#/auth/sms-pricing">See SMS pricing by country</a></li>
+            </ul>
+          </div>
+
+          <aside class="est-side" aria-label="Price breakdown">
+            <div class="receipt-wrap est-receipt" data-print>
+              <div class="receipt">
+                <div class="receipt-head">
+                  <img src="assets/tg-icon.svg" alt="" width="28" height="28">
+                  <div>
+                    <span class="receipt-brand">Price breakdown</span>
+                    <span class="receipt-sub mono">PAY-AS-YOU-GO · ESTIMATE</span>
+                  </div>
+                </div>
+
+                <ul class="receipt-lines mono est-lines" data-est-lines>
+                  <li class="est-empty">Add a credit pack to start</li>
+                </ul>
+
+                <ul class="receipt-lines receipt-lines--plus mono">
+                  <li><span>Total tickets/credits</span><b data-est-credits>0</b></li>
+                  <li><span>Average price per ticket</span><b data-est-avg>$0.00</b></li>
+                </ul>
+
+                <div class="receipt-total">
+                  <span>Total price</span>
+                  <b class="est-total" data-est-total>$0</b>
+                </div>
+
+                <a href="https://app.ticket-generator.com/#/auth/signup" class="btn btn-primary btn-lg est-buy">Sign up to buy</a>
+                <p class="est-free mono">FIRST 10 CREDITS FREE ON SIGN-UP</p>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= What a credit gets you · tickets slide past as you scroll ================= -->
+    <section class="tkt pr-inc" data-tkt="Features" aria-labelledby="inc-title">
+      <div class="fc-scroll" data-fc-scroll>
+        <div class="fc-pin">
+          <header class="pr-sec-head">
+            <p class="eyebrow">Easy &amp; Powerful</p>
+            <h2 id="inc-title">Easy-to-use, feature-packed, fair-priced</h2>
+            <p>Pay only for the tickets you create and get access to all the advanced features</p>
+          </header>
+
+          <div class="fc-stage">
+            <div class="fc-hero" data-fc-hero>
+              <div class="fch-main">
+                <span class="fch-kicker mono">Admit one · every event</span>
+                <p class="fch-eq"><span><b>1</b><small class="mono">credit</small></span><i aria-hidden="true">=</i><span><b>1</b><small class="mono">ticket</small></span></p>
+              </div>
+              <div class="fch-stub">
+                <p class="fch-stamp mono">Every feature included</p>
+                <ul class="fch-zero mono">
+                  <li><span>Subscription</span><b>$0</b></li>
+                  <li><span>Commission</span><b>0%</b></li>
+                  <li><span>Hidden fees</span><b>$0</b></li>
+                </ul>
+              </div>
+            </div>
+            <ul class="fc-track" data-fc-track>
+              <li class="fc" data-fc style="--tint: #e6f0ff; --accent: #175cd3;">
+                <div class="fc-top">
+                  <span class="fc-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+                  <h3>No surprises, just solid security</h3>
+                </div>
+                <div class="fc-bottom">
+                  <p>Protect event and attendee data with GDPR, ISO 27001:2022, and SOC2 compliance. Ensure confidentiality, integrity, and security at every step.</p>
+                  <span class="fc-admit mono">Included with every credit</span>
+                </div>
+              </li>
+              <li class="fc" data-fc style="--tint: #fff1dc; --accent: #b54708;">
+                <div class="fc-top">
+                  <span class="fc-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9a3 3 0 0 0 0 6v4h18v-4a3 3 0 0 1 0-6V5H3v4Z"/><path d="M14 5v2M14 11v2M14 17v2"/></svg></span>
+                  <h3>Tickets that do more</h3>
+                </div>
+                <div class="fc-bottom">
+                  <p>Craft eye-catching tickets with custom logos, colors, and messaging. Or, select a polished template to ensure that every ticket promotes your brand.</p>
+                  <span class="fc-admit mono">Included with every credit</span>
+                </div>
+              </li>
+              <li class="fc" data-fc style="--tint: #e3f6ec; --accent: #067647;">
+                <div class="fc-top">
+                  <span class="fc-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 12h10"/></svg></span>
+                  <h3>No gatecrashers, no worries</h3>
+                </div>
+                <div class="fc-bottom">
+                  <p>Get event coordinators to <a href="https://ticket-generator.com/validate-tickets">validate each ticket</a> via the Ticket Validator's web version or mobile app. Prevent gatecrashers and unauthorized entries like a pro.</p>
+                  <span class="fc-admit mono">Included with every credit</span>
+                </div>
+              </li>
+              <li class="fc" data-fc style="--tint: #e6f0ff; --accent: #175cd3;">
+                <div class="fc-top">
+                  <span class="fc-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></svg></span>
+                  <h3>Roll out the red carpet</h3>
+                </div>
+                <div class="fc-bottom">
+                  <p>Create a customized, mobile-friendly page to share event details, collect attendee information, get registrations, and receive payments.</p>
+                  <span class="fc-admit mono">Included with every credit</span>
+                </div>
+              </li>
+              <li class="fc" data-fc style="--tint: #fff1dc; --accent: #b54708;">
+                <div class="fc-top">
+                  <span class="fc-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4 20-7Z"/><path d="M22 2 11 13"/></svg></span>
+                  <h3>Deliver tickets in a snap</h3>
+                </div>
+                <div class="fc-bottom">
+                  <p>Download your tickets as print-ready PDFs for distribution or directly send them digitally to the guests via email, SMS, and WhatsApp.</p>
+                  <span class="fc-admit mono">Included with every credit</span>
+                </div>
+              </li>
+              <li class="fc" data-fc style="--tint: #e3f6ec; --accent: #067647;">
+                <div class="fc-top">
+                  <span class="fc-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></span>
+                  <h3>Your event's crystal ball</h3>
+                </div>
+                <div class="fc-bottom">
+                  <p>Get detailed <a href="https://ticket-generator.com/event-attendance-tracking">event analytics</a>. Dive into attendance graphs, check-in rates, and demographic breakdowns. Gain actionable insights to fine-tune your next event.</p>
+                  <span class="fc-admit mono">Included with every credit</span>
+                </div>
+              </li>
+              <li class="fc" data-fc style="--tint: #efeaff; --accent: #5925dc;">
+                <div class="fc-top">
+                  <span class="fc-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><path d="M21 15a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2v2ZM3 15a2 2 0 0 0 2 2h1v-6H5a2 2 0 0 0-2 2v2Z"/><path d="M18 17v1a3 3 0 0 1-3 3h-3"/></svg></span>
+                  <h3>Your ticketing sidekick</h3>
+                </div>
+                <div class="fc-bottom">
+                  <p>Get complete technical assistance from our <a href="https://ticket-generator.com/support">support</a> team via live chat, email, and phone. Our expert team is ready to help you design, launch, and optimize every event.</p>
+                  <span class="fc-admit mono">Included with every credit</span>
+                </div>
+              </li>
+              <li class="fc" data-fc style="--tint: #ffe9e3; --accent: #c4320a;">
+                <div class="fc-top">
+                  <span class="fc-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg></span>
+                  <h3>Automate like a pro</h3>
+                </div>
+                <div class="fc-bottom">
+                  <p>Integrate ticket generation into your own information system to create tickets, send tickets, and much more via <a href="https://ticket-generator.com/ticket-generator-api">Ticket Generator API</a>.</p>
+                  <span class="fc-admit mono">Included with every credit</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Pricing FAQs ================= -->
+    <section class="faq tkt" data-tkt="Help desk" id="pricing-faqs" aria-labelledby="faq-title">
+      <div class="container faq-grid">
+        <div class="faq-side">
+          <p class="eyebrow">Need Help?</p>
+          <h2 id="faq-title">Pricing FAQs</h2>
+          <p class="faq-sub">Get answers to commonly asked pricing-related questions</p>
+
+          <div class="faq-help">
+            <span class="faq-help-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.6A8.4 8.4 0 1 1 21 11.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            </span>
+            <h3>Have specific questions or custom requirements?</h3>
+            <p>Reach out to us and we will provide the right solution.</p>
+            <div class="faq-help-actions">
+              <a href="https://ticket-generator.com/support" class="btn btn-secondary">Contact Us</a>
+              <a href="https://ticket-generator.dayschedule.com/quick-meeting" class="btn btn-primary">Book a Demo</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-list">
+          <details class="faq-item" name="faq" open>
+            <summary><span class="faq-q mono">Q.01</span><span class="faq-title">What are ticket credits?</span><i class="faq-icon" aria-hidden="true"></i></summary>
+            <div class="faq-a">
+              <p>In Ticket Generator, ticket credits are required to generate tickets. Generating one ticket requires one ticket credit. First 10 ticket credits are free and added to the account on sign up.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" name="faq">
+            <summary><span class="faq-q mono">Q.02</span><span class="faq-title">How many ticket credits do I need?</span><i class="faq-icon" aria-hidden="true"></i></summary>
+            <div class="faq-a">
+              <p>One credit = One ticket. Therefore, your account should have enough credits to generate the number of tickets you need. Depending on the tickets you need, choose a credit package. The package options allow you to buy credits in multiples of 10—10, 100, 1,000, and 10,000.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" name="faq">
+            <summary><span class="faq-q mono">Q.03</span><span class="faq-title">Can ticket credits be refunded?</span><i class="faq-icon" aria-hidden="true"></i></summary>
+            <div class="faq-a">
+              <p>No, ticket credits once purchased cannot be refunded. However, credits don't expire and can be used to generate tickets anytime.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" name="faq">
+            <summary><span class="faq-q mono">Q.04</span><span class="faq-title">What is the cost of creating a seating plan?</span><i class="faq-icon" aria-hidden="true"></i></summary>
+            <div class="faq-a">
+              <p>Creating one seating plan costs 100 USD or 200 credits. This includes the design and setup of a complete seating layout by the Ticket Generator team. Once the layout is created, you can review and approve it, or request changes before it is finalized and used for your events.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" name="faq">
+            <summary><span class="faq-q mono">Q.05</span><span class="faq-title">How can I buy more credits?</span><i class="faq-icon" aria-hidden="true"></i></summary>
+            <div class="faq-a">
+              <p>To purchase ticket credits, go to Billing in the Ticket Generator application and choose the required credit package.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Social proof · a carousel of logo tickets ================= -->
+    <section class="logos tkt" data-tkt="Trusted by" aria-labelledby="logos-title">
+      <div class="container">
+        <h2 id="logos-title" class="logos-title">Ticket Generator is the trusted choice of global leaders like Deloitte, Verizon, and Takeda</h2>
+      </div>
+
+      <div class="roll" data-roll>
+        <ul class="roll-track" data-roll-track>
+          <li><span class="lt"><img src="assets/logos/google.png" alt="Google" width="106" height="50" loading="lazy"></span></li>
+          <li><span class="lt"><img src="assets/logos/deloitte.png" alt="Deloitte" width="150" height="50" loading="lazy"></span></li>
+          <li><span class="lt"><img src="assets/logos/verizon.png" alt="Verizon" width="149" height="50" loading="lazy"></span></li>
+          <li><span class="lt"><img src="assets/logos/vmware.png" alt="VMware" width="106" height="50" loading="lazy"></span></li>
+          <li><span class="lt"><img src="assets/logos/hyatt.png" alt="Hyatt" width="106" height="50" loading="lazy"></span></li>
+          <li><span class="lt"><img src="assets/logos/lufthansa.png" alt="Lufthansa" width="106" height="50" loading="lazy"></span></li>
+          <li><span class="lt"><img src="assets/logos/volvo-group.png" alt="Volvo Group" width="46" height="50" loading="lazy"></span></li>
+          <li><span class="lt"><img src="assets/logos/unhcr.png" alt="UNHCR" width="106" height="50" loading="lazy"></span></li>
+          <li><span class="lt"><img src="assets/logos/takeda.png" alt="Takeda" width="145" height="50" loading="lazy"></span></li>
+          <li><span class="lt"><img src="assets/logos/georgia-tech.png" alt="Georgia Institute of Technology" width="106" height="50" loading="lazy"></span></li>
+          <li><span class="lt"><img src="assets/logos/nyc-health-hospitals.png" alt="NYC Health + Hospitals" width="102" height="50" loading="lazy"></span></li>
+          <li><span class="lt"><img src="assets/logos/hartford-healthcare.png" alt="Hartford HealthCare" width="107" height="50" loading="lazy"></span></li>
+          <li><span class="lt"><img src="assets/logos/nyc-public-schools.png" alt="NYC Public Schools" width="106" height="50" loading="lazy"></span></li>
+          <li><span class="lt"><img src="assets/logos/gov-western-australia.png" alt="Department of Education, Western Australia" width="51" height="50" loading="lazy"></span></li>
+          <li><span class="lt"><img src="assets/logos/almarai.png" alt="Almarai" width="73" height="50" loading="lazy"></span></li>
+          <li><span class="lt"><img src="assets/logos/kansas-city-schools.png" alt="Kansas City Public Schools" width="150" height="50" loading="lazy"></span></li>
+          <li><span class="lt"><img src="assets/logos/univ-southampton.png" alt="University of Southampton" width="146" height="50" loading="lazy"></span></li>
+          <li><span class="lt"><img src="assets/logos/lausd.png" alt="Los Angeles Unified School District" width="149" height="50" loading="lazy"></span></li>
+          <li><span class="lt"><img src="assets/logos/dekalb-county.png" alt="DeKalb County School District" width="76" height="50" loading="lazy"></span></li>
+          <li><span class="lt"><img src="assets/logos/ateneo-de-manila.png" alt="Ateneo de Manila University" width="104" height="50" loading="lazy"></span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ================= Testimonials · a messy deck that shuffles as you scroll ================= -->
+    <section class="tm tkt" data-tkt="Testimonials" aria-labelledby="tm-title">
+      <div class="tm-scroll" data-tm-scroll>
+        <div class="tm-pin">
+          <div class="container tm-layout">
+
+            <div class="tm-side">
+              <p class="eyebrow">Top-Rated</p>
+              <h2 id="tm-title">Why do organizers choose us?</h2>
+              <p class="tm-sub">Hear straight from the event pros.</p>
+            </div>
+
+            <div class="tm-deck" data-tm-deck>
+              <article class="tq" style="--paper: #ffffff; --ink: #1f2430;" data-tq>
+                <div class="tq-body">
+                  <div class="tq-main">
+                    <blockquote class="tq-quote">What I like about it is that we can easily track how many invited guests have arrived and directly report this to our client. This gives us a good indication of when to start the program. It also makes the registration process simple as we just need to scan the guests’ tickets—<mark>no spreadsheets required.</mark></blockquote>
+                  </div>
+                  <footer class="tq-stub">
+                    <img class="tq-avatar" src="assets/people/callum.webp" alt="" width="56" height="56" loading="lazy" decoding="async">
+                    <span class="tq-who"><b>Callum Webster</b>Perky People</span>
+                    <span class="tq-admit mono" aria-hidden="true">Admit one</span>
+                  </footer>
+                </div>
+              </article>
+              <article class="tq" style="--paper: #e7f0ff; --ink: #1f2430;" data-tq>
+                <div class="tq-body">
+                  <div class="tq-main">
+                    <blockquote class="tq-quote">We started using Ticket Generator years back and are very pleased with our experience. They have continued to improve their product to adapt to an ever-changing market. Whenever we have faced an issue, we have received <mark>full support to resolve our problem quickly.</mark></blockquote>
+                  </div>
+                  <footer class="tq-stub">
+                    <img class="tq-avatar" src="assets/people/greg.webp" alt="" width="56" height="56" loading="lazy" decoding="async">
+                    <span class="tq-who"><b>Greg Berry</b>Univ. of Alabama at Birmingham</span>
+                    <span class="tq-admit mono" aria-hidden="true">Admit one</span>
+                  </footer>
+                </div>
+              </article>
+              <article class="tq" style="--paper: #fff7e1; --ink: #1f2430;" data-tq>
+                <div class="tq-body">
+                  <div class="tq-main">
+                    <blockquote class="tq-quote">The ease of use provided by Ticket Generator is truly remarkable. I wholeheartedly recommend Ticket Generator to event planners and organizers, as it has <mark>proven to be an invaluable tool for streamlining ticket management.</mark></blockquote>
+                  </div>
+                  <footer class="tq-stub">
+                    <img class="tq-avatar" src="assets/people/donnie.webp" alt="" width="56" height="56" loading="lazy" decoding="async">
+                    <span class="tq-who"><b>Dr. Donnie Glasgow</b>Knuckle Headz</span>
+                    <span class="tq-admit mono" aria-hidden="true">Admit one</span>
+                  </footer>
+                </div>
+              </article>
+              <article class="tq" style="--paper: #e9f7f0; --ink: #1f2430;" data-tq>
+                <div class="tq-body">
+                  <div class="tq-main">
+                    <blockquote class="tq-quote">One of the major problems Ticket Generator effectively solves is the <mark>global availability of tickets to audiences worldwide.</mark> With this tool, we can now easily generate secure digital tickets. Ticket Generator has proven to be reliable and efficient in meeting our ticketing needs.</blockquote>
+                  </div>
+                  <footer class="tq-stub">
+                    <img class="tq-avatar" src="assets/people/reginaldo.webp" alt="" width="56" height="56" loading="lazy" decoding="async">
+                    <span class="tq-who"><b>Reginaldo Carolina</b>CAMS Events</span>
+                    <span class="tq-admit mono" aria-hidden="true">Admit one</span>
+                  </footer>
+                </div>
+              </article>
+              <article class="tq" style="--paper: #eef5ff; --ink: #1f2430;" data-tq>
+                <div class="tq-body">
+                  <div class="tq-main">
+                    <blockquote class="tq-quote">Ticket Generator empowers us to effectively manage inventory at the point of sale, facilitate distribution, and retention. <mark>The seamless ticket distribution has been a game-changer,</mark> propelling our startup partners to new heights.</blockquote>
+                  </div>
+                  <footer class="tq-stub">
+                    <img class="tq-avatar" src="assets/people/matthew.webp" alt="" width="56" height="56" loading="lazy" decoding="async">
+                    <span class="tq-who"><b>Matthew Headley</b>230 Loridans, LLC</span>
+                    <span class="tq-admit mono" aria-hidden="true">Admit one</span>
+                  </footer>
+                </div>
+              </article>
+              <article class="tq" style="--paper: #fff0ea; --ink: #1f2430;" data-tq>
+                <div class="tq-body">
+                  <div class="tq-main">
+                    <blockquote class="tq-quote">From designing the ticket and sending them out to validating on-site and gathering attendance data, <mark>Ticket Generator does it all.</mark> We had multiple team members scanning QR Codes at the entry, without any chaos. It’s rare to find one tool that handles creation, distribution, validation, and performance tracking.</blockquote>
+                  </div>
+                  <footer class="tq-stub">
+                    <img class="tq-avatar" src="assets/people/lila.webp" alt="" width="56" height="56" loading="lazy" decoding="async">
+                    <span class="tq-who"><b>Lila Harper</b>Event Organizer</span>
+                    <span class="tq-admit mono" aria-hidden="true">Admit one</span>
+                  </footer>
+                </div>
+              </article>
+              <article class="tq" style="--paper: #f2efff; --ink: #1f2430;" data-tq>
+                <div class="tq-body">
+                  <div class="tq-main">
+                    <blockquote class="tq-quote">I was responsible for branding, website creation, and event registration management for the National Health Research Conference in 2022. What I love the most about this app is that <mark>multiple team members can scan and validate tickets.</mark> It also allows you to upload your own ticket design and add unique identifiers.</blockquote>
+                  </div>
+                  <footer class="tq-stub">
+                    <img class="tq-avatar" src="assets/people/kershelle.webp" alt="" width="56" height="56" loading="lazy" decoding="async">
+                    <span class="tq-who"><b>Kershelle Barker</b>KHreative</span>
+                    <span class="tq-admit mono" aria-hidden="true">Admit one</span>
+                  </footer>
+                </div>
+              </article>
+              <article class="tq" style="--paper: #e6f3ff; --ink: #1f2430;" data-tq>
+                <div class="tq-body">
+                  <div class="tq-main">
+                    <blockquote class="tq-quote">Ticket Generator is a <mark>cost-effective, easy-to-use, and customizable ticketing system.</mark> We have been using it for both large and small-scale events. It allows us to send individual tickets to each of our attendees and easily scan these tickets on-site.</blockquote>
+                  </div>
+                  <footer class="tq-stub">
+                    <img class="tq-avatar" src="assets/people/heather.webp" alt="" width="56" height="56" loading="lazy" decoding="async">
+                    <span class="tq-who"><b>Heather Bennett</b>Seller System</span>
+                    <span class="tq-admit mono" aria-hidden="true">Admit one</span>
+                  </footer>
+                </div>
+              </article>
+              <article class="tq" style="--paper: #ffffff; --ink: #1f2430;" data-tq>
+                <div class="tq-body">
+                  <div class="tq-main">
+                    <blockquote class="tq-quote">The ticket app is extremely effective because we can trace the tickets easily. With printed tickets, people always say that they tend to lose their tickets. But with Ticket Generator, even if they misplace their tickets <mark>we can find and resend/reprint it.</mark></blockquote>
+                  </div>
+                  <footer class="tq-stub">
+                    <img class="tq-avatar" src="assets/people/deyon.webp" alt="" width="56" height="56" loading="lazy" decoding="async">
+                    <span class="tq-who"><b>Deyon Bovell</b>Rhythm &amp; Groove Dance Studio</span>
+                    <span class="tq-admit mono" aria-hidden="true">Admit one</span>
+                  </footer>
+                </div>
+              </article>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Final CTA · your admission ticket ================= -->
+    <section class="final" aria-labelledby="final-title">
+      <div class="container">
+        <div class="final-ticket">
+          <div class="final-main">
+            <p class="final-kicker mono">ADMIT ONE · YOUR EVENT</p>
+            <h2 id="final-title">Get started with Ticket Generator</h2>
+            <p class="final-meta">First 10 tickets free <i></i> Free account <i></i> No credit card required</p>
+            <div class="final-cta">
+              <a href="#signup" class="btn btn-light btn-xl">Sign Up</a>
+              <a href="#demo" class="btn btn-ghost-light btn-xl">Book a Demo</a>
+            </div>
+          </div>
+          <div class="final-stub" aria-hidden="true">
+            <span class="final-free"><b>10</b><span class="mono">TICKETS<br>FREE</span></span>
+            <svg class="final-qr" viewBox="0 0 25 25" shape-rendering="crispEdges" data-final-qr></svg>
+            <span class="final-no mono">No. 000001</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= Footer ================= -->
+  <footer class="site-footer tkt" data-tkt="See you at the gate">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" class="logo" aria-label="Ticket Generator home">
+            <img src="assets/tg-icon.svg" alt="" width="32" height="32">
+            <img src="assets/tg-logotype.svg" alt="Ticket Generator" class="logo-type" width="150" height="14">
+          </a>
+          <p class="footer-tagline">Event ticketing made easy!</p>
+
+          <div class="footer-validator">
+            <span class="footer-label">Download Ticket Validator</span>
+            <a href="#ticket-validator-web" class="validator-btn">
+              <span class="validator-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 12h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <span><small>Ticket Validator</small>Web Application</span>
+            </a>
+            <div class="store-badges">
+              <a href="https://apps.apple.com/us/app/ticket-validator/id1491873237?ls=1" aria-label="Download Ticket Validator on the App Store">
+                <img src="assets/footer/app-store.webp" alt="Download on the App Store" width="135" height="40" loading="lazy">
+              </a>
+              <a href="https://play.google.com/store/search?q=ticket+validator&amp;c=apps&amp;hl=en_IN" aria-label="Get Ticket Validator on Google Play">
+                <img src="assets/footer/google-play.webp" alt="Get it on Google Play" width="135" height="40" loading="lazy">
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <nav class="footer-col" aria-label="Product">
+          <h3 class="footer-label">Product</h3>
+          <ul>
+            <li><a href="#demo">Book a Demo</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="pricing.html" aria-current="page">Pricing</a></li>
+            <li><a href="#legal">Legal</a></li>
+          </ul>
+        </nav>
+
+        <nav class="footer-col" aria-label="Resources">
+          <h3 class="footer-label">Resources</h3>
+          <ul>
+            <li><a href="#support">Support</a></li>
+            <li><a href="#community">Community</a></li>
+            <li><a href="#status">Status</a></li>
+            <li><a href="#resources">Blog</a></li>
+            <li><a href="#ticket-templates">Ticket Templates</a></li>
+            <li><a href="#ticket-maker">Ticket Maker</a> <span class="new-tag">New</span></li>
+          </ul>
+        </nav>
+
+        <nav class="footer-col" aria-label="Other tools by Trycon">
+          <h3 class="footer-label">Other Tools by Trycon</h3>
+          <ul>
+            <li><a href="https://scanova.io/" class="tool-link"><img src="assets/footer/scanova.png" alt="" width="24" height="24" loading="lazy">Scanova</a></li>
+            <li><a href="https://qrmark.com/" class="tool-link"><img src="assets/footer/qr-mark.svg" alt="" width="24" height="24" loading="lazy">QR Mark</a></li>
+            <li><a href="https://qrbatch.io/" class="tool-link"><img src="assets/footer/qr-batch.svg" alt="" width="24" height="24" loading="lazy">QR Batch</a></li>
+            <li><a href="https://qrapi.io/" class="tool-link"><img src="assets/footer/qr-api.svg" alt="" width="24" height="24" loading="lazy">QR API</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-maker">A product of
+          <a href="https://trycon.io/" aria-label="Trycon"><img src="assets/footer/trycon.webp" alt="Trycon" width="74" height="20" loading="lazy"></a>
+        </p>
+        <p>© 2026 Ticket Generator. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Phone only: the running total stays in reach while packs are picked -->
+  <div class="m-cta" data-m-cta>
+    <p class="m-cta-text"><b data-m-total>$0</b><span data-m-credits>Add a credit pack</span></p>
+    <a href="https://app.ticket-generator.com/#/auth/signup" class="btn btn-primary">Sign up to buy</a>
+  </div>
+
+  <script src="js/main.js" defer></script>
+  <script src="js/pricing.js" defer></script>
+</body>
+</html>

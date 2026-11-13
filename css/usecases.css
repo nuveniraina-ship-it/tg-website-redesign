@@ -1,0 +1,213 @@
+/* =========================================================
+   Use cases — the section pins while you scroll and a new ticket
+   is dealt onto the pile for each use case.
+   ========================================================= */
+.uc { background: var(--bg-primary); padding-bottom: var(--space-8xl); }
+
+/* scroll runway: one viewport to settle + ~70vh per extra ticket */
+.uc-scroll { position: relative; height: calc(100vh + 4 * 70vh); }
+.uc-pin {
+  position: sticky;
+  top: 84px;
+  height: calc(100vh - 84px);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.uc-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 330px) minmax(0, 1fr);
+  gap: var(--space-7xl);
+  align-items: center;
+}
+
+/* ---------- Side: heading + progress rail ---------- */
+.uc-side h2 {
+  margin-top: var(--space-lg);
+  font-size: 36px;
+  line-height: 44px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.uc-rail {
+  position: relative;
+  display: grid;
+  gap: 6px;
+  margin-top: var(--space-5xl);
+  padding: 0;
+  list-style: none;
+}
+/* each use case owns a segment of the vertical progress bar;
+   --seg (0→1) is set by JS from the scroll, so it fills continuously */
+.uc-rail li { position: relative; }
+.uc-rail li::before,
+.uc-rail li::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 4px;
+  margin-top: -26px;   /* every segment is the same 52px, centred on its label */
+  border-radius: 4px;
+}
+.uc-rail li::before { height: 52px; background: var(--gray-200); }
+.uc-rail li::after {
+  height: calc(52px * var(--seg, 0));
+  background: var(--brand-500);
+}
+.uc-rail button {
+  display: block;
+  width: 100%;
+  padding: 14px 0 14px 26px;
+  text-align: left;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  transition: color .25s;
+}
+.uc-rail button:hover { color: var(--text-secondary); }
+.uc-rail li.is-active button { color: var(--text-primary); }
+
+/* ---------- The pile ---------- */
+/* side room so the tilted, slightly zoomed tickets never reach the section's edge */
+.uc-pile { position: relative; height: min(440px, calc(100vh - 220px)); margin-inline: 28px 60px; }
+
+.uct {
+  --media: 42%;
+  --notch: 13px;
+  --ink: var(--text-primary);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  max-width: 860px;
+  margin-inline: auto;
+  color: var(--ink);
+  filter: drop-shadow(0 24px 30px rgba(20, 22, 28, .12)) drop-shadow(0 3px 6px rgba(20, 22, 28, .06));
+  /* waiting off-stage: below the pile, spun */
+  transform: translate(26%, calc(-50% + 95vh)) rotate(var(--from-r, 14deg)) scale(.95);
+  transition: transform .9s cubic-bezier(.2, .85, .25, 1.04);
+  will-change: transform;
+}
+.uct.is-in { transform: translate(var(--x, 0), calc(-50% + var(--y, 0px))) rotate(var(--r, 0deg)); }
+/* slow zoom while its use case is being read (--z 0→1 from JS) */
+.uct { scale: calc(1 + var(--z, 0) * .05); }
+.uct:not(.is-in), .uct.is-under { pointer-events: none; }
+
+.uct-body {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--media) minmax(0, 1fr);
+  min-height: 340px;
+  border-radius: 20px;
+  background: var(--paper);
+  box-shadow: inset 0 0 0 1px rgba(20, 22, 28, .05);
+  /* notches where the photo stub tears off */
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at var(--media) 0, transparent 98%, #000),
+    radial-gradient(circle var(--notch) at var(--media) 100%, transparent 98%, #000);
+  -webkit-mask-composite: source-in;
+          mask:
+    radial-gradient(circle var(--notch) at var(--media) 0, transparent 98%, #000),
+    radial-gradient(circle var(--notch) at var(--media) 100%, transparent 98%, #000);
+          mask-composite: intersect;
+}
+/* tickets further down the pile dim slightly */
+.uct-body::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: #14161c;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .6s;
+}
+.uct.is-under .uct-body::after { opacity: .05; }
+.uct.is-under-2 .uct-body::after { opacity: .1; }
+
+/* photo stub — Figma's asymmetric corners (top-right + bottom-left) */
+.uct-media {
+  padding: 14px;
+  border-right: 2px dashed rgba(20, 22, 28, .18);
+}
+.uct-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px 32px 6px 32px;
+}
+
+.uct-main {
+  display: flex;
+  flex-direction: column;
+  padding: 28px 30px 26px;
+  min-width: 0;
+}
+.uct-kicker { font-size: 11px; line-height: 16px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-quaternary); }
+.uct-title {
+  margin-top: 10px;
+  font-size: 22px;
+  line-height: 30px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  text-wrap: balance;
+}
+.uct-desc { margin-top: 10px; font-size: 16px; line-height: 24px; color: var(--text-tertiary); }
+.uct-desc a { color: var(--text-secondary); text-decoration: underline; text-decoration-color: var(--gray-300); text-underline-offset: 3px; }
+.uct-desc a:hover { color: var(--brand-700); text-decoration-color: currentColor; }
+.uct-link {
+  align-self: flex-start;
+  margin-top: auto;
+  padding-top: 18px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--brand-700);
+}
+.uct-link span { display: inline-block; transition: transform .2s; }
+.uct-link:hover span { transform: translateX(3px); }
+
+/* ---------- Reduced motion: no pinning, just a tidy list ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .uc-scroll { height: auto; }
+  .uct { scale: none; }
+  .uc-pin { position: static; height: auto; overflow: visible; padding: var(--space-8xl) 0; }
+  .uc-layout { align-items: start; }
+  .uc-pile { height: auto; display: grid; gap: var(--space-3xl); }
+  .uct, .uct.is-in { position: relative; top: auto; transform: none; transition: none; }
+  .uc-hint { display: none; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .uc-layout { grid-template-columns: minmax(0, 280px) minmax(0, 1fr); gap: var(--space-5xl); }
+  .uc-rail button { font-size: 16px; line-height: 24px; padding: 12px 0 12px 20px; }
+  .uct { --media: 38%; }
+  .uct-desc { font-size: 15px; line-height: 22px; }
+}
+@media (max-width: 960px) {
+  .uc-pin { top: 64px; height: calc(100vh - 64px); align-items: stretch; padding: var(--space-3xl) 0; }
+  .uc-layout { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; gap: var(--space-xl); }
+  .uc-side h2 { font-size: 26px; line-height: 32px; }
+  .uc-rail { display: none; }
+  .uc-pile { height: auto; }
+
+  /* portrait ticket: photo on top, perforation, text below */
+  .uct-body {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+    -webkit-mask: none;
+            mask: none;
+  }
+  .uct-media { height: 168px; padding: 10px 10px 12px; border-right: 0; border-bottom: 2px dashed rgba(20, 22, 28, .18); }
+  .uct-main { padding: 16px 18px 18px; }
+  .uct-title { font-size: 18px; line-height: 25px; }
+  .uct-desc { font-size: 14px; line-height: 21px; }
+  .uct-link { padding-top: 12px; }
+}
+@media (max-width: 420px) {
+  .uct-media { height: 140px; }
+  .uct-desc { font-size: 13.5px; line-height: 20px; }
+}
