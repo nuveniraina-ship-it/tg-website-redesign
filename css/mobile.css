@@ -988,3 +988,71 @@
   .blogs-head .eyebrow { display: none; }
   .blogs-head h2 { margin-top: 0; }
 }
+
+/* Round 15 — pricing page on phones: the blue headline and the estimator are two separate
+   tickets, and the eight feature cards stack on top of each other as you scroll */
+@media (max-width: 768px) {
+  .pr-hero.tkt { padding: 0; border-radius: 0; background: none; box-shadow: none; overflow: visible; }
+  .pr-hero > .container { padding-inline: 0; }
+  .pr-head { margin: 0; border-radius: 24px; box-shadow: var(--m-shadow); }
+  .pr-head::before, .pr-head::after { display: none; }
+  .est {
+    position: relative;
+    margin-top: 14px;
+    padding: 62px 16px 20px;
+    border-radius: 24px;
+    background: var(--bg-primary);
+    box-shadow: var(--m-shadow);
+  }
+  /* its own stub strip: label, tear line and side notches */
+  .est::before {
+    content: "Estimate";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 13px 18px;
+    border-bottom: 2px dashed var(--gray-200);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    line-height: 16px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--text-primary);
+  }
+  .est::after {
+    content: "";
+    position: absolute;
+    top: 33px;
+    left: -11px;
+    right: -11px;
+    height: 22px;
+    background:
+      radial-gradient(circle 11px at 11px 50%, var(--desk) 97%, transparent),
+      radial-gradient(circle 11px at calc(100% - 11px) 50%, var(--desk) 97%, transparent);
+    pointer-events: none;
+  }
+
+  /* feature cards: icon, heading, three lines of text; each one sticks under the
+     header and the next slides over it */
+  .fc-track { display: grid; gap: 14px; margin: 14px var(--gutter) 0; padding: 0 0 6px; border-radius: 0; background: none; box-shadow: none; }
+  .fc, .fc + .fc {
+    position: sticky;
+    top: calc(78px + var(--i, 0) * 9px);
+    padding: 16px 16px 18px;
+    border: 0;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 0 0 1px rgba(16, 24, 40, .06), 0 -8px 18px -10px rgba(16, 24, 40, .22), 0 4px 8px rgba(16, 24, 40, .06);
+  }
+  .fc:nth-child(2) { --i: 1; } .fc:nth-child(3) { --i: 2; } .fc:nth-child(4) { --i: 3; }
+  .fc:nth-child(5) { --i: 4; } .fc:nth-child(6) { --i: 5; } .fc:nth-child(7) { --i: 6; }
+  .fc:nth-child(8) { --i: 7; }
+  .fc-top { flex-direction: column; align-items: flex-start; gap: 12px; padding: 0; }
+  .fc-icon { width: 40px; height: 40px; border-radius: 12px; }
+  .fc-icon svg { width: 22px; height: 22px; }
+  .fc h3 { font-size: 17px; line-height: 23px; }
+  .fc-bottom { padding: 6px 0 0; }
+  .fc-bottom p { min-height: 63px; font-size: 14px; line-height: 21px; }
+}

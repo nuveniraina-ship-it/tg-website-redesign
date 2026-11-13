@@ -28,6 +28,10 @@ for PAGE in *.html; do
   perl -0pe "s#(?:[ \t]*<link rel=\"stylesheet\" href=\"css/[^\"]+\">\n)+#  <link rel=\"stylesheet\" href=\"css/$BUNDLE.min.css\">\n#" "$PAGE" > "$OUT/$PAGE"
 done
 
+# 2b. Stamp the css/js links so phones never show an old cached copy after a deploy
+STAMP=$(date +%Y%m%d%H%M%S)
+perl -pi -e "s#(href=\"css/[^\"]+\.css|src=\"js/[^\"]+\.js)\"#\$1?v=$STAMP\"#g" "$OUT"/*.html
+
 # 3. JS
 for JS in js/*.js; do
   npx --yes esbuild@0.24.0 "$JS" --minify --log-level=warning --outfile="$OUT/$JS"
