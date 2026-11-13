@@ -773,3 +773,27 @@
   .fc-bottom { padding: 2px 0 0 42px; }
   .fc-bottom p { font-size: 13.5px; line-height: 19px; }
 }
+
+/* Round 8 — a shorter FAQ on phones: same behaviour (one answer open, the rest on tap), tighter rows */
+@media (max-width: 768px) {
+  .faq.tkt { padding-bottom: 24px; }
+  .faq-list { gap: 8px; }
+  .faq-item summary { gap: 10px; padding: 12px 14px; }
+  .faq-title { font-size: 15px; line-height: 21px; }
+  .faq-icon { flex: none; width: 24px; height: 24px; }
+  .faq-a { padding: 10px 0 14px; }
+  .faq-a p { font-size: 14px; line-height: 21px; }
+  /* "Didn't find your query?" becomes one row with its button */
+  .faq-help {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 12px;
+    padding: 10px 10px 10px 14px;
+    border-radius: 14px;
+  }
+  .faq-help-icon, .faq-help p { display: none; }
+  .faq-help h3 { margin: 0; font-size: 15px; line-height: 20px; }
+  .faq-help .btn { flex: none; margin: 0; padding: 8px 12px; }
+}
