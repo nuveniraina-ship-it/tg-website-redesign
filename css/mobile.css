@@ -797,3 +797,28 @@
   .faq-help h3 { margin: 0; font-size: 15px; line-height: 20px; }
   .faq-help .btn { flex: none; margin: 0; padding: 8px 12px; }
 }
+
+/* Round 9 — a shorter footer on phones */
+@media (max-width: 768px) {
+  .site-footer.tkt { padding-top: 62px; padding-bottom: 20px; }
+  .footer-grid { gap: 18px 20px; }
+  .footer-tagline { margin-top: 6px; }
+  .footer-validator { margin-top: 14px; padding: 12px; }
+  .validator-btn { margin-top: 8px; }
+  .footer-col ul { margin-top: 2px; }
+  .footer-col li a { min-height: 36px; }
+  /* other Trycon tools: four small tiles in one row */
+  .footer-col:last-child ul { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin-top: 8px; }
+  .footer-col:last-child .tool-link {
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    min-height: 58px;
+    padding: 6px 2px;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .footer-bottom { margin-top: 18px; padding-top: 14px; gap: 4px; }
+}
