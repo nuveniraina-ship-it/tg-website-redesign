@@ -147,7 +147,7 @@
     height: 3px;
     background: var(--brand-500);
     transform-origin: 0 50%;
-    animation: tab-timer 4.5s linear both;
+    animation: tab-timer 3s linear both;
   }
   .j-stage { position: static; margin: 12px 0 0; padding: 0; background: none; }
   .stage-sticky { position: static; height: auto; padding: 0; }
@@ -683,10 +683,9 @@
 
 /* Round 4 — whole blocks cut or merged on phones */
 @media (max-width: 768px) {
-  /* blog: two slim rows; the footer's Resources column links to the rest */
+  /* blog: three slim rows */
   .blogs.tkt { padding-bottom: 20px; }
   .blog-grid { gap: 8px; margin-top: 14px; }
-  .blog-grid > :nth-child(n + 3) { display: none; }
   .post-link { grid-template-columns: 92px minmax(0, 1fr); }
   .post-cover { min-height: 84px; }
   .post-body { padding: 10px 14px; }
@@ -915,4 +914,77 @@
   .dest { padding: 8px 4px; gap: 4px; }
   .api-foot { margin-top: 8px; }
   .api-count { font-size: 13px; line-height: 18px; }
+}
+
+/* Round 14 — use cases as one full ticket at a time (photo, heading, text), reviews without
+   arrows or dots, and all three blog posts */
+@media (max-width: 768px) {
+  .m-story { display: flex; gap: 5px; margin-top: 12px; }
+  .m-story button { flex: 1; display: grid; align-items: center; height: 24px; }
+  .m-story i { display: block; height: 4px; border-radius: 2px; background: var(--gray-200); overflow: hidden; }
+  .m-story i::after {
+    content: "";
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--brand-600);
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+  }
+  .m-story .is-done i::after, .m-story .is-on i::after { transform: scaleX(1); }
+  .m-story.is-auto .is-on i::after { animation: tab-timer 6s linear both; }
+
+  .uc-pile { display: grid; gap: 0; margin-top: 4px; }
+  .uct, .uct.is-in {
+    --media: 150px;
+    --notch: 9px;
+    grid-area: 1 / 1;
+    display: grid;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .35s, visibility 0s .35s;
+  }
+  .uct.is-on { opacity: 1; visibility: visible; transition: opacity .35s; }
+  /* portrait ticket: photo on top, tear line and notches at the join, text below */
+  .uct-body {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: var(--media) minmax(0, 1fr);
+    min-height: 0;
+    -webkit-mask:
+      radial-gradient(circle var(--notch) at 0 var(--media), transparent 98%, #000),
+      radial-gradient(circle var(--notch) at 100% var(--media), transparent 98%, #000);
+    -webkit-mask-composite: source-in;
+            mask:
+      radial-gradient(circle var(--notch) at 0 var(--media), transparent 98%, #000),
+      radial-gradient(circle var(--notch) at 100% var(--media), transparent 98%, #000);
+            mask-composite: intersect;
+  }
+  .uct-media { height: auto; min-height: 0; padding: 8px 8px 10px; border-right: 0; border-bottom: 2px dashed rgba(20, 22, 28, .18); }
+  .uct-media img { border-radius: 10px 10px 4px 4px; }
+  .uct-main { justify-content: flex-start; padding: 14px 16px 16px; }
+  .uct-kicker { display: none; }
+  .uct-title { margin-top: 0; font-size: 18px; line-height: 24px; }
+  .uct-desc { display: block; margin-top: 6px; font-size: 14px; line-height: 21px; }
+  .uct-link { margin-top: auto; padding-top: 10px; font-size: 14px; line-height: 20px; }
+  .uct-link::after { content: none; }
+  .uct-link span {
+    position: static;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    margin: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  /* reviews: just the cards */
+  .tq { transition: transform .45s cubic-bezier(.2, .8, .2, 1), opacity .25s; }
+  .tm-deck { margin-bottom: 4px; }
+
+  /* blog: always all three posts */
+  .blogs-head .eyebrow { display: none; }
+  .blogs-head h2 { margin-top: 0; }
 }

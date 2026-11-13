@@ -247,12 +247,59 @@
       cards.forEach((c, i) => c.style.setProperty('--z', seg(i)));
     };
     let ucTick = false;
-    window.addEventListener('scroll', () => {
-      if (ucTick) return;
-      ucTick = true;
-      requestAnimationFrame(() => { onUcScroll(); ucTick = false; });
-    }, { passive: true });
-    onUcScroll();
+    if (!phone.matches) {
+      window.addEventListener('scroll', () => {
+        if (ucTick) return;
+        ucTick = true;
+        requestAnimationFrame(() => { onUcScroll(); ucTick = false; });
+      }, { passive: true });
+      onUcScroll();
+    } else {
+      // phones: one full ticket at a time (photo, heading, text), played like a story
+      const pile = ucScroll.querySelector('[data-uc-pile]');
+      const bars = document.createElement('div');
+      bars.className = 'm-story';
+      bars.setAttribute('role', 'tablist');
+      bars.setAttribute('aria-label', 'Use cases');
+      bars.innerHTML = cards.map((c) =>
+        `<button type="button" role="tab" aria-label="${c.querySelector('.uct-title').textContent.trim().replace(/"/g, '&quot;')}"><i></i></button>`).join('');
+      pile.before(bars);
+      const barBtns = [...bars.children];
+      const UC_MS = 6000;
+      let cur = -1;
+      let auto = 0;
+      let resume = 0;
+      let inView = false;
+      const showUc = (k) => {
+        cur = ((k % cards.length) + cards.length) % cards.length;
+        cards.forEach((c, i) => c.classList.toggle('is-on', i === cur));
+        barBtns.forEach((b, i) => {
+          b.classList.toggle('is-done', i < cur);
+          b.classList.remove('is-on');
+          b.setAttribute('aria-selected', String(i === cur));
+        });
+        void bars.offsetWidth;                      // restart the timer bar
+        barBtns[cur].classList.add('is-on');
+      };
+      const play = () => {
+        clearInterval(auto);
+        clearTimeout(resume);
+        const on = inView && !reduceMotion;
+        bars.classList.toggle('is-auto', on);
+        if (on) { showUc(cur); auto = setInterval(() => showUc(cur + 1), UC_MS); }
+      };
+      const byHand = (k) => {
+        clearInterval(auto);
+        clearTimeout(resume);
+        bars.classList.remove('is-auto');
+        showUc(k);
+        resume = setTimeout(play, 8000);
+      };
+      barBtns.forEach((b, i) => b.addEventListener('click', () => byHand(i)));
+      onSwipe(pile, (d) => byHand(cur + d));
+      showUc(0);
+      new IntersectionObserver(([entry]) => { inView = entry.isIntersecting; play(); }, { threshold: 0.4 }).observe(pile);
+    }
 
     // rail buttons jump to that ticket's slice of the runway
     ucScroll.querySelectorAll('[data-uc-go]').forEach((btn) => {
@@ -365,23 +412,9 @@
     window.addEventListener('resize', () => { const k = top; top = -1; shuffleTo(Math.max(k, 0)); });
     onTmScroll();
 
-    // phones: a carousel that plays by itself; drag, tap a dot or use the arrows to take over.
+    // phones: a carousel that plays by itself; drag it to take over.
     if (onPhone) {
       const deckEl = tmScroll.querySelector('[data-tm-deck]');
-      const arrow = (d) => `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="${d}" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-      const nav = document.createElement('div');
-      nav.className = 'm-deck-nav';
-      nav.innerHTML = `<button type="button" class="m-deck-arrow" aria-label="Previous review">${arrow('M15.833 10H4.167M10 15.833 4.167 10 10 4.167')}</button>
-        <ol class="m-dots">${deck.map((_, i) => `<li><button type="button" aria-label="Review ${i + 1} of ${n}"></button></li>`).join('')}</ol>
-        <button type="button" class="m-deck-arrow" aria-label="Next review">${arrow('M4.167 10h11.666M10 4.167 15.833 10 10 15.833')}</button>`;
-      deckEl.after(nav);
-      const [prevBtn, nextBtn] = nav.querySelectorAll('.m-deck-arrow');
-      const dotBtns = [...nav.querySelectorAll('.m-dots button')];
-      onCar = (k) => dotBtns.forEach((b, i) => {
-        b.classList.toggle('is-on', i === k);
-        if (i === k) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
-      });
-      onCar(Math.max(top, 0));
       const go = (d) => shuffleTo((top + d + n) % n);
       // it moves on by itself; touching it pauses that for a while
       let auto = 0;
@@ -390,16 +423,13 @@
       const play = () => {
         clearInterval(auto);
         clearTimeout(resume);
-        if (inView && !reduceMotion) auto = setInterval(() => go(1), 4500);
+        if (inView && !reduceMotion) auto = setInterval(() => go(1), 3000);
       };
       const hold = () => {
         clearInterval(auto);
         clearTimeout(resume);
-        resume = setTimeout(play, 8000);
+        resume = setTimeout(play, 5000);
       };
-      prevBtn.addEventListener('click', () => { go(-1); hold(); });
-      nextBtn.addEventListener('click', () => { go(1); hold(); });
-      dotBtns.forEach((b, i) => b.addEventListener('click', () => { shuffleTo(i); hold(); }));
 
       // drag: the cards follow the finger, then settle on the nearest review
       let x0 = 0;
@@ -816,7 +846,7 @@
     if (end) stepsCol.append(end);
 
     // the steps play on a loop by themselves; tapping a tab or swiping takes over for a while
-    const STEP_MS = 4500;
+    const STEP_MS = 3000;
     let auto = 0;
     let resume = 0;
     let inView = false;
