@@ -16,22 +16,6 @@
   background: radial-gradient(circle at 1px 1px, rgba(21, 112, 239, .09) 1px, transparent 1.5px) 0 0 / 22px 22px fixed, var(--desk);
 }
 
-.cs-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  width: min(100% - 20px, 1100px);
-  margin: 10px auto 0;
-  padding: 14px 20px;
-  border-radius: 20px;
-  background: #fff;
-  box-shadow: 0 1px 2px rgba(10, 13, 18, .06), 0 18px 28px -18px rgba(10, 13, 18, .3);
-}
-.cs-top .logo { display: flex; align-items: center; gap: 10px; }
-.cs-top nav { display: flex; gap: 22px; font-size: 15px; line-height: 22px; font-weight: 500; color: var(--text-secondary); }
-.cs-top nav a:hover { color: var(--brand-700); }
-
 .cs { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 28px 16px 44px; }
 .cs-rig { --w: min(320px, 100%); width: var(--w); display: flex; flex-direction: column; align-items: center; }
 
@@ -140,9 +124,6 @@
 .cs-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 26px; }
 
 @media (max-width: 480px) {
-  .cs-top { padding: 12px 16px; }
-  .cs-top .logo-type { width: 128px; height: auto; }
-  .cs-top nav { gap: 16px; font-size: 14px; }
   .cs { padding: 18px 16px 32px; justify-content: flex-start; }
   .cs-actions { width: 100%; }
   .cs-actions .btn { flex: 1 1 140px; justify-content: center; }

@@ -17,15 +17,38 @@
 </head>
 <body class="cs-page">
 
-  <header class="cs-top">
-    <a href="/" class="logo" aria-label="Ticket Generator home">
-      <img src="assets/tg-icon.svg" alt="" width="32" height="32">
-      <img src="assets/tg-logotype.svg" alt="Ticket Generator" class="logo-type" width="150" height="14">
-    </a>
-    <nav aria-label="Main">
-      <a href="/">Home</a>
-      <a href="pricing.html">Pricing</a>
-    </nav>
+  <header class="site-header" data-header>
+    <div class="container header-inner">
+      <a href="/" class="logo" aria-label="Ticket Generator home">
+        <img src="assets/tg-icon.svg" alt="" width="32" height="32">
+        <img src="assets/tg-logotype.svg" alt="Ticket Generator" class="logo-type" width="150" height="14">
+      </a>
+
+      <nav class="main-nav" id="main-nav" aria-label="Main">
+        <ul>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="use-cases.html">Use Cases</a></li>
+          <li><a href="resources.html">Resources</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="support.html">Support</a></li>
+        </ul>
+        <div class="nav-actions nav-actions--mobile">
+          <a href="https://tg-full-revamp.vercel.app/signup" class="btn btn-primary">Sign Up Free</a>
+          <a href="https://tg-full-revamp.vercel.app/login" class="btn btn-secondary">Log In</a>
+          <p class="nav-note">First 10 tickets free · No credit card required</p>
+        </div>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="https://tg-full-revamp.vercel.app/login" class="btn btn-link">Log In</a>
+        <a href="https://tg-full-revamp.vercel.app/signup" class="btn btn-dark">Sign Up</a>
+      </div>
+
+      <button class="menu-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Open menu" data-menu-toggle>
+        <span></span><span></span>
+      </button>
+    </div>
   </header>
 
   <main class="cs" data-cs data-state="typing">
@@ -74,6 +97,7 @@
     </div>
   </main>
 
+  <script src="js/main.js" defer></script>
   <script src="js/coming-soon.js" defer></script>
 </body>
 </html>
