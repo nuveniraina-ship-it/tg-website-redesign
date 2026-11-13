@@ -685,8 +685,13 @@
 
 /* Round 4 — whole blocks cut or merged on phones */
 @media (max-width: 768px) {
-  /* blog: the footer's Resources column already links to it */
-  .blogs.tkt { display: none; }
+  /* blog: two slim rows; the footer's Resources column links to the rest */
+  .blogs.tkt { padding-bottom: 20px; }
+  .blog-grid { gap: 8px; margin-top: 14px; }
+  .blog-grid > :nth-child(n + 3) { display: none; }
+  .post-link { grid-template-columns: 92px minmax(0, 1fr); }
+  .post-cover { min-height: 84px; }
+  .post-body { padding: 10px 14px; }
   /* logos: the stub already says "Trusted by", so the strip stands alone */
   .logos-title { display: none; }
   .logos.tkt { padding-top: 62px; padding-bottom: 20px; }
