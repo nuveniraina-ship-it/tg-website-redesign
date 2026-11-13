@@ -737,3 +737,39 @@
   .est-receipt .receipt-total { padding-top: 10px; }
   .est-buy { margin-top: 12px; }
 }
+
+/* Round 7 — a shorter features section on the pricing page (phones) */
+@media (max-width: 768px) {
+  .pr-inc.tkt { padding-bottom: 20px; }
+  .pr-sec-head p:last-child { display: none; }
+  .fc-stage { margin-top: 16px; }
+  /* the "1 = 1" ticket: smaller numerals, the three zeros side by side on the stub */
+  .fch-main { padding: 16px 20px 18px; }
+  .fch-eq { margin-top: 10px; }
+  .fch-eq b { font-size: 56px; line-height: 50px; }
+  .fch-eq i { font-size: 30px; line-height: 40px; }
+  .fch-stub { gap: 12px; padding: 16px 20px 18px; }
+  .fch-zero { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
+  .fch-zero li { display: flex; flex-direction: column-reverse; align-items: flex-start; gap: 0; padding: 0 0 0 12px; border-left: 1px dashed rgba(255, 255, 255, .3); }
+  .fch-zero li:first-child { padding-left: 0; border-left: 0; }
+  .fch-zero li::after { display: none; }
+  .fch-zero li span { font-size: 10px; line-height: 14px; letter-spacing: .06em; text-transform: uppercase; opacity: .8; }
+  .fch-zero li b { font-size: 20px; line-height: 26px; }
+  /* the eight features: one card, dashed dividers, like lines on a receipt */
+  .fc-track {
+    gap: 0;
+    margin: 12px var(--gutter) 0;
+    padding: 2px 14px;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 0 0 1px rgba(16, 24, 40, .05), 0 4px 8px rgba(16, 24, 40, .06);
+  }
+  .fc { border-radius: 0; background: none; box-shadow: none; padding: 12px 0; }
+  .fc + .fc { border-top: 1px dashed var(--gray-300); }
+  .fc-top { gap: 10px; padding: 0; }
+  .fc-icon { width: 32px; height: 32px; border-radius: 9px; }
+  .fc-icon svg { width: 18px; height: 18px; }
+  .fc h3 { font-size: 15px; line-height: 20px; }
+  .fc-bottom { padding: 2px 0 0 42px; }
+  .fc-bottom p { font-size: 13.5px; line-height: 19px; }
+}
