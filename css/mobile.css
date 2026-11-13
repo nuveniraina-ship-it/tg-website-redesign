@@ -682,3 +682,15 @@
   .fc-bottom { padding: 2px 14px 12px 62px; }
   .fc-bottom p { font-size: 14px; line-height: 20px; }
 }
+
+/* Round 4 — whole blocks cut or merged on phones */
+@media (max-width: 768px) {
+  /* blog: the footer's Resources column already links to it */
+  .blogs.tkt { display: none; }
+  /* logos: the stub already says "Trusted by", so the strip stands alone */
+  .logos-title { display: none; }
+  .logos.tkt { padding-top: 62px; padding-bottom: 20px; }
+  /* API demo: start at the API itself — the registrations window is a desktop extra */
+  .node-src, .wire-in { display: none; }
+  .flow { padding-top: 18px; }
+}
