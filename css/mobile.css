@@ -611,3 +611,74 @@
 @media (min-width: 769px) { .pr-chips { display: none; } }
 /* the action bar only exists on phones */
 @media (min-width: 769px) { .m-cta { display: none; } }
+
+/* =========================================================
+   Round 3 — a shorter phone page. Same sections and look as
+   desktop; repeated buttons go, tall blocks are tightened.
+   ========================================================= */
+@media (max-width: 768px) {
+  /* steps card: the sticky bar and the closing ticket already carry the buttons */
+  .j-end { display: none; }
+  .j-steps { padding-bottom: 22px; }
+  .step-row { min-height: 112px; margin-top: 16px; }
+
+  /* numbers: three figures side by side, like the pricing header */
+  .numbers.tkt { padding-bottom: 28px; }
+  .numbers-grid { gap: 24px; }
+  .stats {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr 1fr;
+    margin-top: 20px;
+    border-top: 1px dashed rgba(255, 255, 255, .22);
+    border-bottom: 1px dashed rgba(255, 255, 255, .22);
+  }
+  .stat {
+    display: block;
+    padding: 12px 0 12px 12px;
+    border-bottom: 0;
+    border-left: 1px dashed rgba(255, 255, 255, .22);
+  }
+  .stat:first-child { padding-left: 0; border-left: 0; }
+  .stat-value { display: block; font-size: 17px; line-height: 24px; }
+  .stat-label { display: block; margin-top: 2px; font-size: 11px; line-height: 15px; }
+  /* a shorter receipt */
+  .numbers .receipt { padding: 26px 20px 24px; }
+  .numbers .receipt-head { padding-bottom: 12px; }
+  .numbers .receipt-sub { display: none; }
+  .numbers .receipt-lines { gap: 7px; padding: 12px 0; }
+  .numbers .receipt-total { flex-direction: row; align-items: baseline; gap: 6px; padding-top: 12px; }
+  .numbers .receipt-total b { font-size: 15px; }
+  .numbers .receipt-foot { margin-top: 14px; gap: 6px; }
+  .numbers .barcode { height: 26px; }
+
+  /* use cases: slightly slimmer rows */
+  .uct, .uct.is-in { --media: 92px; }
+  .uct-body { min-height: 92px; }
+  .uct-main { padding: 10px 14px; }
+
+  /* API demo plays by itself on phones, so the button goes and the diagram tightens */
+  .api-fire { display: none; }
+  .api-foot { margin-top: 10px; text-align: center; }
+  .node-core { gap: 4px; padding-top: 0; }
+  .core-ring { width: 56px; height: 56px; }
+  .core-ring img, .core-ring svg { width: 26px; height: 26px; }
+  .core-name { margin-top: 4px; }
+  .core-slot { height: 96px; margin-top: 4px; }
+  .mini-ticket { height: 88px; }
+  .trust-tear { margin-block: 24px; }
+
+  /* footer: slimmer link rows */
+  .footer-col li a { min-height: 40px; }
+
+  /* pricing features: a smaller "1 = 1" ticket and one short line per feature */
+  .fch-main { padding: 18px 20px 20px; }
+  .fch-eq { margin-top: 14px; }
+  .fch-eq b { font-size: 66px; line-height: 58px; }
+  .fch-eq i { font-size: 34px; line-height: 46px; }
+  .fch-stub { gap: 12px; padding: 18px 20px 20px; }
+  .fc-track { gap: 8px; }
+  .fc-top { padding: 12px 14px 0; }
+  .fc-icon { width: 36px; height: 36px; border-radius: 10px; }
+  .fc-bottom { padding: 2px 14px 12px 62px; }
+  .fc-bottom p { font-size: 14px; line-height: 20px; }
+}
