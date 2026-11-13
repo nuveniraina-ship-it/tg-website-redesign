@@ -255,50 +255,8 @@
       }, { passive: true });
       onUcScroll();
     } else {
-      // phones: one full ticket at a time (photo, heading, text), played like a story
-      const pile = ucScroll.querySelector('[data-uc-pile]');
-      const bars = document.createElement('div');
-      bars.className = 'm-story';
-      bars.setAttribute('role', 'tablist');
-      bars.setAttribute('aria-label', 'Use cases');
-      bars.innerHTML = cards.map((c) =>
-        `<button type="button" role="tab" aria-label="${c.querySelector('.uct-title').textContent.trim().replace(/"/g, '&quot;')}"><i></i></button>`).join('');
-      pile.before(bars);
-      const barBtns = [...bars.children];
-      const UC_MS = 6000;
-      let cur = -1;
-      let auto = 0;
-      let resume = 0;
-      let inView = false;
-      const showUc = (k) => {
-        cur = ((k % cards.length) + cards.length) % cards.length;
-        cards.forEach((c, i) => c.classList.toggle('is-on', i === cur));
-        barBtns.forEach((b, i) => {
-          b.classList.toggle('is-done', i < cur);
-          b.classList.remove('is-on');
-          b.setAttribute('aria-selected', String(i === cur));
-        });
-        void bars.offsetWidth;                      // restart the timer bar
-        barBtns[cur].classList.add('is-on');
-      };
-      const play = () => {
-        clearInterval(auto);
-        clearTimeout(resume);
-        const on = inView && !reduceMotion;
-        bars.classList.toggle('is-auto', on);
-        if (on) { showUc(cur); auto = setInterval(() => showUc(cur + 1), UC_MS); }
-      };
-      const byHand = (k) => {
-        clearInterval(auto);
-        clearTimeout(resume);
-        bars.classList.remove('is-auto');
-        showUc(k);
-        resume = setTimeout(play, 8000);
-      };
-      barBtns.forEach((b, i) => b.addEventListener('click', () => byHand(i)));
-      onSwipe(pile, (d) => byHand(cur + d));
-      showUc(0);
-      new IntersectionObserver(([entry]) => { inView = entry.isIntersecting; play(); }, { threshold: 0.4 }).observe(pile);
+      // phones: every ticket is shown; they stack on scroll with position: sticky (css/mobile.css)
+      cards.forEach((c) => c.classList.add('is-in'));
     }
 
     // rail buttons jump to that ticket's slice of the runway
@@ -397,8 +355,24 @@
     };
 
     const absTop = (el) => { let t = 0; for (let e = el; e; e = e.offsetParent) t += e.offsetTop; return t; };
+    // phones: the pinned carousel turns with the scroll, then settles on the nearest review
+    const PIN_TOP = 70;
+    const carRun = () => tmScroll.offsetHeight - pin.offsetHeight;
+    const carPos = () => Math.min(1, Math.max(0, (window.scrollY - absTop(tmScroll) + PIN_TOP) / Math.max(1, carRun()))) * (n - 1);
+    let settle = 0;
+    let dragging = false;
     const onTmScroll = () => {
-      if (reduceMotion || onPhone) return shuffleTo(Math.max(top, 0));
+      if (onPhone) {
+        if (dragging) return;
+        const pos = carPos();
+        top = Math.round(pos);
+        tmScroll.classList.add('is-scrolling');
+        renderCar(pos);
+        clearTimeout(settle);
+        settle = setTimeout(() => { tmScroll.classList.remove('is-scrolling'); renderCar(top); }, 140);
+        return;
+      }
+      if (reduceMotion) return shuffleTo(Math.max(top, 0));
       const run = tmScroll.offsetHeight - pin.offsetHeight;
       const p = Math.min(1, Math.max(0, (window.scrollY - absTop(tmScroll)) / run));
       shuffleTo(Math.min(n - 1, Math.floor(p * n)));
@@ -409,29 +383,18 @@
       tmTick = true;
       requestAnimationFrame(() => { onTmScroll(); tmTick = false; });
     }, { passive: true });
-    window.addEventListener('resize', () => { const k = top; top = -1; shuffleTo(Math.max(k, 0)); });
-    onTmScroll();
+    if (!onPhone) {
+      window.addEventListener('resize', () => { const k = top; top = -1; shuffleTo(Math.max(k, 0)); });
+      onTmScroll();
+    }
 
-    // phones: a carousel that plays by itself; drag it to take over.
+    // phones: scrolling turns the carousel; a sideways drag moves the page to that review.
     if (onPhone) {
       const deckEl = tmScroll.querySelector('[data-tm-deck]');
-      const go = (d) => shuffleTo((top + d + n) % n);
-      // it moves on by itself; touching it pauses that for a while
-      let auto = 0;
-      let resume = 0;
-      let inView = false;
-      const play = () => {
-        clearInterval(auto);
-        clearTimeout(resume);
-        if (inView && !reduceMotion) auto = setInterval(() => go(1), 3000);
+      const goTo = (k) => {
+        const y = absTop(tmScroll) - PIN_TOP + carRun() * (k / (n - 1));
+        window.scrollTo({ top: y, behavior: reduceMotion ? 'auto' : 'smooth' });
       };
-      const hold = () => {
-        clearInterval(auto);
-        clearTimeout(resume);
-        resume = setTimeout(play, 5000);
-      };
-
-      // drag: the cards follow the finger, then settle on the nearest review
       let x0 = 0;
       let y0 = 0;
       let p0 = 0;
@@ -440,7 +403,7 @@
       deckEl.addEventListener('touchstart', (e) => {
         x0 = e.touches[0].clientX;
         y0 = e.touches[0].clientY;
-        p0 = top;
+        p0 = Math.max(top, 0);
         mode = '';
         dx = 0;
       }, { passive: true });
@@ -449,29 +412,31 @@
         const dy = e.touches[0].clientY - y0;
         if (!mode && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) mode = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
         if (mode !== 'x') return;
+        dragging = true;
         deckEl.classList.add('is-dragging');
-        clearInterval(auto);
-        renderCar(p0 - dx / carStep);
+        renderCar(Math.min(n - 1, Math.max(0, p0 - dx / carStep)));
       }, { passive: true });
       const drop = () => {
         if (mode !== 'x') return;
         mode = '';
+        dragging = false;
         deckEl.classList.remove('is-dragging');
         let move = Math.round(-dx / carStep);
         if (!move && Math.abs(dx) > 36) move = dx < 0 ? 1 : -1;
-        top = -1;                                   // force a re-render even if we settle where we started
-        shuffleTo((((p0 + move) % n) + n) % n);
-        hold();
+        top = Math.min(n - 1, Math.max(0, p0 + move));
+        renderCar(top);
+        goTo(top);
       };
       deckEl.addEventListener('touchend', drop);
       deckEl.addEventListener('touchcancel', drop);
-      new IntersectionObserver(([entry]) => { inView = entry.isIntersecting; play(); }, { threshold: 0.5 }).observe(deckEl);
       // every review ticket is as tall as the longest one, so the deck never jumps
       const size = () => {
         deckEl.style.removeProperty('--card-h');
         deckEl.style.setProperty('--card-h', `${Math.max(...deck.map((c) => c.offsetHeight))}px`);
         carStep = deck[0].offsetWidth + 10;
-        renderCar(Math.max(top, 0));
+        // room to scroll through every review while the carousel stays pinned
+        tmScroll.style.height = `${pin.offsetHeight + (n - 1) * 90}px`;
+        onTmScroll();
       };
       size();
       window.addEventListener('load', size);
@@ -651,6 +616,12 @@
       clearTimeout(autoTimer);
       enqueue();
     });
+    const ring = core.querySelector('.core-ring');
+    ring.setAttribute('role', 'button');
+    ring.setAttribute('tabindex', '0');
+    ring.setAttribute('aria-label', 'Send a test registration');
+    ring.addEventListener('click', () => fire.click());
+    ring.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fire.click(); } });
     if (reduceMotion) enqueue();
   }
 
@@ -862,8 +833,14 @@
       clearInterval(auto);
       clearTimeout(resume);
       tabs.classList.remove('is-auto');
-      resume = setTimeout(play, 8000);
+      resume = setTimeout(play, 3000);
     };
+    // touching the picture (say, trying the colours) holds the current step for 3s after the last touch
+    stageCol.addEventListener('pointerdown', () => {
+      clearInterval(auto);
+      clearTimeout(resume);
+      resume = setTimeout(play, 3000);
+    });
     tabBtns.forEach((b, i) => b.addEventListener('click', () => byHand(i + 1)));
     onSwipe(stageCol, (d) => byHand(current + d));
     onSwipe(stepRow, (d) => byHand(current + d));

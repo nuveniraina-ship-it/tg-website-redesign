@@ -693,7 +693,6 @@
   .logos-title { display: none; }
   .logos.tkt { padding-top: 62px; padding-bottom: 20px; }
   /* API demo: start at the API itself — the registrations window is a desktop extra */
-  .node-src, .wire-in { display: none; }
   .flow { padding-top: 18px; }
 }
 
@@ -1055,4 +1054,50 @@
   .fc h3 { font-size: 17px; line-height: 23px; }
   .fc-bottom { padding: 6px 0 0; }
   .fc-bottom p { min-height: 63px; font-size: 14px; line-height: 21px; }
+}
+
+/* Round 16 — phones: clearer ticket notch in the hero picture, no timer bars, use cases stack on
+   scroll, the API shows three registrations, and the reviews carousel turns with the scroll */
+@media (max-width: 768px) {
+  /* a tinted backdrop so the white ticket stub and its notches read as cut-outs */
+  .stage-panel.m-shot, .j-stage .stage-panel { background-color: #eaf1fb; }
+  .m-tabs.is-auto button.is-on::after { content: none; }
+
+  /* use cases: full tickets that pile up as you scroll */
+  .m-story { display: none; }
+  .uc-pile { grid-auto-rows: 1fr; gap: 14px; margin-top: 12px; padding-bottom: 4px; }
+  .uct, .uct.is-in {
+    grid-area: auto;
+    position: sticky;
+    top: calc(78px + var(--i, 0) * 10px);
+    opacity: 1;
+    visibility: visible;
+    transition: none;
+    filter: drop-shadow(0 -6px 10px rgba(20, 22, 28, .1)) drop-shadow(0 4px 8px rgba(20, 22, 28, .08));
+  }
+  .uct:nth-child(2) { --i: 1; } .uct:nth-child(3) { --i: 2; }
+  .uct:nth-child(4) { --i: 3; } .uct:nth-child(5) { --i: 4; }
+
+  /* API: the registrations window is back, three rows, compact */
+  .flow { padding-top: 10px; }
+  .node-src { margin-bottom: 0; }
+  .reg-list { min-height: 126px; }
+  .reg-list li { padding-block: 6px; }
+  .wire-in { height: 16px; }
+  .core-ring { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .core-ring:active { transform: scale(.94); }
+
+  /* reviews: the carousel pins under the header while the page scrolls through the reviews */
+  .tm.tkt { overflow: visible; }
+  .tm-pin {
+    position: sticky;
+    top: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: calc(100svh - 70px - 84px);
+    min-height: 400px;
+    overflow: hidden;
+  }
+  .tm-scroll.is-scrolling .tq { transition: transform .12s linear, opacity .12s linear; }
 }
