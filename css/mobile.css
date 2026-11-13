@@ -822,3 +822,17 @@
   }
   .footer-bottom { margin-top: 18px; padding-top: 14px; gap: 4px; }
 }
+
+/* Round 10 — a shorter reviews section on phones */
+@media (max-width: 768px) {
+  .tm.tkt { padding-top: 62px; padding-bottom: 20px; }
+  .tm-side .eyebrow { display: none; }          /* the stub already says "Testimonials" */
+  .tm-side h2 { margin-top: 0; font-size: 22px; line-height: 28px; }
+  .tm-deck { height: calc(var(--card-h, 320px) + 40px); margin-top: 8px; }
+  .tq-main { padding: 16px 16px 14px; }
+  .tq-quote { font-size: 15px; line-height: 22px; }
+  .tq-stub { padding: 10px 16px; }
+  .tq-avatar { width: 40px; height: 40px; }
+  .m-deck-nav { gap: 14px; margin-top: 0; }
+  .m-deck-nav button { width: 40px; height: 40px; }
+}
