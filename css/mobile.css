@@ -663,8 +663,6 @@
   .core-ring { width: 56px; height: 56px; }
   .core-ring img, .core-ring svg { width: 26px; height: 26px; }
   .core-name { margin-top: 4px; }
-  .core-slot { height: 96px; margin-top: 4px; }
-  .mini-ticket { height: 88px; }
   .trust-tear { margin-block: 24px; }
 
   /* footer: slimmer link rows */
@@ -698,4 +696,24 @@
   /* API demo: start at the API itself — the registrations window is a desktop extra */
   .node-src, .wire-in { display: none; }
   .flow { padding-top: 18px; }
+}
+
+/* Round 5 — shorter hero and steps cards on phones */
+@media (max-width: 768px) {
+  .j-hero { padding: 22px 20px 20px; }
+  .hero-title { margin-top: 14px; font-size: 32px; line-height: 37px; }
+  .hero-lede { margin-top: 10px; font-size: 16px; line-height: 24px; }
+  .hero-cta { margin-top: 18px; }
+  .assurances { flex-wrap: nowrap; justify-content: space-between; gap: 8px; font-size: 12.5px; white-space: nowrap; }
+  .assurances li { gap: 5px; }
+  .stage-panel.m-shot { aspect-ratio: 560 / 470; }
+
+  .j-steps { padding-top: 60px; }
+  .j-intro .eyebrow { display: none; }
+  .j-intro h2 { margin-top: 0; font-size: 22px; line-height: 28px; white-space: nowrap; }
+  .m-tabs { margin-top: 14px; }
+  .j-stage .stage-panel { aspect-ratio: 560 / 440; }
+  .step-row { min-height: 104px; margin-top: 14px; }
+  .step h3 { font-size: 19px; line-height: 25px; }
+  .step p { margin-top: 4px; font-size: 15px; line-height: 22px; }
 }
