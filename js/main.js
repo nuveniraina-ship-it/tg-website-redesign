@@ -301,9 +301,30 @@
     // always swing out to the right (away from the heading), with a little variety per card
     const side = (i) => [i % 2 ? 66 : 78, i % 2 ? -14 : 6, i % 2 ? 19 : 12, 1, 1];
 
+    // phones: a curved carousel — the current review faces you, its neighbours angle in from the sides
+    let carStep = 300;
+    let onCar = null;
+    const wrapOff = (o) => ((((o + n / 2) % n) + n) % n) - n / 2;
+    const renderCar = (pos) => deck.forEach((card, i) => {
+      const o = wrapOff(i - pos);
+      const a = Math.abs(o);
+      card.style.setProperty('--tx', `${(o * carStep).toFixed(1)}px`);
+      card.style.setProperty('--ry', `${(Math.max(-1, Math.min(1, o)) * -24).toFixed(2)}deg`);
+      card.style.setProperty('--ts', (1 - Math.min(a, 1) * 0.1).toFixed(3));
+      card.style.setProperty('--to', a < 1.6 ? (1 - Math.min(a, 1) * 0.5).toFixed(2) : 0);
+      card.style.setProperty('--tz', 50 - Math.round(a * 10));
+      card.classList.toggle('is-buried', a > 0.5);
+    });
+
     let top = -1;
     const shuffleTo = (k) => {
       if (k === top) return;
+      if (onPhone) {
+        top = k;
+        renderCar(k);
+        if (onCar) onCar(k);
+        return;
+      }
       const prev = top;
       top = k;
       deck.forEach((card, i) => {
@@ -344,46 +365,83 @@
     window.addEventListener('resize', () => { const k = top; top = -1; shuffleTo(Math.max(k, 0)); });
     onTmScroll();
 
-    // phones: the deck doesn't pin. Tap, swipe or use the arrows to bring up the next review.
+    // phones: a carousel that plays by itself; drag, tap a dot or use the arrows to take over.
     if (onPhone) {
       const deckEl = tmScroll.querySelector('[data-tm-deck]');
+      const arrow = (d) => `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="${d}" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
       const nav = document.createElement('div');
       nav.className = 'm-deck-nav';
-      nav.innerHTML = `<button type="button" aria-label="Previous review"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M15.833 10H4.167M10 15.833 4.167 10 10 4.167" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <span class="mono"><b>01</b> / ${String(n).padStart(2, '0')}</span>
-        <button type="button" aria-label="Next review"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4.167 10h11.666M10 4.167 15.833 10 10 15.833" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
+      nav.innerHTML = `<button type="button" class="m-deck-arrow" aria-label="Previous review">${arrow('M15.833 10H4.167M10 15.833 4.167 10 10 4.167')}</button>
+        <ol class="m-dots">${deck.map((_, i) => `<li><button type="button" aria-label="Review ${i + 1} of ${n}"></button></li>`).join('')}</ol>
+        <button type="button" class="m-deck-arrow" aria-label="Next review">${arrow('M4.167 10h11.666M10 4.167 15.833 10 10 15.833')}</button>`;
       deckEl.after(nav);
-      const [prevBtn, nextBtn] = nav.querySelectorAll('button');
-      const nowB = nav.querySelector('b');
-      const go = (d) => {
-        const k = (top + d + n) % n;
-        shuffleTo(k);
-        nowB.textContent = String(k + 1).padStart(2, '0');
-      };
-      // the deck deals the next review by itself; a tap or swipe takes over for a while
+      const [prevBtn, nextBtn] = nav.querySelectorAll('.m-deck-arrow');
+      const dotBtns = [...nav.querySelectorAll('.m-dots button')];
+      onCar = (k) => dotBtns.forEach((b, i) => {
+        b.classList.toggle('is-on', i === k);
+        if (i === k) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
+      });
+      onCar(Math.max(top, 0));
+      const go = (d) => shuffleTo((top + d + n) % n);
+      // it moves on by itself; touching it pauses that for a while
       let auto = 0;
       let resume = 0;
       let inView = false;
       const play = () => {
         clearInterval(auto);
         clearTimeout(resume);
-        if (inView && !reduceMotion) auto = setInterval(() => go(1), 5000);
+        if (inView && !reduceMotion) auto = setInterval(() => go(1), 4500);
       };
-      const byHand = (d) => {
-        go(d);
+      const hold = () => {
         clearInterval(auto);
         clearTimeout(resume);
-        resume = setTimeout(play, 9000);
+        resume = setTimeout(play, 8000);
       };
-      prevBtn.addEventListener('click', () => byHand(-1));
-      nextBtn.addEventListener('click', () => byHand(1));
-      deckEl.addEventListener('click', () => byHand(1));
-      onSwipe(deckEl, byHand);
+      prevBtn.addEventListener('click', () => { go(-1); hold(); });
+      nextBtn.addEventListener('click', () => { go(1); hold(); });
+      dotBtns.forEach((b, i) => b.addEventListener('click', () => { shuffleTo(i); hold(); }));
+
+      // drag: the cards follow the finger, then settle on the nearest review
+      let x0 = 0;
+      let y0 = 0;
+      let p0 = 0;
+      let mode = '';
+      let dx = 0;
+      deckEl.addEventListener('touchstart', (e) => {
+        x0 = e.touches[0].clientX;
+        y0 = e.touches[0].clientY;
+        p0 = top;
+        mode = '';
+        dx = 0;
+      }, { passive: true });
+      deckEl.addEventListener('touchmove', (e) => {
+        dx = e.touches[0].clientX - x0;
+        const dy = e.touches[0].clientY - y0;
+        if (!mode && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) mode = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+        if (mode !== 'x') return;
+        deckEl.classList.add('is-dragging');
+        clearInterval(auto);
+        renderCar(p0 - dx / carStep);
+      }, { passive: true });
+      const drop = () => {
+        if (mode !== 'x') return;
+        mode = '';
+        deckEl.classList.remove('is-dragging');
+        let move = Math.round(-dx / carStep);
+        if (!move && Math.abs(dx) > 36) move = dx < 0 ? 1 : -1;
+        top = -1;                                   // force a re-render even if we settle where we started
+        shuffleTo((((p0 + move) % n) + n) % n);
+        hold();
+      };
+      deckEl.addEventListener('touchend', drop);
+      deckEl.addEventListener('touchcancel', drop);
       new IntersectionObserver(([entry]) => { inView = entry.isIntersecting; play(); }, { threshold: 0.5 }).observe(deckEl);
       // every review ticket is as tall as the longest one, so the deck never jumps
       const size = () => {
         deckEl.style.removeProperty('--card-h');
         deckEl.style.setProperty('--card-h', `${Math.max(...deck.map((c) => c.offsetHeight))}px`);
+        carStep = deck[0].offsetWidth + 10;
+        renderCar(Math.max(top, 0));
       };
       size();
       window.addEventListener('load', size);
@@ -445,7 +503,8 @@
     let issued = 0;
     let ticketNo = 540;
     let steps = [];
-    const at = (ms, fn) => steps.push(setTimeout(fn, reduceMotion ? 0 : ms));
+    const SPEED = 0.5;   // the whole request-to-delivery run takes under two seconds
+    const at = (ms, fn) => steps.push(setTimeout(fn, reduceMotion ? 0 : ms * SPEED));
     const initials = (n) => n.split(' ').map((w) => w[0]).join('');
     const restart = (el, cls) => { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); };
     const mini = q('[data-mini-ticket]');
@@ -493,7 +552,7 @@
 
     const scheduleAuto = () => {
       clearTimeout(autoTimer);
-      if (visible && !reduceMotion) autoTimer = setTimeout(() => { if (!pending()) enqueue(); }, 1900);
+      if (visible && !reduceMotion) autoTimer = setTimeout(() => { if (!pending()) enqueue(); }, 700);
     };
 
     const pump = () => {

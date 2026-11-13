@@ -867,3 +867,52 @@
     color: var(--brand-700);
   }
 }
+
+/* Round 12 — reviews as a curved carousel on phones: the current review faces you,
+   its neighbours angle in from the sides; it plays by itself, and follows a finger */
+@media (max-width: 768px) {
+  .tm-deck { height: calc(var(--card-h, 300px) + 20px); margin-top: 6px; touch-action: pan-y; }
+  .tq {
+    left: 14px;
+    right: 14px;
+    transform: perspective(800px) translate(var(--tx, 0), -50%) rotateY(var(--ry, 0deg)) scale(var(--ts, 1));
+    transition: transform .55s cubic-bezier(.2, .8, .2, 1), opacity .3s;
+  }
+  .tm-deck.is-dragging .tq { transition: opacity .2s; }
+  .m-deck-nav { gap: 10px; margin-top: 4px; }
+  .m-deck-nav .m-deck-arrow { flex: none; width: 36px; height: 36px; }
+  .m-dots { display: flex; align-items: center; gap: 0; margin: 0; padding: 0; list-style: none; }
+  .m-dots li { display: block; }
+  .m-dots button { display: grid; place-items: center; width: 20px; height: 32px; border-radius: 0; background: none; box-shadow: none; }
+  .m-dots button::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--brand-200);
+    transition: width .3s, background-color .3s;
+  }
+  .m-dots button.is-on::before { width: 16px; background: var(--brand-600); }
+}
+
+/* Round 13 — a shorter Security & API ticket on phones */
+@media (max-width: 768px) {
+  .trust.tkt { padding-top: 62px; padding-bottom: 20px; }
+  .trust-copy .eyebrow { display: none; }                /* the stub already says "Security & API" */
+  .trust-copy h2 { margin-top: 0; font-size: 22px; line-height: 28px; }
+  .trust-copy p:last-child { display: none; }            /* the three seals say it */
+  .trust-row { gap: 16px; }
+  .seal-disc { width: 60px; height: 60px; }
+  .seal-disc img { width: 50px; height: 50px; }
+  .seal-disc img[src*="iso-27001"] { width: 40px; height: 40px; }
+  .seal-label { margin-top: 6px; font-size: 0; line-height: 0; }
+  .seal-label b { display: block; font-size: 13px; line-height: 18px; }
+  .trust-tear { margin-block: 20px; }
+  .api-head h3 { margin-top: 4px; font-size: 22px; line-height: 28px; }
+  .api-head-copy p { margin-top: 6px; font-size: 15px; line-height: 22px; }
+  .flow { margin-top: 14px; padding: 14px 10px 10px; }
+  .core-ring { width: 48px; height: 48px; }
+  .dest { padding: 8px 4px; gap: 4px; }
+  .api-foot { margin-top: 8px; }
+  .api-count { font-size: 13px; line-height: 18px; }
+}
