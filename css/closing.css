@@ -11,7 +11,7 @@
 }
 .blogs-head { max-width: 640px; }
 .blogs-head h2 {
-  margin-top: var(--space-lg);
+  margin-top: 0;
   font-size: 36px;
   line-height: 44px;
   font-weight: 600;
