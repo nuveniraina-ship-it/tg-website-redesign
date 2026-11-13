@@ -4,6 +4,15 @@
   const root = document.querySelector('[data-cs]');
   if (!root) return;
   const status = root.querySelector('[data-cs-status]');
+
+  // each unfinished page has its own address; name it on the ticket
+  const NAMES = { api: 'API', faqs: 'FAQs', demo: 'Book a Demo', 'ticket-validator-web': 'Ticket Validator' };
+  const slug = location.pathname.replace(/^\/|\.html$|\/$/g, '');
+  if (/^[a-z0-9-]+$/.test(slug) && slug !== 'coming-soon' && slug !== '404') {
+    const name = NAMES[slug] || slug.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join(' ');
+    root.querySelector('h1').textContent = `The ${name} page is still at the printer`;
+    document.title = `${name} — coming soon — Ticket Generator`;
+  }
   const say = (state, text) => { root.dataset.state = state; status.textContent = text; };
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     root.classList.add('is-printed');
