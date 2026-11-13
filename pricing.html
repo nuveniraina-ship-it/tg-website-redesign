@@ -96,7 +96,7 @@
           <div class="est-main">
             <h2 class="est-title">Get price estimate</h2>
             <label class="est-field" for="est-tickets">
-              <span class="est-label">Enter estimated number of tickets (minimum 10) to auto-select a credit pack</span>
+              <span class="est-label"><span class="d-only">Enter estimated number of tickets (minimum 10) to auto-select a credit pack</span><span class="m-only">Enter your ticket count (minimum 10)</span></span>
               <span class="est-input">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9a3 3 0 0 0 0 6v4h18v-4a3 3 0 0 1 0-6V5H3v4Z"/><path d="M14 5v2M14 11v2M14 17v2"/></svg>
                 <input id="est-tickets" type="text" inputmode="numeric" autocomplete="off" placeholder="e.g. 250" aria-describedby="est-msg" data-est-input>
@@ -187,8 +187,8 @@
             </ul>
 
             <ul class="est-notes">
-              <li><sup>*</sup> For events with a venue layout, one ticket requires two credits. <a href="https://support.ticket-generator.com/hc/en-us/articles/54660482257945-Venue-Layout">Learn more</a></li>
-              <li><sup>**</sup> Sending a ticket via SMS may use additional credits depending on the recipient's country, and some countries are not supported. <a href="https://app.ticket-generator.com/#/auth/sms-pricing">See SMS pricing by country</a></li>
+              <li><sup>*</sup> <span class="d-only">For events with a venue layout, one ticket requires two credits.</span><span class="m-only">Venue-layout events use two credits per ticket.</span> <a href="https://support.ticket-generator.com/hc/en-us/articles/54660482257945-Venue-Layout">Learn more</a></li>
+              <li><sup>**</sup> <span class="d-only">Sending a ticket via SMS may use additional credits depending on the recipient's country, and some countries are not supported.</span><span class="m-only">SMS may use extra credits and isn't available in every country.</span> <a href="https://app.ticket-generator.com/#/auth/sms-pricing"><span class="d-only">See SMS pricing by country</span><span class="m-only">SMS pricing</span></a></li>
             </ul>
           </div>
 

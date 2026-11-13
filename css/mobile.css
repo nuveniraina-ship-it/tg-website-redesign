@@ -717,3 +717,23 @@
   .step h3 { font-size: 19px; line-height: 25px; }
   .step p { margin-top: 4px; font-size: 15px; line-height: 22px; }
 }
+
+/* Round 6 — a shorter top ticket on the pricing page (phones) */
+@media (max-width: 768px) {
+  .pr-hero.tkt { padding-bottom: 20px; }
+  .pr-head { padding: 58px 20px 20px; }
+  .pr-head h1 { margin-top: 6px; font-size: 28px; line-height: 34px; }
+  .pr-lede { display: none; }             /* the three figures below say it */
+  .pr-chips { margin-top: 16px; padding-top: 14px; }
+  .est { margin-top: 20px; gap: 18px; }
+  .est-input { height: 48px; }
+  .est-or { margin-top: 12px; }
+  .packs { gap: 6px; margin-top: 10px; }
+  .pack-top { padding-block: 6px; }
+  .pack-bottom { padding-block: 6px; }
+  .est-notes { margin-top: 10px; gap: 2px; }
+  .est-receipt .receipt { padding: 22px 18px 20px; }
+  .est-receipt .receipt-lines { gap: 6px; padding: 10px 0; }
+  .est-receipt .receipt-total { padding-top: 10px; }
+  .est-buy { margin-top: 12px; }
+}
