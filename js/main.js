@@ -510,6 +510,28 @@
     const copy = wireRow.querySelector('.trust-copy');
     const discs = [...wireRow.querySelectorAll('.seal-disc')];
     const NS = 'http://www.w3.org/2000/svg';
+    const lockSvg = wireRow.querySelector('[data-lock]');
+    // returns the lock's outline box in row coordinates (for keeping lines away from it)
+    const drawLock = (d, room) => {
+      if (!lockSvg) return null;
+      const stage = lockSvg.parentElement.getBoundingClientRect();
+      const row = wireRow.getBoundingClientRect();
+      const ox = stage.left - row.left, oy = stage.top - row.top;   // row → stage coordinates
+      const a = d[0], z = d[d.length - 1];
+      const x1 = a.cx - ox, x2 = z.cx - ox;
+      const discH = a.b - a.t;
+      const bh = discH + 34;
+      const bt = a.cy - oy - bh / 2, bb = bt + bh;
+      const bw = x2 - x1, r = Math.min(26, bh / 4);
+      const sh = Math.max(36, Math.min(96, room - 14, bt - 24));   // shackle height: fits the room above, even when open
+      const sw = Math.min(bw * 0.42, 170);
+      const s1 = (x1 + x2) / 2 - sw / 2, s2 = s1 + sw, top = bt - sh, cr = Math.min(sw / 2, sh * 0.55);
+      lockSvg.setAttribute('viewBox', `0 0 ${stage.width.toFixed(1)} ${stage.height.toFixed(1)}`);
+      lockSvg.innerHTML = `
+        <g class="lock-shackle"><path pathLength="1" d="M${s1} ${bt} V${top + cr} A${cr} ${cr} 0 0 1 ${s1 + cr} ${top} H${s2 - cr} A${cr} ${cr} 0 0 1 ${s2} ${top + cr} V${bt}"/></g>
+        <path pathLength="1" d="M${x1 + r} ${bt} H${x2 - r} A${r} ${r} 0 0 1 ${x2} ${bt + r} V${bb - r} A${r} ${r} 0 0 1 ${x2 - r} ${bb} H${x1 + r} A${r} ${r} 0 0 1 ${x1} ${bb - r} V${bt + r} A${r} ${r} 0 0 1 ${x1 + r} ${bt} Z"/>`;
+      return { l: x1 + ox - 6, r: x2 + ox + 6, t: top + oy - 26, b: bb + oy + 6 };   // includes room for the open shackle
+    };
     const drawWires = () => {
       const row = wireRow.getBoundingClientRect();
       if (!row.width || discs.length < 2) return;
@@ -538,10 +560,11 @@
         const a = d[i].cx + d[i].R, b = d[i + 1].cx - d[i + 1].R;
         if (b - a > 14) paths.push(`M${a} ${d[i].cy} L${b} ${d[i + 1].cy}`);
       }
-      const room = sideBySide ? d[0].t : d[0].t - c.b;   // clear space above the seals
-      const lift = Math.min(64, room - 16);
+      // The lock (drawn on click) is built from the seals: its body runs from the middle of the
+      // first seal to the middle of the last, so it covers half of ISO and SOC and all of GDPR;
+      // the shackle sits in the clear space above. Lines keep out of the lock's area.
       const last = d[d.length - 1];
-      if (lift > 24) paths.push(`M${d[0].cx} ${d[0].t - 10} C${d[0].cx} ${d[0].t - lift} ${last.cx} ${last.t - lift} ${last.cx} ${last.t - 10}`);
+      const lockBox = drawLock(d, sideBySide ? d[0].t : d[0].t - c.b);
       // Loose lines scattered at random over all the free space in the section (seeded, so they
       // stay put): each candidate curve is tested point by point and dropped if it would pass under
       // any words, a seal or the button.
@@ -556,6 +579,7 @@
       });
       wireRow.querySelectorAll('.seal-label, .shield-status').forEach((el) => addBox(box(el)));
       d.forEach((k) => addBox({ l: k.cx - k.R, r: k.cx + k.R, t: k.cy - k.R, b: k.cy + k.R }));
+      if (lockBox) addBox(lockBox);
       // the whole ticket is fair game (above and below the row too), except its top strip
       const sec = box(wireRow.closest('section'));
       const strip = wireRow.closest('section').querySelector(':scope > .tkt-stub');

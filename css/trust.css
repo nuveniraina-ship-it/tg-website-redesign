@@ -521,22 +521,21 @@
 .trust-wires circle { fill: #53b1fd; opacity: .8; filter: drop-shadow(0 0 4px rgba(83, 177, 253, .75)); }
 @media (prefers-reduced-motion: reduce) { .trust-wires circle { display: none; } }
 
-.shield-stage { position: relative; display: grid; justify-items: center; padding: 34px 0 0; }
-.trust-lock {
+.shield-stage { position: relative; display: grid; justify-items: center; padding: 64px 0 0; }   /* room above the seals for the shackle */
+.trust-lock {   /* covers the whole badge area; JS draws the lock to fit the seals (js/main.js: drawLock) */
   position: absolute;
-  left: 50%;
-  top: 50%;
+  left: 0;
+  top: 0;
   z-index: 0;
-  width: 300px;
-  height: auto;
-  transform: translate(-50%, -54%);
+  width: 100%;
+  height: 100%;
   overflow: visible;
   pointer-events: none;
   opacity: 0;
   transition: opacity .5s ease;
 }
 .trust-lock path { fill: none; stroke: var(--brand-100); stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
-.lock-shackle { transform: translateY(-30px); }   /* open */
+.lock-shackle { transform: translateY(-20px); }   /* open */
 .trust-lock.is-on { opacity: 1; }
 .trust-lock.is-on path { animation: lock-draw 1.3s ease-out forwards; }
 .trust-lock.is-on .lock-shackle path { animation-delay: .15s; }
