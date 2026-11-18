@@ -1576,12 +1576,12 @@
 }
 
 @media (max-width: 768px) {
-  /* the phone hero ticket gets the same designed face as the demo ticket */
+  /* the phone hero ticket: the concert photo faded into the brand blue, like the demo ticket */
   .m-pass-top {
     background:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 380 206' preserveAspectRatio='xMaxYMax slice'%3E%3Cg fill='white'%3E%3Cpath d='M318 -6 L248 206 L352 206 Z' fill-opacity='.08'/%3E%3Cpath d='M222 -6 L176 206 L258 206 Z' fill-opacity='.06'/%3E%3Cpath d='M372 -6 L330 206 L392 206 Z' fill-opacity='.06'/%3E%3Cpath d='M170 206L170 194 Q170 188 173.5 188 A5 5 0 1 1 183.5 188 Q187 188 187 194L187 196 Q187 190 191.5 190 A5 5 0 1 1 201.5 190 Q206 190 206 196L206 194 Q206 188 211.0 188 A5 5 0 1 1 221.0 188 Q226 188 226 194L226 196 Q226 190 230.0 190 A5 5 0 1 1 240.0 190 Q244 190 244 196L244 188 Q244 182 249.0 182 A6 6 0 1 1 261.0 182 Q266 182 266 188L266 196 Q266 190 268.5 190 A6 6 0 1 1 280.5 190 Q283 190 283 196L283 189 Q283 183 285.0 183 A6 6 0 1 1 297.0 183 Q299 183 299 189L299 195 Q299 189 304.0 189 A5 5 0 1 1 314.0 189 Q319 189 319 195L319 190 Q319 184 321.0 184 A6 6 0 1 1 333.0 184 Q335 184 335 190L335 194 Q335 188 340.0 188 A5 5 0 1 1 350.0 188 Q355 188 355 194L355 191 Q355 185 359.5 185 A5 5 0 1 1 369.5 185 Q374 185 374 191L374 198 Q374 192 380.0 192 A5 5 0 1 1 390.0 192 Q396 192 396 198 L380 206 Z' fill-opacity='.16'/%3E%3Cg fill-opacity='.16' stroke='white' stroke-opacity='.16'%3E%3Cpath d='M196 192 L204 154' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='204' cy='152' r='3.2'/%3E%3Cpath d='M238 192 L230 160' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='230' cy='158' r='3.2'/%3E%3Cpath d='M281 192 L273 156' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='289' cy='154' r='3.2'/%3E%3Cpath d='M322 192 L314 158' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='330' cy='156' r='3.2'/%3E%3Cpath d='M356 192 L364 156' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='348' cy='154' r='3.2'/%3E%3C/g%3E%3Cpath d='M250 30v16a5 4 0 1 1-2-3V30l14-3v13a5 4 0 1 1-2-3V30z' fill-opacity='.4'/%3E%3Cpath d='M300 52v13a4 3 0 1 1-2-2.5V52z M298 52h8v4h-8z' fill-opacity='.3'/%3E%3Cpath d='M206 22l2 5 5 2-5 2-2 5-2-5-5-2 5-2z' fill-opacity='.5'/%3E%3Cpath d='M350 22l1.4 3.6 3.6 1.4-3.6 1.4-1.4 3.6-1.4-3.6-3.6-1.4 3.6-1.4z' fill-opacity='.4'/%3E%3C/g%3E%3C/svg%3E") right bottom / cover no-repeat,
-      radial-gradient(120% 95% at 92% 0%, rgba(255, 255, 255, .26), transparent 58%),
-      radial-gradient(80% 90% at 0% 100%, rgba(0, 0, 0, .22), transparent 70%),
+      radial-gradient(120% 95% at 92% 0%, rgba(255, 255, 255, .18), transparent 58%),
+      linear-gradient(90deg, color-mix(in srgb, var(--brand-600) 88%, transparent) 0%, color-mix(in srgb, var(--brand-600) 66%, transparent) 50%, color-mix(in srgb, var(--brand-600) 34%, transparent) 100%),
+      url("../assets/tickets/concert.webp") center / cover no-repeat,
       var(--brand-600);
   }
 }

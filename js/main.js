@@ -887,6 +887,49 @@
 
   // Template swatches: click one and the whole stage (ticket, tracker, cards) takes that colour.
   const picks = [...panel.querySelectorAll('[data-theme-pick]')];   // the corner bar's swatches
+  // Every colour has its own event: pink is a Valentine's night, green a city run, and so on.
+  // The name, category, logo letters, venue and the faded photo behind the ticket all change with it.
+  const EVENTS = {
+    blue:   { name: 'Neon Nights Live',     cat: 'CONCERT',        logo: 'NN', venue: 'City Arena',     place: 'City Arena, Downtown',        photo: 'concert' },
+    ink:    { name: 'After Dark Live',      cat: 'NIGHT SHOW',     logo: 'AD', venue: 'Club Noir',      place: 'Club Noir, Old Town',         photo: 'night' },
+    green:  { name: 'City Run 10K',         cat: 'MARATHON',       logo: 'CR', venue: 'Riverside Park', place: 'Riverside Park, North Gate',  photo: 'run' },
+    purple: { name: 'Leaders Summit',       cat: 'CONFERENCE',     logo: 'LS', venue: 'Grand Hall',     place: 'Grand Hall, Convention Centre', photo: 'summit' },
+    sunset: { name: 'Sunset Art Workshop',  cat: 'WORKSHOP',       logo: 'SA', venue: 'Studio 9',       place: 'Studio 9, Arts Quarter',      photo: 'art' },
+    pink:   { name: "Valentine's Night",    cat: "VALENTINE'S DAY", logo: 'VN', venue: 'Rose Garden',   place: 'The Rose Garden Terrace',     photo: null },
+    red:    { name: 'Red Carpet Premiere',  cat: 'FILM PREMIERE',  logo: 'RC', venue: 'Grand Cinema',   place: 'Grand Cinema, Main Street',   photo: null },
+    yellow: { name: 'Charity Fun Day',      cat: 'CHARITY',        logo: 'CF', venue: 'Central Square', place: 'Central Square, City Centre', photo: 'charity' },
+    teal:   { name: 'Ocean Beats Party',    cat: 'BEACH PARTY',    logo: 'OB', venue: 'Palm Beach',     place: 'Palm Beach Pier',             photo: null },
+  };
+  // a picked colour → the closest event family by hue
+  const eventForHex = (hex) => {
+    const n = parseInt(hex.slice(1), 16);
+    const r = (n >> 16) / 255, g = ((n >> 8) & 255) / 255, b = (n & 255) / 255;
+    const mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn;
+    const sat = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
+    if (sat < 0.12) return 'ink';
+    let h = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4;
+    h = (h * 60 + 360) % 360;
+    if (h >= 290 && h < 345) return 'pink';
+    if (h >= 345 || h < 15) return l > 0.7 ? 'pink' : 'red';
+    if (h < 40) return 'sunset';
+    if (h < 70) return 'yellow';
+    if (h < 165) return 'green';
+    if (h < 195) return 'teal';
+    if (h < 250) return 'blue';
+    return 'purple';
+  };
+  const setEvent = (key) => {
+    const ev = EVENTS[key] || EVENTS.blue;
+    document.querySelectorAll('.stage-canvas').forEach((cv) => {
+      cv.style.setProperty("--t-photo", ev.photo ? `url("${location.origin}/assets/tickets/${ev.photo}.webp")` : "none");   // no photo yet: just the colour
+      ['name', 'cat', 'logo', 'venue', 'place'].forEach((f) => cv.querySelectorAll(`[data-ev="${f}"]`).forEach((el) => { el.textContent = ev[f]; }));
+    });
+  };
+  // fetch the photos ahead of time, so a colour change swaps them at once
+  window.addEventListener('load', () => setTimeout(() => {
+    Object.values(EVENTS).filter((ev) => ev.photo).forEach((ev) => { const im = new Image(); im.src = `${location.origin}/assets/tickets/${ev.photo}.webp`; });
+  }, 1500));
+
   // the ticket's text turns dark on a light colour, so it always stays readable
   const setInk = (hex) => {
     const props = ['--t-ink', '--t-ink-soft', '--t-line'];
@@ -911,6 +954,7 @@
       canvas.dataset.theme = 'custom';
       canvas.style.setProperty('--pick', anyPick.value);
       setInk(anyPick.value);
+      setEvent(eventForHex(anyPick.value));
       dot.style.setProperty('--c', anyPick.value);
       dot.classList.add('is-set', 'is-on');
       picks.forEach((b) => b.classList.remove('is-on'));
@@ -920,6 +964,7 @@
     anyPick?.parentElement.classList.remove('is-on');
     const theme = btn.dataset.themePick;
     setInk(null);   // the preset colours are all dark enough for white text
+    setEvent(theme);
     if (theme === 'blue') canvas.removeAttribute('data-theme'); else canvas.dataset.theme = theme;
     picks.forEach((b) => b.classList.toggle('is-on', b === btn));
   }));

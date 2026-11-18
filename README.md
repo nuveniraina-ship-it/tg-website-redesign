@@ -255,7 +255,21 @@ Headings never run past two lines, on desktop, tablet or phone: the Features hea
 
 The Sign Up button in the navigation bar is blue (the brand primary button) on every page.
 
-The demo event in the hero is a concert, "Neon Nights Live" at City Arena (Sat, 14 Mar, 7:00 PM), across the ticket, the event page card, the "Create New Event" form and the report. The ticket's face is drawn for a concert: stage-light beams, a crowd with raised hands along the bottom, music notes and sparkles, all in faint white over the ticket's own colour, with "CONCERT" as its category and the ticket number at the top right. When a light colour is picked, its text (and the event card's Register button) turns dark so it stays readable; the preset colours keep white text. The phone hero ticket has the same design.
+The demo ticket in the hero changes event with its colour, everywhere the demo shows the event (ticket, event page card, "Create New Event" form, sales list and report): name, category, logo letters and venue all switch, and a photo of that kind of event sits behind the ticket, faded into the ticket's colour (more on the left where the words are, lighter on the right). Light picked colours switch the text to dark.
+
+| Colour | Event | Category | Venue | Photo |
+| --- | --- | --- | --- | --- |
+| Blue (default) | Neon Nights Live | Concert | City Arena | `assets/tickets/concert.webp` |
+| Ink | After Dark Live | Night show | Club Noir | `night.webp` |
+| Green | City Run 10K | Marathon | Riverside Park | `run.webp` |
+| Purple | Leaders Summit | Conference | Grand Hall | `summit.webp` |
+| Sunset | Sunset Art Workshop | Workshop | Studio 9 | `art.webp` |
+| Picked: pink | Valentine's Night | Valentine's Day | Rose Garden | none yet |
+| Picked: red | Red Carpet Premiere | Film premiere | Grand Cinema | none yet |
+| Picked: yellow | Charity Fun Day | Charity | Central Square | `charity.webp` |
+| Picked: teal | Ocean Beats Party | Beach party | Palm Beach | none yet |
+
+A colour from the colour wheel goes to the nearest family by hue (greys go to Ink). The phone hero ticket is the blue concert ticket with its photo.
 
 ### Mobile copy
 
