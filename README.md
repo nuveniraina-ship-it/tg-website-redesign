@@ -255,7 +255,7 @@ Headings never run past two lines, on desktop, tablet or phone: the Features hea
 
 The Sign Up button in the navigation bar is blue (the brand primary button) on every page.
 
-The demo ticket in the hero changes event with its colour, everywhere the demo shows the event (ticket, event page card, "Create New Event" form, sales list and report): name, category, logo letters and venue all switch, and a photo of that kind of event sits behind the ticket, faded into the ticket's colour (more on the left where the words are, lighter on the right). Light picked colours switch the text to dark.
+The demo ticket in the hero changes event with its colour, everywhere the demo shows the event (ticket, event page card, "Create New Event" form, sales list and report): name, category, logo letters and venue all switch, and a photo of that kind of event sits behind the ticket, faded into the ticket's colour (more on the left where the words are, lighter on the right). The event page card's cover uses the same photo, lightly tinted. Light picked colours switch the text to dark.
 
 | Colour | Event | Category | Venue | Photo |
 | --- | --- | --- | --- | --- |
