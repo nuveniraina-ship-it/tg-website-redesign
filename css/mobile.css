@@ -1296,31 +1296,18 @@
   .stage-panel.m-shot { aspect-ratio: 560 / 560; }
   .j-stage .stage-panel { aspect-ratio: 560 / 600; }
 
-  /* "Ready to issue your first ticket?" is back, as the steps ticket's full-width bottom stub:
-     a tear line across with a notch at each side edge, then the call to action */
+  /* "Ready to issue your first ticket?" closes the steps ticket as a full-width band.
+     No tear line or side notches here (removed to match desktop) */
   .m-card--steps .j-end {
     position: relative;
     display: block;
     margin: 20px -20px -20px;
     padding: 20px 20px 22px;
     border: 0;
-    border-top: 2px dashed rgba(255, 255, 255, .4);
     border-radius: 0;
     background: rgba(255, 255, 255, .07);
     color: #fff;
   }
-  .m-card--steps .j-end::before,
-  .m-card--steps .j-end::after {
-    content: "";
-    position: absolute;
-    top: -12px;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: var(--desk-paper);
-  }
-  .m-card--steps .j-end::before { left: -11px; }
-  .m-card--steps .j-end::after { right: -11px; }
   .m-card--steps .j-end h3 { font-size: 19px; line-height: 25px; color: #fff; }
   .m-card--steps .j-end-meta { color: rgba(255, 255, 255, .8); }
   .m-card--steps .j-end-meta i { background: rgba(255, 255, 255, .5); }

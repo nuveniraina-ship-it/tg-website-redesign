@@ -229,7 +229,7 @@ Same fonts as desktop; only the sizes change.
 | --- | --- |
 | Navigation bar | Floating bar with logo and menu button, same on every page |
 | Hero | Its own white ticket: headline, button, then the product picture as the stub |
-| Five steps | Its own blue ticket with five tabs, ending in a full-width bottom stub ("Ready to issue your first ticket?" with Book a Demo and Create Your Event) past a tear line with notches at both side edges. A one-line "Try it: your colour" bar with the colour dots and the colour wheel sits above the demo. Steps change by themselves every 3 seconds; touching the picture (for example, trying the colours) holds the step and it resumes 3 seconds after the last touch. No timer bar |
+| Five steps | Its own blue ticket with five tabs, ending in a full-width band ("Ready to issue your first ticket?" with Book a Demo and Create Your Event), with no tear line above it. A one-line "Try it: your colour" bar with the colour dots and the colour wheel sits above the demo. Steps change by themselves every 3 seconds; touching the picture (for example, trying the colours) holds the step and it resumes 3 seconds after the last touch. No timer bar |
 | Numbers | Three stats in one row, compact receipt |
 | Event page | The copy, then the event page in its phone layout: cover, details, full-width "Register Now", lineup in a 2 × 2 grid, guide and share side by side |
 | Launch options | The same strip running downwards: illustration across the top of each ticket, then the words, then "Get Started" on the stub. A tap gives the same little tilt as a desktop hover (left out, middle up, right out) |
