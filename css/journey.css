@@ -83,12 +83,12 @@
   line-height: 28px;
   color: var(--text-tertiary);
 }
-.hero-cta {
+.hero-cta {   /* the button, with "First 10 tickets free" and "No credit card required" under it */
   margin-top: var(--space-4xl);
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-xl) var(--space-3xl);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-lg);
 }
 .assurances {
   display: flex;
