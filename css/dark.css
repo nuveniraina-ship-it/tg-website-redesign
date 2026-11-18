@@ -91,7 +91,7 @@
   .hf::before { background: var(--bg-primary); }
   .hf-icon { background: color-mix(in srgb, var(--accent) 22%, transparent); color: color-mix(in srgb, var(--accent) 45%, #fff); }
   .hf-top { border-bottom-color: var(--gray-300); }
-  .hf, .cw, .lo-grid, .lo { filter: drop-shadow(0 0 1px rgba(0, 0, 0, .5)) drop-shadow(0 12px 22px rgba(0, 0, 0, .45)); }
+  .hf, .cw, .lo-grid, .lo, .fc { filter: drop-shadow(0 0 1px rgba(0, 0, 0, .5)) drop-shadow(0 12px 22px rgba(0, 0, 0, .45)); }
   .lo-grid .lo { filter: none; }
 
   /* event page section: the copy sits on the dark ticket; the product page is dark already */

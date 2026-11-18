@@ -229,11 +229,11 @@ Same fonts as desktop; only the sizes change.
 | --- | --- |
 | Navigation bar | Floating bar with logo and menu button, same on every page |
 | Hero | Its own white ticket: headline, button, then the product picture as the stub |
-| Five steps | Its own blue ticket with five tabs. Steps change by themselves every 3 seconds; touching the picture (for example, trying the colours) holds the step and it resumes 3 seconds after the last touch. No timer bar |
+| Five steps | Its own blue ticket with five tabs. A one-line "Try it: your colour" bar with the colour dots and the colour wheel sits above the demo. Steps change by themselves every 3 seconds; touching the picture (for example, trying the colours) holds the step and it resumes 3 seconds after the last touch. No timer bar |
 | Numbers | Three stats in one row, compact receipt |
 | Event page | The copy, then the event page in its phone layout: cover, details, full-width "Register Now", lineup in a 2 × 2 grid, guide and share side by side |
-| Launch options | The same strip running downwards, a small illustration beside each title, "Get Started" on each stub |
-| Clear wins | Five stacking cards, illustration on top |
+| Launch options | The same strip running downwards: illustration across the top of each ticket, then the words, then "Get Started" on the stub. A tap gives the same little tilt as a desktop hover (left out, middle up, right out) |
+| Clear wins | Five stacking portrait tickets: illustration on top, tear line with side notches, then the words |
 | Features | Nine cards (icon, heading, three lines of text) that stack on top of each other as you scroll |
 | Use cases | Five full tickets (photo on top, tear line, heading, full text, "Learn more") that stack on top of each other as you scroll. No progress bar and no "Admit one" label |
 | Security and API | Seals show their names only. The demo shows three registrations, runs by itself, and tapping the logo sends another |

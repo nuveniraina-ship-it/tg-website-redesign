@@ -1237,3 +1237,56 @@
   .seal-label { font-size: 0; }
   .seal-label b { font-size: 13px; }
 }
+
+/* Round 23 — phones get today's desktop changes properly */
+@media (max-width: 768px) {
+  /* "Try it with your brand colour": one compact line above the demo, never over it */
+  .j-stage .stage-panel { aspect-ratio: 560 / 500; }
+  .j-stage .stage-panel > .stage-canvas { top: calc(50% + 20px); }
+  .stage-try { top: 8px; left: 8px; right: 8px; justify-content: space-between; gap: 8px; padding: 5px 6px 5px 10px; font-size: 12px; line-height: 16px; white-space: nowrap; }
+  .stage-try-text { overflow: hidden; text-overflow: ellipsis; }
+  .stage-try-dots { gap: 4px; }
+  .stage-try-dots button, .stage-try-any { width: 20px; height: 20px; }
+
+  /* launch options: the illustration across the top of each ticket, then the words, then the stub */
+  .lo { display: flex; flex-direction: column; }
+  .lo-art { margin: 10px 10px 0; }
+  .lo-art img { aspect-ratio: 2.6 / 1; object-fit: cover; object-position: 50% 30%; }
+  .lo-body { padding: 12px 16px 6px; }
+  .lo-cta { margin: 6px 10px 10px; }
+  /* a tap gives the same little tilt as a hover on desktop */
+  .lo:nth-child(1):active { transform: translate(-3px, -4px) rotate(-1.5deg); }
+  .lo:nth-child(2):active { transform: translateY(-4px); }
+  .lo:nth-child(3):active { transform: translate(3px, -4px) rotate(1.5deg); }
+
+  /* clear wins: no leftover desktop padding around the ticket */
+  .cw { padding: 0; }
+
+  /* pricing features: all ten stack, and each is a ticket like the homepage's core strengths */
+  .fc:nth-child(9) { --i: 8; } .fc:nth-child(10) { --i: 9; }
+  .fc, .fc + .fc {
+    --cut: 104px;
+    --notch: 10px;
+    padding: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    filter: drop-shadow(0 0 1px rgba(16, 24, 40, .16)) drop-shadow(0 -8px 14px rgba(16, 24, 40, .08)) drop-shadow(0 6px 12px rgba(16, 24, 40, .06));
+  }
+  .fc::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: 18px;
+    background: #fff;
+    -webkit-mask:
+      radial-gradient(circle var(--notch) at 0 var(--cut), transparent 98%, #000) left / 51% 100% no-repeat,
+      radial-gradient(circle var(--notch) at 100% var(--cut), transparent 98%, #000) right / 51% 100% no-repeat;
+            mask:
+      radial-gradient(circle var(--notch) at 0 var(--cut), transparent 98%, #000) left / 51% 100% no-repeat,
+      radial-gradient(circle var(--notch) at 100% var(--cut), transparent 98%, #000) right / 51% 100% no-repeat;
+  }
+  .fc-top { justify-content: flex-end; height: var(--cut); margin: 0 calc(var(--notch) + 4px); padding: 14px 2px 12px; border-bottom: 2px dashed var(--gray-200); }
+  .fc-bottom { padding: 12px 16px 16px; }
+}
