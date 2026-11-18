@@ -1122,7 +1122,10 @@
       const text = document.createElement('div');
       text.className = 'm-step-text';
       stepEl.querySelectorAll('p').forEach((p) => text.append(p.cloneNode(true)));
-      li.append(head, pic, text);
+      const tkt = document.createElement('div');
+      tkt.className = 'm-step-tkt';
+      tkt.append(head, pic, text);
+      li.append(tkt);
       list.append(li);
     });
     instant = false;
@@ -1142,7 +1145,21 @@
     if (end) stepsCol.append(end);
 
     stacks.push(list);
-    const evenSteps = () => evenStack(list);
+    // the stacked edge of each ticket is as tall as the tallest heading row, so no heading is cut;
+    // the notches sit on the two tear lines
+    const evenSteps = () => {
+      const heads = [...list.querySelectorAll('.m-step-head')];
+      heads.forEach((h) => { h.style.minHeight = ''; });
+      const peek = Math.ceil(Math.max(...heads.map((h) => h.offsetHeight)));
+      list.style.setProperty('--peek', `${peek}px`);
+      heads.forEach((h) => { h.style.minHeight = `${peek}px`; });
+      list.querySelectorAll('.m-step-tkt').forEach((t) => {
+        const pic = t.querySelector('.m-step-pic');
+        t.style.setProperty('--cut1', `${peek}px`);
+        t.style.setProperty('--cut2', `${peek + pic.offsetHeight}px`);
+      });
+      evenStack(list);
+    };
     evenSteps();
     window.addEventListener('load', evenSteps);
     window.addEventListener('resize', evenSteps);

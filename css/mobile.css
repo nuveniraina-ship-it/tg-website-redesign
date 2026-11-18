@@ -1517,3 +1517,48 @@
   /* help box without an icon (pricing): the words take the full width */
   .faq-help:not(:has(.faq-help-icon)) { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Round 27 — phones: every section heading sits centred under its centred blue strip label,
+   with the intro line right under it centred too */
+@media (max-width: 768px) {
+  .tkt h2, .tkt h2 + p, .faq-sub, .ep-lede, .api-head-copy, .blogs-head p, .j-intro { text-align: center; }
+  .api-head-copy .text-link { justify-content: center; }
+  .tkt h2 { text-wrap: balance; margin-inline: auto; }
+}
+
+/* Round 27 — phones: the five step cards are real tickets (notches on both tear lines), and each
+   stacked edge is as tall as the tallest heading row (--peek, from JS), so every heading shows */
+@media (max-width: 768px) {
+  .m-card--steps { margin-top: 14px; }   /* space between the hero ticket and Get Started */
+  .m-step {
+    top: calc(78px + var(--i, 0) * var(--peek, 48px));
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    overflow: visible;
+    filter: drop-shadow(0 0 1px rgba(16, 24, 40, .22)) drop-shadow(0 -6px 12px rgba(16, 24, 40, .12)) drop-shadow(0 6px 10px rgba(16, 24, 40, .06));
+  }
+  .m-step-tkt {
+    --n: 10px;
+    border-radius: 18px;
+    background: #fff;
+    overflow: hidden;
+    -webkit-mask:
+      radial-gradient(circle var(--n) at 0 var(--cut1, 48px), transparent 98%, #000),
+      radial-gradient(circle var(--n) at 100% var(--cut1, 48px), transparent 98%, #000),
+      radial-gradient(circle var(--n) at 0 var(--cut2, 300px), transparent 98%, #000),
+      radial-gradient(circle var(--n) at 100% var(--cut2, 300px), transparent 98%, #000);
+    -webkit-mask-composite: source-in;
+            mask:
+      radial-gradient(circle var(--n) at 0 var(--cut1, 48px), transparent 98%, #000),
+      radial-gradient(circle var(--n) at 100% var(--cut1, 48px), transparent 98%, #000),
+      radial-gradient(circle var(--n) at 0 var(--cut2, 300px), transparent 98%, #000),
+      radial-gradient(circle var(--n) at 100% var(--cut2, 300px), transparent 98%, #000);
+            mask-composite: intersect;
+  }
+  .m-step-head { box-sizing: border-box; align-items: center; padding: 10px 16px; }
+  .m-step-head h3 { font-size: 17px; line-height: 22px; }
+  .m-step-pic.stage-panel { aspect-ratio: 560 / 460; margin-inline: 0; border-top: 2px dashed var(--gray-200); }
+  .m-step-pic.stage-panel, .m-step-text { margin-inline: 0; }
+  .m-step-text { padding: 12px 16px 16px; }
+}
