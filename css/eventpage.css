@@ -359,3 +359,15 @@ button.ep-btn { border: 0; cursor: pointer; font-family: inherit; }
 }
 .ep-page[hidden], .ep-reg[hidden], .ep-reg-body[hidden], .ep-reg-done[hidden] { display: none; }
 .ep-reg { box-sizing: border-box; }
+
+/* ---------- Event page: centred words on top, the page itself below ---------- */
+.ep-layout { grid-template-columns: minmax(0, 1fr); gap: var(--space-6xl); }
+.ep-copy { max-width: 1040px; margin-inline: auto; text-align: center; }
+.ep-lede { max-width: 640px; margin-inline: auto; }
+.ep-copy .checks { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 24px; }
+.ep-copy .checks li { text-align: left; }
+.ep-frame { width: 100%; max-width: 1040px; margin-inline: auto; }
+@media (max-width: 768px) {
+  .ep-copy .checks { display: grid; width: max-content; max-width: 100%; margin-inline: auto; gap: 6px; }
+  .ep-link { display: inline-flex; }
+}
