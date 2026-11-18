@@ -920,7 +920,7 @@
   };
   const setEvent = (key) => {
     const ev = EVENTS[key] || EVENTS.blue;
-    document.querySelectorAll('.stage-canvas').forEach((cv) => {
+    document.querySelectorAll('.stage-canvas, .m-pass').forEach((cv) => {
       cv.style.setProperty("--t-photo", ev.photo ? `url("${location.origin}/assets/tickets/${ev.photo}.webp")` : "none");   // no photo yet: just the colour
       ['name', 'cat', 'logo', 'venue', 'place'].forEach((f) => cv.querySelectorAll(`[data-ev="${f}"]`).forEach((el) => { el.textContent = ev[f]; }));
     });
@@ -960,14 +960,21 @@
       picks.forEach((b) => b.classList.remove('is-on'));
     });
   }
-  picks.forEach((btn) => btn.addEventListener('click', () => {
+  // One colour choice for the whole page: any set of dots (hero or Get Started, desktop or phone)
+  // recolours every picture and ticket and switches them all to that colour's event.
+  const applyTheme = (theme) => {
     anyPick?.parentElement.classList.remove('is-on');
-    const theme = btn.dataset.themePick;
     setInk(null);   // the preset colours are all dark enough for white text
     setEvent(theme);
-    if (theme === 'blue') canvas.removeAttribute('data-theme'); else canvas.dataset.theme = theme;
-    picks.forEach((b) => b.classList.toggle('is-on', b === btn));
-  }));
+    document.querySelectorAll('.stage-canvas, .m-pass').forEach((el) => {
+      if (theme === 'blue') el.removeAttribute('data-theme'); else el.dataset.theme = theme;
+    });
+    document.querySelectorAll('[data-theme-pick]').forEach((b) => b.classList.toggle('is-on', b.dataset.themePick === theme));
+  };
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-theme-pick]');
+    if (b) applyTheme(b.dataset.themePick);
+  });
 
   // Scale the fixed-size canvas to whatever space the panel has.
   const fitTo = (box, cv) => {
@@ -988,12 +995,12 @@
     heroShot.innerHTML = `
       <div class="m-pass-tkt">
         <div class="m-pass-top">
-          <div class="m-pass-row"><span class="m-pass-logo">NN</span><span class="m-pass-cat">CONCERT</span><span class="m-pass-type">General Admission</span></div>
-          <p class="m-pass-title">Neon Nights Live</p>
+          <div class="m-pass-row"><span class="m-pass-logo" data-ev="logo">NN</span><span class="m-pass-cat" data-ev="cat">CONCERT</span><span class="m-pass-type">General Admission</span></div>
+          <p class="m-pass-title" data-ev="name">Neon Nights Live</p>
           <dl class="m-pass-meta">
             <div><dt>Date</dt><dd>Sat, 14 Mar</dd></div>
             <div><dt>Time</dt><dd>7:00 PM</dd></div>
-            <div><dt>Venue</dt><dd>City Arena</dd></div>
+            <div><dt>Venue</dt><dd data-ev="venue">City Arena</dd></div>
           </dl>
         </div>
         <div class="m-pass-stub">
@@ -1006,6 +1013,9 @@
         </div>
       </div>`;
     drawQR(heroShot.querySelector('.m-pass-qr'), 'Neon Nights Live');
+    // the same colour dots under the hero ticket (in sync with Get Started)
+    const heroTry = panel.querySelector('.stage-try')?.cloneNode(true);
+    if (heroTry) { heroTry.classList.add('m-pass-try'); heroShot.append(heroTry); }
   }
   const STEP_NAMES = ['Create', 'Sell', 'Send', 'Scan', 'Report'];
   let tabBtns = [];
@@ -1143,7 +1153,6 @@
     const endWrap = heroSec.querySelector('.j-end')?.parentElement;
     // a still copy of the opening scene for the hero, taken before the live picture moves
     const shotPanel = panel.cloneNode(true);
-    shotPanel.querySelector('.stage-try')?.remove();
     shotPanel.querySelectorAll('[id]').forEach((el) => el.removeAttribute('id'));
     const shotCanvas = shotPanel.querySelector('.stage-canvas');
     shotCanvas.removeAttribute('data-stage');

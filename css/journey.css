@@ -637,19 +637,19 @@
 
 /* Colour themes: the stage reads every colour from the brand scale, so swapping
    the scale here re-colours the ticket, tracker, cards and progress bars at once. */
-.stage-canvas[data-theme="ink"] {
+.stage-canvas[data-theme="ink"], .m-pass[data-theme="ink"] {
   --brand-25: #fafafa; --brand-50: #f5f5f5; --brand-100: #e9eaeb; --brand-200: #d5d7da; --brand-300: #a4a7ae;
   --brand-500: #535862; --brand-600: #181d27; --brand-700: #181d27; --brand-800: #0a0d12;
 }
-.stage-canvas[data-theme="green"] {
+.stage-canvas[data-theme="green"], .m-pass[data-theme="green"] {
   --brand-25: #f6fef9; --brand-50: #ecfdf3; --brand-100: #dcfae6; --brand-200: #abefc6; --brand-300: #75e0a7;
   --brand-500: #17b26a; --brand-600: #079455; --brand-700: #067647; --brand-800: #085d3a;
 }
-.stage-canvas[data-theme="purple"] {
+.stage-canvas[data-theme="purple"], .m-pass[data-theme="purple"] {
   --brand-25: #fafaff; --brand-50: #f4f3ff; --brand-100: #ebe9fe; --brand-200: #d9d6fe; --brand-300: #bdb4fe;
   --brand-500: #7a5af8; --brand-600: #6938ef; --brand-700: #5925dc; --brand-800: #4a1fb8;
 }
-.stage-canvas[data-theme="pink"] {
+.stage-canvas[data-theme="pink"], .m-pass[data-theme="pink"] {
   --brand-25: #fef6fb; --brand-50: #fdf2fa; --brand-100: #fce7f6; --brand-200: #fcceee; --brand-300: #faa7e0;
   --brand-500: #ee46bc; --brand-600: #dd2590; --brand-700: #c11574; --brand-800: #9e165f;
 }
@@ -1044,4 +1044,10 @@
   .tkt--steps .j-end { margin-top: var(--space-4xl); }
   /* more room between the five steps */
   .tkt--steps .step { min-height: 48vh; padding: var(--space-6xl) 0; }
+}
+
+/* the hero's still picture has the same colour dots as Get Started (they stay in sync) */
+@media (min-width: 961px) {
+  .j-shot .stage-panel { aspect-ratio: 560 / 650; }
+  .j-shot .stage-panel > .stage-canvas { top: calc(50% + 26px); }
 }
