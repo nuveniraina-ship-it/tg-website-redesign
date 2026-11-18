@@ -1046,8 +1046,3 @@
   .tkt--steps .step { min-height: 48vh; padding: var(--space-6xl) 0; }
 }
 
-/* the hero's still picture has the same colour dots as Get Started (they stay in sync) */
-@media (min-width: 961px) {
-  .j-shot .stage-panel { aspect-ratio: 560 / 650; }
-  .j-shot .stage-panel > .stage-canvas { top: calc(50% + 26px); }
-}

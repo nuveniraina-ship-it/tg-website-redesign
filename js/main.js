@@ -1013,9 +1013,7 @@
         </div>
       </div>`;
     drawQR(heroShot.querySelector('.m-pass-qr'), 'Neon Nights Live');
-    // the same colour dots under the hero ticket (in sync with Get Started)
-    const heroTry = panel.querySelector('.stage-try')?.cloneNode(true);
-    if (heroTry) { heroTry.classList.add('m-pass-try'); heroShot.append(heroTry); }
+
   }
   const STEP_NAMES = ['Create', 'Sell', 'Send', 'Scan', 'Report'];
   let tabBtns = [];
@@ -1153,6 +1151,7 @@
     const endWrap = heroSec.querySelector('.j-end')?.parentElement;
     // a still copy of the opening scene for the hero, taken before the live picture moves
     const shotPanel = panel.cloneNode(true);
+    shotPanel.querySelector('.stage-try')?.remove();   // no dots here: the hero follows the colour picked in Get Started
     shotPanel.querySelectorAll('[id]').forEach((el) => el.removeAttribute('id'));
     const shotCanvas = shotPanel.querySelector('.stage-canvas');
     shotCanvas.removeAttribute('data-stage');
