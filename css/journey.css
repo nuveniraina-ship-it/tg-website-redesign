@@ -920,8 +920,8 @@
   /* the picture's box is only as tall as the picture, so there's no empty band above and below it */
   .stage-sticky { height: auto; top: 96px; padding: var(--space-3xl) 0; }
   /* taller than the picture, so the cards have air above and below */
-  .stage-panel { height: auto; aspect-ratio: 560 / 800; }
-  .stage-panel > .stage-canvas { top: calc(50% + 22px); }   /* room for the "Try it" bar above it */
+  .stage-panel { height: auto; aspect-ratio: 560 / 830; }
+  .stage-panel > .stage-canvas { top: calc(50% + 34px); }   /* clear space between the "Try it" bar and the picture */
   .tkt--hero.tkt {
     --jgap: var(--space-7xl);
     --line-x: calc((100% - var(--jw)) / 2 + var(--gutter) + (var(--jw) - var(--gutter) * 2 - var(--jgap)) * 1.65 / 2.65 + var(--jgap) / 2);
