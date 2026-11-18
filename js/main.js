@@ -1,6 +1,11 @@
 (() => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // offline page: a service worker shows Mira at her laptop when the network can't be reached
+  if ('serviceWorker' in navigator && window.isSecureContext) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));
+  }
+
   /* ---------- Pages that aren't redesigned yet go to the coming-soon page ---------- */
   // Only the homepage and pricing exist so far: links to other pages of the Ticket Generator
   // site, and placeholder links with nowhere to go, all open coming-soon.html instead.

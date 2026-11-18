@@ -1231,7 +1231,7 @@
   .hf p { margin-top: 0; }
   .shield-stage { padding-top: 10px; overflow: hidden; }
   .shield-bg { width: 168px; height: 196px; }
-  .shield-stage .seals { margin-top: 34px; }
+  .shield-stage .seals { margin-top: 20px; }
   .shield-status { margin-top: 14px; font-size: 12px; }
   .seal-label { font-size: 0; }
   .seal-label b { font-size: 13px; }

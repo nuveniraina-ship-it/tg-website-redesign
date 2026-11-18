@@ -527,7 +527,7 @@
 .shield-light { fill: #2e90fa; opacity: .85; filter: drop-shadow(0 0 4px rgba(46, 144, 250, .9)) drop-shadow(0 0 9px rgba(83, 177, 253, .6)); }
 .shield-light--edge { fill: #53b1fd; opacity: .75; }
 @media (prefers-reduced-motion: reduce) { .shield-light { display: none; } }
-.shield-stage .seals { position: relative; z-index: 1; width: 100%; margin-top: 78px; }
+.shield-stage .seals { position: relative; z-index: 1; width: 100%; margin-top: 44px; }
 .shield-status {
   position: relative;
   z-index: 1;

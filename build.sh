@@ -23,7 +23,8 @@ rm -f "$OUT/assets/og-image.svg"
 for PAGE in *.html; do
   NAME="${PAGE%.html}"
   BUNDLE=$([ "$NAME" = index ] && echo site || echo "$NAME")
-  CSS_FILES=$(grep -o 'href="css/[^"]*\.css"' "$PAGE" | sed 's/href="//; s/"$//')
+  CSS_FILES=$(grep -o 'href="css/[^"]*\.css"' "$PAGE" | sed 's/href="//; s/"$//' || true)
+  if [ -z "$CSS_FILES" ]; then cp "$PAGE" "$OUT/$PAGE"; continue; fi   # self-contained pages (offline.html)
   cat $CSS_FILES | npx --yes esbuild@0.24.0 --loader=css --minify --log-level=warning > "$OUT/css/$BUNDLE.min.css"
   perl -0pe "s#(?:[ \t]*<link rel=\"stylesheet\" href=\"css/[^\"]+\">\n)+#  <link rel=\"stylesheet\" href=\"css/$BUNDLE.min.css\">\n#" "$PAGE" > "$OUT/$PAGE"
 done
@@ -38,6 +39,9 @@ cp "$OUT/coming-soon.html" "$OUT/404.html"
 for SLUG in affiliate-program vs-eventbrite vs-ticket-tailor api community demo faqs features how-it-works legal resources status support ticket-maker ticket-templates ticket-validator-web use-cases; do
   cp "$OUT/coming-soon.html" "$OUT/$SLUG.html"
 done
+
+# 2d. The service worker (shows offline.html when the network can't be reached)
+cp sw.js "$OUT/sw.js"
 
 # 3. JS
 for JS in js/*.js; do

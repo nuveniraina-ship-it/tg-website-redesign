@@ -927,8 +927,7 @@
     --line-x: calc((100% - var(--jw)) / 2 + var(--gutter) + (var(--jw) - var(--gutter) * 2 - var(--jgap)) * 1.65 / 2.65 + var(--jgap) / 2);
     padding-top: 24px;
   }
-  /* the closing card runs the full width, as the ticket's bottom stub: the vertical tear line
-     stops at a horizontal one above it, with notches at both side edges (--stub-y set by JS) */
+  /* the closing card runs the full width; the vertical tear line stops just above it (--stub-y set by JS) */
   .tkt--hero.tkt--land.tkt::before {
     top: 0;
     bottom: 0;
@@ -937,22 +936,15 @@
     margin: 0;
     right: 0;
     background:
-      repeating-linear-gradient(180deg, var(--gray-300) 0 6px, transparent 6px 12px) calc(var(--line-x) - 1px) 18px / 2px calc(var(--stub-y, 100%) - 18px) no-repeat,
-      repeating-linear-gradient(90deg, var(--gray-300) 0 6px, transparent 6px 12px) 24px calc(var(--stub-y, 100%) - 1px) / calc(100% - 48px) 2px no-repeat;
+      repeating-linear-gradient(180deg, var(--gray-300) 0 6px, transparent 6px 12px) calc(var(--line-x) - 1px) 18px / 2px calc(var(--stub-y, 100%) - 18px) no-repeat;
   }
   .tkt--hero.tkt--land.tkt::after {
     left: 0;
     right: 0;
     width: auto;
     margin: 0;
-    -webkit-mask:
-      radial-gradient(circle 16px at var(--line-x) 0, #000 98%, transparent) 0 0 / 100% 100% no-repeat,
-      radial-gradient(circle 16px at 0 var(--stub-y, 100%), #000 98%, transparent) 0 0 / 100% 100% no-repeat,
-      radial-gradient(circle 16px at 100% var(--stub-y, 100%), #000 98%, transparent) 0 0 / 100% 100% no-repeat;
-            mask:
-      radial-gradient(circle 16px at var(--line-x) 0, #000 98%, transparent) 0 0 / 100% 100% no-repeat,
-      radial-gradient(circle 16px at 0 var(--stub-y, 100%), #000 98%, transparent) 0 0 / 100% 100% no-repeat,
-      radial-gradient(circle 16px at 100% var(--stub-y, 100%), #000 98%, transparent) 0 0 / 100% 100% no-repeat;
+    -webkit-mask: radial-gradient(circle 16px at var(--line-x) 0, #000 98%, transparent) 0 0 / 100% 100% no-repeat;
+            mask: radial-gradient(circle 16px at var(--line-x) 0, #000 98%, transparent) 0 0 / 100% 100% no-repeat;
   }
   .tkt--hero .j-end { margin-top: 56px; }
 }
@@ -1022,19 +1014,30 @@
 @keyframes try-nudge { 0%, 100% { transform: none; } 10% { transform: translateY(-3px); } 20% { transform: none; } }
 .m-shot .stage-try { display: none; }   /* the phone hero's still copy isn't clickable */
 
-/* ---------- API: "try it" line above the pipeline ---------- */
+/* ---------- API: "try it" pill in the demo's top-left corner ---------- */
+.flow-wrap { position: relative; margin-top: var(--space-6xl); }
 .api-try {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  margin-top: var(--space-3xl);
-  padding: 10px 14px;
-  border-radius: 12px;
-  background: rgba(46, 144, 250, .12);
-  box-shadow: inset 0 0 0 1px rgba(46, 144, 250, .3);
-  font-size: 14px;
-  line-height: 21px;
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 5px 12px 5px 9px;
+  border-radius: 9999px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(16, 24, 40, .08), 0 6px 14px -6px rgba(16, 24, 40, .2);
+  font-size: 13px;
+  line-height: 18px;
   color: var(--text-secondary);
 }
 .api-try b { color: var(--brand-700); }
-.api-try-dot { flex: none; width: 8px; height: 8px; margin-top: 7px; border-radius: 50%; background: var(--brand-500); box-shadow: 0 0 0 4px rgba(46, 144, 250, .25); }
+.api-try-dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--brand-500); box-shadow: 0 0 0 4px rgba(46, 144, 250, .22); }
+.flow-wrap .flow { margin-top: 0; padding-top: calc(var(--space-5xl) + 18px); }
+@media (max-width: 768px) {
+  .api-try { top: 10px; left: 10px; font-size: 12px; padding: 4px 10px 4px 8px; }
+  .flow-wrap { margin-top: 14px; }
+  .flow-wrap .flow { padding-top: 44px; }
+}

@@ -95,7 +95,7 @@
 }
 .uct.is-in { transform: translate(var(--x, 0), calc(-50% + var(--y, 0px))) rotate(var(--r, 0deg)); }
 /* slow zoom while its use case is being read (--z 0→1 from JS) */
-.uct { scale: calc(1 + var(--z, 0) * .05); }
+/* no slow zoom: the tickets stay their size while they're read */
 .uct:not(.is-in), .uct.is-under { pointer-events: none; }
 
 .uct-body {
@@ -218,7 +218,9 @@
 /* the pin is only as tall as the heading and the pile, and sits in the middle of the
    screen, so there's no empty band above or below it */
 @media (prefers-reduced-motion: no-preference) and (min-width: 961px) {
-  .uc-scroll { height: calc(560px + 4 * 62vh); }
-  .uc-pin { height: auto; top: max(96px, calc(50vh + 42px - 290px)); padding: 16px 0; }
-  .uc-pile { height: 460px; }
+  /* the pinned box fills the screen under the header, so there's no empty band while it's pinned;
+     a shorter runway moves the pile on sooner */
+  .uc-scroll { height: calc(100vh + 4 * 42vh); }
+  .uc-pin { height: calc(100vh - 96px); top: 96px; padding: 12px 0; }
+  .uc-pile { height: min(560px, calc(100vh - 160px)); }
 }
