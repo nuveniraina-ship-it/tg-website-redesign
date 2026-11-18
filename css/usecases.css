@@ -16,7 +16,7 @@
 }
 .uc-layout {
   display: grid;
-  grid-template-columns: minmax(0, 330px) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 370px) minmax(0, 1fr);   /* wide enough for a two-line heading */
   gap: var(--space-7xl);
   align-items: center;
 }

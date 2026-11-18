@@ -251,6 +251,8 @@ Same fonts as desktop; only the sizes change.
 
 Every section heading on phones is centred under its centred blue strip label, with the intro line under it centred too.
 
+Headings never run past two lines, on desktop, tablet or phone: the Features heading's box is wider on desktop, the use-cases side column is 370px, a few long headings are a little smaller between 769 and 1180px wide, and on phones the Features heading has a shorter version ("Powerful features that make event ticketing a breeze"). Wherever "Ticket Generator" appears in the page text it is written with a non-breaking space (`Ticket&nbsp;Generator`), so the two words always stay on the same line.
+
 ### Mobile copy
 
 Some long paragraphs have a shorter phone-only version. In the HTML these are pairs of `<span class="d-only">` (desktop) and `<span class="m-only">` (phone).

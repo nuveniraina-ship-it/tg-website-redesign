@@ -102,6 +102,7 @@
 .hfs.tkt { padding: 104px 0 var(--space-8xl); background: var(--bg-secondary); }
 .hfs-head { max-width: 640px; margin-inline: auto; text-align: center; }
 .hfs-head h2 { margin-top: var(--space-lg); font-size: 36px; line-height: 44px; font-weight: 600; letter-spacing: -0.02em; text-wrap: balance; }
+#all-features .hfs-head { max-width: 880px; }   /* the long heading fits in two balanced lines */
 .hfs-head p:last-child { margin-top: var(--space-xl); font-size: 18px; line-height: 28px; color: var(--text-tertiary); }
 .hf-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-xl); margin-top: var(--space-6xl); }
 .hf {
