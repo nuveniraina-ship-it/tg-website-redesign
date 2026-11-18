@@ -516,3 +516,70 @@
   .api-head h3 { font-size: 24px; line-height: 32px; }
   .api-json pre { font-size: 12px; line-height: 20px; padding: 14px 16px; }
 }
+
+/* ---------- The shield behind the badges ----------
+   Draws itself when the section comes into view, a scan line sweeps down it,
+   and it "checks" one badge at a time (the status line says which). */
+.shield-stage { position: relative; display: grid; justify-items: center; padding: 34px 0 0; }
+.shield-bg {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 300px;
+  height: 350px;
+  transform: translateX(-50%);
+  overflow: visible;
+  pointer-events: none;
+}
+.shield-line { stroke-dasharray: 800; stroke-dashoffset: 0; }
+.shield-line--inner { stroke-dasharray: 4 6; opacity: .45; }
+.shield-scan { opacity: 0; }
+.shield-ring {
+  position: absolute;
+  left: 50%;
+  top: 150px;
+  width: 260px;
+  height: 260px;
+  margin: -130px 0 0 -130px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(46, 144, 250, .35);
+  opacity: 0;
+  pointer-events: none;
+}
+.shield-stage .seals { position: relative; z-index: 1; width: 100%; margin-top: 78px; }
+.seal { cursor: pointer; outline: none; }
+.seal-disc { transition: transform .35s cubic-bezier(.3, 1.4, .5, 1), box-shadow .35s, outline-color .35s; }
+.seal.is-on .seal-disc { outline-color: var(--brand-500); box-shadow: 0 0 0 6px rgba(46, 144, 250, .12), 0 20px 34px rgba(21, 70, 140, .2), 0 0 0 1px var(--gray-100); }
+.seal:nth-child(1).is-on .seal-disc { transform: rotate(-6deg) translateY(-8px) scale(1.06); }
+.seal:nth-child(2).is-on .seal-disc { transform: rotate(4deg) translateY(-8px) scale(1.06); }
+.seal:nth-child(3).is-on .seal-disc { transform: rotate(-3deg) translateY(-8px) scale(1.06); }
+.seal:focus-visible .seal-disc { outline-style: solid; }
+.seal.is-on .seal-label b { color: var(--brand-700); }
+.shield-status {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 22px;
+  padding: 7px 14px 7px 8px;
+  border-radius: 9999px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(16, 24, 40, .08), 0 6px 14px -6px rgba(16, 24, 40, .18);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--text-secondary);
+}
+.shield-check { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--success-500); color: #fff; }
+@media (prefers-reduced-motion: no-preference) {
+  .shield-stage:not(.is-armed) .shield-line { stroke-dashoffset: 800; }
+  .shield-stage.is-armed .shield-line { transition: stroke-dashoffset 1.6s cubic-bezier(.4, 0, .2, 1); }
+  .shield-stage.is-armed .shield-line--inner { transition-delay: .3s; }
+  .shield-stage.is-armed .shield-scan { animation: shield-scan 3.2s ease-in-out 1.2s infinite; }
+  .shield-stage.is-ping .shield-ring { animation: shield-ping 1.6s ease-out; }
+  .shield-stage.is-ping .shield-ring--2 { animation-delay: .35s; }
+  .shield-stage.is-ping .shield-check { animation: check-pop .45s cubic-bezier(.3, 1.6, .5, 1); }
+}
+@keyframes shield-scan { 0% { transform: translateY(0); opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { transform: translateY(340px); opacity: 0; } }
+@keyframes shield-ping { 0% { transform: scale(.55); opacity: .9; } 100% { transform: scale(1.35); opacity: 0; } }
+@keyframes check-pop { 0% { transform: scale(.4); } 100% { transform: scale(1); } }

@@ -186,8 +186,11 @@
   width: 2px;
   background: repeating-linear-gradient(180deg, var(--gray-300) 0 6px, transparent 6px 12px);
 }
-.lo:hover { transform: translateY(-10px) rotate(-1.2deg); z-index: 2; }
-.lo:nth-child(3):hover { transform: translateY(-10px) rotate(1.2deg); }
+.lo { transform-origin: 50% 100%; }
+.lo:hover { z-index: 2; }
+.lo:nth-child(1):hover { transform: translate(-6px, -8px) rotate(-2.5deg); transform-origin: 100% 100%; }   /* tilts out to the left */
+.lo:nth-child(2):hover { transform: translateY(-8px); }                                                 /* lifts a little */
+.lo:nth-child(3):hover { transform: translate(6px, -8px) rotate(2.5deg); transform-origin: 0 100%; }     /* tilts out to the right */
 .lo-art { margin: 14px 14px 0; border-radius: 14px; background: linear-gradient(160deg, var(--tint), #fff 80%); overflow: hidden; }
 .lo-art img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
 .lo-body { flex: 1; padding: 20px 26px 22px; }
@@ -226,27 +229,87 @@
 .lo-cta span { transition: transform .2s; }
 .lo-cta:hover span { transform: translateX(4px); }
 
-/* ---------- Clear wins: five cards that stack as you scroll (as on the live site) ---------- */
+/* ---------- Clear wins: five landscape tickets that stack as you scroll ----------
+   Text is the main part; the illustration is the stub, past a vertical tear line
+   with a notch at the top and bottom edges. */
 .cws.tkt { padding: 104px 0 var(--space-8xl); background: var(--bg-secondary); }
 .cw-grid { display: grid; gap: 28px; max-width: 1080px; margin: var(--space-6xl) auto 0; }
 .cw {
+  --split: 48%;
+  --notch: 14px;
   position: sticky;
   top: calc(110px + var(--i, 0) * 14px);
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  grid-template-columns: var(--split) minmax(0, 1fr);
   align-items: center;
-  gap: var(--space-5xl);
   min-height: 340px;
-  padding: 32px 40px;
+  filter: drop-shadow(0 0 1px rgba(16, 24, 40, .16)) drop-shadow(0 -8px 16px rgba(16, 24, 40, .1)) drop-shadow(0 10px 18px rgba(16, 24, 40, .08));
+}
+.cw::before {    /* the ticket itself: white, rounded, notched where the stub tears off */
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
   border-radius: 22px;
   background: #fff;
-  box-shadow: 0 0 0 1px rgba(16, 24, 40, .06), 0 -10px 24px -14px rgba(16, 24, 40, .22), 0 10px 20px -12px rgba(16, 24, 40, .14);
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at var(--split) 0, transparent 98%, #000) top / 100% 51% no-repeat,
+    radial-gradient(circle var(--notch) at var(--split) 100%, transparent 98%, #000) bottom / 100% 51% no-repeat;
+          mask:
+    radial-gradient(circle var(--notch) at var(--split) 0, transparent 98%, #000) top / 100% 51% no-repeat,
+    radial-gradient(circle var(--notch) at var(--split) 100%, transparent 98%, #000) bottom / 100% 51% no-repeat;
+}
+.cw::after {     /* tear line */
+  content: "";
+  position: absolute;
+  top: calc(var(--notch) + 8px);
+  bottom: calc(var(--notch) + 8px);
+  left: var(--split);
+  width: 2px;
+  margin-left: -1px;
+  background: repeating-linear-gradient(180deg, var(--gray-300) 0 6px, transparent 6px 12px);
 }
 .cw:nth-child(2) { --i: 1; } .cw:nth-child(3) { --i: 2; } .cw:nth-child(4) { --i: 3; } .cw:nth-child(5) { --i: 4; }
-.cw-no { font-size: 12px; letter-spacing: .14em !important; color: var(--brand-700); }
-.cw h3 { margin-top: 10px; font-size: 26px; line-height: 34px; font-weight: 600; letter-spacing: -0.015em; }
+.cw-copy { padding: 36px 40px; }
+.cw h3 { font-size: 26px; line-height: 34px; font-weight: 600; letter-spacing: -0.015em; }
 .cw p { margin-top: 12px; font-size: 17px; line-height: 27px; color: var(--text-tertiary); }
+.cw-art { padding: 24px 28px; }
 .cw-art img { display: block; width: 100%; height: auto; max-height: 300px; object-fit: contain; }
+
+/* ---------- Core strengths: nine tickets, three to a row; each row stacks over the one above ---------- */
+.hf-grid { align-items: start; row-gap: 28px; }
+.hf {
+  --cut: 132px;
+  --notch: 11px;
+  position: sticky;
+  top: calc(110px + var(--row, 0) * 18px);
+  z-index: var(--row, 0);
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  filter: drop-shadow(0 0 1px rgba(16, 24, 40, .16)) drop-shadow(0 -8px 14px rgba(16, 24, 40, .08)) drop-shadow(0 8px 14px rgba(16, 24, 40, .07));
+}
+.hf:hover { transform: none; box-shadow: none; }
+.hf:nth-child(n + 4) { --row: 1; }
+.hf:nth-child(n + 7) { --row: 2; }
+.hf::before {   /* portrait ticket: notches at the sides where the top part tears off */
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 18px;
+  background: #fff;
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at 0 var(--cut), transparent 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% var(--cut), transparent 98%, #000) right / 51% 100% no-repeat;
+          mask:
+    radial-gradient(circle var(--notch) at 0 var(--cut), transparent 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% var(--cut), transparent 98%, #000) right / 51% 100% no-repeat;
+}
+.hf-top { display: flex; flex-direction: column; justify-content: flex-end; height: var(--cut); padding: 22px 22px 16px; border-bottom: 2px dashed var(--gray-200); margin: 0 calc(var(--notch) + 4px); padding-inline: calc(22px - var(--notch) - 4px); }
+.hf-top h3 { margin-top: 12px; }
+.hf > p { margin: 0; padding: 14px 22px 22px; min-height: 120px; }
 
 @media (max-width: 1100px) {
   .lo-grid { grid-template-columns: minmax(0, 1fr); max-width: 520px; margin-inline: auto; }

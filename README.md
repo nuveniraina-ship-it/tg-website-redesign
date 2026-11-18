@@ -137,14 +137,14 @@ Homepage order: hero and five steps, event page, launch options, customer logos,
 | Section | What it does |
 | --- | --- |
 | Navigation bar | Floating ticket-shaped bar, same on every page, with Log In and Sign Up on the right |
-| Hero and five steps | A landscape ticket with no strip across the top and 24px corners. A dashed tear line runs the full height between the copy (the main part, wider) and the product picture (the stub, narrower; 1.3 : 1), with a notch at the top and bottom edges. The closing "Ready to issue" card sits on the main part. The copy is 1.65 times as wide as the picture, and the picture's box is only as tall as the picture. A "Try it: recolour this ticket" bar with five colour dots sits in the picture's top-left corner. The API demo has a "Try it" line above it. The picture is pinned while the five steps scroll past and change it; colour swatches recolour the ticket |
+| Hero and five steps | A landscape ticket with no strip across the top and 24px corners. A dashed tear line runs the full height between the copy (the main part, wider) and the product picture (the stub, narrower; 1.3 : 1), with a notch at the top and bottom edges. The closing "Ready to issue" card sits on the main part. The copy is 1.65 times as wide as the picture, and the picture's box is only as tall as the picture. A "Try it with your brand colour" bar sits in the picture's top-left corner: five preset colours plus a colour-wheel dot that opens the device's colour picker, and the whole ticket, cards and progress bars take that colour. The picture's box is a little taller than the picture, so there's air above and below it. The API demo has a "Try it" line above it. The picture is pinned while the five steps scroll past and change it; colour swatches recolour the ticket |
 | Numbers | Stats beside a printed receipt |
 | Event page | The Ticket Generator event page as guests see it (dark theme, three cover images that slide every 3.5 seconds with arrows on either side and dots, Live badge, date, time, venue, "Register Now", lineup, event guide, share), in a browser window beside the copy. Copied from the product's demo page at `tg-full-revamp.vercel.app/p/summer-music-festival` |
-| Launch options | "What kind of event are you planning?": a strip of three tickets joined edge to edge (Direct Ticketing, Free Registrations, Paid Registrations) with perforations and notches between them. Each has the live site's illustration, a two-step "how it works", and "Get Started" on its stub (opens sign-up). Hovering one tears it slightly off the strip |
-| Clear wins | "Easy event ticketing from setup to scan": five cards that stack on top of each other as you scroll, text on the left and the live site's illustration on the right, as on ticket-generator.com |
-| Features | "Core Strengths": the live homepage's nine features in a 3 × 3 grid (event page, branded tickets, seating plans, box office, delivery, QR validation, dashboard, add-ons, API) |
-| Use cases | Section pins; one tilted ticket is dealt onto a pile per scroll step. The rail on the left has five equal lines; the line of the use case on show is fully lit, including when one is clicked |
-| Security and API | Three compliance seals, then a live demo: registration list, API, ticket, three delivery channels. Clicking the button or the logo sends a registration |
+| Launch options | "What kind of event are you planning?": a strip of three tickets joined edge to edge (Direct Ticketing, Free Registrations, Paid Registrations) with perforations and notches between them. Each has the live site's illustration, a two-step "how it works", and "Get Started" on its stub (opens sign-up). On hover the left ticket tilts out to the left, the middle one lifts a little and the right one tilts out to the right |
+| Clear wins | "Easy event ticketing from setup to scan": five landscape tickets that stack on top of each other as you scroll. Text is the main part and the live site's illustration is the stub, past a vertical tear line with notches |
+| Features | "Core Strengths": the live homepage's nine features as portrait tickets, three to a row. Icon and title on top, a tear line with side notches, then the text. As you scroll, each row of three stacks over the row above |
+| Use cases | Section pins (the pinned box is only as tall as its content, so there's no empty band above or below); one tilted ticket is dealt onto a pile per scroll step. The rail on the left has five equal lines; the line of the use case on show is fully lit, including when one is clicked |
+| Security and API | A shield draws itself behind the three compliance seals, a scan line sweeps down it, and it checks one seal at a time (the seal lifts, a ring pulses, and a status line says what it covers); hover or tap a seal to pick it. Then a live demo: registration list, API, ticket, three delivery channels. Clicking the button or the logo sends a registration |
 | Testimonials | Curved carousel, not pinned: the middle review faces you and its neighbours angle in from the sides. Like the customer logos it moves on by itself, one review every 2.5 seconds while on screen, and pauses while the mouse rests on it. Previous and next arrows sit under it; you can also drag it, click a side review or use the arrow keys |
 | FAQ | One answer open, the rest open on click |
 | Blog | Three posts, or the section is removed. Never fewer than three |
@@ -250,6 +250,24 @@ Same fonts as desktop; only the sizes change.
 Some long paragraphs have a shorter phone-only version. In the HTML these are pairs of `<span class="d-only">` (desktop) and `<span class="m-only">` (phone).
 
 ---
+
+## Dark theme
+
+The site follows the visitor's device setting (`prefers-color-scheme`). All dark styles are in [`css/dark.css`](css/dark.css), loaded last on every page.
+
+| Role | Light | Dark |
+| --- | --- | --- |
+| Page background ("desk") | `#e2e9f4` with a blue dot grid | `#090c12` with a fainter blue dot grid |
+| Ticket surface (`--bg-primary`) | `#ffffff` | `#151922` |
+| Soft surface (`--bg-secondary`) | `#fafafa` | `#10141b` |
+| Main text (`--text-primary`) | `#181d27` | `#f3f5f8` |
+| Supporting text (`--text-tertiary`) | `#535862` | `#a6acb8` |
+| Border (`--border-primary`) | `#d5d7da` | `#343b49` |
+| Eyebrows and links | `--brand-700` `#175cd3` | `--brand-400` `#53b1fd` |
+| Brand tints (`--brand-25` to `--brand-100`) | pale blues | deep blues `#0f1827` to `#16304f` |
+| Primary button | `--brand-600` | unchanged |
+
+"Paper" stays light in dark mode, because its pictures and product mock-ups are drawn on white: the hero product demo, receipts, the API demo, customer logo tiles, review and use-case tickets, clear-wins and launch-option tickets, pricing feature tickets, the compliance badges and the coming-soon ticket. These containers restate the light tokens inside them.
 
 ## Shared tokens
 

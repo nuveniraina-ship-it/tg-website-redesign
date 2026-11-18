@@ -1202,12 +1202,38 @@
   .lo-steps { display: none; }
   .lo-cta { grid-column: 1 / -1; margin: 4px 12px 12px; padding: 10px 12px; font-size: 14px; }
 
-  /* clear wins: still a stack, picture on top */
+  /* clear wins: still a stack; portrait tickets, picture on top, tear line under it */
   .cw-grid { gap: 14px; margin-top: 14px; }
-  .cw { top: calc(78px + var(--i, 0) * 9px); grid-template-columns: minmax(0, 1fr); gap: 4px; min-height: 0; padding: 14px 16px 16px; border-radius: 18px; }
-  .cw-art { order: -1; }
-  .cw-art img { max-height: 150px; }
-  .cw-no { font-size: 10px; }
-  .cw h3 { margin-top: 4px; font-size: 17px; line-height: 23px; }
+  .cw { --cut: 168px; --notch: 10px; top: calc(78px + var(--i, 0) * 9px); grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .cw::before {
+    border-radius: 18px;
+    -webkit-mask:
+      radial-gradient(circle var(--notch) at 0 var(--cut), transparent 98%, #000) left / 51% 100% no-repeat,
+      radial-gradient(circle var(--notch) at 100% var(--cut), transparent 98%, #000) right / 51% 100% no-repeat;
+            mask:
+      radial-gradient(circle var(--notch) at 0 var(--cut), transparent 98%, #000) left / 51% 100% no-repeat,
+      radial-gradient(circle var(--notch) at 100% var(--cut), transparent 98%, #000) right / 51% 100% no-repeat;
+  }
+  .cw::after { top: var(--cut); bottom: auto; left: calc(var(--notch) + 6px); right: calc(var(--notch) + 6px); width: auto; height: 2px; margin: -1px 0 0; background: repeating-linear-gradient(90deg, var(--gray-300) 0 6px, transparent 6px 12px); }
+  .cw-art { order: -1; height: var(--cut); padding: 12px 16px; }
+  .cw-art img { height: 100%; max-height: none; }
+  .cw-copy { padding: 14px 16px 16px; }
+  .cw h3 { font-size: 17px; line-height: 23px; }
   .cw p { margin-top: 4px; font-size: 14px; line-height: 21px; }
+}
+
+/* Round 22 — phones: core strengths tickets in one column, shield sized down */
+@media (max-width: 768px) {
+  .hf { --cut: 112px; --row: 0; top: calc(78px + var(--i, 0) * 9px); z-index: var(--i, 0); padding: 0; box-shadow: none; }
+  .hf-top { padding-top: 16px; padding-bottom: 12px; }
+  .hf-top h3 { margin-top: 10px; }
+  .hf > p { padding: 12px 16px 16px; min-height: 0; }
+  .hf p { margin-top: 0; }
+  .shield-stage { padding-top: 10px; overflow: hidden; }
+  .shield-bg { width: 168px; height: 196px; }
+  .shield-ring { top: 96px; width: 150px; height: 150px; margin: -75px 0 0 -75px; }
+  .shield-stage .seals { margin-top: 34px; }
+  .shield-status { margin-top: 14px; font-size: 12px; }
+  .seal-label { font-size: 0; }
+  .seal-label b { font-size: 13px; }
 }

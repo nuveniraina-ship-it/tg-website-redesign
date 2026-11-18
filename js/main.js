@@ -425,6 +425,49 @@
     window.addEventListener('resize', size);
   }
 
+  /* ---------- Security: the shield checks each badge in turn; hover or tap one to read it ---------- */
+  const shield = document.querySelector('[data-shield]');
+  if (shield) {
+    const seals = [...shield.querySelectorAll('.seal')];
+    const text = shield.querySelector('[data-shield-text]');
+    const INFO = [
+      ['ISO 27001:2022', 'Audited information security across our systems'],
+      ['GDPR', 'Attendee data handled under EU data protection law'],
+      ['SOC 2', 'Independently verified controls for operational integrity'],
+    ];
+    let cur = -1;
+    let timer = 0;
+    let inView = false;
+    let held = false;
+    const pick = (k) => {
+      cur = (k + seals.length) % seals.length;
+      seals.forEach((s, i) => s.classList.toggle('is-on', i === cur));
+      shield.dataset.on = String(cur);
+      text.textContent = `${INFO[cur][0]} verified · ${INFO[cur][1]}`;
+      shield.classList.remove('is-ping');
+      void shield.offsetWidth;
+      shield.classList.add('is-ping');
+    };
+    const play = () => {
+      clearInterval(timer);
+      if (inView && !held && !reduceMotion) timer = setInterval(() => pick(cur + 1), 2600);
+    };
+    seals.forEach((s, i) => {
+      const on = () => { held = true; clearInterval(timer); pick(i); };
+      const off = () => { held = false; play(); };
+      s.addEventListener('pointerenter', on);
+      s.addEventListener('pointerleave', off);
+      s.addEventListener('focus', on);
+      s.addEventListener('blur', off);
+      s.addEventListener('click', () => pick(i));
+    });
+    new IntersectionObserver(([e]) => {
+      inView = e.isIntersecting;
+      if (inView) { shield.classList.add('is-armed'); if (cur < 0) pick(0); }
+      play();
+    }, { threshold: 0.45 }).observe(shield);
+  }
+
   /* ---------- Event page: the cover images slide by themselves; arrows and dots move them ---------- */
   const epCover = document.querySelector('[data-ep-cover]');
   if (epCover) {
@@ -651,7 +694,20 @@
 
   // Template swatches: click one and the whole stage (ticket, tracker, cards) takes that colour.
   const picks = [...panel.querySelectorAll('[data-theme-pick]')];   // the corner bar and the Create card's swatches
+  // any colour: the picker sets --pick and the custom theme builds the whole scale from it
+  const anyPick = panel.querySelector('[data-theme-any]');
+  if (anyPick) {
+    const dot = anyPick.parentElement;
+    anyPick.addEventListener('input', () => {
+      canvas.dataset.theme = 'custom';
+      canvas.style.setProperty('--pick', anyPick.value);
+      dot.style.setProperty('--c', anyPick.value);
+      dot.classList.add('is-set', 'is-on');
+      picks.forEach((b) => b.classList.remove('is-on'));
+    });
+  }
   picks.forEach((btn) => btn.addEventListener('click', () => {
+    anyPick?.parentElement.classList.remove('is-on');
     const theme = btn.dataset.themePick;
     if (theme === 'blue') canvas.removeAttribute('data-theme'); else canvas.dataset.theme = theme;
     picks.forEach((b) => b.classList.toggle('is-on', b === btn));

@@ -665,6 +665,19 @@
   --brand-500: #fb6514; --brand-600: #ec4a0a; --brand-700: #c4320a; --brand-800: #9c2a10;
 }
 
+/* any colour the visitor picks: the whole scale is mixed from --pick */
+.stage-canvas[data-theme="custom"] {
+  --brand-25: color-mix(in srgb, var(--pick) 4%, #fff);
+  --brand-50: color-mix(in srgb, var(--pick) 8%, #fff);
+  --brand-100: color-mix(in srgb, var(--pick) 16%, #fff);
+  --brand-200: color-mix(in srgb, var(--pick) 30%, #fff);
+  --brand-300: color-mix(in srgb, var(--pick) 48%, #fff);
+  --brand-500: color-mix(in srgb, var(--pick) 82%, #fff);
+  --brand-600: var(--pick);
+  --brand-700: color-mix(in srgb, var(--pick) 82%, #000);
+  --brand-800: color-mix(in srgb, var(--pick) 64%, #000);
+}
+
 /* 2 · Sell */
 .c-types { left: 0; top: 340px; width: 250px; padding: 12px 14px; }
 .c-types ul { margin-top: 8px; display: grid; gap: 4px; }
@@ -906,8 +919,9 @@
   .journey { grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); }
   /* the picture's box is only as tall as the picture, so there's no empty band above and below it */
   .stage-sticky { height: auto; top: 96px; padding: var(--space-3xl) 0; }
-  .stage-panel { height: auto; aspect-ratio: 560 / 616; }
-  .stage-panel > .stage-canvas { top: calc(50% + 24px); }   /* room for the "Try it" bar above it */
+  /* taller than the picture, so the cards have air above and below */
+  .stage-panel { height: auto; aspect-ratio: 560 / 700; }
+  .stage-panel > .stage-canvas { top: calc(50% + 22px); }   /* room for the "Try it" bar above it */
   .tkt--hero.tkt {
     --jgap: var(--space-7xl);
     --line-x: calc((100% - var(--jw)) / 2 + var(--gutter) + (var(--jw) - var(--gutter) * 2 - var(--jgap)) * 1.65 / 2.65 + var(--jgap) / 2);
@@ -949,6 +963,32 @@
 }
 .stage-try-dots button:hover { transform: scale(1.15); }
 .stage-try-dots button.is-on { box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--c); }
+/* the sixth dot: a colour wheel that opens the picker for any brand colour */
+.stage-try-any {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: conic-gradient(#f04438, #f79009, #fdb022, #17b26a, #2e90fa, #6938ef, #ee46bc, #f04438);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .7);
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+}
+.stage-try-any:hover { transform: scale(1.15); }
+.stage-try-any.is-set { background: var(--c); }
+.stage-try-any.is-set::after {   /* a small wheel stays on it, so it's still clearly "pick another" */
+  content: "";
+  position: absolute;
+  right: -3px;
+  bottom: -3px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: conic-gradient(#f04438, #f79009, #17b26a, #2e90fa, #6938ef, #f04438);
+  box-shadow: 0 0 0 1.5px #fff;
+}
+.stage-try-any.is-on { box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--c, #6938ef); }
+.stage-try-any input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; border: 0; padding: 0; }
 @media (prefers-reduced-motion: no-preference) {
   .stage-try { animation: try-nudge 2.4s ease-in-out 1.2s 2; }
 }

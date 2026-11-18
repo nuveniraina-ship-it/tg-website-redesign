@@ -2,7 +2,7 @@
    Use cases — the section pins while you scroll and a new ticket
    is dealt onto the pile for each use case.
    ========================================================= */
-.uc { background: var(--bg-primary); padding-bottom: var(--space-8xl); }
+.uc { background: var(--bg-primary); padding-bottom: var(--space-4xl); }
 
 /* scroll runway: one viewport to settle + ~70vh per extra ticket */
 .uc-scroll { position: relative; height: calc(100vh + 4 * 70vh); }
@@ -213,4 +213,12 @@
 @media (max-width: 420px) {
   .uct-media { height: 140px; }
   .uct-desc { font-size: 13.5px; line-height: 20px; }
+}
+
+/* the pin is only as tall as the heading and the pile, and sits in the middle of the
+   screen, so there's no empty band above or below it */
+@media (prefers-reduced-motion: no-preference) and (min-width: 961px) {
+  .uc-scroll { height: calc(560px + 4 * 62vh); }
+  .uc-pin { height: auto; top: max(96px, calc(50vh + 42px - 290px)); padding: 16px 0; }
+  .uc-pile { height: 460px; }
 }
