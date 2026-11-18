@@ -1441,8 +1441,8 @@
   .logos .roll-track img { max-width: 96px; height: 28px; }
 
   /* ---------- security: a lock that fits, a pill that isn't cut ---------- */
-  .trust.tkt:not(.api-sec) { padding-bottom: 76px; }   /* room below the button for loose lines */
-  .shield-stage { overflow: visible; padding-top: 72px; padding-bottom: 4px; }   /* clear room above the seals for the lines */
+  .trust.tkt:not(.api-sec) { padding-bottom: 30px; }
+  .shield-stage { overflow: visible; padding-top: 54px; padding-bottom: 4px; }   /* clear room above the seals for the lines */
 
   /* ---------- footer: the strip above the tear line has the same height as the others ---------- */
   .site-footer > .tkt-stub { padding: 14px 18px; }

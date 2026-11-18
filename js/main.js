@@ -267,13 +267,13 @@
       });
     };
 
-    // desktop: centre the pinned box under the header and give it a runway of its own height + 4 steps
+    // desktop: pin the box just under the header and give it a runway of its own height + 4 steps
     const HEADER = 96;
     const fit = () => {
       if (phone.matches || reduceMotion) return;
       const h = pin.offsetHeight;
       ucScroll.style.setProperty('--uc-pin-h', `${h}px`);
-      ucScroll.style.setProperty('--uc-top', `${HEADER + Math.max(16, (window.innerHeight - HEADER - h) / 2)}px`);
+      ucScroll.style.setProperty('--uc-top', `${HEADER + 24}px`);   // pinned just under the header, no empty band above
     };
     fit();
     window.addEventListener('resize', fit);
@@ -550,62 +550,30 @@
         [...range.getClientRects()].forEach((r) => { if (r.width) textEnd = Math.max(textEnd, r.right - row.left); });
       });
       const x0 = sideBySide ? textEnd + 24 : 0;
-      const L = d[0].cx - d[0].R;
+      const L = d[0].cx - (d[0].r - d[0].l) / 2 - 14;   // meets the ring around the first badge
       if (L - x0 > 60) {
         const m = (x0 + L) / 2;
         paths.push(`M${x0} ${cy - 34} C${m} ${cy - 34} ${m} ${cy - 10} ${L} ${cy - 10}`);
         paths.push(`M${x0} ${cy + 30} C${m} ${cy + 30} ${m} ${cy + 10} ${L} ${cy + 10}`);
       }
       for (let i = 0; i < d.length - 1; i++) {
-        const a = d[i].cx + d[i].R, b = d[i + 1].cx - d[i + 1].R;
-        if (b - a > 14) paths.push(`M${a} ${d[i].cy} L${b} ${d[i + 1].cy}`);
+        const a = d[i].cx + (d[i].r - d[i].l) / 2 + 14, b = d[i + 1].cx - (d[i + 1].r - d[i + 1].l) / 2 - 14;
+        if (b - a > 8) paths.push(`M${a} ${d[i].cy} L${b} ${d[i + 1].cy}`);
       }
       // The lock (drawn on click) is built from the seals: its body runs from the middle of the
       // first seal to the middle of the last, so it covers half of ISO and SOC and all of GDPR;
       // the shackle sits in the clear space above. Lines keep out of the lock's area.
       const last = d[d.length - 1];
       const lockBox = drawLock(d, sideBySide ? d[0].t : d[0].t - c.b);
-      // Loose lines scattered at random over all the free space in the section (seeded, so they
-      // stay put): each candidate curve is tested point by point and dropped if it would pass under
-      // any words, a seal or the button.
-      const pad = 12;
-      const blocks = [];
-      const addBox = (r) => blocks.push({ l: r.l - pad, r: r.r + pad, t: r.t - pad, b: r.b + pad });
-      copy.querySelectorAll('h2, p').forEach((el) => {
-        if (!el.offsetParent) return;
-        const range = document.createRange();
-        range.selectNodeContents(el);
-        [...range.getClientRects()].forEach((r) => { if (r.width) addBox({ l: r.left - row.left, r: r.right - row.left, t: r.top - row.top, b: r.bottom - row.top }); });
+      // Around the badges: a dotted ring just outside each badge's own dashed edge, with a light
+      // that circles it (alternate directions), so the lines frame the badges instead of wandering.
+      const rings = [];
+      d.forEach((k, i) => {
+        const rr = (k.r - k.l) / 2 + 14;
+        const sweep = i % 2 ? 0 : 1;
+        rings.push(`M${k.cx - rr} ${k.cy} A${rr} ${rr} 0 1 ${sweep} ${k.cx + rr} ${k.cy} A${rr} ${rr} 0 1 ${sweep} ${k.cx - rr} ${k.cy}`);
       });
-      wireRow.querySelectorAll('.seal-label, .shield-status').forEach((el) => addBox(box(el)));
-      d.forEach((k) => addBox({ l: k.cx - k.R, r: k.cx + k.R, t: k.cy - k.R, b: k.cy + k.R }));
-      if (lockBox) addBox(lockBox);
-      // the whole ticket is fair game (above and below the row too), except its top strip
-      const sec = box(wireRow.closest('section'));
-      const strip = wireRow.closest('section').querySelector(':scope > .tkt-stub');
-      const area = { l: sec.l + 10, r: sec.r - 10, t: (strip ? box(strip).b : sec.t) + 10, b: sec.b - 10 };
-      const free = (x, y) => x > area.l && x < area.r && y > area.t && y < area.b
-        && !blocks.some((q) => x > q.l && x < q.r && y > q.t && y < q.b);
-      let seed = 11;
-      const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
-      const probe = document.createElementNS(NS, 'path');
-      svg.append(probe);
-      const want = row.width > 700 ? 14 : 8;
-      let kept = 0;
-      for (let tries = 0; tries < 900 && kept < want; tries++) {
-        const x1 = area.l + rnd() * (area.r - area.l), y1 = area.t + rnd() * (area.b - area.t);
-        const ang = rnd() * Math.PI * 2, len = 70 + rnd() * (row.width > 700 ? 200 : 120);
-        const x2 = x1 + Math.cos(ang) * len, y2 = y1 + Math.sin(ang) * len;
-        const bend = (rnd() - 0.5) * len * 0.8;
-        const qx = (x1 + x2) / 2 - Math.sin(ang) * bend, qy = (y1 + y2) / 2 + Math.cos(ang) * bend;
-        const dPath = `M${x1.toFixed(1)} ${y1.toFixed(1)} Q${qx.toFixed(1)} ${qy.toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}`;
-        probe.setAttribute('d', dPath);
-        const L = probe.getTotalLength();
-        let ok = true;
-        for (let t = 0; t <= 20 && ok; t++) { const pt = probe.getPointAtLength((L * t) / 20); ok = free(pt.x, pt.y); }
-        if (ok) { paths.push(dPath); kept++; }
-      }
-      probe.remove();
+      paths.push(...rings);
       svg.replaceChildren();
       paths.forEach((dPath, i) => {
         const p = document.createElementNS(NS, 'path');
