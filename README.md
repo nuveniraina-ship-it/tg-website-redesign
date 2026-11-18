@@ -329,7 +329,7 @@ Used by both versions. All values live in [`css/tokens.css`](css/tokens.css).
 ## Loading and offline
 
 - **Loading screen:** every page opens with Mira (the pixel host) typing at her laptop on the desk background, no text. It's inline in each page, so it shows before anything else loads, and it fades out when the page has finished loading, or after 2.5 seconds at most.
-- **Offline:** [`sw.js`](sw.js) is a small service worker. If a page can't be reached (no network or an unstable one), it shows [`offline.html`](offline.html) instead of the browser's error page: the same Mira at her laptop. That page reloads itself as soon as the connection is back. Everything else loads from the network as normal.
+- **Offline:** [`sw.js`](sw.js) is a small service worker. If a page can't be reached (no network or an unstable one), it shows [`offline.html`](offline.html) instead of the browser's error page: the same Mira at her laptop, with a short note on top ("Looks like your Wi-Fi took an intermission"). The loading screen itself has no text. That page reloads itself as soon as the connection is back. Everything else loads from the network as normal.
 
 ## Ticket rules
 

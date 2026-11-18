@@ -2,7 +2,7 @@
    One job: when a page can't be reached (no network or an unstable one), show the
    offline page with Mira at her laptop instead of the browser's own error page.
    Everything else goes straight to the network as usual. */
-const CACHE = 'tg-offline-v1';
+const CACHE = 'tg-offline-v2';
 const OFFLINE = '/offline';
 
 self.addEventListener('install', (event) => {
