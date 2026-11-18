@@ -1289,3 +1289,56 @@
   .fc-top { justify-content: flex-end; height: var(--cut); margin: 0 calc(var(--notch) + 4px); padding: 14px 2px 12px; border-bottom: 2px dashed var(--gray-200); }
   .fc-bottom { padding: 12px 16px 16px; }
 }
+
+/* Round 24 — phones get the same changes as desktop */
+@media (max-width: 768px) {
+  /* hero pictures: more room top to bottom */
+  .stage-panel.m-shot { aspect-ratio: 560 / 560; }
+  .j-stage .stage-panel { aspect-ratio: 560 / 600; }
+
+  /* "Ready to issue your first ticket?" is back, as the steps ticket's full-width bottom stub:
+     a tear line across with a notch at each side edge, then the call to action */
+  .m-card--steps .j-end {
+    position: relative;
+    display: block;
+    margin: 20px -20px -20px;
+    padding: 20px 20px 22px;
+    border: 0;
+    border-top: 2px dashed rgba(255, 255, 255, .4);
+    border-radius: 0;
+    background: rgba(255, 255, 255, .07);
+    color: #fff;
+  }
+  .m-card--steps .j-end::before,
+  .m-card--steps .j-end::after {
+    content: "";
+    position: absolute;
+    top: -12px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--desk-paper);
+  }
+  .m-card--steps .j-end::before { left: -11px; }
+  .m-card--steps .j-end::after { right: -11px; }
+  .m-card--steps .j-end h3 { font-size: 19px; line-height: 25px; color: #fff; }
+  .m-card--steps .j-end-meta { color: rgba(255, 255, 255, .8); }
+  .m-card--steps .j-end-meta i { background: rgba(255, 255, 255, .5); }
+  .m-card--steps .j-end-cta .btn-secondary { background: transparent; color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .6); }
+  .m-card--steps .j-end-cta .btn-primary { background: #fff; color: var(--brand-700); }
+
+  /* clear wins: the words are the main part; the picture sits on a smaller bottom stub,
+     where a portrait ticket's QR code would be */
+  .cw { --cut: auto; }
+  .cw-art { order: 1; height: 132px; padding: 10px 16px 12px; }
+  .cw-copy { order: 0; padding: 16px 16px 14px; }
+  .cw::before {
+    -webkit-mask:
+      radial-gradient(circle var(--notch) at 0 calc(100% - 134px), transparent 98%, #000) left / 51% 100% no-repeat,
+      radial-gradient(circle var(--notch) at 100% calc(100% - 134px), transparent 98%, #000) right / 51% 100% no-repeat;
+            mask:
+      radial-gradient(circle var(--notch) at 0 calc(100% - 134px), transparent 98%, #000) left / 51% 100% no-repeat,
+      radial-gradient(circle var(--notch) at 100% calc(100% - 134px), transparent 98%, #000) right / 51% 100% no-repeat;
+  }
+  .cw::after { top: auto; bottom: 133px; }
+}
