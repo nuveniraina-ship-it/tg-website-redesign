@@ -236,16 +236,6 @@
                   <span class="mini-progress"><i data-upload></i></span>
                 </div>
               </div>
-              <div class="scene s1 card c-templates">
-                <span class="c-label">Templates <i class="thumbs-hint">Click to try</i></span>
-                <div class="thumbs" data-themes>
-                  <button type="button" tabindex="-1" class="is-on" data-theme-pick="blue" title="Blue" style="--c: #1570ef"></button>
-                  <button type="button" tabindex="-1" data-theme-pick="ink" title="Ink" style="--c: #181d27"></button>
-                  <button type="button" tabindex="-1" data-theme-pick="green" title="Green" style="--c: #079455"></button>
-                  <button type="button" tabindex="-1" data-theme-pick="purple" title="Purple" style="--c: #6938ef"></button>
-                  <button type="button" tabindex="-1" data-theme-pick="sunset" title="Sunset" style="--c: #ec4a0a"></button>
-                </div>
-              </div>
 
               <!-- Scene 2 · Sell -->
               <div class="scene s2 card c-types">
@@ -834,12 +824,13 @@
       </div>
     </section>
 
-    <!-- ================= Trust + API (dark) ================= -->
-    <section class="trust tkt" data-tkt="Security &amp; API" aria-labelledby="trust-title" data-reveal>
+    <!-- ================= Security ================= -->
+    <section class="trust tkt" data-tkt="Security" aria-labelledby="trust-title" data-reveal>
       <div class="container">
 
         <!-- Trusted Protection -->
-        <div class="trust-row">
+        <div class="trust-row" data-wires>
+          <svg class="trust-wires" aria-hidden="true"></svg>
           <div class="trust-copy">
             <p class="eyebrow eyebrow--dark">Trusted Protection</p>
             <h2 id="trust-title">Iron-clad security and privacy for every event, every ticket</h2>
@@ -847,12 +838,11 @@
           </div>
 
           <div class="shield-stage" data-shield>
-<svg class="shield-bg" viewBox="0 0 240 280" aria-hidden="true">
-              <defs>
-                <linearGradient id="shield-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e90fa" stop-opacity=".14"/><stop offset="1" stop-color="#2e90fa" stop-opacity=".03"/></linearGradient>
-                <radialGradient id="shield-glow"><stop offset="0" stop-color="#84caff" stop-opacity=".9"/><stop offset="1" stop-color="#84caff" stop-opacity="0"/></radialGradient>
-              </defs>
-              <g class="shield-lights"><path class="shield-wire" d="M-120 80 C -40 80, -10 120, 18 130"/><path class="shield-wire" d="M-120 190 C -50 190, -10 160, 30 170"/><path class="shield-wire" d="M360 70 C 280 70, 250 110, 222 120"/><path class="shield-wire" d="M360 200 C 290 200, 250 170, 212 175"/><circle class="shield-light" r="3.2"><animateMotion dur="3.6s" begin="0.0s" repeatCount="indefinite" path="M-120 80 C -40 80, -10 120, 18 130"/></circle><circle class="shield-light" r="3.2"><animateMotion dur="4.1s" begin="-0.9s" repeatCount="indefinite" path="M-120 190 C -50 190, -10 160, 30 170"/></circle><circle class="shield-light" r="3.2"><animateMotion dur="4.6s" begin="-1.8s" repeatCount="indefinite" path="M360 70 C 280 70, 250 110, 222 120"/></circle><circle class="shield-light" r="3.2"><animateMotion dur="5.1s" begin="-2.7s" repeatCount="indefinite" path="M360 200 C 290 200, 250 170, 212 175"/></circle><circle class="shield-light shield-light--edge" r="2.6"><animateMotion dur="9s" begin="0s" repeatCount="indefinite" path="M120 8 222 44v86c0 66-44 116-102 142C62 246 18 196 18 130V44z"/></circle><circle class="shield-light shield-light--edge" r="2.6"><animateMotion dur="9s" begin="-4.5s" repeatCount="indefinite" path="M120 8 222 44v86c0 66-44 116-102 142C62 246 18 196 18 130V44z"/></circle><circle class="shield-light shield-light--edge" r="2.2"><animateMotion dur="12s" begin="-2s" repeatCount="indefinite" path="M120 24 208 55v75c0 57-38 100-88 123-50-23-88-66-88-123V55z"/></circle><circle class="shield-light shield-light--edge" r="2.2"><animateMotion dur="12s" begin="-8s" repeatCount="indefinite" path="M120 24 208 55v75c0 57-38 100-88 123-50-23-88-66-88-123V55z"/></circle></g>
+<svg class="trust-lock" viewBox="0 0 200 240" aria-hidden="true" data-lock>
+              <g class="lock-shackle"><path pathLength="1" d="M62 104V72a38 38 0 0 1 76 0v32"/></g>
+              <path pathLength="1" d="M48 104h104a20 20 0 0 1 20 20v76a20 20 0 0 1-20 20H48a20 20 0 0 1-20-20v-76a20 20 0 0 1 20-20z"/>
+              <path pathLength="1" d="M100 139a13 13 0 1 1 0 26a13 13 0 1 1 0-26z"/>
+              <path pathLength="1" d="M100 165v22"/>
             </svg>
           <ul class="seals">
             <li class="seal">
@@ -868,19 +858,23 @@
               <span class="seal-label"><b>SOC 2</b>Operational integrity</span>
             </li>
           </ul>
-            <p class="shield-status"><span class="shield-check" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span><span>Encrypted, access-controlled, audited</span></p>
+            <button type="button" class="shield-status" data-lock-btn aria-pressed="false"><span class="shield-check" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span><span>Encrypted, access-controlled, audited</span></button>
           </div>
         </div>
 
-        <!-- tear line across the section -->
-        <div class="trust-tear" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- ================= API · its own ticket ================= -->
+    <section class="trust api-sec tkt" data-tkt="API" aria-labelledby="api-title">
+      <div class="container">
 
         <!-- Automate like a pro · a live request → ticket → delivery pipeline -->
         <div class="api" data-api>
           <div class="api-head">
             <div>
               <p class="eyebrow eyebrow--dark">Ticket Generator API</p>
-              <h3>Automate like a pro</h3>
+              <h2 id="api-title">Automate like a pro</h2>
             </div>
             <div class="api-head-copy">
               <p><span class="d-only">Integrate your event management system with Ticket Generator API to enable real-time ticket generation and distribution. Automate workflows seamlessly and deliver a smooth, branded ticketing experience to your attendees.</span><span class="m-only">Connect your own system. Tickets are created and sent the moment someone registers.</span></p>

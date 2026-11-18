@@ -630,21 +630,6 @@
 .ne-fields dd { font-size: 13px; line-height: 18px; font-weight: 600; color: var(--text-primary); }
 .ne-publish { margin-top: 10px; font-size: 12px; line-height: 16px; font-weight: 500; color: var(--text-tertiary); }
 .ne-publish .mini-progress { margin-top: 6px; }
-.c-templates { right: 0; top: 368px; width: 248px; padding: 12px 14px; }
-.c-templates .c-label { display: flex; justify-content: space-between; align-items: baseline; }
-.thumbs-hint { font-style: normal; font-size: 10px; font-weight: 500; color: var(--text-quaternary); }
-.thumbs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 9px; margin-top: 8px; }
-/* each swatch is a tiny ticket in that theme; clicking it re-themes the whole stage */
-.thumbs button {
-  height: 34px;
-  border-radius: 6px;
-  background: linear-gradient(90deg, var(--c) 72%, #fff 72%, #fff 74%, var(--gray-100) 74%);
-  box-shadow: inset 0 0 0 1px var(--border-secondary);
-  cursor: pointer;
-  transition: transform .2s cubic-bezier(.3, 1.5, .5, 1), box-shadow .2s;
-}
-.thumbs button:hover { transform: translateY(-2px); }
-.thumbs button.is-on { box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--c); }
 
 /* Colour themes: the stage reads every colour from the brand scale, so swapping
    the scale here re-colours the ticket, tracker, cards and progress bars at once. */

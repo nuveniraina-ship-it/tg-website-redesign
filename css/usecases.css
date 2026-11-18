@@ -215,12 +215,13 @@
   .uct-desc { font-size: 13.5px; line-height: 20px; }
 }
 
-/* the pin is only as tall as the heading and the pile, and sits in the middle of the
-   screen, so there's no empty band above or below it */
+/* desktop: the pinned box is only as tall as the heading, rail and pile (no empty bands),
+   and JS centres it in the space under the header (--uc-top) and sizes the runway from its
+   height (--uc-pin-h). Tickets waiting below the pile are clipped at the section's edge. */
 @media (prefers-reduced-motion: no-preference) and (min-width: 961px) {
-  /* the pinned box fills the screen under the header, so there's no empty band while it's pinned;
-     a shorter runway moves the pile on sooner */
-  .uc-scroll { height: calc(100vh + 4 * 42vh); }
-  .uc-pin { height: calc(100vh - 96px); top: 96px; padding: 12px 0; }
-  .uc-pile { height: min(560px, calc(100vh - 160px)); }
+  .uc-scroll { height: calc(var(--uc-pin-h, 640px) + 4 * 42vh); overflow: clip; }
+  .uc-pin { height: auto; top: var(--uc-top, 120px); padding: 0; display: block; overflow: visible; }
+  .uc-pile { height: min(480px, calc(100vh - 200px)); }
+  .uc-rail { margin-top: var(--space-4xl); }
+  .uc-rail li { min-height: 72px; }
 }

@@ -267,10 +267,22 @@
       });
     };
 
-    const runway = () => ucScroll.offsetHeight - pin.offsetHeight;
+    // desktop: centre the pinned box under the header and give it a runway of its own height + 4 steps
+    const HEADER = 96;
+    const fit = () => {
+      if (phone.matches || reduceMotion) return;
+      const h = pin.offsetHeight;
+      ucScroll.style.setProperty('--uc-pin-h', `${h}px`);
+      ucScroll.style.setProperty('--uc-top', `${HEADER + Math.max(16, (window.innerHeight - HEADER - h) / 2)}px`);
+    };
+    fit();
+    window.addEventListener('resize', fit);
+    window.addEventListener('load', fit);
+    const pinTop = () => parseFloat(getComputedStyle(pin).top) || 0;
+    const runway = () => Math.max(1, ucScroll.offsetHeight - pin.offsetHeight);
     const onUcScroll = () => {
       if (reduceMotion) return show(cards.length - 1);
-      const p = Math.min(1, Math.max(0, -ucScroll.getBoundingClientRect().top / runway()));
+      const p = Math.min(1, Math.max(0, (pinTop() - ucScroll.getBoundingClientRect().top) / runway()));
       const pos = p * cards.length;
       const n = Math.min(cards.length - 1, Math.floor(pos));
       show(n);
@@ -296,7 +308,7 @@
     ucScroll.querySelectorAll('[data-uc-go]').forEach((btn) => {
       btn.addEventListener('click', () => {
         const i = Number(btn.dataset.ucGo);
-        const top = ucScroll.getBoundingClientRect().top + window.scrollY + runway() * ((i + 0.5) / cards.length);
+        const top = ucScroll.getBoundingClientRect().top + window.scrollY - pinTop() + runway() * ((i + 0.5) / cards.length);
         window.scrollTo({ top, behavior: reduceMotion ? 'auto' : 'smooth' });
       });
     });
@@ -456,6 +468,112 @@
     window.addEventListener('load', level);
     window.addEventListener('resize', level);
     document.fonts?.ready.then(level);
+  }
+
+  /* ---------- Clear wins: the stack stops when the last ticket lands, then leaves as one ----------
+     A sticky ticket lets go when the bottom of the list reaches its own bottom. Without help the last
+     ticket lets go first and slides up over the others. Extra bottom margin on each earlier ticket
+     (taken back from the next one's top margin, so spacing doesn't change) makes all five let go together. */
+  const cwGrid = document.querySelector('.cw-grid');
+  if (cwGrid) {
+    const cards = [...cwGrid.children];
+    const even = () => {
+      cards.forEach((c) => { c.style.marginTop = ''; c.style.marginBottom = ''; });
+      const ends = cards.map((c) => parseFloat(getComputedStyle(c).top) + c.offsetHeight);
+      const end = Math.max(...ends);
+      cards.forEach((c, i) => {
+        const extra = end - ends[i];
+        if (!extra) return;
+        c.style.marginBottom = `${extra}px`;
+        if (cards[i + 1]) cards[i + 1].style.marginTop = `${-extra}px`;
+      });
+    };
+    even();
+    window.addEventListener('load', even);
+    window.addEventListener('resize', even);
+    document.fonts?.ready.then(even);
+  }
+
+  /* ---------- Security: lines from the end of the text into the seals, with lights on them ----------
+     Drawn from the real layout so they never cross any words: two lines from where the text column
+     ends into the first seal, one across each gap between seals, and an arc over the top only when
+     there's clear room above the seals. */
+  const wireRow = document.querySelector('[data-wires]');
+  if (wireRow) {
+    const svg = wireRow.querySelector('.trust-wires');
+    const copy = wireRow.querySelector('.trust-copy');
+    const discs = [...wireRow.querySelectorAll('.seal-disc')];
+    const NS = 'http://www.w3.org/2000/svg';
+    const drawWires = () => {
+      const row = wireRow.getBoundingClientRect();
+      if (!row.width || discs.length < 2) return;
+      const box = (el) => { const r = el.getBoundingClientRect(); return { l: r.left - row.left, r: r.right - row.left, t: r.top - row.top, b: r.bottom - row.top }; };
+      const c = box(copy);
+      const d = discs.map((el) => { const b = box(el); return { ...b, cx: (b.l + b.r) / 2, cy: (b.t + b.b) / 2, R: (b.r - b.l) / 2 + 12 }; });
+      const cy = d[0].cy;
+      const paths = [];
+      const sideBySide = c.r < d[0].l;                 // desktop: text on the left, seals on the right
+      // where the words actually end (the text column's box is wider than its lines)
+      let textEnd = c.l;
+      copy.querySelectorAll('h2, p').forEach((el) => {
+        if (!el.offsetParent) return;
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        [...range.getClientRects()].forEach((r) => { if (r.width) textEnd = Math.max(textEnd, r.right - row.left); });
+      });
+      const x0 = sideBySide ? textEnd + 24 : 0;
+      const L = d[0].cx - d[0].R;
+      if (L - x0 > 60) {
+        const m = (x0 + L) / 2;
+        paths.push(`M${x0} ${cy - 34} C${m} ${cy - 34} ${m} ${cy - 10} ${L} ${cy - 10}`);
+        paths.push(`M${x0} ${cy + 30} C${m} ${cy + 30} ${m} ${cy + 10} ${L} ${cy + 10}`);
+      }
+      for (let i = 0; i < d.length - 1; i++) {
+        const a = d[i].cx + d[i].R, b = d[i + 1].cx - d[i + 1].R;
+        if (b - a > 14) paths.push(`M${a} ${d[i].cy} L${b} ${d[i + 1].cy}`);
+      }
+      const room = sideBySide ? d[0].t : d[0].t - c.b;   // clear space above the seals
+      const lift = Math.min(64, room - 16);
+      const last = d[d.length - 1];
+      if (lift > 24) paths.push(`M${d[0].cx} ${d[0].t - 10} C${d[0].cx} ${d[0].t - lift} ${last.cx} ${last.t - lift} ${last.cx} ${last.t - 10}`);
+
+      svg.replaceChildren();
+      paths.forEach((dPath, i) => {
+        const p = document.createElementNS(NS, 'path');
+        p.setAttribute('d', dPath);
+        svg.append(p);
+        if (reduceMotion) return;
+        const len = p.getTotalLength();
+        const dot = document.createElementNS(NS, 'circle');
+        dot.setAttribute('r', '3');
+        const mo = document.createElementNS(NS, 'animateMotion');
+        const dur = Math.max(1.6, len / 70);
+        mo.setAttribute('dur', `${dur.toFixed(2)}s`);
+        mo.setAttribute('begin', `${(-i * 0.9).toFixed(2)}s`);
+        mo.setAttribute('repeatCount', 'indefinite');
+        mo.setAttribute('path', dPath);
+        dot.append(mo);
+        svg.append(dot);
+      });
+    };
+    drawWires();
+    window.addEventListener('load', drawWires);
+    new ResizeObserver(drawWires).observe(wireRow);
+  }
+
+  /* Security: click the status pill → a faint lock draws in, open, then snaps shut */
+  const lockBtn = document.querySelector('[data-lock-btn]');
+  const lockArt = document.querySelector('[data-lock]');
+  if (lockBtn && lockArt) {
+    let shutTimer;
+    lockBtn.addEventListener('click', () => {
+      clearTimeout(shutTimer);
+      lockArt.classList.remove('is-on', 'is-shut');
+      void lockArt.getBoundingClientRect();          // restart the drawing
+      lockArt.classList.add('is-on');
+      lockBtn.setAttribute('aria-pressed', 'true');
+      shutTimer = setTimeout(() => lockArt.classList.add('is-shut'), reduceMotion ? 0 : 1450);
+    });
   }
 
   /* ---------- Event page: the cover images slide by themselves; arrows and dots move them ---------- */
@@ -683,7 +801,7 @@
   drawQR(canvas.querySelector('[data-qr]'), 'Annual Client Summit');
 
   // Template swatches: click one and the whole stage (ticket, tracker, cards) takes that colour.
-  const picks = [...panel.querySelectorAll('[data-theme-pick]')];   // the corner bar and the Create card's swatches
+  const picks = [...panel.querySelectorAll('[data-theme-pick]')];   // the corner bar's swatches
   // any colour: the picker sets --pick and the custom theme builds the whole scale from it
   const anyPick = panel.querySelector('[data-theme-any]');
   if (anyPick) {

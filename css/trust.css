@@ -108,7 +108,7 @@
   gap: var(--space-5xl) var(--space-7xl);
   align-items: end;
 }
-.api-head h3 {
+.api-head h2 {
   margin-top: var(--space-lg);
   font-size: 36px;
   line-height: 44px;
@@ -479,7 +479,7 @@
   .trust { padding: var(--space-8xl) 0; }
   .trust-row, .api-head { grid-template-columns: minmax(0, 1fr); gap: var(--space-6xl); }
   .api-head { gap: var(--space-xl); }
-  .trust-copy h2, .api-head h3 { font-size: 30px; line-height: 38px; }
+  .trust-copy h2, .api-head h2 { font-size: 30px; line-height: 38px; }
   .trust-tear { margin-block: var(--space-8xl); }
 
   /* pipeline runs top-to-bottom */
@@ -505,32 +505,55 @@
   .seal-disc img { width: 78px; height: 78px; }
   .seal-label { font-size: 12px; }
   .seal-label b { font-size: 13px; }
-  .api-head h3 { font-size: 24px; line-height: 32px; }
+  .api-head h2 { font-size: 24px; line-height: 32px; }
   .api-json pre { font-size: 12px; line-height: 20px; padding: 14px 16px; }
 }
 
-/* ---------- The shield behind the badges ----------
-   A still shield. Small points of light run along a few lines into it and
-   around its edges, like information moving that stays sealed inside. */
+/* ---------- Behind the badges ----------
+   Dotted lines start where the text ends and run only through clear space (into the first
+   seal and across the gaps between seals), never under any words. Small lights travel along
+   them. JS draws them from the real layout (js/main.js). Clicking the status pill draws a
+   faint lock behind the seals: it appears open, then the shackle snaps shut. */
+.trust-row { position: relative; }
+.trust-copy { position: relative; z-index: 1; }
+.trust-wires { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 0; }
+.trust-wires path { fill: none; stroke: rgba(46, 144, 250, .3); stroke-width: 1.2; stroke-dasharray: 2 5; }
+.trust-wires circle { fill: #53b1fd; opacity: .8; filter: drop-shadow(0 0 4px rgba(83, 177, 253, .75)); }
+@media (prefers-reduced-motion: reduce) { .trust-wires circle { display: none; } }
+
 .shield-stage { position: relative; display: grid; justify-items: center; padding: 34px 0 0; }
-.shield-bg {
+.trust-lock {
   position: absolute;
   left: 50%;
-  top: 0;
+  top: 50%;
+  z-index: 0;
   width: 300px;
-  height: 350px;
-  transform: translateX(-50%);
+  height: auto;
+  transform: translate(-50%, -54%);
   overflow: visible;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity .5s ease;
 }
-.shield-wire { fill: none; stroke: rgba(46, 144, 250, .22); stroke-width: 1.2; stroke-dasharray: 2 5; }
-.shield-light { fill: #2e90fa; opacity: .85; filter: drop-shadow(0 0 4px rgba(46, 144, 250, .9)) drop-shadow(0 0 9px rgba(83, 177, 253, .6)); }
-.shield-light--edge { fill: #53b1fd; opacity: .75; }
-@media (prefers-reduced-motion: reduce) { .shield-light { display: none; } }
+.trust-lock path { fill: none; stroke: var(--brand-100); stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.lock-shackle { transform: translateY(-30px); }   /* open */
+.trust-lock.is-on { opacity: 1; }
+.trust-lock.is-on path { animation: lock-draw 1.3s ease-out forwards; }
+.trust-lock.is-on .lock-shackle path { animation-delay: .15s; }
+.trust-lock.is-shut .lock-shackle { transform: translateY(0); transition: transform .32s cubic-bezier(.5, 0, .7, 1.5); }
+@keyframes lock-draw { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .trust-lock.is-on path { animation: none; stroke-dashoffset: 0; }
+  .trust-lock .lock-shackle { transition: none !important; }
+}
 .shield-stage .seals { position: relative; z-index: 1; width: 100%; margin-top: 44px; }
 .shield-status {
   position: relative;
   z-index: 1;
+  cursor: pointer;
+  font: inherit;
+  border: 0;
+  transition: box-shadow .2s, transform .2s;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -544,3 +567,5 @@
   color: var(--text-secondary);
 }
 .shield-check { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--brand-600); color: #fff; }
+.shield-status:hover { box-shadow: 0 0 0 1px var(--brand-200), 0 8px 18px -6px rgba(21, 112, 239, .3); }
+.shield-status:active { transform: scale(.97); }

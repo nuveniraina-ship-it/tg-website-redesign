@@ -55,7 +55,7 @@
   }
 
   /* shared type scale */
-  .numbers-copy h2, .uc-side h2, .trust-copy h2, .api-head h3, .tm-side h2,
+  .numbers-copy h2, .uc-side h2, .trust-copy h2, .api-head h2, .tm-side h2,
   .faq-side h2, .blogs-head h2, .pr-sec-head h2, .j-intro h2 { margin-top: 8px; font-size: 26px; line-height: 32px; }
 
   /* ---------- Hero + steps: one section, two tickets (wrapped by JS) ---------- */
@@ -906,7 +906,7 @@
   .seal-label { margin-top: 6px; font-size: 0; line-height: 0; }
   .seal-label b { display: block; font-size: 13px; line-height: 18px; }
   .trust-tear { margin-block: 20px; }
-  .api-head h3 { margin-top: 4px; font-size: 22px; line-height: 28px; }
+  .api-head h2 { margin-top: 4px; font-size: 22px; line-height: 28px; }
   .api-head-copy p { margin-top: 6px; font-size: 15px; line-height: 22px; }
   .flow { margin-top: 14px; padding: 14px 10px 10px; }
   .core-ring { width: 48px; height: 48px; }
@@ -1230,7 +1230,7 @@
   .hf > p { padding: 12px 16px 16px; min-height: 0; }
   .hf p { margin-top: 0; }
   .shield-stage { padding-top: 10px; overflow: hidden; }
-  .shield-bg { width: 168px; height: 196px; }
+  .trust-lock { width: 150px; }
   .shield-stage .seals { margin-top: 20px; }
   .shield-status { margin-top: 14px; font-size: 12px; }
   .seal-label { font-size: 0; }
