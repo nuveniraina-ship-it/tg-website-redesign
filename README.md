@@ -149,7 +149,7 @@ Homepage order: hero and five steps, event page, launch options, customer logos,
 | FAQ | "Have a Question?" in the strip. One answer open, the rest open on click |
 | Blog | Three posts, or the section is removed. Never fewer than three |
 | Closing ticket | Landscape "admission ticket" with Sign Up and Book a Demo |
-| Pricing: estimator | A landscape ticket like the homepage hero: headline, ticket count field and credit packs on the main part; the sticky price receipt is the stub on the right, past the tear line. "Create your own event" in the event page section opens the app's sign-up |
+| Pricing: estimator | A landscape ticket like the homepage hero: headline, ticket count field and credit packs on the main part; the sticky price receipt is the stub on the right, past the tear line. Under its "Sign up to buy" button sit "First 10 tickets free" and "No credit card required" with check marks, like the homepage hero. "Create your own event" in the event page section opens the app's sign-up |
 | Pricing: features | Section pins; the blue "1 credit = 1 ticket" ticket steps back and ten feature tickets slide past sideways (including seating plans and on-ground sales, as on the live pricing page) |
 | Coming soon | Terminal with Mira typing; a portrait ticket prints from the top and names the page. The stub carries a real QR code that opens the homepage |
 

@@ -177,7 +177,20 @@
 .receipt-total .est-total { font-size: 32px; line-height: 38px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
 .receipt-total { align-items: center; }
 .est-buy { width: 100%; justify-content: center; margin-top: 22px; }
-.est-free { margin-top: 12px; text-align: center; font-size: 10px; line-height: 14px; letter-spacing: .16em; color: var(--text-quaternary); }
+/* under "Sign up to buy", the same two check-marked lines as under the homepage's Create Your Event */
+.est-free { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 16px; margin: 12px 0 0; padding: 0; list-style: none; font-size: 14px; line-height: 20px; color: var(--text-tertiary); }
+.est-free li { display: flex; align-items: flex-start; gap: 8px; }
+.est-free li::before {
+  content: "";
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  border-radius: 50%;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M11.5 5.5 7 10 4.5 7.5' stroke='%23079455' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 16px no-repeat,
+    var(--success-50);
+}
 
 /* ---------- What a credit gets you: a row of vertical tickets that slides
    sideways as you scroll (the section pins while it plays). The middle
