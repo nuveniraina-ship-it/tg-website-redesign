@@ -178,3 +178,4 @@
   .faq-a::before { left: -28px; }
   .faq-a::after  { right: -28px; }
 }
+.faq-help:not(:has(.faq-help-icon)) h3 { margin-top: 0; }

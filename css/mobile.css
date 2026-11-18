@@ -1444,7 +1444,7 @@
   /* ---------- security: a lock that fits, a pill that isn't cut ---------- */
   .trust.tkt { padding-bottom: 30px; }
   .shield-stage { overflow: visible; padding-top: 56px; padding-bottom: 4px; }   /* clear room above the seals for the lines */
-  .trust-lock { width: 112px; transform: translate(-50%, -62%); }
+  .trust-lock { width: 190px; transform: translate(-50%, -50%); }
 
   /* ---------- footer: the strip above the tear line has the same height as the others ---------- */
   .site-footer > .tkt-stub { padding: 14px 18px; }
@@ -1512,4 +1512,8 @@
   .m-step-text { padding: 12px 14px 14px; border-top: 2px dashed var(--gray-200); }
   .m-step-text p { margin: 0; font-size: 14px; line-height: 21px; color: var(--text-tertiary); }
   .m-step-text p + p { display: none; }
+}
+@media (max-width: 768px) {
+  /* help box without an icon (pricing): the words take the full width */
+  .faq-help:not(:has(.faq-help-icon)) { grid-template-columns: minmax(0, 1fr); }
 }

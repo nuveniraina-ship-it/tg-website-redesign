@@ -542,37 +542,46 @@
       const lift = Math.min(64, room - 16);
       const last = d[d.length - 1];
       if (lift > 24) paths.push(`M${d[0].cx} ${d[0].t - 10} C${d[0].cx} ${d[0].t - lift} ${last.cx} ${last.t - lift} ${last.cx} ${last.t - 10}`);
-      // small hops over each gap between neighbouring seals
-      if (lift > 18) {
-        for (let i = 0; i < d.length - 1; i++) {
-          const h = Math.min(lift * 0.55, 30);
-          paths.push(`M${d[i].cx + d[i].R * 0.55} ${d[i].t + 6} Q${(d[i].cx + d[i + 1].cx) / 2} ${d[i].t - h} ${d[i + 1].cx - d[i + 1].R * 0.55} ${d[i + 1].t + 6}`);
-        }
+      // Loose lines scattered at random over all the free space in the section (seeded, so they
+      // stay put): each candidate curve is tested point by point and dropped if it would pass under
+      // any words, a seal or the button.
+      const pad = 12;
+      const blocks = [];
+      const addBox = (r) => blocks.push({ l: r.l - pad, r: r.r + pad, t: r.t - pad, b: r.b + pad });
+      copy.querySelectorAll('h2, p').forEach((el) => {
+        if (!el.offsetParent) return;
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        [...range.getClientRects()].forEach((r) => { if (r.width) addBox({ l: r.left - row.left, r: r.right - row.left, t: r.top - row.top, b: r.bottom - row.top }); });
+      });
+      wireRow.querySelectorAll('.seal-label, .shield-status').forEach((el) => addBox(box(el)));
+      d.forEach((k) => addBox({ l: k.cx - k.R, r: k.cx + k.R, t: k.cy - k.R, b: k.cy + k.R }));
+      // the whole ticket is fair game (above and below the row too), except its top strip
+      const sec = box(wireRow.closest('section'));
+      const strip = wireRow.closest('section').querySelector(':scope > .tkt-stub');
+      const area = { l: sec.l + 10, r: sec.r - 10, t: (strip ? box(strip).b : sec.t) + 10, b: sec.b - 10 };
+      const free = (x, y) => x > area.l && x < area.r && y > area.t && y < area.b
+        && !blocks.some((q) => x > q.l && x < q.r && y > q.t && y < q.b);
+      let seed = 11;
+      const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+      const probe = document.createElementNS(NS, 'path');
+      svg.append(probe);
+      const want = row.width > 700 ? 14 : 8;
+      let kept = 0;
+      for (let tries = 0; tries < 900 && kept < want; tries++) {
+        const x1 = area.l + rnd() * (area.r - area.l), y1 = area.t + rnd() * (area.b - area.t);
+        const ang = rnd() * Math.PI * 2, len = 70 + rnd() * (row.width > 700 ? 200 : 120);
+        const x2 = x1 + Math.cos(ang) * len, y2 = y1 + Math.sin(ang) * len;
+        const bend = (rnd() - 0.5) * len * 0.8;
+        const qx = (x1 + x2) / 2 - Math.sin(ang) * bend, qy = (y1 + y2) / 2 + Math.cos(ang) * bend;
+        const dPath = `M${x1.toFixed(1)} ${y1.toFixed(1)} Q${qx.toFixed(1)} ${qy.toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+        probe.setAttribute('d', dPath);
+        const L = probe.getTotalLength();
+        let ok = true;
+        for (let t = 0; t <= 20 && ok; t++) { const pt = probe.getPointAtLength((L * t) / 20); ok = free(pt.x, pt.y); }
+        if (ok) { paths.push(dPath); kept++; }
       }
-      // a few loose, irregular lines in the clear band above the seals (seeded, so they stay put)
-      const bandTop = sideBySide ? 8 : c.b + 10;
-      const bandBot = d[0].t - lift - 6;
-      if (bandBot - bandTop > 16) {
-        let seed = 7;
-        const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
-        const xMin = sideBySide ? x0 : 6;
-        const xMax = row.width - 6;
-        for (let k = 0; k < 3; k++) {
-          const xa = xMin + rnd() * (xMax - xMin) * 0.5;
-          const xb = Math.min(xMax, xa + 60 + rnd() * (xMax - xMin) * 0.45);
-          const ya = bandTop + rnd() * (bandBot - bandTop);
-          const yb = bandTop + rnd() * (bandBot - bandTop);
-          const yc = bandTop + rnd() * (bandBot - bandTop);
-          paths.push(`M${xa.toFixed(1)} ${ya.toFixed(1)} Q${((xa + xb) / 2).toFixed(1)} ${yc.toFixed(1)} ${xb.toFixed(1)} ${yb.toFixed(1)}`);
-        }
-      }
-      // out from the last seal towards the right edge, when there's room
-      const rEdge = row.width - 4;
-      if (rEdge - (last.cx + last.R) > 30) {
-        const a = last.cx + last.R;
-        paths.push(`M${a} ${last.cy + 8} C${(a + rEdge) / 2} ${last.cy + 8} ${(a + rEdge) / 2} ${last.cy - 26} ${rEdge} ${last.cy - 26}`);
-      }
-
+      probe.remove();
       svg.replaceChildren();
       paths.forEach((dPath, i) => {
         const p = document.createElementNS(NS, 'path');
@@ -610,6 +619,26 @@
       lockBtn.setAttribute('aria-pressed', 'true');
       shutTimer = setTimeout(() => lockArt.classList.add('is-shut'), reduceMotion ? 0 : 1450);
     });
+  }
+
+  /* ---------- Event page: registration always closes a week from today ----------
+     The festival runs for five days and ends the day registration closes (as on the live demo page). */
+  const epCloses = document.querySelector('[data-ep-closes]');
+  if (epCloses) {
+    const day = 86400000;
+    const today = new Date(); today.setHours(12, 0, 0, 0);
+    const close = new Date(today.getTime() + 7 * day);
+    const start = new Date(close.getTime() - 4 * day);
+    const M = (d, len) => d.toLocaleString('en-US', { month: len });
+    epCloses.textContent = `${M(close, 'long')} ${close.getDate()}, ${close.getFullYear()}`;
+    const dates = document.querySelector('[data-ep-dates]');
+    if (dates) {
+      dates.textContent = start.getMonth() === close.getMonth()
+        ? `${M(start, 'long')} ${start.getDate()}–${close.getDate()}, ${close.getFullYear()}`
+        : `${M(start, 'short')} ${start.getDate()} – ${M(close, 'short')} ${close.getDate()}, ${close.getFullYear()}`;
+    }
+    const startEl = document.querySelector('[data-ep-start]');
+    if (startEl) startEl.textContent = `${M(start, 'short')} ${start.getDate()}`;
   }
 
   /* ---------- Event page: "Register Now" opens the registration step inside the frame, with a way back ---------- */
