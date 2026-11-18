@@ -78,14 +78,14 @@
   text-wrap: balance;
 }
 .hero-lede {
-  margin-top: var(--space-3xl);
+  margin-top: var(--space-xl);
   max-width: 560px;
   font-size: 18px;
   line-height: 28px;
   color: var(--text-tertiary);
 }
 .hero-cta {
-  margin-top: var(--space-5xl);
+  margin-top: var(--space-4xl);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -116,7 +116,7 @@
     var(--success-50);
 }
 .scroll-cue {
-  margin-top: var(--space-7xl);
+  margin-top: var(--space-5xl);
   display: inline-flex;
   align-items: center;
   gap: var(--space-lg);
@@ -149,7 +149,7 @@
 
 /* ---------- Steps ---------- */
 .j-intro {
-  padding-top: var(--space-8xl);
+  padding-top: var(--space-6xl);
   max-width: 520px;
 }
 .eyebrow {
@@ -173,7 +173,7 @@
 }
 
 .step {
-  min-height: 78vh;
+  min-height: 56vh;
   display: flex;
   flex-direction: column;
   justify-content: center;

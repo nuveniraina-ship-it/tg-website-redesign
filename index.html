@@ -33,6 +33,7 @@
   <link rel="stylesheet" href="css/journey.css">
   <link rel="stylesheet" href="css/logos.css">
   <link rel="stylesheet" href="css/numbers.css">
+  <link rel="stylesheet" href="css/eventpage.css">
   <link rel="stylesheet" href="css/usecases.css">
   <link rel="stylesheet" href="css/tickets.css">
   <link rel="stylesheet" href="css/trust.css">
@@ -93,7 +94,7 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1.5a2.5 2.5 0 0 0 0 5V16a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1.5a2.5 2.5 0 0 0 0-5V8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14 6v12" stroke="currentColor" stroke-width="2" stroke-dasharray="2 2.5"/></svg>
             1,000,000+
           </span>
-          <span class="hero-stat-label">tickets generated<span class="d-only"> and counting</span></span>
+          <span class="hero-stat-label">tickets generated<span class="d-only">&nbsp;and counting</span></span>
         </p>
         <h1 class="hero-title">Your <span class="nowrap">all-in-one</span> event ticketing platform</h1>
         <p class="hero-lede">
@@ -402,7 +403,7 @@
     </section>
 
     <!-- ================= Social proof · a carousel of logo tickets ================= -->
-    <section class="logos tkt" data-tkt="Trusted by" aria-labelledby="logos-title">
+    <section class="logos tkt" data-tkt="Our customers" aria-labelledby="logos-title">
       <div class="container">
         <h2 id="logos-title" class="logos-title">Ticket Generator: Global leaders' trusted ally for seamless events</h2>
       </div>
@@ -434,7 +435,7 @@
     </section>
 
     <!-- ================= The numbers · stats + pay-as-you-go ================= -->
-    <section class="numbers tkt" data-tkt="Pricing" id="pricing" aria-labelledby="numbers-title" data-reveal>
+    <section class="numbers tkt" data-tkt="By the numbers" id="pricing" aria-labelledby="numbers-title" data-reveal>
       <div class="container numbers-grid">
 
         <div class="numbers-copy">
@@ -500,6 +501,119 @@
           </div>
         </div>
 
+      </div>
+    </section>
+
+    <!-- ================= Event page · what guests see, as Ticket Generator builds it ================= -->
+    <section class="ep tkt" data-tkt="Event page" id="event-page" aria-labelledby="ep-title">
+      <div class="container ep-layout">
+        <div class="ep-copy">
+          <p class="eyebrow">Event Page</p>
+          <h2 id="ep-title">Every event gets its own page</h2>
+          <p class="ep-lede">Share one link for the details, registrations and payments. This is the page your guests see, exactly as Ticket Generator builds it.</p>
+          <ul class="checks">
+            <li>Cover images, lineup and venue layout</li>
+            <li>Registration form and online payments</li>
+            <li>Works on any phone, no app to install</li>
+          </ul>
+          <a class="text-link ep-link" href="https://tg-full-revamp.vercel.app/p/summer-music-festival">Open the live event page <span aria-hidden="true">→</span></a>
+        </div>
+
+        <div class="ep-frame" aria-label="Example event page: Summer Music Festival">
+          <div class="ep-bar" aria-hidden="true"><span class="ep-dots"><i></i><i></i><i></i></span><span class="ep-url mono">ticket-generator.com/p/summer-music-festival</span></div>
+          <div class="ep-page">
+            <div class="ep-hero">
+              <div class="ep-cover"><img src="assets/eventpage/banner.webp" alt="A singer performing to a festival crowd under stage lights" width="1215" height="630" loading="lazy" decoding="async"><span class="ep-pips" aria-hidden="true"><i class="is-on"></i><i></i><i></i></span></div>
+              <div class="ep-main">
+                <span class="ep-live">Live</span>
+                <h3>Summer Music Festival</h3>
+                <ul class="ep-facts">
+                  <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>July 26–30, 2026</li>
+                  <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>6:00 to 11:00 pm IST</li>
+                  <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Riverside Amphitheater</li>
+                  <li class="ep-close">Registration closes July 30, 2026, 11:00 pm</li>
+                </ul>
+                <a class="ep-btn" href="https://tg-full-revamp.vercel.app/p/summer-music-festival">Register Now</a>
+              </div>
+            </div>
+            <div class="ep-grid">
+              <div class="ep-card ep-lineup">
+                <p class="ep-card-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Lineup</p>
+                <ul>
+                    <li><img src="assets/eventpage/lineup-1.webp" alt="" width="200" height="200" loading="lazy" decoding="async"><b>Aarav Menon</b><span>Headline act</span><i>Neon Tide</i></li>
+                    <li><img src="assets/eventpage/lineup-2.webp" alt="" width="200" height="200" loading="lazy" decoding="async"><b>Priya Raghavan</b><span>Vocalist</span><i>The Salt Ranges</i></li>
+                    <li><img src="assets/eventpage/lineup-3.webp" alt="" width="200" height="200" loading="lazy" decoding="async"><b>Dev Sharma</b><span>DJ</span><i>Basement Collective</i></li>
+                    <li><img src="assets/eventpage/lineup-4.webp" alt="" width="200" height="200" loading="lazy" decoding="async"><b>Leila Fernandes</b><span>Guitarist</span><i>Cassette Sons</i></li>
+                </ul>
+              </div>
+              <div class="ep-side">
+                <div class="ep-card">
+                  <p class="ep-card-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Event Guide</p>
+                  <p class="ep-row">English</p>
+                  <p class="ep-row">Bring your ticket/confirmation</p>
+                </div>
+                <div class="ep-card">
+                  <p class="ep-card-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.59 13.51 6.83 3.98M15.41 6.51l-6.82 3.98"/></svg>Share with Friends</p>
+                  <p class="ep-share" aria-hidden="true"><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></i><i class="t">𝕏</i><i class="t">f</i><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></i><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></i><i class="t">in</i></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Features · everything included with every ticket ================= -->
+    <section class="hfs tkt" data-tkt="Features" id="all-features" aria-labelledby="hf-title">
+      <div class="container">
+        <header class="hfs-head">
+          <p class="eyebrow">Features</p>
+          <h2 id="hf-title">Everything you need, included with every ticket</h2>
+          <p>No add-ons and no plans to upgrade. Every feature comes with every credit.</p>
+        </header>
+        <ul class="hf-grid">
+          <li class="hf" style="--tint: #e6f0ff; --accent: #175cd3;">
+            <span class="hf-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+            <h3>No surprises, just solid security</h3>
+            <p><span class="d-only">Protect event and attendee data with GDPR, ISO 27001:2022, and SOC2 compliance. Ensure confidentiality, integrity, and security at every step.</span><span class="m-only">GDPR, ISO 27001:2022 and SOC 2 compliant, so your event and attendee data stays confidential and secure at every step.</span></p>
+          </li>
+          <li class="hf" style="--tint: #fff1dc; --accent: #b54708;">
+            <span class="hf-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9a3 3 0 0 0 0 6v4h18v-4a3 3 0 0 1 0-6V5H3v4Z"/><path d="M14 5v2M14 11v2M14 17v2"/></svg></span>
+            <h3>Tickets that do more</h3>
+            <p><span class="d-only">Craft eye-catching tickets with custom logos, colors, and messaging. Or, select a polished template to ensure that every ticket promotes your brand.</span><span class="m-only">Add your logo, colors and message, or pick a polished template, so every ticket you send promotes your brand.</span></p>
+          </li>
+          <li class="hf" style="--tint: #e3f6ec; --accent: #067647;">
+            <span class="hf-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 12h10"/></svg></span>
+            <h3>No gatecrashers, no worries</h3>
+            <p><span class="d-only">Get event coordinators to <a href="https://ticket-generator.com/validate-tickets">validate each ticket</a> via the Ticket Validator's web version or mobile app. Prevent gatecrashers and unauthorized entries like a pro.</span><span class="m-only"><a href="https://ticket-generator.com/validate-tickets">Validate each ticket</a> at the door with the Ticket Validator web or mobile app, and keep gatecrashers out like a pro.</span></p>
+          </li>
+          <li class="hf" style="--tint: #e6f0ff; --accent: #175cd3;">
+            <span class="hf-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></svg></span>
+            <h3>Roll out the red carpet</h3>
+            <p><span class="d-only">Create a customized, mobile-friendly page to share event details, collect attendee information, get registrations, and receive payments.</span><span class="m-only">Create a mobile-friendly event page to share details, collect attendee information, take registrations and receive payments.</span></p>
+          </li>
+          <li class="hf" style="--tint: #fff1dc; --accent: #b54708;">
+            <span class="hf-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4 20-7Z"/><path d="M22 2 11 13"/></svg></span>
+            <h3>Deliver tickets in a snap</h3>
+            <p><span class="d-only">Download your tickets as print-ready PDFs for distribution or directly send them digitally to the guests via email, SMS, and WhatsApp.</span><span class="m-only">Download tickets as print-ready PDFs, or send them straight to your guests by email, SMS and WhatsApp.</span></p>
+          </li>
+          <li class="hf" style="--tint: #e3f6ec; --accent: #067647;">
+            <span class="hf-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></span>
+            <h3>Your event's crystal ball</h3>
+            <p><span class="d-only">Get detailed <a href="https://ticket-generator.com/event-attendance-tracking">event analytics</a>. Dive into attendance graphs, check-in rates, and demographic breakdowns. Gain actionable insights to fine-tune your next event.</span><span class="m-only"><a href="https://ticket-generator.com/event-attendance-tracking">Event analytics</a> with attendance graphs, check-in rates and demographics, so you can fine-tune your next event.</span></p>
+          </li>
+          <li class="hf" style="--tint: #efeaff; --accent: #5925dc;">
+            <span class="hf-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><path d="M21 15a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2v2ZM3 15a2 2 0 0 0 2 2h1v-6H5a2 2 0 0 0-2 2v2Z"/><path d="M18 17v1a3 3 0 0 1-3 3h-3"/></svg></span>
+            <h3>Your ticketing sidekick</h3>
+            <p><span class="d-only">Get complete technical assistance from our <a href="https://ticket-generator.com/support">support</a> team via live chat, email, and phone. Our expert team is ready to help you design, launch, and optimize every event.</span><span class="m-only">Get help from our <a href="https://ticket-generator.com/support">support</a> team by live chat, email and phone, from designing your tickets to event day.</span></p>
+          </li>
+          <li class="hf" style="--tint: #ffe9e3; --accent: #c4320a;">
+            <span class="hf-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg></span>
+            <h3>Automate like a pro</h3>
+            <p><span class="d-only">Integrate ticket generation into your own information system to create tickets, send tickets, and much more via <a href="https://ticket-generator.com/ticket-generator-api">Ticket Generator API</a>.</span><span class="m-only">Create and send tickets from your own information system, and much more, with the <a href="https://ticket-generator.com/ticket-generator-api">Ticket Generator API</a>.</span></p>
+          </li>
+        </ul>
+        <p class="hfs-more"><a class="text-link" href="pricing.html">See pricing <span aria-hidden="true">→</span></a></p>
       </div>
     </section>
 
@@ -843,7 +957,7 @@
     </section>
 
     <!-- ================= FAQ · perforated accordion ================= -->
-    <section class="faq tkt" data-tkt="Help desk" id="support" aria-labelledby="faq-title">
+    <section class="faq tkt" data-tkt="FAQs" id="support" aria-labelledby="faq-title">
       <div class="container faq-grid">
         <div class="faq-side">
           <p class="eyebrow">Need Help?</p>
@@ -907,7 +1021,7 @@
     </section>
 
     <!-- ================= Blogs ================= -->
-    <section class="blogs tkt" data-tkt="Reading room" id="resources" aria-labelledby="blogs-title">
+    <section class="blogs tkt" data-tkt="Blog" id="resources" aria-labelledby="blogs-title">
       <div class="container">
         <header class="blogs-head">
           <h2 id="blogs-title">Learn best practices</h2>
@@ -975,7 +1089,7 @@
   </main>
 
   <!-- ================= Footer ================= -->
-  <footer class="site-footer tkt" data-tkt="See you at the gate">
+  <footer class="site-footer tkt" data-tkt="Ticket Generator">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">

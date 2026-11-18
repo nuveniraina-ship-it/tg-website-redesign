@@ -185,3 +185,47 @@
   .tq-no { grid-column: 3; grid-row: 1; align-self: center; }
   .tq-admit, .tq-qr { display: none; }
 }
+
+/* =========================================================
+   The deck as a curved carousel (all screen sizes; JS in js/main.js):
+   the middle review faces you, its neighbours angle in from the
+   sides. Not pinned — it turns a little as the section scrolls by.
+   ========================================================= */
+@media (prefers-reduced-motion: no-preference) {
+  .tm.tkt { overflow: clip; padding-bottom: var(--space-6xl); }
+  .tm-scroll { height: auto; }
+  .tm-pin { position: static; height: auto; display: block; overflow: visible; padding: 0; }
+  .tm-layout { display: block; }
+  .tm-side { max-width: 640px; margin-inline: auto; text-align: center; }
+  .tm-deck {
+    position: relative;
+    height: calc(var(--card-h, 320px) + 40px);
+    margin-top: var(--space-4xl);
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: grab;
+    outline: none;
+  }
+  .tm-deck.is-dragging { cursor: grabbing; }
+  .tm-deck:focus-visible .tq:not(.is-buried) .tq-body { box-shadow: 0 0 0 3px var(--brand-300); }
+  .tq {
+    left: 0;
+    right: 0;
+    width: min(680px, 100% - 28px);
+    max-width: none;
+    margin-inline: auto;
+    transform: perspective(1000px) translate(var(--tx, 0), -50%) rotateY(var(--ry, 0deg)) scale(var(--ts, 1));
+    transition: transform .55s cubic-bezier(.2, .8, .2, 1), opacity .3s;
+  }
+  .tq.is-buried { pointer-events: auto; cursor: pointer; }
+  .tq-body { min-height: var(--card-h, 0); }
+  .tm-deck.is-dragging .tq { transition: opacity .2s; }
+  .tm-deck.is-scrolling .tq { transition: transform .16s linear, opacity .16s linear; }
+  .tq img { -webkit-user-drag: none; }
+}
+@media (prefers-reduced-motion: no-preference) and (max-width: 768px) {
+  .tm-deck { margin-top: 8px; height: calc(var(--card-h, 300px) + 20px); }
+  .tq { width: auto; left: 14px; right: 14px; }
+  .tm-side { text-align: left; }
+}

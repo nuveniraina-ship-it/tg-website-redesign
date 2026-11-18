@@ -281,179 +281,127 @@
     });
   }
 
-  /* ---------- Testimonials: a messy deck that shuffles as you scroll ---------- */
+  /* ---------- Testimonials: a curved carousel ----------
+     The review in the middle faces you; its neighbours angle in from the sides.
+     It is never pinned, so nobody has to read every review before moving on:
+     it turns a little while the section scrolls past, and can be dragged, swiped,
+     clicked (a side review comes to the front) or moved with the arrow keys. */
   const tmScroll = document.querySelector('[data-tm-scroll]');
-  if (tmScroll) {
-    const pin = tmScroll.querySelector('.tm-pin');
-    const deck = [...tmScroll.querySelectorAll('[data-tq]')];
-    const dots = [...tmScroll.querySelectorAll('[data-tm-dots] li')];
-    const nowEl = tmScroll.querySelector('[data-tm-now]');
+  if (tmScroll && !reduceMotion) {
+    const deckEl = tmScroll.querySelector('[data-tm-deck]');
+    const deck = [...deckEl.querySelectorAll('[data-tq]')];
     const n = deck.length;
-    // pile positions by depth (0 = top): x, y, rotation, scale, opacity — deliberately untidy
-    const onPhone = phone.matches;
-    const PILE = onPhone ? [
-      [0, 0, 0, 1, 1],
-      [10, -18, 2.5, 0.96, 1],
-      [-10, -32, -3.5, 0.92, 1],
-      [0, -38, 1.5, 0.9, 0],
-    ] : [
-      [0, 0, -1.5, 1, 1],
-      [30, -16, 5, 0.975, 1],
-      [-34, -28, -7, 0.955, 1],
-      [44, -40, 9, 0.94, 1],
-      [-22, -50, -11, 0.925, 1],
-      [0, -58, 3, 0.91, 0],
-    ];
-    const timers = new Map();
-    const set = (card, [x, y, r, s, o], z, unit = 'px') => {
-      const k = onPhone ? 1 : window.innerWidth < 960 ? 0.45 : 1;
-      card.style.setProperty('--tx', unit === '%' ? `${x}%` : `${x * k}px`);
-      card.style.setProperty('--ty', `${y * k}px`);
-      card.style.setProperty('--tr', `${r}deg`);
-      card.style.setProperty('--ts', s);
-      card.style.setProperty('--to', o);
-      card.style.setProperty('--tz', z);
-    };
-    const place = (card, depth) => set(card, PILE[Math.min(depth, PILE.length - 1)], 50 - depth);
-    // always swing out to the right (away from the heading), with a little variety per card
-    const side = (i) => [i % 2 ? 66 : 78, i % 2 ? -14 : 6, i % 2 ? 19 : 12, 1, 1];
-
-    // phones: a curved carousel — the current review faces you, its neighbours angle in from the sides
-    let carStep = 300;
-    let onCar = null;
-    const wrapOff = (o) => ((((o + n / 2) % n) + n) % n) - n / 2;
-    const renderCar = (pos) => deck.forEach((card, i) => {
-      const o = wrapOff(i - pos);
+    const TURN = 2;            // reviews the carousel turns while the section crosses the screen
+    let step = 300;
+    let base = 0;              // where drags, clicks and keys have moved it
+    let scrollPart = 0;        // what the page scroll adds
+    const wrap = (o) => ((((o + n / 2) % n) + n) % n) - n / 2;
+    const render = (pos) => deck.forEach((card, i) => {
+      const o = wrap(i - pos);
       const a = Math.abs(o);
-      card.style.setProperty('--tx', `${(o * carStep).toFixed(1)}px`);
+      card.style.setProperty('--tx', `${(o * step).toFixed(1)}px`);
       card.style.setProperty('--ry', `${(Math.max(-1, Math.min(1, o)) * -24).toFixed(2)}deg`);
       card.style.setProperty('--ts', (1 - Math.min(a, 1) * 0.1).toFixed(3));
       card.style.setProperty('--to', a < 1.6 ? (1 - Math.min(a, 1) * 0.5).toFixed(2) : 0);
       card.style.setProperty('--tz', 50 - Math.round(a * 10));
       card.classList.toggle('is-buried', a > 0.5);
+      card.setAttribute('aria-hidden', String(a > 0.5));
     });
-
-    let top = -1;
-    const shuffleTo = (k) => {
-      if (k === top) return;
-      if (onPhone) {
-        top = k;
-        renderCar(k);
-        if (onCar) onCar(k);
-        return;
-      }
-      const prev = top;
-      top = k;
-      deck.forEach((card, i) => {
-        const d = (i - k + n) % n;
-        const pd = prev < 0 ? d : (i - prev + n) % n;
-        clearTimeout(timers.get(card));
-        card.classList.toggle('is-buried', d !== 0);
-        if (reduceMotion || prev < 0) return place(card, d);
-        if (d - pd > n / 2) {
-          // leaving the top: slide out to the side, then tuck under the pile
-          set(card, side(i), 60, '%');
-          timers.set(card, setTimeout(() => place(card, d), 330));
-        } else if (pd - d > n / 2) {
-          // coming back (scrolling up): slip out from under the pile, then land on top
-          set(card, side(i), 1, '%');
-          timers.set(card, setTimeout(() => place(card, d), 330));
-        } else {
-          place(card, d);
-        }
-      });
-      if (nowEl) nowEl.textContent = String(k + 1).padStart(2, '0');
-      dots.forEach((dot, i) => dot.classList.toggle('is-active', i === k));
+    const now = () => base + scrollPart;
+    const snap = () => { base = Math.round(now()) - scrollPart; render(now()); };
+    const readScroll = () => {
+      const r = tmScroll.getBoundingClientRect();
+      const t = (window.innerHeight - r.top) / (window.innerHeight + r.height);
+      scrollPart = Math.min(1, Math.max(0, t)) * TURN;
     };
 
-    const absTop = (el) => { let t = 0; for (let e = el; e; e = e.offsetParent) t += e.offsetTop; return t; };
-    // phones: the pinned carousel turns with the scroll, then settles on the nearest review
-    const PIN_TOP = 70;
-    const carRun = () => tmScroll.offsetHeight - pin.offsetHeight;
-    const carPos = () => Math.min(1, Math.max(0, (window.scrollY - absTop(tmScroll) + PIN_TOP) / Math.max(1, carRun()))) * (n - 1);
     let settle = 0;
     let dragging = false;
-    const onTmScroll = () => {
-      if (onPhone) {
-        if (dragging) return;
-        const pos = carPos();
-        top = Math.round(pos);
-        tmScroll.classList.add('is-scrolling');
-        renderCar(pos);
-        clearTimeout(settle);
-        settle = setTimeout(() => { tmScroll.classList.remove('is-scrolling'); renderCar(top); }, 140);
-        return;
-      }
-      if (reduceMotion) return shuffleTo(Math.max(top, 0));
-      const run = tmScroll.offsetHeight - pin.offsetHeight;
-      const p = Math.min(1, Math.max(0, (window.scrollY - absTop(tmScroll)) / run));
-      shuffleTo(Math.min(n - 1, Math.floor(p * n)));
-    };
-    let tmTick = false;
+    let tick = false;
     window.addEventListener('scroll', () => {
-      if (tmTick) return;
-      tmTick = true;
-      requestAnimationFrame(() => { onTmScroll(); tmTick = false; });
+      if (tick || dragging) return;
+      tick = true;
+      requestAnimationFrame(() => {
+        tick = false;
+        readScroll();
+        deckEl.classList.add('is-scrolling');
+        render(now());
+        clearTimeout(settle);
+        settle = setTimeout(() => { deckEl.classList.remove('is-scrolling'); snap(); }, 160);
+      });
     }, { passive: true });
-    if (!onPhone) {
-      window.addEventListener('resize', () => { const k = top; top = -1; shuffleTo(Math.max(k, 0)); });
-      onTmScroll();
-    }
 
-    // phones: scrolling turns the carousel; a sideways drag moves the page to that review.
-    if (onPhone) {
-      const deckEl = tmScroll.querySelector('[data-tm-deck]');
-      const goTo = (k) => {
-        const y = absTop(tmScroll) - PIN_TOP + carRun() * (k / (n - 1));
-        window.scrollTo({ top: y, behavior: reduceMotion ? 'auto' : 'smooth' });
-      };
-      let x0 = 0;
-      let y0 = 0;
-      let p0 = 0;
-      let mode = '';
-      let dx = 0;
-      deckEl.addEventListener('touchstart', (e) => {
-        x0 = e.touches[0].clientX;
-        y0 = e.touches[0].clientY;
-        p0 = Math.max(top, 0);
-        mode = '';
-        dx = 0;
-      }, { passive: true });
-      deckEl.addEventListener('touchmove', (e) => {
-        dx = e.touches[0].clientX - x0;
-        const dy = e.touches[0].clientY - y0;
-        if (!mode && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) mode = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
-        if (mode !== 'x') return;
-        dragging = true;
-        deckEl.classList.add('is-dragging');
-        renderCar(Math.min(n - 1, Math.max(0, p0 - dx / carStep)));
-      }, { passive: true });
-      const drop = () => {
-        if (mode !== 'x') return;
-        mode = '';
-        dragging = false;
-        deckEl.classList.remove('is-dragging');
-        let move = Math.round(-dx / carStep);
-        if (!move && Math.abs(dx) > 36) move = dx < 0 ? 1 : -1;
-        top = Math.min(n - 1, Math.max(0, p0 + move));
-        renderCar(top);
-        goTo(top);
-      };
-      deckEl.addEventListener('touchend', drop);
-      deckEl.addEventListener('touchcancel', drop);
-      // every review ticket is as tall as the longest one, so the deck never jumps
-      const size = () => {
-        deckEl.style.removeProperty('--card-h');
-        deckEl.style.setProperty('--card-h', `${Math.max(...deck.map((c) => c.offsetHeight))}px`);
-        carStep = deck[0].offsetWidth + 10;
-        // room to scroll through every review while the carousel stays pinned
-        tmScroll.style.height = `${pin.offsetHeight + (n - 1) * 90}px`;
-        onTmScroll();
-      };
-      size();
-      window.addEventListener('load', size);
-      window.addEventListener('resize', size);
-    }
+    // drag with a finger or the mouse; a short flick is enough to move one review
+    let x0 = 0;
+    let y0 = 0;
+    let b0 = 0;
+    let mode = '';
+    let dx = 0;
+    let moved = false;
+    deckEl.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0) return;
+      x0 = e.clientX;
+      y0 = e.clientY;
+      b0 = base;
+      mode = '';
+      dx = 0;
+      moved = false;
+    });
+    deckEl.addEventListener('pointermove', (e) => {
+      if (e.buttons !== 1 && e.pointerType === 'mouse') return;
+      dx = e.clientX - x0;
+      const dy = e.clientY - y0;
+      if (!mode && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) {
+        mode = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+        if (mode === 'x') { deckEl.setPointerCapture(e.pointerId); dragging = true; deckEl.classList.add('is-dragging'); }
+      }
+      if (mode !== 'x') return;
+      moved = true;
+      base = b0 - dx / step;
+      render(now());
+    });
+    const drop = () => {
+      if (mode !== 'x') return;
+      mode = '';
+      dragging = false;
+      deckEl.classList.remove('is-dragging');
+      let move = Math.round(-dx / step);
+      if (!move && Math.abs(dx) > 36) move = dx < 0 ? 1 : -1;
+      base = Math.round(b0 + scrollPart + move) - scrollPart;
+      render(now());
+    };
+    deckEl.addEventListener('pointerup', drop);
+    deckEl.addEventListener('pointercancel', drop);
+    // a click on a side review brings it to the front
+    deckEl.addEventListener('click', (e) => {
+      if (moved) { moved = false; e.preventDefault(); return; }
+      const card = e.target.closest('[data-tq]');
+      if (!card || !card.classList.contains('is-buried')) return;
+      e.preventDefault();
+      base += Math.round(wrap(deck.indexOf(card) - now()));
+      render(now());
+    }, true);
+    deckEl.tabIndex = 0;
+    deckEl.setAttribute('aria-label', 'Reviews. Use the left and right arrow keys to see more.');
+    deckEl.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      e.preventDefault();
+      base += e.key === 'ArrowRight' ? 1 : -1;
+      snap();
+    });
+
+    // every review ticket is as tall as the longest one, so the deck never jumps
+    const size = () => {
+      deckEl.style.removeProperty('--card-h');
+      deck.forEach((c) => c.style.setProperty('--tx', '0px'));
+      deckEl.style.setProperty('--card-h', `${Math.max(...deck.map((c) => c.offsetHeight))}px`);
+      step = deck[0].offsetWidth + (phone.matches ? 10 : 28);
+      readScroll();
+      snap();
+    };
+    size();
+    window.addEventListener('load', size);
+    window.addEventListener('resize', size);
   }
 
   /* ---------- API pipeline: registration → API → ticket → channels ---------- */

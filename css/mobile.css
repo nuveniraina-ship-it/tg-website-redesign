@@ -1087,17 +1087,56 @@
   .core-ring { cursor: pointer; -webkit-tap-highlight-color: transparent; }
   .core-ring:active { transform: scale(.94); }
 
-  /* reviews: the carousel pins under the header while the page scrolls through the reviews */
-  .tm.tkt { overflow: visible; }
-  .tm-pin {
+}
+
+/* Round 17 — phones: the new event page and features sections; reviews carousel unpinned */
+@media (max-width: 768px) {
+  /* event page: copy, then the page as guests see it on a phone */
+  .ep.tkt { padding: 62px 0 20px; }
+  .ep-layout { gap: 18px; }
+  .ep-copy .eyebrow { display: none; }
+  .ep-copy h2 { margin-top: 0; font-size: 22px; line-height: 28px; }
+  .ep-lede { margin-top: 8px; font-size: 15px; line-height: 22px; }
+  .ep-copy .checks { margin-top: 12px; gap: 6px; font-size: 14px; line-height: 21px; }
+  .ep-link { margin-top: 12px; font-size: 15px; }
+  .ep-frame { margin-inline: -6px; border-radius: 16px; }
+  .ep-bar { padding: 8px 10px; gap: 10px; }
+  .ep-dots i { width: 8px; height: 8px; }
+  .ep-url { font-size: 11px; padding: 3px 8px; }
+  .ep-page { padding: 10px; gap: 10px; }
+  .ep-cover { aspect-ratio: 16 / 10; }
+  .ep-main { padding: 14px 14px 16px; }
+  .ep-main h3 { font-size: 22px; line-height: 28px; }
+  .ep-facts { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .ep-btn { display: flex; width: 100%; padding: 11px 16px; font-size: 15px; }
+  .ep-grid { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .ep-lineup ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ep-side { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .ep-card { padding: 12px; }
+
+  /* features: icon, heading, three lines; the cards stack on scroll like on pricing */
+  .hfs.tkt { padding: 62px 0 20px; }
+  .hfs-head { text-align: left; }
+  .hfs-head .eyebrow { display: none; }
+  .hfs-head h2 { margin-top: 0; font-size: 22px; line-height: 28px; }
+  .hfs-head p:last-child { margin-top: 8px; font-size: 15px; line-height: 22px; }
+  .hf-grid { grid-template-columns: minmax(0, 1fr); gap: 14px; margin-top: 14px; padding-bottom: 6px; }
+  .hf {
     position: sticky;
-    top: 70px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: calc(100svh - 70px - 84px);
-    min-height: 400px;
-    overflow: hidden;
+    top: calc(78px + var(--i, 0) * 9px);
+    padding: 16px 16px 18px;
+    box-shadow: 0 0 0 1px rgba(16, 24, 40, .06), 0 -8px 18px -10px rgba(16, 24, 40, .22), 0 4px 8px rgba(16, 24, 40, .06);
   }
-  .tm-scroll.is-scrolling .tq { transition: transform .12s linear, opacity .12s linear; }
+  .hf:hover { transform: none; }
+  .hf:nth-child(2) { --i: 1; } .hf:nth-child(3) { --i: 2; } .hf:nth-child(4) { --i: 3; }
+  .hf:nth-child(5) { --i: 4; } .hf:nth-child(6) { --i: 5; } .hf:nth-child(7) { --i: 6; }
+  .hf:nth-child(8) { --i: 7; }
+  .hf-icon { width: 40px; height: 40px; }
+  .hf h3 { margin-top: 12px; font-size: 17px; line-height: 23px; }
+  .hf p { margin-top: 6px; min-height: 63px; font-size: 14px; line-height: 21px; }
+  .hfs-more { margin-top: 16px; }
+
+  /* reviews: not pinned; the section clips the side reviews */
+  .tm.tkt { overflow: clip; }
+  .tm-pin { position: static; height: auto; display: block; overflow: visible; }
 }

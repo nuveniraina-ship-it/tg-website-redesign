@@ -17,14 +17,14 @@ The redesigned Ticket Generator marketing site, built around a "ticket" design l
 | `css/tokens.css` | Design tokens: colours, fonts, spacing, radius, shadows |
 | `css/base.css` | Reset, buttons, header, shared pieces |
 | `css/tickets.css` | The ticket shell every section sits in |
-| `css/<section>.css` | One file per homepage section (journey, logos, numbers, usecases, trust, testimonials, faq, closing, footer) |
+| `css/<section>.css` | One file per homepage section (journey, logos, numbers, eventpage, usecases, trust, testimonials, faq, closing, footer). `eventpage.css` holds both the event page and the features grid |
 | `css/pricing.css` | Pricing page styles |
 | `css/coming-soon.css` | Coming-soon page styles |
 | `css/mobile.css` | Phone layout (768px and below), loaded last on both pages |
 | `js/main.js` | Homepage and shared behaviour |
 | `js/pricing.js` | Pricing calculator |
 | `js/coming-soon.js` | Coming-soon animation |
-| `assets/` | Logos, photos, badges, icons |
+| `assets/` | Logos, photos, badges, icons. `assets/eventpage/` holds the cover image and lineup photos from the Ticket Generator demo event page |
 | `build.sh` | Build and deploy script |
 
 Plain HTML, CSS and vanilla JavaScript. No framework and no install step.
@@ -137,15 +137,17 @@ Both fonts load from Google Fonts. Mono text uses a slashed zero and `-0.03em` l
 | Navigation bar | Floating ticket-shaped bar, same on every page, with Log In and Sign Up on the right |
 | Hero and five steps | The product picture is pinned while the five steps scroll past and change it; colour swatches recolour the ticket |
 | Numbers | Stats beside a printed receipt |
-| Use cases | Section pins; one tilted ticket is dealt onto a pile per scroll step, with a progress rail on the left |
+| Event page | The Ticket Generator event page as guests see it (dark theme, cover image, Live badge, date, time, venue, "Register Now", lineup, event guide, share), in a browser window beside the copy. Copied from the product's demo page at `tg-full-revamp.vercel.app/p/summer-music-festival` |
+| Features | Eight feature cards in a 4 × 2 grid: icon, heading, text |
+| Use cases | Section pins; one tilted ticket is dealt onto a pile per scroll step. The rail on the left lights the whole label of the use case on show, including when one is clicked |
 | Security and API | Three compliance seals, then a live demo: registration list, API, ticket, three delivery channels. Clicking the button or the logo sends a registration |
-| Testimonials | Section pins; a messy deck of review tickets shuffles as you scroll |
+| Testimonials | Curved carousel, not pinned: the middle review faces you and its neighbours angle in from the sides. It turns about two reviews as the section scrolls past; drag it, click a side review or use the arrow keys to see more |
 | FAQ | One answer open, the rest open on click |
 | Blog | Three posts, or the section is removed. Never fewer than three |
 | Closing ticket | Landscape "admission ticket" with Sign Up and Book a Demo |
 | Pricing: estimator | Ticket count field and credit packs on the left, sticky price receipt on the right |
 | Pricing: features | Section pins; the blue "1 credit = 1 ticket" ticket steps back and eight feature tickets slide past sideways |
-| Coming soon | Terminal with Mira typing; a portrait ticket prints from the top and names the page |
+| Coming soon | Terminal with Mira typing; a portrait ticket prints from the top and names the page. The stub carries a real QR code that opens the homepage |
 
 ---
 
@@ -225,9 +227,11 @@ Same fonts as desktop; only the sizes change.
 | Hero | Its own white ticket: headline, button, then the product picture as the stub |
 | Five steps | Its own blue ticket with five tabs. Steps change by themselves every 3 seconds; touching the picture (for example, trying the colours) holds the step and it resumes 3 seconds after the last touch. No timer bar |
 | Numbers | Three stats in one row, compact receipt |
+| Event page | The copy, then the event page in its phone layout: cover, details, full-width "Register Now", lineup in a 2 × 2 grid, guide and share side by side |
+| Features | Eight cards (icon, heading, three lines of text) that stack on top of each other as you scroll |
 | Use cases | Five full tickets (photo on top, tear line, heading, full text, "Learn more") that stack on top of each other as you scroll. No progress bar and no "Admit one" label |
 | Security and API | Seals show their names only. The demo shows three registrations, runs by itself, and tapping the logo sends another |
-| Testimonials | Curved carousel: the current review faces you and its neighbours angle in from the sides. It pins under the header and turns as you scroll; a sideways drag also works. No arrows or dots |
+| Testimonials | Same curved carousel as desktop, not pinned, so the page carries on after one review. Swipe sideways for more. No arrows or dots |
 | FAQ | One answer open, the rest open on tap |
 | Blog | Three slim rows, or the section is removed |
 | Footer | Compact link columns and a row of Trycon product tiles |
@@ -321,6 +325,7 @@ Used by both versions. All values live in [`css/tokens.css`](css/tokens.css).
 Apply to both versions.
 
 - Every section is a ticket: rounded card, a mono uppercase stub label at the top, semicircle notches where parts join.
+- Stub labels name the section plainly: How it works, Our customers, By the numbers, Event page, Features, Use cases, Security & API, Testimonials, FAQs, Blog, and Ticket Generator on the footer (Pricing and Features on the pricing page).
 - **Vertical (portrait) ticket:** the dotted line, zig-zag or semicircle notches sit at the bottom, where the two parts join.
 - **Horizontal (landscape) ticket:** the line or pattern sits on the right-hand side, between the main part and the stub.
 - When a ticket changes orientation at a breakpoint, its tear line and notches move with it.

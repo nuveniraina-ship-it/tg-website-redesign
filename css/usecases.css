@@ -45,16 +45,19 @@
   content: "";
   position: absolute;
   left: 0;
-  top: 50%;
+  top: 6px;
   width: 4px;
-  margin-top: -26px;   /* every segment is the same 52px, centred on its label */
   border-radius: 4px;
 }
-.uc-rail li::before { height: 52px; background: var(--gray-200); }
+/* each segment runs the full height of its label */
+.uc-rail li::before { bottom: 6px; background: var(--gray-200); }
 .uc-rail li::after {
-  height: calc(52px * var(--seg, 0));
+  height: calc((100% - 12px) * var(--seg, 0));
   background: var(--brand-500);
+  transition: height .2s;
 }
+/* the use case on show is always lit along its whole length */
+.uc-rail li.is-active::after, .uc-rail li.is-done::after { height: calc(100% - 12px); }
 .uc-rail button {
   display: block;
   width: 100%;
