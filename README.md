@@ -137,11 +137,11 @@ Homepage order: hero and five steps, event page, launch options, customer logos,
 | Section | What it does |
 | --- | --- |
 | Navigation bar | Floating ticket-shaped bar, same on every page, with Log In and Sign Up on the right |
-| Hero and five steps | A landscape ticket with no strip across the top and 24px corners. A dashed tear line runs the full height between the copy (the main part, wider) and the product picture (the stub, narrower; 1.3 : 1), with a notch at the top and bottom edges. The closing "Ready to issue" card sits on the main part. The picture is pinned while the five steps scroll past and change it; colour swatches recolour the ticket |
+| Hero and five steps | A landscape ticket with no strip across the top and 24px corners. A dashed tear line runs the full height between the copy (the main part, wider) and the product picture (the stub, narrower; 1.3 : 1), with a notch at the top and bottom edges. The closing "Ready to issue" card sits on the main part. The copy is 1.65 times as wide as the picture, and the picture's box is only as tall as the picture. A "Try it: recolour this ticket" bar with five colour dots sits in the picture's top-left corner. The API demo has a "Try it" line above it. The picture is pinned while the five steps scroll past and change it; colour swatches recolour the ticket |
 | Numbers | Stats beside a printed receipt |
 | Event page | The Ticket Generator event page as guests see it (dark theme, three cover images that slide every 3.5 seconds with arrows on either side and dots, Live badge, date, time, venue, "Register Now", lineup, event guide, share), in a browser window beside the copy. Copied from the product's demo page at `tg-full-revamp.vercel.app/p/summer-music-festival` |
-| Launch options | "What kind of event are you planning?": three portrait tickets (Direct Ticketing, Free Registrations, Paid Registrations), each with "Get Started" on its stub, linking to sign-up |
-| Clear wins | "Easy event ticketing from setup to scan": four benefit cards. The fifth benefit on the live site (zero commissions) is the numbers section that follows |
+| Launch options | "What kind of event are you planning?": a strip of three tickets joined edge to edge (Direct Ticketing, Free Registrations, Paid Registrations) with perforations and notches between them. Each has the live site's illustration, a two-step "how it works", and "Get Started" on its stub (opens sign-up). Hovering one tears it slightly off the strip |
+| Clear wins | "Easy event ticketing from setup to scan": five cards that stack on top of each other as you scroll, text on the left and the live site's illustration on the right, as on ticket-generator.com |
 | Features | "Core Strengths": the live homepage's nine features in a 3 × 3 grid (event page, branded tickets, seating plans, box office, delivery, QR validation, dashboard, add-ons, API) |
 | Use cases | Section pins; one tilted ticket is dealt onto a pile per scroll step. The rail on the left has five equal lines; the line of the use case on show is fully lit, including when one is clicked |
 | Security and API | Three compliance seals, then a live demo: registration list, API, ticket, three delivery channels. Clicking the button or the logo sends a registration |
@@ -232,8 +232,8 @@ Same fonts as desktop; only the sizes change.
 | Five steps | Its own blue ticket with five tabs. Steps change by themselves every 3 seconds; touching the picture (for example, trying the colours) holds the step and it resumes 3 seconds after the last touch. No timer bar |
 | Numbers | Three stats in one row, compact receipt |
 | Event page | The copy, then the event page in its phone layout: cover, details, full-width "Register Now", lineup in a 2 × 2 grid, guide and share side by side |
-| Launch options | Three compact tickets, icon beside the title, "Get Started" on the stub |
-| Clear wins | Four rows, icon on the left |
+| Launch options | The same strip running downwards, a small illustration beside each title, "Get Started" on each stub |
+| Clear wins | Five stacking cards, illustration on top |
 | Features | Nine cards (icon, heading, three lines of text) that stack on top of each other as you scroll |
 | Use cases | Five full tickets (photo on top, tear line, heading, full text, "Learn more") that stack on top of each other as you scroll. No progress bar and no "Admit one" label |
 | Security and API | Seals show their names only. The demo shows three registrations, runs by itself, and tapping the logo sends another |

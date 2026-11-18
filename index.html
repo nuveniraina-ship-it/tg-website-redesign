@@ -110,16 +110,22 @@
             <li>No credit card required</li>
           </ul>
         </div>
-        <a href="#step-1" class="scroll-cue">
-          <span class="scroll-cue-line" aria-hidden="true"></span>
-          Scroll to follow one ticket from idea to entry gate
-        </a>
       </div>
 
       <!-- Sticky stage: the one ticket -->
       <div class="j-stage" aria-hidden="true">
         <div class="stage-sticky">
           <div class="stage-panel">
+            <div class="stage-try">
+              <span class="stage-try-text"><b>Try it:</b> recolour this ticket</span>
+              <span class="stage-try-dots">
+                <button type="button" class="is-on" data-theme-pick="blue" aria-label="Blue" style="--c: #1570ef"></button>
+                <button type="button" data-theme-pick="ink" aria-label="Ink" style="--c: #181d27"></button>
+                <button type="button" data-theme-pick="green" aria-label="Green" style="--c: #079455"></button>
+                <button type="button" data-theme-pick="purple" aria-label="Purple" style="--c: #6938ef"></button>
+                <button type="button" data-theme-pick="sunset" aria-label="Sunset" style="--c: #ec4a0a"></button>
+              </span>
+            </div>
             <div class="stage-canvas" data-stage data-state="0">
 
               <!-- Step tracker -->
@@ -476,38 +482,38 @@
         <header class="hfs-head">
           <p class="eyebrow">Launch Options</p>
           <h2 id="lo-title">What kind of event are you planning?</h2>
-          <p>Launch your first event in minutes. Select the best fit and get started.</p>
+          <p>Launch your first event in minutes. Pick the ticket that fits and tear it off.</p>
         </header>
         <ul class="lo-grid">
           <li class="lo" style="--tint: #e6f0ff; --accent: #175cd3;">
-            <a href="https://tg-full-revamp.vercel.app/signup" class="lo-link">
-              <span class="lo-main">
-                <span class="hf-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4 20-7Z"/><path d="M22 2 11 13"/></svg></span>
-                <span class="lo-title">Direct Ticketing</span>
-                <span class="lo-text">Send ready-made or customized tickets automatically to your guests.</span>
-              </span>
-              <span class="lo-stub">Get Started <span aria-hidden="true">→</span></span>
-            </a>
-          </li>
-          <li class="lo" style="--tint: #fff1dc; --accent: #b54708;">
-            <a href="https://tg-full-revamp.vercel.app/signup" class="lo-link">
-              <span class="lo-main">
-                <span class="hf-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 10h6M9 14h6M9 18h3"/></svg></span>
-                <span class="lo-title">Free Registrations</span>
-                <span class="lo-text">Create an event page and let guests register for free.</span>
-              </span>
-              <span class="lo-stub">Get Started <span aria-hidden="true">→</span></span>
-            </a>
+            <div class="lo-art"><img src="assets/launch/direct.webp" alt="A guest list sending tickets by email, SMS and WhatsApp" width="753" height="504" loading="lazy" decoding="async"></div>
+            <div class="lo-body">
+              <span class="lo-no mono">Option 01</span>
+              <h3 class="lo-title">Direct Ticketing</h3>
+              <p class="lo-text">Send ready-made or customized tickets automatically to your guests.</p>
+              <ol class="lo-steps"><li>Upload a guest list</li><li>Tickets go out automatically</li></ol>
+            </div>
+            <a class="lo-cta" href="https://tg-full-revamp.vercel.app/signup">Get Started <span aria-hidden="true">→</span></a>
           </li>
           <li class="lo" style="--tint: #e3f6ec; --accent: #067647;">
-            <a href="https://tg-full-revamp.vercel.app/signup" class="lo-link">
-              <span class="lo-main">
-                <span class="hf-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg></span>
-                <span class="lo-title">Paid Registrations</span>
-                <span class="lo-text">Sell tickets, collect payments, and keep 100% of your earnings.</span>
-              </span>
-              <span class="lo-stub">Get Started <span aria-hidden="true">→</span></span>
-            </a>
+            <div class="lo-art"><img src="assets/launch/free.svg" alt="An event page with guests registering" width="377" height="252" loading="lazy" decoding="async"></div>
+            <div class="lo-body">
+              <span class="lo-no mono">Option 02</span>
+              <h3 class="lo-title">Free Registrations</h3>
+              <p class="lo-text">Create an event page and let guests register for free.</p>
+              <ol class="lo-steps"><li>Publish an event page</li><li>Guests sign up for free</li></ol>
+            </div>
+            <a class="lo-cta" href="https://tg-full-revamp.vercel.app/signup">Get Started <span aria-hidden="true">→</span></a>
+          </li>
+          <li class="lo" style="--tint: #fff1dc; --accent: #b54708;">
+            <div class="lo-art"><img src="assets/launch/paid.svg" alt="A ticket sales dashboard showing earnings" width="377" height="252" loading="lazy" decoding="async"></div>
+            <div class="lo-body">
+              <span class="lo-no mono">Option 03</span>
+              <h3 class="lo-title">Paid Registrations</h3>
+              <p class="lo-text">Sell tickets, collect payments, and keep 100% of your earnings.</p>
+              <ol class="lo-steps"><li>Set ticket prices</li><li>Payments go to your account</li></ol>
+            </div>
+            <a class="lo-cta" href="https://tg-full-revamp.vercel.app/signup">Get Started <span aria-hidden="true">→</span></a>
           </li>
         </ul>
       </div>
@@ -554,25 +560,45 @@
           <p>Everything you need to sell, send and scan tickets, with no platform fees in between.</p>
         </header>
         <ul class="cw-grid">
-          <li class="cw" style="--tint: #e6f0ff; --accent: #175cd3;">
-            <span class="hf-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
-            <h3>Setup event tickets in a minute</h3>
-            <p><span class="d-only">Customize tickets with your branding, logos, and event details using ready-made templates or upload your own designs. Send tickets automatically via SMS, WhatsApp, or email.</span><span class="m-only">Brand your tickets with a template or your own design, then send them automatically by SMS, WhatsApp or email.</span></p>
+          <li class="cw">
+            <div class="cw-copy">
+              <span class="cw-no mono">01</span>
+              <h3>Setup event tickets in a minute</h3>
+              <p><span class="d-only">Customize tickets with your branding, logos, and event details using ready-made templates or upload your own designs. Send tickets automatically via SMS, WhatsApp, or email.</span><span class="m-only">Brand your tickets with a template or your own design, then send them automatically by SMS, WhatsApp or email.</span></p>
+            </div>
+            <div class="cw-art"><img src="assets/clearwins/win-1.webp" alt="Create customized tickets with ease and send them automatically via SMS, WhatsApp, or email" width="1120" height="692" loading="lazy" decoding="async"></div>
           </li>
-          <li class="cw" style="--tint: #fff1dc; --accent: #b54708;">
-            <span class="hf-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0 0 4h14a2 2 0 0 1 2 2v3"/><path d="M3 5v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3"/><path d="M21 12h-4a2 2 0 0 0 0 4h4z"/></svg></span>
-            <h3>Keep 100% of your ticket sales revenue</h3>
-            <p><span class="d-only">Ticket Generator integrates with your Stripe, PayPal, or Razorpay account so payments go directly to you. No hidden charges or platform fees.</span><span class="m-only">Payments go straight to your Stripe, PayPal or Razorpay account. No hidden charges or platform fees.</span></p>
+          <li class="cw">
+            <div class="cw-copy">
+              <span class="cw-no mono">02</span>
+              <h3>Keep 100% of your ticket sales revenue</h3>
+              <p><span class="d-only">Ticket Generator integrates with your Stripe, PayPal, or Razorpay account so payments go directly to you. No hidden charges or platform fees.</span><span class="m-only">Payments go straight to your Stripe, PayPal or Razorpay account. No hidden charges or platform fees.</span></p>
+            </div>
+            <div class="cw-art"><img src="assets/clearwins/win-2.webp" alt="Select a payment gateway and keep 100% of your ticket sales" width="1120" height="746" loading="lazy" decoding="async"></div>
           </li>
-          <li class="cw" style="--tint: #e3f6ec; --accent: #067647;">
-            <span class="hf-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 10 5-10 5L2 7l10-5z"/><path d="m2 12 10 5 10-5"/><path d="m2 17 10 5 10-5"/></svg></span>
-            <h3>Your tickets, your way</h3>
-            <p><span class="d-only">Easily create multiple ticket types such as General Admission, VIP Passes, Early Bird Specials, and more. Tailor each ticket to meet your event's specific needs.</span><span class="m-only">Create General Admission, VIP, Early Bird and other ticket types, each tailored to your event.</span></p>
+          <li class="cw">
+            <div class="cw-copy">
+              <span class="cw-no mono">03</span>
+              <h3>Your tickets, your way</h3>
+              <p><span class="d-only">Easily create multiple ticket types such as General Admission, VIP Passes, Early Bird Specials, and more. Tailor each ticket to meet your event's specific needs.</span><span class="m-only">Create General Admission, VIP, Early Bird and other ticket types, each tailored to your event.</span></p>
+            </div>
+            <div class="cw-art"><img src="assets/clearwins/win-3.webp" alt="Choose from ticket categories like early bird, VIP, or general admission" width="1120" height="736" loading="lazy" decoding="async"></div>
           </li>
-          <li class="cw" style="--tint: #efeaff; --accent: #5925dc;">
-            <span class="hf-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></span>
-            <h3>Run smarter events with real-time insights</h3>
-            <p><span class="d-only">Get live insights on attendee registrations, ticket sales, and event check-ins. Export comprehensive reports to measure success, identify trends, and plan smarter for future events.</span><span class="m-only">Watch registrations, sales and check-ins live, and export reports to plan your next event.</span></p>
+          <li class="cw">
+            <div class="cw-copy">
+              <span class="cw-no mono">04</span>
+              <h3>Run smarter events with real-time insights</h3>
+              <p><span class="d-only">Get live insights on attendee registrations, ticket sales, and event check-ins. Export comprehensive reports to measure success, identify trends, and plan smarter for future events.</span><span class="m-only">Watch registrations, sales and check-ins live, and export reports to plan your next event.</span></p>
+            </div>
+            <div class="cw-art"><img src="assets/clearwins/win-4.webp" alt="Analyze event data to plan better events" width="1120" height="686" loading="lazy" decoding="async"></div>
+          </li>
+          <li class="cw">
+            <div class="cw-copy">
+              <span class="cw-no mono">05</span>
+              <h3>Zero commissions, no hidden fees</h3>
+              <p><span class="d-only">No subscriptions. No recurring costs. Just a simple, pay-as-you-go model that grows with your event needs. Pay only for what you use. Nothing more, nothing less.</span><span class="m-only">No subscriptions or recurring costs. Pay as you go, only for the tickets you use.</span></p>
+            </div>
+            <div class="cw-art"><img src="assets/clearwins/win-5.webp" alt="No subscriptions with Ticket Generator" width="1120" height="684" loading="lazy" decoding="async"></div>
           </li>
         </ul>
       </div>
@@ -702,7 +728,6 @@
             <p><span class="d-only">Integrate your event management system with the Ticket Generator API for real-time ticket generation and distribution. Automate workflows and deliver a smooth, branded ticketing experience.</span><span class="m-only">Connect your event system to the Ticket Generator API to generate and send branded tickets in real time.</span></p>
           </li>
         </ul>
-        <p class="hfs-more"><a class="text-link" href="pricing.html">See pricing <span aria-hidden="true">→</span></a></p>
       </div>
     </section>
 
@@ -832,6 +857,8 @@
               </a>
             </div>
           </div>
+
+          <p class="api-try"><span class="api-try-dot" aria-hidden="true"></span><span><b>Try it:</b> <span class="d-only">click the Ticket Generator logo or “Simulate a new registration” to watch a guest get their ticket.</span><span class="m-only">tap the Ticket Generator logo to register a guest and watch their ticket go out.</span></span></p>
 
           <!-- the pipeline -->
           <div class="flow" aria-hidden="true">

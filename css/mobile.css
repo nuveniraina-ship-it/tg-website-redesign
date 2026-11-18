@@ -1150,25 +1150,64 @@
 /* Round 19 — phones: launch options and clear wins */
 @media (max-width: 768px) {
   .los.tkt, .cws.tkt { padding: 62px 0 20px; }
-  .lo-grid { gap: 10px; margin-top: 14px; }
-  .lo-main { flex-direction: row; flex-wrap: wrap; align-items: center; column-gap: 12px; padding: 16px; }
-  .lo-main .hf-icon { width: 40px; height: 40px; }
-  .lo-title { margin-top: 0; font-size: 17px; line-height: 23px; }
-  .lo-text { flex-basis: 100%; margin-top: 6px; font-size: 14px; line-height: 21px; }
-  .lo { --notch: 9px; }
-  .lo-link { -webkit-mask-position: left, right; }
-  .lo-stub { height: 46px; padding: 0 16px; font-size: 14px; }
-  .lo-link {
+
+  /* the strip runs downwards: perforations and notches between the tickets */
+  .lo-grid { --notch: 10px; grid-template-columns: minmax(0, 1fr); margin-top: 14px; }
+  .lo, .lo:first-child, .lo:last-child {
+    border-radius: 0;
     -webkit-mask:
-      radial-gradient(circle var(--notch) at 0 calc(100% - 46px), transparent 98%, #000) left / 51% 100% no-repeat,
-      radial-gradient(circle var(--notch) at 100% calc(100% - 46px), transparent 98%, #000) right / 51% 100% no-repeat;
+      radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000) top left / 51% 51% no-repeat,
+      radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000) top right / 51% 51% no-repeat,
+      radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000) bottom left / 51% 51% no-repeat,
+      radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000) bottom right / 51% 51% no-repeat;
             mask:
-      radial-gradient(circle var(--notch) at 0 calc(100% - 46px), transparent 98%, #000) left / 51% 100% no-repeat,
-      radial-gradient(circle var(--notch) at 100% calc(100% - 46px), transparent 98%, #000) right / 51% 100% no-repeat;
+      radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000) top left / 51% 51% no-repeat,
+      radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000) top right / 51% 51% no-repeat,
+      radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000) bottom left / 51% 51% no-repeat,
+      radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000) bottom right / 51% 51% no-repeat;
   }
-  .cw-grid { grid-template-columns: minmax(0, 1fr); gap: 10px; margin-top: 14px; }
-  .cw { display: grid; grid-template-columns: 40px minmax(0, 1fr); column-gap: 12px; padding: 14px 16px; }
-  .cw .hf-icon { width: 40px; height: 40px; grid-row: span 2; }
-  .cw h3 { margin: 0; font-size: 16px; line-height: 22px; }
+  .lo:first-child { border-radius: 20px 20px 0 0; -webkit-mask:
+      radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000) bottom left / 51% 51% no-repeat,
+      radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000) bottom right / 51% 51% no-repeat,
+      linear-gradient(#000 0 0) top / 100% 50% no-repeat;
+            mask:
+      radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000) bottom left / 51% 51% no-repeat,
+      radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000) bottom right / 51% 51% no-repeat,
+      linear-gradient(#000 0 0) top / 100% 50% no-repeat; }
+  .lo:last-child { border-radius: 0 0 20px 20px; -webkit-mask:
+      radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000) top left / 51% 51% no-repeat,
+      radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000) top right / 51% 51% no-repeat,
+      linear-gradient(#000 0 0) bottom / 100% 50% no-repeat;
+            mask:
+      radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000) top left / 51% 51% no-repeat,
+      radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000) top right / 51% 51% no-repeat,
+      linear-gradient(#000 0 0) bottom / 100% 50% no-repeat; }
+  .lo + .lo::before {
+    top: -1px;
+    bottom: auto;
+    left: calc(var(--notch) + 6px);
+    right: calc(var(--notch) + 6px);
+    width: auto;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, var(--gray-300) 0 6px, transparent 6px 12px);
+  }
+  .lo:hover, .lo:nth-child(3):hover { transform: none; }
+  .lo { display: grid; grid-template-columns: 112px minmax(0, 1fr); grid-template-rows: auto auto; }
+  .lo-art { grid-row: 1; margin: 12px 0 0 12px; align-self: start; }
+  .lo-art img { aspect-ratio: 1; }
+  .lo-body { grid-row: 1; padding: 12px 14px 8px 12px; }
+  .lo-no { font-size: 10px; }
+  .lo-title { margin-top: 2px; font-size: 17px; line-height: 23px; }
+  .lo-text { margin-top: 4px; font-size: 14px; line-height: 20px; }
+  .lo-steps { display: none; }
+  .lo-cta { grid-column: 1 / -1; margin: 4px 12px 12px; padding: 10px 12px; font-size: 14px; }
+
+  /* clear wins: still a stack, picture on top */
+  .cw-grid { gap: 14px; margin-top: 14px; }
+  .cw { top: calc(78px + var(--i, 0) * 9px); grid-template-columns: minmax(0, 1fr); gap: 4px; min-height: 0; padding: 14px 16px 16px; border-radius: 18px; }
+  .cw-art { order: -1; }
+  .cw-art img { max-height: 150px; }
+  .cw-no { font-size: 10px; }
+  .cw h3 { margin-top: 4px; font-size: 17px; line-height: 23px; }
   .cw p { margin-top: 4px; font-size: 14px; line-height: 21px; }
 }

@@ -650,7 +650,7 @@
   drawQR(canvas.querySelector('[data-qr]'), 'Annual Client Summit');
 
   // Template swatches: click one and the whole stage (ticket, tracker, cards) takes that colour.
-  const picks = [...canvas.querySelectorAll('[data-theme-pick]')];
+  const picks = [...panel.querySelectorAll('[data-theme-pick]')];   // the corner bar and the Create card's swatches
   picks.forEach((btn) => btn.addEventListener('click', () => {
     const theme = btn.dataset.themePick;
     if (theme === 'blue') canvas.removeAttribute('data-theme'); else canvas.dataset.theme = theme;
