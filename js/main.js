@@ -895,7 +895,6 @@
     ink:    { name: 'After Dark Live',      cat: 'NIGHT SHOW',     logo: 'AD', venue: 'Club Noir',      place: 'Club Noir, Old Town',         photo: 'night' },
     green:  { name: 'City Run 10K',         cat: 'MARATHON',       logo: 'CR', venue: 'Riverside Park', place: 'Riverside Park, North Gate',  photo: 'run' },
     purple: { name: 'Leaders Summit',       cat: 'CONFERENCE',     logo: 'LD', venue: 'Grand Hall',     place: 'Grand Hall, Convention Centre', photo: 'summit' },
-    sunset: { name: 'Sunset Art Workshop',  cat: 'WORKSHOP',       logo: 'SA', venue: 'Studio 9',       place: 'Studio 9, Arts Quarter',      photo: 'art' },
     pink:   { name: 'Love Songs Live',      cat: "VALENTINE'S CONCERT", logo: 'LS', venue: 'Rose Hall',  place: 'Rose Hall, Riverside',        photo: 'valentine' },
     red:    { name: 'Opening Night',        cat: 'THEATRE PREMIERE', logo: 'ON', venue: 'Grand Theatre', place: 'Grand Theatre, Main Street', photo: 'premiere' },
     yellow: { name: 'Charity Fun Day',      cat: 'CHARITY',        logo: 'CF', venue: 'Central Square', place: 'Central Square, City Centre', photo: 'charity' },
@@ -912,7 +911,7 @@
     h = (h * 60 + 360) % 360;
     if (h >= 290 && h < 345) return 'pink';
     if (h >= 345 || h < 15) return l > 0.7 ? 'pink' : 'red';
-    if (h < 40) return 'sunset';
+    if (h < 40) return 'red';
     if (h < 70) return 'yellow';
     if (h < 165) return 'green';
     if (h < 195) return 'teal';

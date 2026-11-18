@@ -264,7 +264,7 @@ The demo ticket in the hero changes event with its colour, everywhere the demo s
 | Ink | After Dark Live | Night show | Club Noir | `night.webp` |
 | Green | City Run 10K | Marathon | Riverside Park | `run.webp` |
 | Purple | Leaders Summit | Conference | Grand Hall | `summit.webp` (speaker side of the conference photo) |
-| Sunset | Sunset Art Workshop | Workshop | Studio 9 | `art.webp` |
+| Pink | Love Songs Live | Valentine's concert | Rose Hall | `valentine.webp` (singer on stage, pink lights) |
 
 There are five colours (no colour wheel). The phone hero ticket is the blue concert ticket with its photo.
 

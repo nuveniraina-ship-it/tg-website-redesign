@@ -649,9 +649,9 @@
   --brand-25: #fafaff; --brand-50: #f4f3ff; --brand-100: #ebe9fe; --brand-200: #d9d6fe; --brand-300: #bdb4fe;
   --brand-500: #7a5af8; --brand-600: #6938ef; --brand-700: #5925dc; --brand-800: #4a1fb8;
 }
-.stage-canvas[data-theme="sunset"] {
-  --brand-25: #fffaf5; --brand-50: #fff6ed; --brand-100: #ffead5; --brand-200: #fddcab; --brand-300: #feb273;
-  --brand-500: #fb6514; --brand-600: #ec4a0a; --brand-700: #c4320a; --brand-800: #9c2a10;
+.stage-canvas[data-theme="pink"] {
+  --brand-25: #fef6fb; --brand-50: #fdf2fa; --brand-100: #fce7f6; --brand-200: #fcceee; --brand-300: #faa7e0;
+  --brand-500: #ee46bc; --brand-600: #dd2590; --brand-700: #c11574; --brand-800: #9e165f;
 }
 
 /* any colour the visitor picks: the whole scale is mixed from --pick */
