@@ -143,17 +143,18 @@ main { padding-top: 20px; }
     margin-left: -1px;
     background: repeating-linear-gradient(180deg, var(--gray-300) 0 6px, transparent 6px 12px);
   }
+  /* half-circles cut into the ticket only, so nothing sits over the shadow below it */
   .tkt--land.tkt::after {
-    top: -16px;
-    bottom: -16px;
+    top: 0;
+    bottom: 0;
     width: 32px;
     margin-left: -16px;
     background: var(--desk-paper);
     -webkit-mask:
-      radial-gradient(circle 16px at 50% 16px, #000 98%, transparent) top / 100% 51% no-repeat,
-      radial-gradient(circle 16px at 50% calc(100% - 16px), #000 98%, transparent) bottom / 100% 51% no-repeat;
+      radial-gradient(circle 16px at 50% 0, #000 98%, transparent) top / 100% 51% no-repeat,
+      radial-gradient(circle 16px at 50% 100%, #000 98%, transparent) bottom / 100% 51% no-repeat;
             mask:
-      radial-gradient(circle 16px at 50% 16px, #000 98%, transparent) top / 100% 51% no-repeat,
-      radial-gradient(circle 16px at 50% calc(100% - 16px), #000 98%, transparent) bottom / 100% 51% no-repeat;
+      radial-gradient(circle 16px at 50% 0, #000 98%, transparent) top / 100% 51% no-repeat,
+      radial-gradient(circle 16px at 50% 100%, #000 98%, transparent) bottom / 100% 51% no-repeat;
   }
 }

@@ -132,7 +132,7 @@ Both fonts load from Google Fonts. Mono text uses a slashed zero and `-0.03em` l
 
 ### Desktop sections and behaviour
 
-Homepage order: hero and five steps, event page, customer logos, numbers, features, use cases, security and API, testimonials, FAQ, blog, closing ticket, footer.
+Homepage order: hero and five steps, event page, launch options, customer logos, clear wins, numbers, features, use cases, security and API, testimonials, FAQ, blog, closing ticket, footer. Every section on the live ticket-generator.com homepage has a counterpart here (checked 18 November 2026).
 
 | Section | What it does |
 | --- | --- |
@@ -140,7 +140,9 @@ Homepage order: hero and five steps, event page, customer logos, numbers, featur
 | Hero and five steps | A landscape ticket with no strip across the top and 24px corners. A dashed tear line runs the full height between the copy (the main part, wider) and the product picture (the stub, narrower; 1.3 : 1), with a notch at the top and bottom edges. The closing "Ready to issue" card sits on the main part. The picture is pinned while the five steps scroll past and change it; colour swatches recolour the ticket |
 | Numbers | Stats beside a printed receipt |
 | Event page | The Ticket Generator event page as guests see it (dark theme, three cover images that slide every 3.5 seconds with arrows on either side and dots, Live badge, date, time, venue, "Register Now", lineup, event guide, share), in a browser window beside the copy. Copied from the product's demo page at `tg-full-revamp.vercel.app/p/summer-music-festival` |
-| Features | Eight feature cards in a 4 × 2 grid: icon, heading, text |
+| Launch options | "What kind of event are you planning?": three portrait tickets (Direct Ticketing, Free Registrations, Paid Registrations), each with "Get Started" on its stub, linking to sign-up |
+| Clear wins | "Easy event ticketing from setup to scan": four benefit cards. The fifth benefit on the live site (zero commissions) is the numbers section that follows |
+| Features | "Core Strengths": the live homepage's nine features in a 3 × 3 grid (event page, branded tickets, seating plans, box office, delivery, QR validation, dashboard, add-ons, API) |
 | Use cases | Section pins; one tilted ticket is dealt onto a pile per scroll step. The rail on the left has five equal lines; the line of the use case on show is fully lit, including when one is clicked |
 | Security and API | Three compliance seals, then a live demo: registration list, API, ticket, three delivery channels. Clicking the button or the logo sends a registration |
 | Testimonials | Curved carousel, not pinned: the middle review faces you and its neighbours angle in from the sides. Like the customer logos it moves on by itself, one review every 2.5 seconds while on screen, and pauses while the mouse rests on it. Previous and next arrows sit under it; you can also drag it, click a side review or use the arrow keys |
@@ -148,7 +150,7 @@ Homepage order: hero and five steps, event page, customer logos, numbers, featur
 | Blog | Three posts, or the section is removed. Never fewer than three |
 | Closing ticket | Landscape "admission ticket" with Sign Up and Book a Demo |
 | Pricing: estimator | A landscape ticket like the homepage hero: headline, ticket count field and credit packs on the main part; the sticky price receipt is the stub on the right, past the tear line. "Create your own event" in the event page section opens the app's sign-up |
-| Pricing: features | Section pins; the blue "1 credit = 1 ticket" ticket steps back and eight feature tickets slide past sideways |
+| Pricing: features | Section pins; the blue "1 credit = 1 ticket" ticket steps back and ten feature tickets slide past sideways (including seating plans and on-ground sales, as on the live pricing page) |
 | Coming soon | Terminal with Mira typing; a portrait ticket prints from the top and names the page. The stub carries a real QR code that opens the homepage |
 
 ---
@@ -230,13 +232,15 @@ Same fonts as desktop; only the sizes change.
 | Five steps | Its own blue ticket with five tabs. Steps change by themselves every 3 seconds; touching the picture (for example, trying the colours) holds the step and it resumes 3 seconds after the last touch. No timer bar |
 | Numbers | Three stats in one row, compact receipt |
 | Event page | The copy, then the event page in its phone layout: cover, details, full-width "Register Now", lineup in a 2 × 2 grid, guide and share side by side |
-| Features | Eight cards (icon, heading, three lines of text) that stack on top of each other as you scroll |
+| Launch options | Three compact tickets, icon beside the title, "Get Started" on the stub |
+| Clear wins | Four rows, icon on the left |
+| Features | Nine cards (icon, heading, three lines of text) that stack on top of each other as you scroll |
 | Use cases | Five full tickets (photo on top, tear line, heading, full text, "Learn more") that stack on top of each other as you scroll. No progress bar and no "Admit one" label |
 | Security and API | Seals show their names only. The demo shows three registrations, runs by itself, and tapping the logo sends another |
 | Testimonials | Same curved carousel as desktop: moves on by itself every 2.5 seconds, with previous and next arrows under it. Pauses for 5 seconds after a swipe and 8 seconds after an arrow tap |
 | FAQ | One answer open, the rest open on tap |
 | Blog | Three slim rows, or the section is removed |
-| Footer | Compact link columns and a row of Trycon product tiles |
+| Footer | Compact link columns (Product, Resources with Affiliate Program, Comparison) and a row of Trycon product tiles |
 | Pricing: top | Two tickets: the blue headline ticket with three figures, then the white "Estimate" ticket with the calculator |
 | Pricing: features | The blue "1 credit = 1 ticket" ticket, then eight white cards (icon, heading, three lines of text) that stack on scroll |
 | Coming soon | Same terminal and printing ticket as desktop, sized to the screen |

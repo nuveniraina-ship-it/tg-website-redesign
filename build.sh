@@ -35,7 +35,7 @@ perl -pi -e "s#(href=\"css/[^\"]+\.css|src=\"js/[^\"]+\.js)\"#\$1?v=$STAMP\"#g" 
 # 2c. Any address that doesn't exist shows the coming-soon page too
 cp "$OUT/coming-soon.html" "$OUT/404.html"
 # ...and every page that isn't redesigned yet gets its own address showing the same page
-for SLUG in api community demo faqs features how-it-works legal resources status support ticket-maker ticket-templates ticket-validator-web use-cases; do
+for SLUG in affiliate-program vs-eventbrite vs-ticket-tailor api community demo faqs features how-it-works legal resources status support ticket-maker ticket-templates ticket-validator-web use-cases; do
   cp "$OUT/coming-soon.html" "$OUT/$SLUG.html"
 done
 

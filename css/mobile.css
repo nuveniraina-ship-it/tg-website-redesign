@@ -1130,7 +1130,7 @@
   .hf:hover { transform: none; }
   .hf:nth-child(2) { --i: 1; } .hf:nth-child(3) { --i: 2; } .hf:nth-child(4) { --i: 3; }
   .hf:nth-child(5) { --i: 4; } .hf:nth-child(6) { --i: 5; } .hf:nth-child(7) { --i: 6; }
-  .hf:nth-child(8) { --i: 7; }
+  .hf:nth-child(8) { --i: 7; } .hf:nth-child(9) { --i: 8; }
   .hf-icon { width: 40px; height: 40px; }
   .hf h3 { margin-top: 12px; font-size: 17px; line-height: 23px; }
   .hf p { margin-top: 6px; min-height: 63px; font-size: 14px; line-height: 21px; }
@@ -1145,4 +1145,30 @@
 @media (max-width: 768px) {
   .est { padding-top: 22px; }
   .est::before, .est::after { content: none; }
+}
+
+/* Round 19 — phones: launch options and clear wins */
+@media (max-width: 768px) {
+  .los.tkt, .cws.tkt { padding: 62px 0 20px; }
+  .lo-grid { gap: 10px; margin-top: 14px; }
+  .lo-main { flex-direction: row; flex-wrap: wrap; align-items: center; column-gap: 12px; padding: 16px; }
+  .lo-main .hf-icon { width: 40px; height: 40px; }
+  .lo-title { margin-top: 0; font-size: 17px; line-height: 23px; }
+  .lo-text { flex-basis: 100%; margin-top: 6px; font-size: 14px; line-height: 21px; }
+  .lo { --notch: 9px; }
+  .lo-link { -webkit-mask-position: left, right; }
+  .lo-stub { height: 46px; padding: 0 16px; font-size: 14px; }
+  .lo-link {
+    -webkit-mask:
+      radial-gradient(circle var(--notch) at 0 calc(100% - 46px), transparent 98%, #000) left / 51% 100% no-repeat,
+      radial-gradient(circle var(--notch) at 100% calc(100% - 46px), transparent 98%, #000) right / 51% 100% no-repeat;
+            mask:
+      radial-gradient(circle var(--notch) at 0 calc(100% - 46px), transparent 98%, #000) left / 51% 100% no-repeat,
+      radial-gradient(circle var(--notch) at 100% calc(100% - 46px), transparent 98%, #000) right / 51% 100% no-repeat;
+  }
+  .cw-grid { grid-template-columns: minmax(0, 1fr); gap: 10px; margin-top: 14px; }
+  .cw { display: grid; grid-template-columns: 40px minmax(0, 1fr); column-gap: 12px; padding: 14px 16px; }
+  .cw .hf-icon { width: 40px; height: 40px; grid-row: span 2; }
+  .cw h3 { margin: 0; font-size: 16px; line-height: 22px; }
+  .cw p { margin-top: 4px; font-size: 14px; line-height: 21px; }
 }

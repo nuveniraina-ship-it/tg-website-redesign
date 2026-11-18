@@ -6,7 +6,7 @@
   const status = root.querySelector('[data-cs-status]');
 
   // each unfinished page has its own address; name it on the ticket
-  const NAMES = { api: 'API', faqs: 'FAQs', demo: 'Book a Demo', 'ticket-validator-web': 'Ticket Validator' };
+  const NAMES = { api: 'API', faqs: 'FAQs', demo: 'Book a Demo', 'ticket-validator-web': 'Ticket Validator', 'vs-eventbrite': 'TG vs. Eventbrite', 'vs-ticket-tailor': 'TG vs. Ticket Tailor' };
   const slug = location.pathname.replace(/^\/|\.html$|\/$/g, '');
   if (/^[a-z0-9-]+$/.test(slug) && slug !== 'coming-soon' && slug !== '404') {
     const name = NAMES[slug] || slug.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join(' ');
