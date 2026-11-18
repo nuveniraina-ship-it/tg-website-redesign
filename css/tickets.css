@@ -58,8 +58,20 @@ main { padding-top: 20px; }
   color: color-mix(in srgb, currentColor 62%, transparent);
 }
 .tkt-stub b { font-weight: 500; color: color-mix(in srgb, currentColor 100%, transparent); }
-/* the strip stays as the ticket's tear-off edge, without a section name */
-.tkt-stub > span { visibility: hidden; }
+/* the section's blue heading sits in the strip, above the tear line */
+.tkt-stub .tkt-eyebrow {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  letter-spacing: 0 !important;
+  text-transform: none;
+  color: var(--brand-700);
+}
+.tkt-stub .tkt-eyebrow.is-dark { color: var(--brand-700); }
+.tkt-stub .tkt-eyebrow.is-light { color: var(--brand-200); }
+/* ...so it isn't repeated under the line */
+.eyebrow.is-in-stub { display: none; }
 .tkt-stub::before,
 .tkt-stub::after {
   content: "";

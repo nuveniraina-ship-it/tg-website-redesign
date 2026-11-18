@@ -197,7 +197,7 @@
 .pr-sec-head p:last-child { margin-top: var(--space-lg); font-size: 18px; line-height: 28px; color: var(--text-tertiary); }
 
 /* runway: about half a viewport of scroll per ticket */
-.fc-scroll { position: relative; height: calc(100vh + 10 * 45vh); }
+.fc-scroll { position: relative; height: calc(100vh + 8 * 34vh); }
 .fc-pin {
   position: sticky;
   top: 84px;

@@ -174,11 +174,26 @@
 
   /* ---------- Every section is a ticket: stub strip + flying-letter entrance ---------- */
   const tickets = [...document.querySelectorAll('[data-tkt]')];
+  // the strip carries the section's blue heading (its eyebrow), moved up above the tear line
   tickets.forEach((sec) => {
     const stub = document.createElement('div');
     stub.className = 'tkt-stub';
     stub.setAttribute('aria-hidden', 'true');
-    stub.innerHTML = `<span><b>${sec.dataset.tkt}</b></span>`;
+    let label = sec.dataset.eyebrow || '';
+    let tone = '';
+    if (!label && !sec.classList.contains('tkt--hero')) {
+      const eb = sec.querySelector('.eyebrow');
+      if (eb) {
+        label = eb.textContent.trim();
+        tone = getComputedStyle(eb).color;      // keeps the section's own shade (lighter on dark tickets)
+        eb.classList.add('is-in-stub');
+      }
+    }
+    if (label) {
+      stub.innerHTML = '<span class="tkt-eyebrow"></span>';
+      stub.firstChild.textContent = label;
+      if (tone) stub.firstChild.style.color = tone;
+    }
     sec.prepend(stub);
   });
 
@@ -292,7 +307,7 @@
     const deckEl = tmScroll.querySelector('[data-tm-deck]');
     const deck = [...deckEl.querySelectorAll('[data-tq]')];
     const n = deck.length;
-    const EVERY = 3500;        // ms per review
+    const EVERY = 2500;        // ms per review
     let step = 300;
     let pos = 0;
     const wrap = (o) => ((((o + n / 2) % n) + n) % n) - n / 2;
@@ -376,6 +391,17 @@
       go(Math.round(pos) + Math.round(wrap(deck.indexOf(card) - pos)));
       hold();
     }, true);
+    // arrows, for anyone who wants to read them all without waiting
+    const arrow = (d) => `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="${d}" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    const nav = document.createElement('div');
+    nav.className = 'tm-arrows';
+    nav.innerHTML = `<button type="button" class="tm-arrow" aria-label="Previous review">${arrow('M15.833 10H4.167M10 15.833 4.167 10 10 4.167')}</button>
+      <button type="button" class="tm-arrow" aria-label="Next review">${arrow('M4.167 10h11.666M10 4.167 15.833 10 10 15.833')}</button>`;
+    deckEl.after(nav);
+    const [prevBtn, nextBtn] = nav.querySelectorAll('button');
+    prevBtn.addEventListener('click', () => { go(Math.round(pos) - 1); hold(8000); });
+    nextBtn.addEventListener('click', () => { go(Math.round(pos) + 1); hold(8000); });
+
     deckEl.tabIndex = 0;
     deckEl.setAttribute('aria-label', 'Reviews. Use the left and right arrow keys to see more.');
     deckEl.addEventListener('keydown', (e) => {
@@ -755,7 +781,7 @@
     const stub = document.createElement('div');
     stub.className = 'tkt-stub';
     stub.setAttribute('aria-hidden', 'true');
-    stub.innerHTML = '<span><b>How it works</b></span>';
+    stub.innerHTML = '<span class="tkt-eyebrow is-light">Get Started</span>';
     stepsCard.append(stub, stepsCol);
 
     const tabs = document.createElement('div');

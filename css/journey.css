@@ -17,11 +17,10 @@
 
 /* ---------- Hero (scene 0) ---------- */
 .j-hero {
-  min-height: calc(100vh - 100px);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: var(--space-6xl) 0;
+  padding: var(--space-5xl) 0 var(--space-xl);
 }
 /* hero stat: a two-part ticket — the number is the stub, torn along a perforation */
 .hero-stat {

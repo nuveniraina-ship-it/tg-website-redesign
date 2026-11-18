@@ -179,7 +179,7 @@
   const now = scroller.querySelector('[data-fc-now]');
   const n = cards.length;
   const GAP = 32;
-  const INTRO = 0.22;       // share of the scroll spent on the blue ticket + fly-in
+  const INTRO = 0.1;        // share of the scroll spent on the blue ticket + fly-in
   let step = 362;
   let target = 0;
   let pos = 0;
@@ -240,7 +240,7 @@
     const run = scroller.offsetHeight - pin.offsetHeight;
     const top = scroller.getBoundingClientRect().top - parseFloat(getComputedStyle(pin).top || 0);
     // small holds at both ends: the blue ticket gets a moment alone, and so does the last one
-    target = clamp((-top / run - 0.06) / 0.9, 0, 1);
+    target = clamp((-top / run - 0.02) / 0.96, 0, 1);
   };
 
   const tick = () => {

@@ -143,7 +143,7 @@ Homepage order: hero and five steps, event page, customer logos, numbers, featur
 | Features | Eight feature cards in a 4 × 2 grid: icon, heading, text |
 | Use cases | Section pins; one tilted ticket is dealt onto a pile per scroll step. The rail on the left has five equal lines; the line of the use case on show is fully lit, including when one is clicked |
 | Security and API | Three compliance seals, then a live demo: registration list, API, ticket, three delivery channels. Clicking the button or the logo sends a registration |
-| Testimonials | Curved carousel, not pinned: the middle review faces you and its neighbours angle in from the sides. Like the customer logos it moves on by itself, one review every 3.5 seconds while on screen, and pauses while the mouse rests on it. Drag it, click a side review or use the arrow keys to move it yourself |
+| Testimonials | Curved carousel, not pinned: the middle review faces you and its neighbours angle in from the sides. Like the customer logos it moves on by itself, one review every 2.5 seconds while on screen, and pauses while the mouse rests on it. Previous and next arrows sit under it; you can also drag it, click a side review or use the arrow keys |
 | FAQ | One answer open, the rest open on click |
 | Blog | Three posts, or the section is removed. Never fewer than three |
 | Closing ticket | Landscape "admission ticket" with Sign Up and Book a Demo |
@@ -233,7 +233,7 @@ Same fonts as desktop; only the sizes change.
 | Features | Eight cards (icon, heading, three lines of text) that stack on top of each other as you scroll |
 | Use cases | Five full tickets (photo on top, tear line, heading, full text, "Learn more") that stack on top of each other as you scroll. No progress bar and no "Admit one" label |
 | Security and API | Seals show their names only. The demo shows three registrations, runs by itself, and tapping the logo sends another |
-| Testimonials | Same curved carousel as desktop: moves on by itself every 3.5 seconds, pauses for 5 seconds after a swipe. No arrows or dots |
+| Testimonials | Same curved carousel as desktop: moves on by itself every 2.5 seconds, with previous and next arrows under it. Pauses for 5 seconds after a swipe and 8 seconds after an arrow tap |
 | FAQ | One answer open, the rest open on tap |
 | Blog | Three slim rows, or the section is removed |
 | Footer | Compact link columns and a row of Trycon product tiles |
@@ -327,7 +327,7 @@ Used by both versions. All values live in [`css/tokens.css`](css/tokens.css).
 Apply to both versions.
 
 - Every section is a ticket: rounded card, a mono uppercase stub label at the top, semicircle notches where parts join.
-- The stub strip at the top of each ticket carries no section name: it is just the tear-off edge (dashed line and side notches).
+- The stub strip at the top of each ticket carries the section's blue heading (its eyebrow, such as "Event Page", "Use Cases", "Need Help?"), above the dashed tear line. The heading isn't repeated below the line. It keeps the section's own shade, lighter on the blue and dark tickets. The homepage hero and the footer strips are left empty.
 - **Vertical (portrait) ticket:** the dotted line, zig-zag or semicircle notches sit at the bottom, where the two parts join.
 - **Horizontal (landscape) ticket:** the line or pattern sits on the right-hand side, between the main part and the stub.
 - When a ticket changes orientation at a breakpoint, its tear line and notches move with it.
