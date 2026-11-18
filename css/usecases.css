@@ -39,7 +39,7 @@
 }
 /* each use case owns a segment of the vertical progress bar;
    --seg (0→1) is set by JS from the scroll, so it fills continuously */
-.uc-rail li { position: relative; }
+.uc-rail li { position: relative; display: flex; align-items: center; min-height: 84px; }   /* equal rows, so every line is the same length */
 .uc-rail li::before,
 .uc-rail li::after {
   content: "";

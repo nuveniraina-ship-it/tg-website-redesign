@@ -132,6 +132,8 @@ Both fonts load from Google Fonts. Mono text uses a slashed zero and `-0.03em` l
 
 ### Desktop sections and behaviour
 
+Homepage order: hero and five steps, event page, customer logos, numbers, features, use cases, security and API, testimonials, FAQ, blog, closing ticket, footer.
+
 | Section | What it does |
 | --- | --- |
 | Navigation bar | Floating ticket-shaped bar, same on every page, with Log In and Sign Up on the right |
@@ -139,9 +141,9 @@ Both fonts load from Google Fonts. Mono text uses a slashed zero and `-0.03em` l
 | Numbers | Stats beside a printed receipt |
 | Event page | The Ticket Generator event page as guests see it (dark theme, cover image, Live badge, date, time, venue, "Register Now", lineup, event guide, share), in a browser window beside the copy. Copied from the product's demo page at `tg-full-revamp.vercel.app/p/summer-music-festival` |
 | Features | Eight feature cards in a 4 × 2 grid: icon, heading, text |
-| Use cases | Section pins; one tilted ticket is dealt onto a pile per scroll step. The rail on the left lights the whole label of the use case on show, including when one is clicked |
+| Use cases | Section pins; one tilted ticket is dealt onto a pile per scroll step. The rail on the left has five equal lines; the line of the use case on show is fully lit, including when one is clicked |
 | Security and API | Three compliance seals, then a live demo: registration list, API, ticket, three delivery channels. Clicking the button or the logo sends a registration |
-| Testimonials | Curved carousel, not pinned: the middle review faces you and its neighbours angle in from the sides. It turns about two reviews as the section scrolls past; drag it, click a side review or use the arrow keys to see more |
+| Testimonials | Curved carousel, not pinned: the middle review faces you and its neighbours angle in from the sides. Like the customer logos it moves on by itself, one review every 3.5 seconds while on screen, and pauses while the mouse rests on it. Drag it, click a side review or use the arrow keys to move it yourself |
 | FAQ | One answer open, the rest open on click |
 | Blog | Three posts, or the section is removed. Never fewer than three |
 | Closing ticket | Landscape "admission ticket" with Sign Up and Book a Demo |
@@ -231,7 +233,7 @@ Same fonts as desktop; only the sizes change.
 | Features | Eight cards (icon, heading, three lines of text) that stack on top of each other as you scroll |
 | Use cases | Five full tickets (photo on top, tear line, heading, full text, "Learn more") that stack on top of each other as you scroll. No progress bar and no "Admit one" label |
 | Security and API | Seals show their names only. The demo shows three registrations, runs by itself, and tapping the logo sends another |
-| Testimonials | Same curved carousel as desktop, not pinned, so the page carries on after one review. Swipe sideways for more. No arrows or dots |
+| Testimonials | Same curved carousel as desktop: moves on by itself every 3.5 seconds, pauses for 5 seconds after a swipe. No arrows or dots |
 | FAQ | One answer open, the rest open on tap |
 | Blog | Three slim rows, or the section is removed |
 | Footer | Compact link columns and a row of Trycon product tiles |
@@ -325,7 +327,7 @@ Used by both versions. All values live in [`css/tokens.css`](css/tokens.css).
 Apply to both versions.
 
 - Every section is a ticket: rounded card, a mono uppercase stub label at the top, semicircle notches where parts join.
-- Stub labels name the section plainly: How it works, Our customers, By the numbers, Event page, Features, Use cases, Security & API, Testimonials, FAQs, Blog, and Ticket Generator on the footer (Pricing and Features on the pricing page).
+- The stub strip at the top of each ticket carries no section name: it is just the tear-off edge (dashed line and side notches).
 - **Vertical (portrait) ticket:** the dotted line, zig-zag or semicircle notches sit at the bottom, where the two parts join.
 - **Horizontal (landscape) ticket:** the line or pattern sits on the right-hand side, between the main part and the stub.
 - When a ticket changes orientation at a breakpoint, its tear line and notches move with it.

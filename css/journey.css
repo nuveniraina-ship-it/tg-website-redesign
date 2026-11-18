@@ -173,12 +173,12 @@
 }
 
 .step {
-  min-height: 56vh;
+  min-height: 34vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   max-width: 500px;
-  padding: var(--space-5xl) 0;
+  padding: var(--space-3xl) 0;
   opacity: .32;
   transition: opacity .4s;
 }
@@ -885,7 +885,7 @@
 
   .j-intro { padding-top: var(--space-5xl); }
   .j-intro h2 { font-size: 30px; line-height: 38px; }
-  .step { min-height: 62vh; padding: var(--space-4xl) 0; }
+  .step { min-height: 34vh; padding: var(--space-3xl) 0; }
   .step h3 { font-size: 24px; line-height: 32px; }
   .step p, .j-intro p:last-child { font-size: 16px; line-height: 24px; }
   .j-end { margin-bottom: var(--space-7xl); padding: var(--space-3xl); }

@@ -189,7 +189,7 @@
 /* =========================================================
    The deck as a curved carousel (all screen sizes; JS in js/main.js):
    the middle review faces you, its neighbours angle in from the
-   sides. Not pinned — it turns a little as the section scrolls by.
+   sides. Not pinned; it moves on by itself every few seconds.
    ========================================================= */
 @media (prefers-reduced-motion: no-preference) {
   .tm.tkt { overflow: clip; padding-bottom: var(--space-6xl); }
@@ -221,7 +221,6 @@
   .tq.is-buried { pointer-events: auto; cursor: pointer; }
   .tq-body { min-height: var(--card-h, 0); }
   .tm-deck.is-dragging .tq { transition: opacity .2s; }
-  .tm-deck.is-scrolling .tq { transition: transform .16s linear, opacity .16s linear; }
   .tq img { -webkit-user-drag: none; }
 }
 @media (prefers-reduced-motion: no-preference) and (max-width: 768px) {

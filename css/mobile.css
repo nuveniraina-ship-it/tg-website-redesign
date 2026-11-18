@@ -1005,7 +1005,7 @@
   }
   /* its own stub strip: label, tear line and side notches */
   .est::before {
-    content: "Estimate";
+    content: "\00a0";
     position: absolute;
     top: 0;
     left: 0;

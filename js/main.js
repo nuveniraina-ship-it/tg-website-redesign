@@ -283,21 +283,21 @@
 
   /* ---------- Testimonials: a curved carousel ----------
      The review in the middle faces you; its neighbours angle in from the sides.
-     It is never pinned, so nobody has to read every review before moving on:
-     it turns a little while the section scrolls past, and can be dragged, swiped,
-     clicked (a side review comes to the front) or moved with the arrow keys. */
+     Like the customer logos, it moves on by itself (every few seconds while it is
+     on screen), so nothing waits on the scroll. Drag or swipe it, click a side
+     review or use the arrow keys to move it yourself; it pauses while you do,
+     and while the pointer rests on it. */
   const tmScroll = document.querySelector('[data-tm-scroll]');
   if (tmScroll && !reduceMotion) {
     const deckEl = tmScroll.querySelector('[data-tm-deck]');
     const deck = [...deckEl.querySelectorAll('[data-tq]')];
     const n = deck.length;
-    const TURN = 2;            // reviews the carousel turns while the section crosses the screen
+    const EVERY = 3500;        // ms per review
     let step = 300;
-    let base = 0;              // where drags, clicks and keys have moved it
-    let scrollPart = 0;        // what the page scroll adds
+    let pos = 0;
     const wrap = (o) => ((((o + n / 2) % n) + n) % n) - n / 2;
-    const render = (pos) => deck.forEach((card, i) => {
-      const o = wrap(i - pos);
+    const render = (p) => deck.forEach((card, i) => {
+      const o = wrap(i - p);
       const a = Math.abs(o);
       card.style.setProperty('--tx', `${(o * step).toFixed(1)}px`);
       card.style.setProperty('--ry', `${(Math.max(-1, Math.min(1, o)) * -24).toFixed(2)}deg`);
@@ -307,34 +307,31 @@
       card.classList.toggle('is-buried', a > 0.5);
       card.setAttribute('aria-hidden', String(a > 0.5));
     });
-    const now = () => base + scrollPart;
-    const snap = () => { base = Math.round(now()) - scrollPart; render(now()); };
-    const readScroll = () => {
-      const r = tmScroll.getBoundingClientRect();
-      const t = (window.innerHeight - r.top) / (window.innerHeight + r.height);
-      scrollPart = Math.min(1, Math.max(0, t)) * TURN;
-    };
+    const go = (p) => { pos = p; render(pos); };
 
-    let settle = 0;
-    let dragging = false;
-    let tick = false;
-    window.addEventListener('scroll', () => {
-      if (tick || dragging) return;
-      tick = true;
-      requestAnimationFrame(() => {
-        tick = false;
-        readScroll();
-        deckEl.classList.add('is-scrolling');
-        render(now());
-        clearTimeout(settle);
-        settle = setTimeout(() => { deckEl.classList.remove('is-scrolling'); snap(); }, 160);
-      });
-    }, { passive: true });
+    // the timer: runs only while the carousel is on screen and nobody is handling it
+    let timer = 0;
+    let inView = false;
+    let held = false;
+    let resume = 0;
+    const play = () => {
+      clearInterval(timer);
+      if (inView && !held && !document.hidden) timer = setInterval(() => go(Math.round(pos) + 1), EVERY);
+    };
+    const hold = (ms = 5000) => {
+      clearInterval(timer);
+      clearTimeout(resume);
+      resume = setTimeout(play, ms);
+    };
+    new IntersectionObserver(([e]) => { inView = e.isIntersecting; play(); }, { threshold: 0.4 }).observe(deckEl);
+    document.addEventListener('visibilitychange', play);
+    deckEl.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') { held = true; clearInterval(timer); } });
+    deckEl.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') { held = false; play(); } });
 
     // drag with a finger or the mouse; a short flick is enough to move one review
     let x0 = 0;
     let y0 = 0;
-    let b0 = 0;
+    let p0 = 0;
     let mode = '';
     let dx = 0;
     let moved = false;
@@ -342,7 +339,7 @@
       if (e.button !== 0) return;
       x0 = e.clientX;
       y0 = e.clientY;
-      b0 = base;
+      p0 = Math.round(pos);
       mode = '';
       dx = 0;
       moved = false;
@@ -353,22 +350,20 @@
       const dy = e.clientY - y0;
       if (!mode && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) {
         mode = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
-        if (mode === 'x') { deckEl.setPointerCapture(e.pointerId); dragging = true; deckEl.classList.add('is-dragging'); }
+        if (mode === 'x') { deckEl.setPointerCapture(e.pointerId); deckEl.classList.add('is-dragging'); clearInterval(timer); }
       }
       if (mode !== 'x') return;
       moved = true;
-      base = b0 - dx / step;
-      render(now());
+      render(p0 - dx / step);
     });
     const drop = () => {
       if (mode !== 'x') return;
       mode = '';
-      dragging = false;
       deckEl.classList.remove('is-dragging');
       let move = Math.round(-dx / step);
       if (!move && Math.abs(dx) > 36) move = dx < 0 ? 1 : -1;
-      base = Math.round(b0 + scrollPart + move) - scrollPart;
-      render(now());
+      go(p0 + move);
+      hold();
     };
     deckEl.addEventListener('pointerup', drop);
     deckEl.addEventListener('pointercancel', drop);
@@ -378,16 +373,16 @@
       const card = e.target.closest('[data-tq]');
       if (!card || !card.classList.contains('is-buried')) return;
       e.preventDefault();
-      base += Math.round(wrap(deck.indexOf(card) - now()));
-      render(now());
+      go(Math.round(pos) + Math.round(wrap(deck.indexOf(card) - pos)));
+      hold();
     }, true);
     deckEl.tabIndex = 0;
     deckEl.setAttribute('aria-label', 'Reviews. Use the left and right arrow keys to see more.');
     deckEl.addEventListener('keydown', (e) => {
       if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
       e.preventDefault();
-      base += e.key === 'ArrowRight' ? 1 : -1;
-      snap();
+      go(Math.round(pos) + (e.key === 'ArrowRight' ? 1 : -1));
+      hold();
     });
 
     // every review ticket is as tall as the longest one, so the deck never jumps
@@ -396,8 +391,7 @@
       deck.forEach((c) => c.style.setProperty('--tx', '0px'));
       deckEl.style.setProperty('--card-h', `${Math.max(...deck.map((c) => c.offsetHeight))}px`);
       step = deck[0].offsetWidth + (phone.matches ? 10 : 28);
-      readScroll();
-      snap();
+      render(pos);
     };
     size();
     window.addEventListener('load', size);
