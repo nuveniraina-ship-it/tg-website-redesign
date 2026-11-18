@@ -255,19 +255,19 @@ Headings never run past two lines, on desktop, tablet or phone: the Features hea
 
 The Sign Up button in the navigation bar is blue (the brand primary button) on every page.
 
-The demo ticket in the hero changes event with its colour, everywhere the demo shows the event (ticket, event page card, "Create New Event" form, sales list and report): name, category, logo letters and venue all switch, and a photo of that kind of event sits behind the ticket, faded into the ticket's colour (more on the left where the words are, lighter on the right). The event page card's cover uses the same photo, lightly tinted. Light picked colours switch the text to dark.
+The demo ticket in the hero changes event with its colour, everywhere the demo shows the event (ticket, event page card, "Create New Event" form, sales list and report): name, category, logo letters and venue all switch, and a photo of that kind of event sits behind the ticket, faded into the ticket's colour (an even wash, slightly stronger on the left where the words are). The event page card's cover uses the same photo, lightly tinted. Light picked colours switch the text to dark.
 
 | Colour | Event | Category | Venue | Photo |
 | --- | --- | --- | --- | --- |
 | Blue (default) | Neon Nights Live | Concert | City Arena | `assets/tickets/concert.webp` |
 | Ink | After Dark Live | Night show | Club Noir | `night.webp` |
 | Green | City Run 10K | Marathon | Riverside Park | `run.webp` |
-| Purple | Leaders Summit | Conference | Grand Hall | `summit.webp` |
+| Purple | Leaders Summit | Conference | Grand Hall | `summit.webp` (speaker side of the conference photo) |
 | Sunset | Sunset Art Workshop | Workshop | Studio 9 | `art.webp` |
-| Picked: pink | Valentine's Night | Valentine's Day | Rose Garden | none yet |
-| Picked: red | Red Carpet Premiere | Film premiere | Grand Cinema | none yet |
+| Picked: pink | Love Songs Live | Valentine's concert | Rose Hall | `valentine.webp` (singer on stage, pink lights) |
+| Picked: red | Opening Night | Theatre premiere | Grand Theatre | `premiere.webp` (audience and curtains side of the conference photo) |
 | Picked: yellow | Charity Fun Day | Charity | Central Square | `charity.webp` |
-| Picked: teal | Ocean Beats Party | Beach party | Palm Beach | none yet |
+| Picked: teal | Rooftop Beats | DJ party | Sky Terrace | `rooftop.webp` (rooftop DJ, blue sky) |
 
 A colour from the colour wheel goes to the nearest family by hue (greys go to Ink). The phone hero ticket is the blue concert ticket with its photo.
 

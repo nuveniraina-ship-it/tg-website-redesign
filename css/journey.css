@@ -360,7 +360,7 @@
      where the words are), with a soft spotlight glow; the photo changes with the colour (js/main.js) */
   background:
     radial-gradient(120% 95% at 92% 0%, rgba(255, 255, 255, .18), transparent 58%),
-    linear-gradient(90deg, color-mix(in srgb, var(--t-bg) 88%, transparent) 0%, color-mix(in srgb, var(--t-bg) 66%, transparent) 50%, color-mix(in srgb, var(--t-bg) 34%, transparent) 100%),
+    linear-gradient(100deg, color-mix(in srgb, var(--t-bg) 76%, transparent) 0%, color-mix(in srgb, var(--t-bg) 60%, transparent) 45%, color-mix(in srgb, var(--t-bg) 38%, transparent) 100%),
     var(--t-photo, url("../assets/tickets/concert.webp")) center / cover no-repeat,
     var(--t-bg);
   color: var(--t-ink, #fff);

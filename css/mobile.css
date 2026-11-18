@@ -1580,7 +1580,7 @@
   .m-pass-top {
     background:
       radial-gradient(120% 95% at 92% 0%, rgba(255, 255, 255, .18), transparent 58%),
-      linear-gradient(90deg, color-mix(in srgb, var(--brand-600) 88%, transparent) 0%, color-mix(in srgb, var(--brand-600) 66%, transparent) 50%, color-mix(in srgb, var(--brand-600) 34%, transparent) 100%),
+      linear-gradient(100deg, color-mix(in srgb, var(--brand-600) 76%, transparent) 0%, color-mix(in srgb, var(--brand-600) 60%, transparent) 45%, color-mix(in srgb, var(--brand-600) 38%, transparent) 100%),
       url("../assets/tickets/concert.webp") center / cover no-repeat,
       var(--brand-600);
   }

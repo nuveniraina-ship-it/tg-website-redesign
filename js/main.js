@@ -893,12 +893,12 @@
     blue:   { name: 'Neon Nights Live',     cat: 'CONCERT',        logo: 'NN', venue: 'City Arena',     place: 'City Arena, Downtown',        photo: 'concert' },
     ink:    { name: 'After Dark Live',      cat: 'NIGHT SHOW',     logo: 'AD', venue: 'Club Noir',      place: 'Club Noir, Old Town',         photo: 'night' },
     green:  { name: 'City Run 10K',         cat: 'MARATHON',       logo: 'CR', venue: 'Riverside Park', place: 'Riverside Park, North Gate',  photo: 'run' },
-    purple: { name: 'Leaders Summit',       cat: 'CONFERENCE',     logo: 'LS', venue: 'Grand Hall',     place: 'Grand Hall, Convention Centre', photo: 'summit' },
+    purple: { name: 'Leaders Summit',       cat: 'CONFERENCE',     logo: 'LD', venue: 'Grand Hall',     place: 'Grand Hall, Convention Centre', photo: 'summit' },
     sunset: { name: 'Sunset Art Workshop',  cat: 'WORKSHOP',       logo: 'SA', venue: 'Studio 9',       place: 'Studio 9, Arts Quarter',      photo: 'art' },
-    pink:   { name: "Valentine's Night",    cat: "VALENTINE'S DAY", logo: 'VN', venue: 'Rose Garden',   place: 'The Rose Garden Terrace',     photo: null },
-    red:    { name: 'Red Carpet Premiere',  cat: 'FILM PREMIERE',  logo: 'RC', venue: 'Grand Cinema',   place: 'Grand Cinema, Main Street',   photo: null },
+    pink:   { name: 'Love Songs Live',      cat: "VALENTINE'S CONCERT", logo: 'LS', venue: 'Rose Hall',  place: 'Rose Hall, Riverside',        photo: 'valentine' },
+    red:    { name: 'Opening Night',        cat: 'THEATRE PREMIERE', logo: 'ON', venue: 'Grand Theatre', place: 'Grand Theatre, Main Street', photo: 'premiere' },
     yellow: { name: 'Charity Fun Day',      cat: 'CHARITY',        logo: 'CF', venue: 'Central Square', place: 'Central Square, City Centre', photo: 'charity' },
-    teal:   { name: 'Ocean Beats Party',    cat: 'BEACH PARTY',    logo: 'OB', venue: 'Palm Beach',     place: 'Palm Beach Pier',             photo: null },
+    teal:   { name: 'Rooftop Beats',        cat: 'DJ PARTY',       logo: 'RB', venue: 'Sky Terrace',    place: 'Sky Terrace, Harbour Tower',  photo: 'rooftop' },
   };
   // a picked colour → the closest event family by hue
   const eventForHex = (hex) => {
