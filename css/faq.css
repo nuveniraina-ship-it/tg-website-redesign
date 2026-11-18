@@ -51,6 +51,7 @@
 .faq-help h3 { margin-top: var(--space-xl); font-size: 18px; line-height: 28px; font-weight: 600; }
 .faq-help p { margin-top: 4px; color: var(--text-tertiary); }
 .faq-help .btn { margin-top: var(--space-xl); }
+.faq-help-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 
 /* ---------- Accordion ---------- */
 .faq-list { display: grid; gap: var(--space-lg); }

@@ -470,28 +470,34 @@
     document.fonts?.ready.then(level);
   }
 
-  /* ---------- Clear wins: the stack stops when the last ticket lands, then leaves as one ----------
-     A sticky ticket lets go when the bottom of the list reaches its own bottom. Without help the last
-     ticket lets go first and slides up over the others. Extra bottom margin on each earlier ticket
-     (taken back from the next one's top margin, so spacing doesn't change) makes all five let go together. */
-  const cwGrid = document.querySelector('.cw-grid');
-  if (cwGrid) {
-    const cards = [...cwGrid.children];
-    const even = () => {
-      cards.forEach((c) => { c.style.marginTop = ''; c.style.marginBottom = ''; });
-      const ends = cards.map((c) => parseFloat(getComputedStyle(c).top) + c.offsetHeight);
-      const end = Math.max(...ends);
-      cards.forEach((c, i) => {
-        const extra = end - ends[i];
-        if (!extra) return;
-        c.style.marginBottom = `${extra}px`;
-        if (cards[i + 1]) cards[i + 1].style.marginTop = `${-extra}px`;
-      });
-    };
-    even();
-    window.addEventListener('load', even);
-    window.addEventListener('resize', even);
-    document.fonts?.ready.then(even);
+  /* ---------- Stacks: the pile stops when the last ticket lands, then leaves as one ----------
+     A sticky ticket lets go when the bottom of its list reaches its own bottom, so without help the
+     last ticket lets go first and slides up over the others. Extra bottom margin on each earlier
+     ticket (taken back from the next one's top margin, so the spacing doesn't change) makes them all
+     let go together. Only for single-column sticky stacks (clear wins, launch options and, on
+     phones, core strengths, use cases and pricing features). */
+  const stacks = [...document.querySelectorAll('.cw-grid, .lo-grid, .hf-grid, .uc-pile, .fc-track')];
+  const evenStack = (list) => {
+    const cards = [...list.children];
+    cards.forEach((c) => { c.style.marginTop = ''; c.style.marginBottom = ''; });
+    const sticky = cards.length > 1 && cards.every((c) => getComputedStyle(c).position === 'sticky');
+    const tops = cards.map((c) => c.offsetTop);
+    if (!sticky || new Set(tops).size !== cards.length) return;   // not a one-column sticky stack
+    const ends = cards.map((c) => parseFloat(getComputedStyle(c).top) + c.offsetHeight);
+    const end = Math.max(...ends);
+    cards.forEach((c, i) => {
+      const extra = end - ends[i];
+      if (!extra) return;
+      c.style.marginBottom = `${extra}px`;
+      if (cards[i + 1]) cards[i + 1].style.marginTop = `${-extra}px`;
+    });
+  };
+  if (stacks.length) {
+    const evenAll = () => stacks.forEach(evenStack);
+    evenAll();
+    window.addEventListener('load', evenAll);
+    window.addEventListener('resize', evenAll);
+    document.fonts?.ready.then(evenAll);
   }
 
   /* ---------- Security: lines from the end of the text into the seals, with lights on them ----------
@@ -536,6 +542,36 @@
       const lift = Math.min(64, room - 16);
       const last = d[d.length - 1];
       if (lift > 24) paths.push(`M${d[0].cx} ${d[0].t - 10} C${d[0].cx} ${d[0].t - lift} ${last.cx} ${last.t - lift} ${last.cx} ${last.t - 10}`);
+      // small hops over each gap between neighbouring seals
+      if (lift > 18) {
+        for (let i = 0; i < d.length - 1; i++) {
+          const h = Math.min(lift * 0.55, 30);
+          paths.push(`M${d[i].cx + d[i].R * 0.55} ${d[i].t + 6} Q${(d[i].cx + d[i + 1].cx) / 2} ${d[i].t - h} ${d[i + 1].cx - d[i + 1].R * 0.55} ${d[i + 1].t + 6}`);
+        }
+      }
+      // a few loose, irregular lines in the clear band above the seals (seeded, so they stay put)
+      const bandTop = sideBySide ? 8 : c.b + 10;
+      const bandBot = d[0].t - lift - 6;
+      if (bandBot - bandTop > 16) {
+        let seed = 7;
+        const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+        const xMin = sideBySide ? x0 : 6;
+        const xMax = row.width - 6;
+        for (let k = 0; k < 3; k++) {
+          const xa = xMin + rnd() * (xMax - xMin) * 0.5;
+          const xb = Math.min(xMax, xa + 60 + rnd() * (xMax - xMin) * 0.45);
+          const ya = bandTop + rnd() * (bandBot - bandTop);
+          const yb = bandTop + rnd() * (bandBot - bandTop);
+          const yc = bandTop + rnd() * (bandBot - bandTop);
+          paths.push(`M${xa.toFixed(1)} ${ya.toFixed(1)} Q${((xa + xb) / 2).toFixed(1)} ${yc.toFixed(1)} ${xb.toFixed(1)} ${yb.toFixed(1)}`);
+        }
+      }
+      // out from the last seal towards the right edge, when there's room
+      const rEdge = row.width - 4;
+      if (rEdge - (last.cx + last.R) > 30) {
+        const a = last.cx + last.R;
+        paths.push(`M${a} ${last.cy + 8} C${(a + rEdge) / 2} ${last.cy + 8} ${(a + rEdge) / 2} ${last.cy - 26} ${rEdge} ${last.cy - 26}`);
+      }
 
       svg.replaceChildren();
       paths.forEach((dPath, i) => {
@@ -574,6 +610,34 @@
       lockBtn.setAttribute('aria-pressed', 'true');
       shutTimer = setTimeout(() => lockArt.classList.add('is-shut'), reduceMotion ? 0 : 1450);
     });
+  }
+
+  /* ---------- Event page: "Register Now" opens the registration step inside the frame, with a way back ---------- */
+  const epReg = document.querySelector('[data-ep-reg]');
+  const epOpen = document.querySelector('[data-ep-register]');
+  if (epReg && epOpen) {
+    const epPage = document.querySelector('.ep-page');
+    const form = epReg.querySelector('[data-ep-form]');
+    const done = epReg.querySelector('[data-ep-done]');
+    const total = epReg.querySelector('[data-ep-total]');
+    const opts = [...epReg.querySelectorAll('.ep-opt')];
+    const prices = ['$25', '$60'];
+    const showReg = (on) => {
+      if (on) epReg.style.minHeight = `${epPage.offsetHeight}px`;   // same height, so the page doesn't jump
+      epPage.hidden = on;
+      epReg.hidden = !on;
+      if (on) { form.hidden = false; done.hidden = true; epReg.querySelector('[data-ep-back]').focus({ preventScroll: true }); }
+      else epOpen.focus({ preventScroll: true });
+      const frame = epReg.closest('.ep-frame');
+      if (frame.getBoundingClientRect().top < 70) frame.scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' });
+    };
+    epOpen.addEventListener('click', () => showReg(true));
+    epReg.querySelector('[data-ep-back]').addEventListener('click', () => showReg(false));
+    opts.forEach((o, i) => o.addEventListener('click', () => {
+      opts.forEach((x) => { x.classList.toggle('is-on', x === o); x.setAttribute('aria-checked', String(x === o)); });
+      total.textContent = prices[i];
+    }));
+    epReg.querySelector('[data-ep-confirm]').addEventListener('click', () => { form.hidden = true; done.hidden = false; });
   }
 
   /* ---------- Event page: the cover images slide by themselves; arrows and dots move them ---------- */
@@ -831,14 +895,33 @@
   new ResizeObserver(() => fitTo(panel, canvas)).observe(panel);
 
   // phones: a still copy of the opening scene sits in the hero, taken before anything animates
+  // phones: the hero's picture is one clean ticket (no overlapping cards and chips)
   let heroShot = null;
   if (phone.matches) {
-    heroShot = panel.cloneNode(true);
-    heroShot.classList.add('m-shot');
+    heroShot = document.createElement('div');
+    heroShot.className = 'm-pass';
     heroShot.setAttribute('aria-hidden', 'true');
-    const shotCanvas = heroShot.querySelector('.stage-canvas');
-    shotCanvas.removeAttribute('data-stage');
-    new ResizeObserver(() => fitTo(heroShot, shotCanvas)).observe(heroShot);
+    heroShot.innerHTML = `
+      <div class="m-pass-tkt">
+        <div class="m-pass-top">
+          <div class="m-pass-row"><span class="m-pass-logo">AC</span><span class="m-pass-type">General Admission</span></div>
+          <p class="m-pass-title">Annual Client Summit</p>
+          <dl class="m-pass-meta">
+            <div><dt>Date</dt><dd>Sat, 14 Mar</dd></div>
+            <div><dt>Time</dt><dd>7:00 PM</dd></div>
+            <div><dt>Venue</dt><dd>Hall B</dd></div>
+          </dl>
+        </div>
+        <div class="m-pass-stub">
+          <svg class="m-pass-qr" viewBox="0 0 25 25" shape-rendering="crispEdges"></svg>
+          <div class="m-pass-side">
+            <p class="m-pass-scan">Scan at entry</p>
+            <p class="m-pass-no">No. 000539</p>
+            <p class="m-pass-ok"><i></i>Valid ticket</p>
+          </div>
+        </div>
+      </div>`;
+    drawQR(heroShot.querySelector('.m-pass-qr'), 'Annual Client Summit');
   }
   const STEP_NAMES = ['Create', 'Sell', 'Send', 'Scan', 'Report'];
   let tabBtns = [];
@@ -985,12 +1068,15 @@
     intro.after(tabs);
     tabs.after(stageCol);
     tabBtns = [...tabs.children];
+    // the colour row sits under the picture on phones, not on top of it
+    const tryBar = panel.querySelector('.stage-try');
+    if (tryBar) panel.after(tryBar);
 
     const end = document.querySelector('.j-end');
     if (end) stepsCol.append(end);
 
     // the steps play on a loop by themselves; tapping a tab or swiping takes over for a while
-    const STEP_MS = 3000;
+    const STEP_MS = 2000;   // quicker on phones: each step shows for 2 seconds
     let auto = 0;
     let resume = 0;
     let inView = false;

@@ -138,8 +138,8 @@ Homepage order: hero and five steps, event page, launch options, customer logos,
 | --- | --- |
 | Navigation bar | Floating ticket-shaped bar, same on every page, with Log In and Sign Up on the right |
 | Hero and five steps | A landscape ticket with no strip across the top and 24px corners. A dashed tear line runs the full height between the copy (the main part, wider) and the product picture (the stub, narrower; 1.3 : 1), with a notch at the top and bottom edges. The closing "Ready to issue" card runs the full width at the bottom; the vertical tear line stops just above it. The copy is 1.65 times as wide as the picture, and the picture's box is only as tall as the picture. "First 10 tickets free" and "No credit card required" sit under the Create Your Event button. A "Try it with your brand colour" bar sits in the picture's top-left corner: five preset colours plus a colour-wheel dot that opens the device's colour picker, and the whole ticket, cards and progress bars take that colour. The picture's box is taller than the picture (560 : 830), so the demo has room above and below it, with a clear gap (about 60px) under the "Try it" bar. The demo has no Templates card; colours come from the "Try it" bar only. The picture is pinned while the five steps scroll past and change it; colour swatches recolour the ticket |
-| Numbers | Stats beside a printed receipt; the receipt ends in a QR code (it opens sign-up) |
-| Event page | The Ticket Generator event page as guests see it (dark theme, three cover images that slide every 3.5 seconds with arrows on either side and dots, Live badge, date, time, venue, "Register Now", lineup, event guide, share), in a browser window beside the copy. Copied from the product's demo page at `tg-full-revamp.vercel.app/p/summer-music-festival` |
+| Numbers | Stats beside a printed receipt; the receipt ends in a QR code that opens the pricing page (scan it, or click or tap it) |
+| Event page | The Ticket Generator event page as guests see it (dark theme, three cover images that slide every 3.5 seconds with arrows on either side and dots, Live badge, date, time, venue, "Register Now", lineup, event guide, share), in a browser window beside the copy. Copied from the product's demo page at `tg-full-revamp.vercel.app/p/summer-music-festival`. "Register Now" opens the registration step inside the window (ticket choice, sample details, Register, then a confirmation) with a "Back to event" button |
 | Launch options | "What kind of event are you planning?": a strip of three tickets joined edge to edge (Direct Ticketing, Free Registrations, Paid Registrations) with perforations and notches between them. Each has the live site's illustration, its name, a line of text, a two-step "how it works", and "Get Started" on its stub (opens sign-up). On hover the left ticket tilts out to the left, the middle one lifts a little and the right one tilts out to the right |
 | Clear wins | "Easy event ticketing from setup to scan": five landscape tickets that stack on top of each other as you scroll, each one 30px lower than the last. The stack stops when the last ticket lands, and then all five scroll away together (the last one never slides over the others). The text is the main part (70%) and the live site's illustration sits on the narrow stub (30%), where a ticket's QR code would be |
 | Features | "Core Strengths": the live homepage's nine features as portrait tickets, three to a row. Icon and title on top, a tear line with side notches, then the text. All nine are the same size (JS sets every ticket to the tallest one's height). As you scroll, each row of three stacks over the row above, 34px lower |
@@ -147,7 +147,7 @@ Homepage order: hero and five steps, event page, launch options, customer logos,
 | Security | Its own ticket. Faint dotted lines start where the text ends and run into the first seal, across the gaps between the seals and in an arc over them; small lights travel along them. They never pass under any words. The "Encrypted, access-controlled, audited" pill is a button: clicking it draws a very light lock behind the seals, open while it draws, and the shackle snaps shut once it's complete |
 | API | Its own ticket after Security ("Ticket Generator API" on its strip): heading and copy, then a live demo: registration list, API, ticket, three delivery channels. Clicking the button or the logo sends a registration. A small "Try it: click the logo in the middle" pill sits in the demo's top-left corner |
 | Testimonials | Curved carousel, not pinned: the middle review faces you and its neighbours angle in from the sides. Like the customer logos it moves on by itself, one review every 2.5 seconds while on screen, and pauses while the mouse rests on it. Previous and next arrows sit under it; you can also drag it, click a side review or use the arrow keys |
-| FAQ | "Have a Question?" in the strip. One answer open, the rest open on click |
+| FAQ | "Have a Question?" in the strip. One answer open, the rest open on click. The help box has See All FAQs and Contact us |
 | Blog | Three posts, or the section is removed. Never fewer than three |
 | Closing ticket | Landscape "admission ticket" with Sign Up and Book a Demo |
 | Pricing: estimator | A landscape ticket like the homepage hero: headline, ticket count field and credit packs on the main part; the sticky price receipt is the stub on the right, past the tear line. Under its "Sign up to buy" button sit "First 10 tickets free" and "No credit card required" with check marks, like the homepage hero. "Create your own event" in the event page section opens the app's sign-up |
@@ -221,7 +221,7 @@ Same fonts as desktop; only the sizes change.
 | Ticket corners | 24px |
 | Ticket notch size | 11px |
 | Gap between tickets | 14px |
-| Sticky cards stop at | 78px from the top, each next card 9–10px lower |
+| Sticky cards stop at | 78px from the top, each next card 20–26px lower so every stacked ticket shows its top edge. Every stack stops when its last ticket lands and then scrolls away as one (no ticket slides over the others) |
 | Reviews carousel pins at | 70px from the top |
 
 ### Mobile sections and behaviour
@@ -229,22 +229,23 @@ Same fonts as desktop; only the sizes change.
 | Section | What it does |
 | --- | --- |
 | Navigation bar | Floating bar with logo and menu button, same on every page |
-| Hero | Its own white ticket: headline, button, then the product picture as the stub |
-| Five steps | Its own blue ticket with five tabs, ending in a full-width band ("Ready to issue your first ticket?" with Book a Demo and Create Your Event), with no tear line above it. A one-line "Try it: your colour" bar with the colour dots and the colour wheel sits above the demo, with a clear gap (about 65–80px) before the picture. Steps change by themselves every 3 seconds; touching the picture (for example, trying the colours) holds the step and it resumes 3 seconds after the last touch. No timer bar |
+| Hero | Its own white ticket: headline, button, then the picture as the stub: one tidy portrait event ticket (blue top with the event name, date, time and venue, a tear line with side notches, then the QR code, ticket number and a "Valid ticket" badge). Nothing overlaps |
+| Five steps | Its own white ticket (like every other section) with five tabs, ending in a light full-width band ("Ready to issue your first ticket?" with Book a Demo and Create Your Event). Steps change by themselves every 2 seconds; touching the picture holds the step and it resumes 3 seconds after the last touch. Under the picture, a clean "Try a colour" row with five colour dots and the colour wheel (not on top of the picture) |
 | Numbers | Three stats in one row, compact receipt |
-| Event page | The copy, then the event page in its phone layout: cover, details, full-width "Register Now", lineup in a 2 × 2 grid, guide and share side by side |
-| Launch options | The same strip running downwards: illustration across the top of each ticket, then the words, then "Get Started" on the stub. A tap gives the same little tilt as a desktop hover (left out, middle up, right out) |
-| Clear wins | Five stacking portrait tickets, each 18px lower than the last: the words on the main part, then a tear line with side notches, then the illustration on a smaller bottom stub, where a portrait ticket's QR code would be |
-| Features | Nine cards (icon, heading, three lines of text) that stack on top of each other as you scroll |
-| Use cases | Five full tickets (photo on top, tear line, heading, full text, "Learn more") that stack on top of each other as you scroll. No progress bar and no "Admit one" label |
-| Security | Seals show their names only. The same lines and lights (from the left edge into the seals and between them, never under words); tapping the pill draws the lock, which then locks |
+| Event page | The copy, then the event page in its phone layout: cover, details, full-width "Register Now", lineup in a 2 × 2 grid, guide and share side by side. "Register Now" opens the registration step inside the frame (ticket choice, sample name and email, Register), with a "Back to event" button; Register shows a "You're registered" confirmation. Same on desktop |
+| Launch options | Three separate tickets that stack as you scroll (each 24px lower than the last), 14px apart before they stack, no tilting: illustration across the top, a tear line, the words, then "Get Started" |
+| Our customers | Smaller logo tickets (128 × 60) in the moving strip, with little space above and below |
+| Clear wins | Five stacking portrait tickets, 14px apart, each 24px lower than the last once stacked: the words on the main part, then a tear line with side notches, then the illustration on a smaller bottom stub |
+| Features | Nine cards (icon, heading, three lines of text), 14px apart, that stack as you scroll, each 22px lower than the last |
+| Use cases | Five full tickets (photo on top, tear line, heading, full text, "Learn more"), 14px apart, that stack as you scroll with 26px of each one showing. No progress bar and no "Admit one" label |
+| Security | Seals show their names only, with clear room above them for the lines: lines and lights into and between the seals, small hops over each gap, and a few loose lines in the space above (never under words). Tapping the pill draws a small lock behind the middle seal, which then locks. The ticket is long enough that nothing is cut |
 | API | Its own ticket. The demo shows three registrations, runs by itself, and tapping the logo sends another; a small "Try it: tap the logo" pill sits in its top-left corner |
 | Testimonials | Same curved carousel as desktop: moves on by itself every 2.5 seconds, with previous and next arrows under it. Pauses for 5 seconds after a swipe and 8 seconds after an arrow tap |
-| FAQ | One answer open, the rest open on tap |
+| FAQ | One answer open, the rest open on tap. The help box is a small card: icon, "Didn't find your query?", one line of text, then See All FAQs and Contact us side by side |
 | Blog | Three slim rows, or the section is removed |
-| Footer | Compact link columns (Product, Resources with Affiliate Program, Comparison) and a row of Trycon product tiles |
-| Pricing: top | Two tickets: the blue headline ticket with three figures, then the white "Estimate" ticket with the calculator |
-| Pricing: features | The blue "1 credit = 1 ticket" ticket, then ten portrait tickets (icon and heading, tear line with side notches, three lines of text) that stack on scroll |
+| Footer | The strip above the tear line reads "Keep exploring", the same height as every other strip. Compact link columns (Product, Resources with Affiliate Program, Comparison) and a row of Trycon product tiles |
+| Pricing: top | Two tickets: the blue headline ticket with three figures, then the white "Estimate" ticket with the calculator. Under "Sign up to buy", "First 10 tickets free" and "No credit card required" sit one under the other, left-aligned, as a centred group |
+| Pricing: features | The blue "1 credit = 1 ticket" ticket, then ten portrait tickets (icon and heading, tear line with side notches, three lines of text), 14px apart, that stack on scroll, each 20px lower than the last |
 | Coming soon | Same terminal and printing ticket as desktop, sized to the screen |
 
 ### Mobile copy

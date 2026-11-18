@@ -416,7 +416,6 @@
 }
 
 /* FAQ contact card with two buttons */
-.faq-help-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 
 /* ---------- Responsive (desktop first; mobile gets its own pass later) ---------- */
 @media (max-width: 1240px) {

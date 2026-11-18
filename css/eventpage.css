@@ -317,3 +317,43 @@
   .lo-grid { grid-template-columns: minmax(0, 1fr); max-width: 520px; margin-inline: auto; }
   .cw { --split: 62%; }
 }
+
+/* ---------- Event page demo: the registration step (after "Register Now") ---------- */
+.ep-frame { scroll-margin-top: 90px; }
+.ep-reg { padding: 16px; background: var(--ep-bg); color: var(--ep-text); }
+.ep-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 12px 7px 8px; border-radius: 9999px;
+  background: var(--ep-card); box-shadow: inset 0 0 0 1px var(--ep-line);
+  font-size: 13px; line-height: 18px; font-weight: 600; color: var(--ep-text); cursor: pointer;
+}
+.ep-back:hover { background: #1f2027; }
+.ep-reg-body, .ep-reg-done { max-width: 460px; margin: 18px auto 6px; padding: 20px; border-radius: 16px; background: var(--ep-card); box-shadow: inset 0 0 0 1px var(--ep-line); }
+.ep-reg-kicker { font-size: 12px; line-height: 16px; color: var(--ep-muted); }
+.ep-reg-title { margin-top: 4px; font-size: 20px; line-height: 28px; font-weight: 600; }
+.ep-reg-opts { display: grid; gap: 8px; margin-top: 14px; }
+.ep-opt {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 14px; border-radius: 12px; background: #1d1e24; box-shadow: inset 0 0 0 1px var(--ep-line);
+  font-size: 14px; line-height: 20px; color: var(--ep-text); text-align: left; cursor: pointer;
+}
+.ep-opt b { font-weight: 600; }
+.ep-opt span { color: var(--ep-muted); }
+.ep-opt.is-on { box-shadow: inset 0 0 0 2px #1570ef; background: rgba(21, 112, 239, .12); }
+.ep-opt.is-on span { color: #84caff; }
+.ep-reg-fields { display: grid; gap: 8px; margin-top: 14px; }
+.ep-reg-fields div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 14px; border-radius: 10px; background: #121318; font-size: 14px; line-height: 20px; }
+.ep-reg-fields dt { color: var(--ep-muted); }
+.ep-reg-fields dd { color: var(--ep-text); }
+.ep-reg-go { display: flex; width: 100%; margin-top: 16px; border: 0; cursor: pointer; }
+.ep-reg-note { margin-top: 10px; font-size: 12px; line-height: 16px; color: var(--ep-muted); text-align: center; }
+.ep-reg-done { text-align: center; }
+.ep-reg-done p { margin-top: 6px; font-size: 14px; line-height: 21px; color: var(--ep-muted); }
+.ep-reg-tick { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: rgba(23, 178, 106, .16); color: #47cd89; }
+button.ep-btn { border: 0; cursor: pointer; font-family: inherit; }
+@media (max-width: 768px) {
+  .ep-reg { padding: 10px; }
+  .ep-reg-body, .ep-reg-done { margin-top: 12px; padding: 16px; }
+}
+.ep-page[hidden], .ep-reg[hidden], .ep-reg-body[hidden], .ep-reg-done[hidden] { display: none; }
+.ep-reg { box-sizing: border-box; }
