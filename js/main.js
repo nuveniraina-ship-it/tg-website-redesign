@@ -929,11 +929,12 @@
 
   /* Per-scene micro-animations, cancelled whenever the scene changes */
   let timers = [];
-  const later = (fn, ms) => timers.push(setTimeout(fn, reduceMotion ? 0 : ms));
+  let instant = false;   // phones: jump each scene straight to its end state to take a still copy
+  const later = (fn, ms) => { if (instant) { fn(); return; } timers.push(setTimeout(fn, reduceMotion ? 0 : ms)); };
   const clearTimers = () => { timers.forEach(clearTimeout); timers = []; };
 
   const countUp = (el, to, { prefix = '', from = 0, ms = 900 } = {}) => {
-    if (reduceMotion) { el.textContent = prefix + to.toLocaleString('en-US'); return; }
+    if (reduceMotion || instant) { el.textContent = prefix + to.toLocaleString('en-US'); return; }
     const start = performance.now();
     const tick = (now) => {
       const p = Math.min(1, (now - start) / ms);
@@ -1040,8 +1041,7 @@
   window.addEventListener('resize', onScroll);
   onScroll();
 
-  /* Phones: the hero and the five steps become two tickets. The steps are tabs over the
-     animation: tap a step (or swipe) and the ticket plays that part of its journey. */
+  /* Phones: the hero and the five steps become two tickets; the steps stack as you scroll. */
   if (heroShot) {
     const card = (cls) => { const d = document.createElement('div'); d.className = `m-card ${cls}`; return d; };
     const hero = journey.querySelector('.j-hero');
@@ -1060,50 +1060,63 @@
     stub.innerHTML = '<span class="tkt-eyebrow is-light">Get Started</span>';
     stepsCard.append(stub, stepsCol);
 
-    const tabs = document.createElement('div');
-    tabs.className = 'm-tabs';
-    tabs.setAttribute('role', 'tablist');
-    tabs.setAttribute('aria-label', 'The five steps');
-    tabs.innerHTML = STEP_NAMES.map((name) => `<button type="button" role="tab">${name}</button>`).join('');
-    intro.after(tabs);
-    tabs.after(stageCol);
-    tabBtns = [...tabs.children];
-    // the colour row sits under the picture on phones, not on top of it
+    // Phones: the five steps are five tickets that stack as you scroll. Each one has its label and
+    // heading at the top (so the stacked edges read like tabs), a still picture of that step, then
+    // its text. Same stack rules as everywhere else: 14px apart, a clear edge of each one showing
+    // once stacked, and the pile leaves as one (js: evenStack).
     const tryBar = panel.querySelector('.stage-try');
-    if (tryBar) panel.after(tryBar);
+    if (tryBar) intro.after(tryBar);              // one colour row for all five pictures
+    const list = document.createElement('ol');
+    list.className = 'm-steps';
+    (tryBar || intro).after(list);
+    const shots = [];
+    instant = true;
+    steps.filter((el) => el.matches('.step')).forEach((stepEl, i) => {
+      const n = i + 1;
+      setState(n);
+      const li = document.createElement('li');
+      li.className = 'm-step';
+      li.style.setProperty('--i', i);
+      const head = document.createElement('div');
+      head.className = 'm-step-head';
+      const num = stepEl.querySelector('.step-num');
+      const h3 = stepEl.querySelector('h3');
+      head.append(num.cloneNode(true), h3.cloneNode(true));
+      const pic = panel.cloneNode(true);
+      pic.classList.add('m-step-pic');
+      pic.setAttribute('aria-hidden', 'true');
+      pic.querySelectorAll('[id]').forEach((el) => el.removeAttribute('id'));
+      const picCanvas = pic.querySelector('.stage-canvas');
+      picCanvas.removeAttribute('data-stage');
+      shots.push(picCanvas);
+      new ResizeObserver(() => fitTo(pic, picCanvas)).observe(pic);
+      const text = document.createElement('div');
+      text.className = 'm-step-text';
+      stepEl.querySelectorAll('p').forEach((p) => text.append(p.cloneNode(true)));
+      li.append(head, pic, text);
+      list.append(li);
+    });
+    instant = false;
+    clearTimers();
+    stageCol.hidden = true;
+    if (stepRow) stepRow.hidden = true;
+
+    // the colour row recolours all five pictures
+    const syncTheme = () => shots.forEach((c) => {
+      if (canvas.dataset.theme) c.dataset.theme = canvas.dataset.theme; else c.removeAttribute('data-theme');
+      const pickVal = canvas.style.getPropertyValue('--pick');
+      if (pickVal) c.style.setProperty('--pick', pickVal); else c.style.removeProperty('--pick');
+    });
+    new MutationObserver(syncTheme).observe(canvas, { attributes: true, attributeFilter: ['data-theme', 'style'] });
 
     const end = document.querySelector('.j-end');
     if (end) stepsCol.append(end);
 
-    // the steps play on a loop by themselves; tapping a tab or swiping takes over for a while
-    const STEP_MS = 2000;   // quicker on phones: each step shows for 2 seconds
-    let auto = 0;
-    let resume = 0;
-    let inView = false;
-    const play = () => {
-      clearInterval(auto);
-      clearTimeout(resume);
-      const on = inView && !reduceMotion;
-      tabs.classList.toggle('is-auto', on);
-      if (on) auto = setInterval(() => setState((current % 5) + 1), STEP_MS);
-    };
-    const byHand = (n) => {
-      setState(((n - 1 + 5) % 5) + 1);
-      clearInterval(auto);
-      clearTimeout(resume);
-      tabs.classList.remove('is-auto');
-      resume = setTimeout(play, 3000);
-    };
-    // touching the picture (say, trying the colours) holds the current step for 3s after the last touch
-    stageCol.addEventListener('pointerdown', () => {
-      clearInterval(auto);
-      clearTimeout(resume);
-      resume = setTimeout(play, 3000);
-    });
-    tabBtns.forEach((b, i) => b.addEventListener('click', () => byHand(i + 1)));
-    onSwipe(stageCol, (d) => byHand(current + d));
-    onSwipe(stepRow, (d) => byHand(current + d));
-    new IntersectionObserver(([entry]) => { inView = entry.isIntersecting; play(); }, { threshold: 0.35 }).observe(stageCol);
-    setState(1);
+    stacks.push(list);
+    const evenSteps = () => evenStack(list);
+    evenSteps();
+    window.addEventListener('load', evenSteps);
+    window.addEventListener('resize', evenSteps);
+    document.fonts?.ready.then(evenSteps);
   }
 })();
