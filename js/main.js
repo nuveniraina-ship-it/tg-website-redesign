@@ -181,7 +181,8 @@
     stub.setAttribute('aria-hidden', 'true');
     let label = sec.dataset.eyebrow || '';
     let tone = '';
-    if (!label && !sec.classList.contains('tkt--hero')) {
+    const landscape = sec.classList.contains('tkt--land') && !window.matchMedia('(max-width: 768px)').matches;
+    if (!label && !sec.classList.contains('tkt--hero') && !landscape) {
       const eb = sec.querySelector('.eyebrow');
       if (eb) {
         label = eb.textContent.trim();
@@ -422,6 +423,34 @@
     size();
     window.addEventListener('load', size);
     window.addEventListener('resize', size);
+  }
+
+  /* ---------- Event page: the cover images slide by themselves; arrows and dots move them ---------- */
+  const epCover = document.querySelector('[data-ep-cover]');
+  if (epCover) {
+    const track = epCover.querySelector('.ep-slides');
+    const pips = [...epCover.querySelectorAll('.ep-pips button')];
+    const count = track.children.length;
+    let cur = 0;
+    let auto = 0;
+    let inView = false;
+    let hover = false;
+    const show = (k) => {
+      cur = (k + count) % count;
+      track.style.transform = `translateX(${-cur * 100}%)`;
+      pips.forEach((b, i) => { b.classList.toggle('is-on', i === cur); b.setAttribute('aria-current', String(i === cur)); });
+    };
+    const play = () => {
+      clearInterval(auto);
+      if (inView && !hover && !reduceMotion) auto = setInterval(() => show(cur + 1), 3500);
+    };
+    epCover.querySelector('.ep-arrow--prev').addEventListener('click', () => { show(cur - 1); play(); });
+    epCover.querySelector('.ep-arrow--next').addEventListener('click', () => { show(cur + 1); play(); });
+    pips.forEach((b, i) => b.addEventListener('click', () => { show(i); play(); }));
+    epCover.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') { hover = true; play(); } });
+    epCover.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') { hover = false; play(); } });
+    onSwipe(epCover, (d) => { show(cur + d); play(); });
+    new IntersectionObserver(([e]) => { inView = e.isIntersecting; play(); }, { threshold: 0.4 }).observe(epCover);
   }
 
   /* ---------- API pipeline: registration → API → ticket → channels ---------- */

@@ -9,7 +9,7 @@
 .ep-copy h2 { margin-top: var(--space-lg); font-size: 36px; line-height: 44px; font-weight: 600; letter-spacing: -0.02em; }
 .ep-lede { margin-top: var(--space-xl); font-size: 18px; line-height: 28px; color: var(--text-tertiary); }
 .ep-copy .checks { margin-top: var(--space-3xl); }
-.ep-link { margin-top: var(--space-3xl); color: var(--brand-700); }
+.ep-link { margin-top: var(--space-3xl); gap: 8px; }
 
 /* the product's own dark event page, in a browser window */
 .ep-frame {
@@ -31,11 +31,32 @@
 
 .ep-page { display: grid; gap: 12px; padding: 16px; background: var(--ep-bg); color: var(--ep-text); }
 .ep-hero { border-radius: 16px; background: var(--ep-card); box-shadow: inset 0 0 0 1px var(--ep-line); overflow: hidden; }
-.ep-cover { position: relative; aspect-ratio: 1215 / 520; overflow: hidden; }
-.ep-cover img { width: 100%; height: 100%; object-fit: cover; }
-.ep-pips { position: absolute; left: 50%; bottom: 10px; display: flex; gap: 5px; transform: translateX(-50%); }
-.ep-pips i { width: 6px; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, .55); }
-.ep-pips i.is-on { width: 18px; background: #2e90fa; }
+.ep-cover { position: relative; aspect-ratio: 1215 / 520; overflow: hidden; touch-action: pan-y; }
+.ep-slides { display: flex; height: 100%; transition: transform .55s cubic-bezier(.2, .8, .2, 1); }
+.ep-slides img { flex: none; width: 100%; height: 100%; object-fit: cover; }
+.ep-arrow {
+  position: absolute;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin-top: -18px;
+  border-radius: 50%;
+  background: rgba(13, 14, 18, .55);
+  color: #fff;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .18);
+  backdrop-filter: blur(6px);
+  transition: background-color .15s, transform .15s;
+}
+.ep-arrow:hover { background: rgba(13, 14, 18, .8); }
+.ep-arrow:active { transform: scale(.94); }
+.ep-arrow--prev { left: 12px; }
+.ep-arrow--next { right: 12px; }
+.ep-pips { position: absolute; left: 50%; bottom: 10px; display: flex; gap: 6px; transform: translateX(-50%); }
+.ep-pips button { width: 7px; height: 7px; border-radius: 4px; background: rgba(255, 255, 255, .6); transition: width .25s, background-color .25s; }
+.ep-pips button.is-on { width: 20px; background: #2e90fa; }
+@media (prefers-reduced-motion: reduce) { .ep-slides { transition: none; } }
 .ep-main { padding: 16px 18px 18px; }
 .ep-live {
   display: inline-flex; align-items: center; gap: 5px;

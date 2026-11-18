@@ -137,9 +137,9 @@ Homepage order: hero and five steps, event page, customer logos, numbers, featur
 | Section | What it does |
 | --- | --- |
 | Navigation bar | Floating ticket-shaped bar, same on every page, with Log In and Sign Up on the right |
-| Hero and five steps | A landscape ticket with no strip across the top: a dashed tear line runs the full height between the copy (main part) and the product picture (stub), with a notch at the top and bottom edges. The picture is pinned while the five steps scroll past and change it; colour swatches recolour the ticket |
+| Hero and five steps | A landscape ticket with no strip across the top and 24px corners. A dashed tear line runs the full height between the copy (the main part, wider) and the product picture (the stub, narrower; 1.3 : 1), with a notch at the top and bottom edges. The closing "Ready to issue" card sits on the main part. The picture is pinned while the five steps scroll past and change it; colour swatches recolour the ticket |
 | Numbers | Stats beside a printed receipt |
-| Event page | The Ticket Generator event page as guests see it (dark theme, cover image, Live badge, date, time, venue, "Register Now", lineup, event guide, share), in a browser window beside the copy. Copied from the product's demo page at `tg-full-revamp.vercel.app/p/summer-music-festival` |
+| Event page | The Ticket Generator event page as guests see it (dark theme, three cover images that slide every 3.5 seconds with arrows on either side and dots, Live badge, date, time, venue, "Register Now", lineup, event guide, share), in a browser window beside the copy. Copied from the product's demo page at `tg-full-revamp.vercel.app/p/summer-music-festival` |
 | Features | Eight feature cards in a 4 × 2 grid: icon, heading, text |
 | Use cases | Section pins; one tilted ticket is dealt onto a pile per scroll step. The rail on the left has five equal lines; the line of the use case on show is fully lit, including when one is clicked |
 | Security and API | Three compliance seals, then a live demo: registration list, API, ticket, three delivery channels. Clicking the button or the logo sends a registration |
@@ -147,7 +147,7 @@ Homepage order: hero and five steps, event page, customer logos, numbers, featur
 | FAQ | One answer open, the rest open on click |
 | Blog | Three posts, or the section is removed. Never fewer than three |
 | Closing ticket | Landscape "admission ticket" with Sign Up and Book a Demo |
-| Pricing: estimator | Ticket count field and credit packs on the left, sticky price receipt on the right |
+| Pricing: estimator | A landscape ticket like the homepage hero: headline, ticket count field and credit packs on the main part; the sticky price receipt is the stub on the right, past the tear line. "Create your own event" in the event page section opens the app's sign-up |
 | Pricing: features | Section pins; the blue "1 credit = 1 ticket" ticket steps back and eight feature tickets slide past sideways |
 | Coming soon | Terminal with Mira typing; a portrait ticket prints from the top and names the page. The stub carries a real QR code that opens the homepage |
 

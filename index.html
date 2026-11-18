@@ -84,7 +84,7 @@
     <!-- =========================================================
          Journey of a ticket — hero + 5 steps share one sticky stage
          ========================================================= -->
-    <section class="tkt tkt--hero" id="how-it-works" data-tkt="How it works">
+    <section class="tkt tkt--hero tkt--land" id="how-it-works" data-tkt="How it works">
     <div class="journey container" data-journey>
 
       <!-- Scene 0 · Hero -->
@@ -414,14 +414,23 @@
             <li>Registration form and online payments</li>
             <li>Works on any phone, no app to install</li>
           </ul>
-          <a class="text-link ep-link" href="https://tg-full-revamp.vercel.app/p/summer-music-festival">Open the live event page <span aria-hidden="true">→</span></a>
+          <a class="btn btn-primary btn-lg ep-link" href="https://tg-full-revamp.vercel.app/signup">Create your own event <span aria-hidden="true">→</span></a>
         </div>
 
         <div class="ep-frame" aria-label="Example event page: Summer Music Festival">
           <div class="ep-bar" aria-hidden="true"><span class="ep-dots"><i></i><i></i><i></i></span><span class="ep-url mono">ticket-generator.com/p/summer-music-festival</span></div>
           <div class="ep-page">
             <div class="ep-hero">
-              <div class="ep-cover"><img src="assets/eventpage/banner.webp" alt="A singer performing to a festival crowd under stage lights" width="1215" height="630" loading="lazy" decoding="async"><span class="ep-pips" aria-hidden="true"><i class="is-on"></i><i></i><i></i></span></div>
+              <div class="ep-cover" data-ep-cover>
+                <div class="ep-slides">
+                  <img src="assets/eventpage/banner.webp" alt="A singer performing to a festival crowd under stage lights" width="1215" height="630" loading="lazy" decoding="async">
+                  <img src="assets/eventpage/banner-2.webp" alt="The singer reaching out to the front row at the Neon Horizon stage" width="1217" height="630" loading="lazy" decoding="async">
+                  <img src="assets/eventpage/banner-3.webp" alt="A wide view of the festival crowd and stage" width="1215" height="630" loading="lazy" decoding="async">
+                </div>
+                <button type="button" class="ep-arrow ep-arrow--prev" aria-label="Previous cover image"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M12.5 15 7.5 10l5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <button type="button" class="ep-arrow ep-arrow--next" aria-label="Next cover image"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m7.5 15 5-5-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <span class="ep-pips"><button type="button" class="is-on" aria-label="Show cover image 1 of 3"></button><button type="button" aria-label="Show cover image 2 of 3"></button><button type="button" aria-label="Show cover image 3 of 3"></button></span>
+              </div>
               <div class="ep-main">
                 <span class="ep-live">Live</span>
                 <h3>Summer Music Festival</h3>

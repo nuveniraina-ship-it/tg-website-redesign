@@ -121,3 +121,39 @@ main { padding-top: 20px; }
   .tkt-stub { padding: 14px 18px; font-size: 9.5px; letter-spacing: .12em; }
   .tkt--hero, .uc.tkt { padding-top: 48px; }
 }
+
+/* ---------- Landscape tickets (homepage hero, pricing hero), desktop ----------
+   No strip across the top. A dashed tear line runs the full height between the
+   main part and the narrower stub on the right, with a notch where it meets the
+   top and bottom edges. Each page sets --line-x, measured from the ticket's left. */
+@media (min-width: 961px) {
+  .tkt--land.tkt { --jw: min(100%, var(--container) + var(--gutter) * 2); border-radius: 24px; }
+  .tkt--land > .tkt-stub { display: none; }
+  .tkt--land.tkt::before,
+  .tkt--land.tkt::after {
+    content: "";
+    position: absolute;
+    left: var(--line-x);
+    pointer-events: none;
+  }
+  .tkt--land.tkt::before {
+    top: 18px;
+    bottom: 18px;
+    width: 2px;
+    margin-left: -1px;
+    background: repeating-linear-gradient(180deg, var(--gray-300) 0 6px, transparent 6px 12px);
+  }
+  .tkt--land.tkt::after {
+    top: -16px;
+    bottom: -16px;
+    width: 32px;
+    margin-left: -16px;
+    background: var(--desk-paper);
+    -webkit-mask:
+      radial-gradient(circle 16px at 50% 16px, #000 98%, transparent) top / 100% 51% no-repeat,
+      radial-gradient(circle 16px at 50% calc(100% - 16px), #000 98%, transparent) bottom / 100% 51% no-repeat;
+            mask:
+      radial-gradient(circle 16px at 50% 16px, #000 98%, transparent) top / 100% 51% no-repeat,
+      radial-gradient(circle 16px at 50% calc(100% - 16px), #000 98%, transparent) bottom / 100% 51% no-repeat;
+  }
+}

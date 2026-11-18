@@ -451,3 +451,26 @@
     padding: 20px 0 28px;   /* the card pile already has ~35-60px of air inside its box */
   }
 }
+
+/* ---------- Pricing hero as a landscape ticket (see css/tickets.css) ----------
+   Headline and calculator are the main part; the price receipt is the stub. */
+@media (min-width: 961px) {
+  .pr-hero.tkt { --side: 400px; --pgap: var(--space-7xl);
+    --line-x: calc((100% - var(--jw)) / 2 + var(--gutter) + (var(--jw) - var(--gutter) * 2 - var(--pgap) - var(--side)) + var(--pgap) / 2);
+    padding: 64px 0 72px;
+  }
+  .pr-hero > .container {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--side);
+    grid-template-rows: auto 1fr;
+    column-gap: var(--pgap);
+  }
+  .pr-hero .est { display: contents; }
+  .pr-head { grid-column: 1; grid-row: 1; max-width: 640px; margin: 0; text-align: left; }
+  .pr-head .eyebrow.is-in-stub { display: block; }
+  .pr-hero .est-main { grid-column: 1; grid-row: 2; margin-top: var(--space-5xl); }
+  .pr-hero .est-side { grid-column: 2; grid-row: 1 / 3; align-self: start; }
+}
+@media (min-width: 961px) and (max-width: 1240px) {
+  .pr-hero.tkt { --side: 360px; --pgap: var(--space-5xl); }
+}

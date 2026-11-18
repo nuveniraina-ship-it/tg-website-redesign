@@ -1140,3 +1140,9 @@
   .tm.tkt { overflow: clip; }
   .tm-pin { position: static; height: auto; display: block; overflow: visible; }
 }
+
+/* Round 18 — no empty strip on the phone Estimate ticket */
+@media (max-width: 768px) {
+  .est { padding-top: 22px; }
+  .est::before, .est::after { content: none; }
+}
