@@ -887,6 +887,22 @@
 
   // Template swatches: click one and the whole stage (ticket, tracker, cards) takes that colour.
   const picks = [...panel.querySelectorAll('[data-theme-pick]')];   // the corner bar's swatches
+  // the ticket's text turns dark on a light colour, so it always stays readable
+  const setInk = (hex) => {
+    const props = ['--t-ink', '--t-ink-soft', '--t-line'];
+    let light = false;
+    if (hex) {
+      const n = parseInt(hex.slice(1), 16);
+      const lin = (c) => { c /= 255; return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4; };
+      const L = 0.2126 * lin(n >> 16) + 0.7152 * lin((n >> 8) & 255) + 0.0722 * lin(n & 255);
+      light = L > 0.4;   // white text would fall below about 2.3:1 here
+    }
+    if (light) {
+      canvas.style.setProperty('--t-ink', '#181d27');
+      canvas.style.setProperty('--t-ink-soft', 'rgba(24, 29, 39, .68)');
+      canvas.style.setProperty('--t-line', 'rgba(24, 29, 39, .24)');
+    } else props.forEach((p) => canvas.style.removeProperty(p));
+  };
   // any colour: the picker sets --pick and the custom theme builds the whole scale from it
   const anyPick = panel.querySelector('[data-theme-any]');
   if (anyPick) {
@@ -894,6 +910,7 @@
     anyPick.addEventListener('input', () => {
       canvas.dataset.theme = 'custom';
       canvas.style.setProperty('--pick', anyPick.value);
+      setInk(anyPick.value);
       dot.style.setProperty('--c', anyPick.value);
       dot.classList.add('is-set', 'is-on');
       picks.forEach((b) => b.classList.remove('is-on'));
@@ -902,6 +919,7 @@
   picks.forEach((btn) => btn.addEventListener('click', () => {
     anyPick?.parentElement.classList.remove('is-on');
     const theme = btn.dataset.themePick;
+    setInk(null);   // the preset colours are all dark enough for white text
     if (theme === 'blue') canvas.removeAttribute('data-theme'); else canvas.dataset.theme = theme;
     picks.forEach((b) => b.classList.toggle('is-on', b === btn));
   }));
@@ -925,7 +943,7 @@
     heroShot.innerHTML = `
       <div class="m-pass-tkt">
         <div class="m-pass-top">
-          <div class="m-pass-row"><span class="m-pass-logo">AC</span><span class="m-pass-type">General Admission</span></div>
+          <div class="m-pass-row"><span class="m-pass-logo">AC</span><span class="m-pass-cat">CONFERENCE</span><span class="m-pass-type">General Admission</span></div>
           <p class="m-pass-title">Annual Client Summit</p>
           <dl class="m-pass-meta">
             <div><dt>Date</dt><dd>Sat, 14 Mar</dd></div>
@@ -1128,8 +1146,10 @@
     // the colour row recolours all five pictures
     const syncTheme = () => shots.forEach((c) => {
       if (canvas.dataset.theme) c.dataset.theme = canvas.dataset.theme; else c.removeAttribute('data-theme');
-      const pickVal = canvas.style.getPropertyValue('--pick');
-      if (pickVal) c.style.setProperty('--pick', pickVal); else c.style.removeProperty('--pick');
+      ['--pick', '--t-ink', '--t-ink-soft', '--t-line'].forEach((prop) => {
+        const v = canvas.style.getPropertyValue(prop);
+        if (v) c.style.setProperty(prop, v); else c.style.removeProperty(prop);
+      });
     });
     new MutationObserver(syncTheme).observe(canvas, { attributes: true, attributeFilter: ['data-theme', 'style'] });
 

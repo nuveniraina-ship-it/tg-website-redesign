@@ -9,7 +9,7 @@
   background: var(--b-bg);
   border-top: 1px solid var(--border-secondary);
 }
-.blogs-head { max-width: 640px; }
+.blogs-head { max-width: 640px; margin-inline: auto; text-align: center; }
 .blogs-head h2 {
   margin-top: 0;
   font-size: 36px;

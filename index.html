@@ -83,7 +83,7 @@
 
       <div class="nav-actions">
         <a href="https://tg-full-revamp.vercel.app/login" class="btn btn-link">Log In</a>
-        <a href="https://tg-full-revamp.vercel.app/signup" class="btn btn-dark">Sign Up</a>
+        <a href="https://tg-full-revamp.vercel.app/signup" class="btn btn-primary">Sign Up</a>
       </div>
 
       <button class="menu-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Open menu" data-menu-toggle>
@@ -157,7 +157,7 @@
                   <!-- printed ticket -->
                   <div class="print">
                     <div class="ticket-top">
-                      <span class="ticket-brand"><b>AC</b><span class="mono">ADMIT ONE</span></span>
+                      <span class="ticket-brand"><b>AC</b><span class="mono">CONFERENCE</span></span>
                       <span class="ticket-type"><span class="tt-ga">General Admission</span><span class="tt-vip">VIP Pass · $25</span></span>
                     </div>
                     <p class="ticket-event">Annual Client Summit</p>
@@ -447,8 +447,8 @@
                   <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span data-ep-dates>July 26–30, 2026</span></li>
                   <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>6:00 to 11:00 pm IST</li>
                   <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Riverside Amphitheater</li>
-                  <li class="ep-close">Registration closes <span data-ep-closes>July 30, 2026</span>, 11:00 pm</li>
                 </ul>
+                <p class="ep-close">Registration closes <span data-ep-closes>July 30, 2026</span>, 11:00 pm</p>
                 <button type="button" class="ep-btn" data-ep-register>Register Now</button>
               </div>
             </div>
@@ -981,16 +981,6 @@
               Simulate a new registration
             </button>
             <p class="api-count" aria-live="polite"><span class="mono" data-api-count>0</span> <span data-api-noun>tickets</span> issued in this demo · zero manual steps</p>
-            <details class="api-json">
-              <summary class="mono">{ } View the request</summary>
-<pre class="mono"><span class="m">POST</span> /v1/tickets
-{
-  <span class="k">"event_id"</span>: <span class="s">"evt_client_summit"</span>,
-  <span class="k">"attendee"</span>: { <span class="k">"name"</span>: <span class="s" data-json-name>"Priya Shah"</span>, <span class="k">"email"</span>: <span class="s" data-json-email>"priya@acme.io"</span> },
-  <span class="k">"send_via"</span>: [<span class="s">"email"</span>, <span class="s">"sms"</span>, <span class="s">"whatsapp"</span>]
-}</pre>
-              <p class="api-note">Illustrative example — see the API docs for the exact request format.</p>
-            </details>
           </div>
         </div>
 

@@ -69,8 +69,8 @@
 .ep-facts { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin-top: 10px; font-size: 13px; line-height: 20px; color: #c9cbd1; }
 .ep-facts li { display: inline-flex; align-items: center; gap: 6px; }
 .ep-facts svg { color: var(--ep-muted); }
-.ep-facts .ep-close {   /* one green pill; the date inside is plain text, so it wraps as one line of words */
-  display: inline-block;
+.ep-close {   /* one green pill on its own line, under the date, time and venue and above Register Now */
+  display: block; width: fit-content; max-width: 100%; margin-top: 12px;
   padding: 2px 10px; border-radius: 9999px;
   background: #ecfdf3; box-shadow: inset 0 0 0 1px #abefc6;
   font-size: 12px; line-height: 18px; font-weight: 600; color: #067647;
@@ -371,3 +371,7 @@ button.ep-btn { border: 0; cursor: pointer; font-family: inherit; }
   .ep-copy .checks { display: grid; width: max-content; max-width: 100%; margin-inline: auto; gap: 6px; }
   .ep-link { display: inline-flex; }
 }
+
+/* ---------- Core strengths: a plain grid of tickets (no stacking) ---------- */
+.hf, .hf:nth-child(n) { position: relative; top: auto; z-index: auto; }
+.hf-grid { row-gap: 28px; }

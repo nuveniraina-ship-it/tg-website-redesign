@@ -1568,3 +1568,23 @@
 @media (min-width: 769px) and (max-width: 1180px) {
   .numbers-copy h2, .uc-side h2, .trust-copy h2 { font-size: 30px; line-height: 38px; }
 }
+
+/* Round 29 — core strengths are a plain grid on phones too (no stacking) */
+@media (max-width: 768px) {
+  .hf, .hf:nth-child(n) { position: relative; top: auto; z-index: auto; }
+  .hf-grid { gap: 14px; }
+}
+
+@media (max-width: 768px) {
+  /* the phone hero ticket gets the same designed face as the demo ticket */
+  .m-pass-top {
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 206'%3E%3Cg fill='none' stroke='white' stroke-width='1.5'%3E%3Ccircle cx='262' cy='212' r='46' stroke-opacity='.22'/%3E%3Ccircle cx='262' cy='212' r='86' stroke-opacity='.16'/%3E%3Ccircle cx='262' cy='212' r='128' stroke-opacity='.11'/%3E%3Ccircle cx='262' cy='212' r='172' stroke-opacity='.07'/%3E%3C/g%3E%3Cg fill='white'%3E%3Cpath d='M168 28l2.2 5.8 5.8 2.2-5.8 2.2-2.2 5.8-2.2-5.8-5.8-2.2 5.8-2.2z' fill-opacity='.5'/%3E%3Cpath d='M214 64l1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z' fill-opacity='.35'/%3E%3Ccircle cx='140' cy='70' r='1.6' fill-opacity='.4'/%3E%3Ccircle cx='236' cy='30' r='1.4' fill-opacity='.4'/%3E%3C/g%3E%3C/svg%3E") right bottom / auto 100% no-repeat,
+      radial-gradient(120% 95% at 92% 0%, rgba(255, 255, 255, .26), transparent 58%),
+      radial-gradient(80% 90% at 0% 100%, rgba(0, 0, 0, .22), transparent 70%),
+      var(--brand-600);
+  }
+}
+@media (max-width: 768px) {
+  .m-pass-cat { margin-right: auto; margin-left: 8px; font-family: var(--font-mono); font-size: 9px; letter-spacing: .14em; opacity: .75; }
+}
