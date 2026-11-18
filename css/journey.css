@@ -898,3 +898,47 @@
   .j-end-cta { width: 100%; }
   .j-end-cta .btn { flex: 1; }
 }
+
+/* ---------- Desktop hero as a landscape ticket ----------
+   No strip across the top: the tear line runs the full height of the ticket,
+   between the copy (the main part) and the product picture (the stub), with a
+   notch where it meets the top and bottom edges. The closing "Ready to issue"
+   card sits over it. */
+@media (min-width: 961px) {
+  .tkt--hero.tkt { --jgap: var(--space-7xl); padding-top: 24px; }
+  .tkt--hero > .tkt-stub { display: none; }
+  .tkt--hero.tkt::before,
+  .tkt--hero.tkt::after {
+    --jw: min(100%, var(--container) + var(--gutter) * 2);
+    content: "";
+    position: absolute;
+    left: calc((100% - var(--jw)) / 2 + var(--gutter) + (var(--jw) - var(--gutter) * 2 - var(--jgap)) / 2.12 + var(--jgap) / 2);
+    pointer-events: none;
+  }
+  /* the perforation */
+  .tkt--hero.tkt::before {
+    top: 18px;
+    bottom: 18px;
+    width: 2px;
+    margin-left: -1px;
+    background: repeating-linear-gradient(180deg, var(--gray-300) 0 6px, transparent 6px 12px);
+  }
+  /* the two notches, cut out of the top and bottom edges */
+  .tkt--hero.tkt::after {
+    top: -16px;
+    bottom: -16px;
+    width: 32px;
+    margin-left: -16px;
+    background: var(--desk-paper);
+    -webkit-mask:
+      radial-gradient(circle 16px at 50% 16px, #000 98%, transparent) top / 100% 51% no-repeat,
+      radial-gradient(circle 16px at 50% calc(100% - 16px), #000 98%, transparent) bottom / 100% 51% no-repeat;
+            mask:
+      radial-gradient(circle 16px at 50% 16px, #000 98%, transparent) top / 100% 51% no-repeat,
+      radial-gradient(circle 16px at 50% calc(100% - 16px), #000 98%, transparent) bottom / 100% 51% no-repeat;
+  }
+  .tkt--hero .j-end { position: relative; z-index: 1; background-color: var(--brand-25); }
+}
+@media (min-width: 961px) and (max-width: 1120px) {
+  .tkt--hero.tkt { --jgap: var(--space-5xl); }
+}

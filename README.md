@@ -137,7 +137,7 @@ Homepage order: hero and five steps, event page, customer logos, numbers, featur
 | Section | What it does |
 | --- | --- |
 | Navigation bar | Floating ticket-shaped bar, same on every page, with Log In and Sign Up on the right |
-| Hero and five steps | The product picture is pinned while the five steps scroll past and change it; colour swatches recolour the ticket |
+| Hero and five steps | A landscape ticket with no strip across the top: a dashed tear line runs the full height between the copy (main part) and the product picture (stub), with a notch at the top and bottom edges. The picture is pinned while the five steps scroll past and change it; colour swatches recolour the ticket |
 | Numbers | Stats beside a printed receipt |
 | Event page | The Ticket Generator event page as guests see it (dark theme, cover image, Live badge, date, time, venue, "Register Now", lineup, event guide, share), in a browser window beside the copy. Copied from the product's demo page at `tg-full-revamp.vercel.app/p/summer-music-festival` |
 | Features | Eight feature cards in a 4 × 2 grid: icon, heading, text |
@@ -327,7 +327,7 @@ Used by both versions. All values live in [`css/tokens.css`](css/tokens.css).
 Apply to both versions.
 
 - Every section is a ticket: rounded card, a mono uppercase stub label at the top, semicircle notches where parts join.
-- The stub strip at the top of each ticket carries the section's blue heading (its eyebrow, such as "Event Page", "Use Cases", "Need Help?"), above the dashed tear line. The heading isn't repeated below the line. It keeps the section's own shade, lighter on the blue and dark tickets. The homepage hero and the footer strips are left empty.
+- The stub strip at the top of each ticket carries the section's blue heading (its eyebrow, such as "Event Page", "Use Cases", "Need Help?"), above the dashed tear line. The heading isn't repeated below the line. It keeps the section's own shade, lighter on the blue and dark tickets. The footer strip is left empty. The blog's strip reads "Reading Room".
 - **Vertical (portrait) ticket:** the dotted line, zig-zag or semicircle notches sit at the bottom, where the two parts join.
 - **Horizontal (landscape) ticket:** the line or pattern sits on the right-hand side, between the main part and the stub.
 - When a ticket changes orientation at a breakpoint, its tear line and notches move with it.
