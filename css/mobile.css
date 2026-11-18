@@ -1241,7 +1241,7 @@
 @media (max-width: 768px) {
   /* "Try it with your brand colour": one compact line above the demo, never over it */
   .j-stage .stage-panel { aspect-ratio: 560 / 500; }
-  .j-stage .stage-panel > .stage-canvas { top: calc(50% + 20px); }
+  .j-stage .stage-panel > .stage-canvas { top: calc(50% + 34px); }   /* clear space under the "Try it" bar, as on desktop */
   .stage-try { top: 8px; left: 8px; right: 8px; justify-content: space-between; gap: 8px; padding: 5px 6px 5px 10px; font-size: 12px; line-height: 16px; white-space: nowrap; }
   .stage-try-text { overflow: hidden; text-overflow: ellipsis; }
   .stage-try-dots { gap: 4px; }
@@ -1294,7 +1294,7 @@
 @media (max-width: 768px) {
   /* hero pictures: more room top to bottom */
   .stage-panel.m-shot { aspect-ratio: 560 / 560; }
-  .j-stage .stage-panel { aspect-ratio: 560 / 600; }
+  .j-stage .stage-panel { aspect-ratio: 560 / 640; }
 
   /* "Ready to issue your first ticket?" closes the steps ticket as a full-width band.
      No tear line or side notches here (removed to match desktop) */
