@@ -137,7 +137,8 @@ Homepage order: hero and five steps, event page, launch options, customer logos,
 | Section | What it does |
 | --- | --- |
 | Navigation bar | Floating ticket-shaped bar, same on every page, with Log In and Sign Up on the right |
-| Hero and five steps | A landscape ticket with no strip across the top and 24px corners. A dashed tear line runs the full height between the copy (the main part, wider) and the product picture (the stub, narrower; 1.3 : 1), with a notch at the top and bottom edges. The closing "Ready to issue" card runs the full width at the bottom; the vertical tear line stops just above it. The copy is 1.65 times as wide as the picture, and the picture's box is only as tall as the picture. "First 10 tickets free" and "No credit card required" sit under the Create Your Event button. A "Try it with your brand colour" bar sits in the picture's top-left corner: five preset colours plus a colour-wheel dot that opens the device's colour picker, and the whole ticket, cards and progress bars take that colour. The picture's box is taller than the picture (560 : 830), so the demo has room above and below it, with a clear gap (about 60px) under the "Try it" bar. The demo has no Templates card; colours come from the "Try it" bar only. The picture is pinned while the five steps scroll past and change it; colour swatches recolour the ticket |
+| Hero | Its own landscape ticket: the copy on the main part and, past the vertical tear line, a still picture of the opening scene (event page card, ticket, chips) on the stub. "First 10 tickets free" and "No credit card required" sit under Create Your Event |
+| Get Started | A separate ticket right under the hero ("Get Started" on its strip): the heading and the five steps on the left (each step is about 430px of scroll, so they are well spaced), the live picture pinned on the right and changing with the step, with a "Try it: pick a colour" bar of five colours in its corner. Ends with the full-width "Ready to issue your first ticket?" card |
 | Numbers | Stats beside a printed receipt; the receipt ends in a QR code that opens the pricing page (scan it, or click or tap it) |
 | Event page | Centred words on top (heading, one line of text, the three checkmarks in one row, "Create your own event"), then the event page below them, full width. The Ticket Generator event page as guests see it (dark theme, three cover images that slide every 3.5 seconds with arrows on either side and dots, Live badge, date, time, venue, "Register Now", lineup, event guide, share), in a browser window beside the copy. Copied from the product's demo page at `tg-full-revamp.vercel.app/p/summer-music-festival`. "Register Now" opens the registration step inside the window (ticket choice, sample details, Register, then a confirmation) with a "Back to event" button. The "Registration closes …" note is one green pill on its own line, under the date, time and venue and above Register Now. The dates move with the calendar: registration always closes 7 days after the day the page is opened (open it on 18 Nov and it closes 25 Nov), and the five-day festival ends that same day (21–25 Nov) |
 | Launch options | "What kind of event are you planning?": a strip of three tickets joined edge to edge (Direct Ticketing, Free Registrations, Paid Registrations) with perforations and notches between them. Each has the live site's illustration, its name, a line of text, a two-step "how it works", and "Get Started" on its stub (opens sign-up). On hover the left ticket tilts out to the left, the middle one lifts a little and the right one tilts out to the right. All three tickets use the brand blue (no green or orange) |
@@ -255,7 +256,7 @@ Headings never run past two lines, on desktop, tablet or phone: the Features hea
 
 The Sign Up button in the navigation bar is blue (the brand primary button) on every page.
 
-The demo ticket in the hero changes event with its colour, everywhere the demo shows the event (ticket, event page card, "Create New Event" form, sales list and report): name, category, logo letters and venue all switch, and a photo of that kind of event sits behind the ticket, faded into the ticket's colour (an even wash, slightly stronger on the left where the words are). The event page card's cover uses the same photo, lightly tinted. Light picked colours switch the text to dark.
+The demo ticket in the hero changes event with its colour, everywhere the demo shows the event (ticket, event page card, "Create New Event" form, sales list and report): name, category, logo letters and venue all switch, and a photo of that kind of event sits behind the ticket, faded into the ticket's colour (an even wash, slightly stronger on the left where the words are). The event page card's cover shows the same photo with only a light tint, so the photo is clearly visible. Light picked colours switch the text to dark.
 
 | Colour | Event | Category | Venue | Photo |
 | --- | --- | --- | --- | --- |
@@ -264,12 +265,8 @@ The demo ticket in the hero changes event with its colour, everywhere the demo s
 | Green | City Run 10K | Marathon | Riverside Park | `run.webp` |
 | Purple | Leaders Summit | Conference | Grand Hall | `summit.webp` (speaker side of the conference photo) |
 | Sunset | Sunset Art Workshop | Workshop | Studio 9 | `art.webp` |
-| Picked: pink | Love Songs Live | Valentine's concert | Rose Hall | `valentine.webp` (singer on stage, pink lights) |
-| Picked: red | Opening Night | Theatre premiere | Grand Theatre | `premiere.webp` (audience and curtains side of the conference photo) |
-| Picked: yellow | Charity Fun Day | Charity | Central Square | `charity.webp` |
-| Picked: teal | Rooftop Beats | DJ party | Sky Terrace | `rooftop.webp` (rooftop DJ, blue sky) |
 
-A colour from the colour wheel goes to the nearest family by hue (greys go to Ink). The phone hero ticket is the blue concert ticket with its photo.
+There are five colours (no colour wheel). The phone hero ticket is the blue concert ticket with its photo.
 
 ### Mobile copy
 

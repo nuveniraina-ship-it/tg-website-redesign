@@ -558,8 +558,7 @@
   border-radius: 10px;
   /* the same event photo as the ticket, lightly tinted with the event's colour */
   background:
-    radial-gradient(120% 140% at 100% 0, rgba(255, 255, 255, .22), transparent 55%),
-    linear-gradient(120deg, color-mix(in srgb, var(--brand-700) 62%, transparent), color-mix(in srgb, var(--brand-500) 30%, transparent)),
+    linear-gradient(120deg, color-mix(in srgb, var(--brand-700) 30%, transparent), color-mix(in srgb, var(--brand-500) 8%, transparent)),
     var(--t-photo, url("../assets/tickets/concert.webp")) center / cover no-repeat,
     linear-gradient(120deg, var(--brand-700), var(--brand-500));
 }
@@ -1030,4 +1029,19 @@
   .api-try { top: 10px; left: 10px; font-size: 12px; padding: 4px 10px 4px 8px; }
   .flow-wrap { margin-top: 14px; }
   .flow-wrap .flow { padding-top: 44px; }
+}
+
+/* ---------- Desktop: hero and Get Started as two tickets (split by js/main.js) ---------- */
+@media (min-width: 961px) {
+  .journey[data-split] { grid-template-areas: "hero stage"; }
+  .tkt--hero .j-hero { padding-bottom: var(--space-6xl); }
+  .j-shot { grid-area: stage; align-self: center; padding: var(--space-3xl) 0 var(--space-5xl); }
+  .j-shot .stage-panel { height: auto; aspect-ratio: 560 / 600; }
+  .j-shot .stage-panel > .stage-canvas { top: 50%; }
+
+  .tkt--steps.tkt { padding: 104px 0 8px; background: var(--bg-primary); }
+  .journey--steps { grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); grid-template-areas: "steps stage"; }
+  .tkt--steps .j-end { margin-top: var(--space-4xl); }
+  /* more room between the five steps */
+  .tkt--steps .step { min-height: 48vh; padding: var(--space-6xl) 0; }
 }

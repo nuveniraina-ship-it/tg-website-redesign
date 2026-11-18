@@ -447,6 +447,7 @@
   const heroEnd = heroTkt?.querySelector('.j-end');
   if (heroEnd) {
     const placeStub = () => {
+      if (!heroTkt.contains(heroEnd)) { heroTkt.style.removeProperty('--stub-y'); return; }   // split: the card lives in Get Started
       const y = heroEnd.getBoundingClientRect().top - heroTkt.getBoundingClientRect().top - 28;
       heroTkt.style.setProperty('--stub-y', `${Math.round(y)}px`);
     };
@@ -1107,11 +1108,11 @@
       const stageBottom = stageCol.getBoundingClientRect().bottom;
       line = stageBottom + (window.innerHeight - stageBottom) * 0.45;
     }
-    let active = 0;
+    let active = journey.dataset.split ? 1 : 0;   // split desktop: the steps' picture starts at step 1
     steps.forEach((s) => {
       if (s.getBoundingClientRect().top <= line) active = Number(s.dataset.step);
     });
-    setState(active);
+    setState(journey.dataset.split ? Math.max(1, active) : active);
   };
 
   let ticking = false;
@@ -1124,6 +1125,45 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll);
   onScroll();
+
+  /* Desktop: the hero and Get Started are two separate tickets. The hero keeps its copy and a still
+     picture of the opening scene; the five steps, their live picture and "Ready to issue" move into
+     their own ticket right under it. */
+  if (!heroShot && window.matchMedia('(min-width: 961px)').matches) {
+    const heroSec = journey.closest('section');
+    const stepsSec = document.createElement('section');
+    stepsSec.className = 'tkt tkt--steps';
+    stepsSec.setAttribute('aria-labelledby', 'steps-title');
+    stepsSec.innerHTML = '<div class="tkt-stub" aria-hidden="true"><span class="tkt-eyebrow">Get Started</span></div>';
+    const grid = document.createElement('div');
+    grid.className = 'container journey journey--steps';
+    stepsSec.append(grid);
+    const stepsCol = journey.querySelector('.j-steps');
+    stepsCol.querySelector('.j-intro .eyebrow')?.classList.add('is-in-stub');
+    stepsCol.querySelector('.j-intro h2')?.setAttribute('id', 'steps-title');
+    const endWrap = heroSec.querySelector('.j-end')?.parentElement;
+    // a still copy of the opening scene for the hero, taken before the live picture moves
+    const shotPanel = panel.cloneNode(true);
+    shotPanel.querySelector('.stage-try')?.remove();
+    shotPanel.querySelectorAll('[id]').forEach((el) => el.removeAttribute('id'));
+    const shotCanvas = shotPanel.querySelector('.stage-canvas');
+    shotCanvas.removeAttribute('data-stage');
+    shotCanvas.dataset.state = '0';
+    for (let i = 1; i <= 5; i++) shotCanvas.classList.remove(`gte-${i}`);
+    shotCanvas.querySelector('.ticket')?.classList.remove('is-scanning', 'is-admitted', 'is-torn');
+    grid.append(stepsCol, stageCol);
+    if (endWrap) stepsSec.append(endWrap);
+    heroSec.after(stepsSec);
+    const shot = document.createElement('div');
+    shot.className = 'j-stage j-shot';
+    shot.setAttribute('aria-hidden', 'true');
+    shot.append(shotPanel);
+    journey.append(shot);
+    new ResizeObserver(() => fitTo(shotPanel, shotCanvas)).observe(shotPanel);
+    journey.dataset.split = '1';
+    heroSec.style.removeProperty('--stub-y');
+    onScroll();
+  }
 
   /* Phones: the hero and the five steps become two tickets; the steps stack as you scroll. */
   if (heroShot) {
