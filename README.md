@@ -255,7 +255,7 @@ Headings never run past two lines, on desktop, tablet or phone: the Features hea
 
 The Sign Up button in the navigation bar is blue (the brand primary button) on every page.
 
-The demo ticket in the hero has a designed face for its event category ("CONFERENCE"): a spotlight glow, soft stage arcs and a few sparkles, all drawn in the ticket's own colour. When a light colour is picked, its text (and the event card's Register button) turns dark so it stays readable; the preset colours keep white text.
+The demo event in the hero is a concert, "Neon Nights Live" at City Arena (Sat, 14 Mar, 7:00 PM), across the ticket, the event page card, the "Create New Event" form and the report. The ticket's face is drawn for a concert: stage-light beams, a crowd with raised hands along the bottom, music notes and sparkles, all in faint white over the ticket's own colour, with "CONCERT" as its category and the ticket number at the top right. When a light colour is picked, its text (and the event card's Register button) turns dark so it stays readable; the preset colours keep white text. The phone hero ticket has the same design.
 
 ### Mobile copy
 

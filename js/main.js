@@ -883,7 +883,7 @@
   const stepRow = journey.querySelector('[data-step-row]');
   const rowSteps = stepRow ? [...stepRow.querySelectorAll('[data-step]')] : [];
 
-  drawQR(canvas.querySelector('[data-qr]'), 'Annual Client Summit');
+  drawQR(canvas.querySelector('[data-qr]'), 'Neon Nights Live');
 
   // Template swatches: click one and the whole stage (ticket, tracker, cards) takes that colour.
   const picks = [...panel.querySelectorAll('[data-theme-pick]')];   // the corner bar's swatches
@@ -943,12 +943,12 @@
     heroShot.innerHTML = `
       <div class="m-pass-tkt">
         <div class="m-pass-top">
-          <div class="m-pass-row"><span class="m-pass-logo">AC</span><span class="m-pass-cat">CONFERENCE</span><span class="m-pass-type">General Admission</span></div>
-          <p class="m-pass-title">Annual Client Summit</p>
+          <div class="m-pass-row"><span class="m-pass-logo">NN</span><span class="m-pass-cat">CONCERT</span><span class="m-pass-type">General Admission</span></div>
+          <p class="m-pass-title">Neon Nights Live</p>
           <dl class="m-pass-meta">
             <div><dt>Date</dt><dd>Sat, 14 Mar</dd></div>
             <div><dt>Time</dt><dd>7:00 PM</dd></div>
-            <div><dt>Venue</dt><dd>Hall B</dd></div>
+            <div><dt>Venue</dt><dd>City Arena</dd></div>
           </dl>
         </div>
         <div class="m-pass-stub">
@@ -960,7 +960,7 @@
           </div>
         </div>
       </div>`;
-    drawQR(heroShot.querySelector('.m-pass-qr'), 'Annual Client Summit');
+    drawQR(heroShot.querySelector('.m-pass-qr'), 'Neon Nights Live');
   }
   const STEP_NAMES = ['Create', 'Sell', 'Send', 'Scan', 'Report'];
   let tabBtns = [];
