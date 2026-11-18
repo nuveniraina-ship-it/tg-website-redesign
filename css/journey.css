@@ -920,14 +920,41 @@
   /* the picture's box is only as tall as the picture, so there's no empty band above and below it */
   .stage-sticky { height: auto; top: 96px; padding: var(--space-3xl) 0; }
   /* taller than the picture, so the cards have air above and below */
-  .stage-panel { height: auto; aspect-ratio: 560 / 700; }
+  .stage-panel { height: auto; aspect-ratio: 560 / 800; }
   .stage-panel > .stage-canvas { top: calc(50% + 22px); }   /* room for the "Try it" bar above it */
   .tkt--hero.tkt {
     --jgap: var(--space-7xl);
     --line-x: calc((100% - var(--jw)) / 2 + var(--gutter) + (var(--jw) - var(--gutter) * 2 - var(--jgap)) * 1.65 / 2.65 + var(--jgap) / 2);
     padding-top: 24px;
   }
-  .tkt--hero .j-end { max-width: calc((100% - var(--jgap)) * 1.65 / 2.65); margin-right: auto; }
+  /* the closing card runs the full width, as the ticket's bottom stub: the vertical tear line
+     stops at a horizontal one above it, with notches at both side edges (--stub-y set by JS) */
+  .tkt--hero.tkt--land.tkt::before {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    margin: 0;
+    right: 0;
+    background:
+      repeating-linear-gradient(180deg, var(--gray-300) 0 6px, transparent 6px 12px) calc(var(--line-x) - 1px) 18px / 2px calc(var(--stub-y, 100%) - 18px) no-repeat,
+      repeating-linear-gradient(90deg, var(--gray-300) 0 6px, transparent 6px 12px) 24px calc(var(--stub-y, 100%) - 1px) / calc(100% - 48px) 2px no-repeat;
+  }
+  .tkt--hero.tkt--land.tkt::after {
+    left: 0;
+    right: 0;
+    width: auto;
+    margin: 0;
+    -webkit-mask:
+      radial-gradient(circle 16px at var(--line-x) 0, #000 98%, transparent) 0 0 / 100% 100% no-repeat,
+      radial-gradient(circle 16px at 0 var(--stub-y, 100%), #000 98%, transparent) 0 0 / 100% 100% no-repeat,
+      radial-gradient(circle 16px at 100% var(--stub-y, 100%), #000 98%, transparent) 0 0 / 100% 100% no-repeat;
+            mask:
+      radial-gradient(circle 16px at var(--line-x) 0, #000 98%, transparent) 0 0 / 100% 100% no-repeat,
+      radial-gradient(circle 16px at 0 var(--stub-y, 100%), #000 98%, transparent) 0 0 / 100% 100% no-repeat,
+      radial-gradient(circle 16px at 100% var(--stub-y, 100%), #000 98%, transparent) 0 0 / 100% 100% no-repeat;
+  }
+  .tkt--hero .j-end { margin-top: 56px; }
 }
 @media (min-width: 961px) and (max-width: 1120px) {
   .tkt--hero.tkt { --jgap: var(--space-5xl); }

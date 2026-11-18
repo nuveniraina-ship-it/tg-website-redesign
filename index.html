@@ -42,7 +42,6 @@
   <link rel="stylesheet" href="css/closing.css">
   <link rel="stylesheet" href="css/footer.css">
   <link rel="stylesheet" href="css/mobile.css">
-  <link rel="stylesheet" href="css/dark.css">
 </head>
 <body>
 
@@ -839,34 +838,31 @@
           </div>
 
           <div class="shield-stage" data-shield>
-            <svg class="shield-bg" viewBox="0 0 240 280" aria-hidden="true">
+<svg class="shield-bg" viewBox="0 0 240 280" aria-hidden="true">
               <defs>
-                <linearGradient id="shield-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e90fa" stop-opacity=".16"/><stop offset="1" stop-color="#2e90fa" stop-opacity=".02"/></linearGradient>
-                <linearGradient id="shield-scan" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#53b1fd" stop-opacity="0"/><stop offset=".5" stop-color="#53b1fd" stop-opacity=".55"/><stop offset="1" stop-color="#53b1fd" stop-opacity="0"/></linearGradient>
-                <clipPath id="shield-clip"><path d="M120 8 222 44v86c0 66-44 116-102 142C62 246 18 196 18 130V44z"/></clipPath>
+                <linearGradient id="shield-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e90fa" stop-opacity=".14"/><stop offset="1" stop-color="#2e90fa" stop-opacity=".03"/></linearGradient>
+                <radialGradient id="shield-glow"><stop offset="0" stop-color="#84caff" stop-opacity=".9"/><stop offset="1" stop-color="#84caff" stop-opacity="0"/></radialGradient>
               </defs>
-              <path class="shield-fill" d="M120 8 222 44v86c0 66-44 116-102 142C62 246 18 196 18 130V44z" fill="url(#shield-fill)"/>
-              <g clip-path="url(#shield-clip)"><rect class="shield-scan" x="0" y="-60" width="240" height="60" fill="url(#shield-scan)"/></g>
-              <path class="shield-line" d="M120 8 222 44v86c0 66-44 116-102 142C62 246 18 196 18 130V44z" fill="none" stroke="#2e90fa" stroke-width="2.5" stroke-linejoin="round"/>
-              <path class="shield-line shield-line--inner" d="M120 24 208 55v75c0 57-38 100-88 123-50-23-88-66-88-123V55z" fill="none" stroke="#2e90fa" stroke-width="1.2" stroke-dasharray="4 6" stroke-linejoin="round"/>
+              <g class="shield-lights"><path class="shield-wire" d="M-120 80 C -40 80, -10 120, 18 130"/><path class="shield-wire" d="M-120 190 C -50 190, -10 160, 30 170"/><path class="shield-wire" d="M360 70 C 280 70, 250 110, 222 120"/><path class="shield-wire" d="M360 200 C 290 200, 250 170, 212 175"/><circle class="shield-light" r="3.2"><animateMotion dur="3.6s" begin="0.0s" repeatCount="indefinite" path="M-120 80 C -40 80, -10 120, 18 130"/></circle><circle class="shield-light" r="3.2"><animateMotion dur="4.1s" begin="-0.9s" repeatCount="indefinite" path="M-120 190 C -50 190, -10 160, 30 170"/></circle><circle class="shield-light" r="3.2"><animateMotion dur="4.6s" begin="-1.8s" repeatCount="indefinite" path="M360 70 C 280 70, 250 110, 222 120"/></circle><circle class="shield-light" r="3.2"><animateMotion dur="5.1s" begin="-2.7s" repeatCount="indefinite" path="M360 200 C 290 200, 250 170, 212 175"/></circle><circle class="shield-light shield-light--edge" r="2.6"><animateMotion dur="9s" begin="0s" repeatCount="indefinite" path="M120 8 222 44v86c0 66-44 116-102 142C62 246 18 196 18 130V44z"/></circle><circle class="shield-light shield-light--edge" r="2.6"><animateMotion dur="9s" begin="-4.5s" repeatCount="indefinite" path="M120 8 222 44v86c0 66-44 116-102 142C62 246 18 196 18 130V44z"/></circle><circle class="shield-light shield-light--edge" r="2.2"><animateMotion dur="12s" begin="-2s" repeatCount="indefinite" path="M120 24 208 55v75c0 57-38 100-88 123-50-23-88-66-88-123V55z"/></circle><circle class="shield-light shield-light--edge" r="2.2"><animateMotion dur="12s" begin="-8s" repeatCount="indefinite" path="M120 24 208 55v75c0 57-38 100-88 123-50-23-88-66-88-123V55z"/></circle></g>
+              <path d="M120 8 222 44v86c0 66-44 116-102 142C62 246 18 196 18 130V44z" fill="url(#shield-fill)"/>
+              <path d="M120 8 222 44v86c0 66-44 116-102 142C62 246 18 196 18 130V44z" fill="none" stroke="#2e90fa" stroke-width="2.5" stroke-linejoin="round"/>
+              <path d="M120 24 208 55v75c0 57-38 100-88 123-50-23-88-66-88-123V55z" fill="none" stroke="#2e90fa" stroke-width="1.2" stroke-dasharray="4 6" stroke-linejoin="round" opacity=".45"/>
             </svg>
-            <span class="shield-ring" aria-hidden="true"></span>
-            <span class="shield-ring shield-ring--2" aria-hidden="true"></span>
           <ul class="seals">
-            <li class="seal" tabindex="0">
+            <li class="seal">
               <span class="seal-disc"><img src="assets/badges/iso-27001.png" decoding="async" alt="ISO 27001:2022 certified" width="156" height="156"></span>
               <span class="seal-label"><b>ISO 27001:2022</b>Information security</span>
             </li>
-            <li class="seal" tabindex="0">
+            <li class="seal">
               <span class="seal-disc"><img src="assets/badges/gdpr.png" decoding="async" alt="GDPR compliant" width="156" height="156"></span>
               <span class="seal-label"><b>GDPR</b>Data protection</span>
             </li>
-            <li class="seal" tabindex="0">
+            <li class="seal">
               <span class="seal-disc"><img src="assets/badges/aicpa-soc.png" decoding="async" alt="AICPA SOC 2" width="156" height="156"></span>
               <span class="seal-label"><b>SOC 2</b>Operational integrity</span>
             </li>
           </ul>
-            <p class="shield-status" aria-live="polite"><span class="shield-check" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5 6.5 11.5 12.5 4.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span data-shield-text>ISO 27001:2022 verified · Audited information security across our systems</span></p>
+            <p class="shield-status"><span class="shield-check" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span><span>Encrypted, access-controlled, audited</span></p>
           </div>
         </div>
 

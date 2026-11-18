@@ -425,47 +425,32 @@
     window.addEventListener('resize', size);
   }
 
-  /* ---------- Security: the shield checks each badge in turn; hover or tap one to read it ---------- */
-  const shield = document.querySelector('[data-shield]');
-  if (shield) {
-    const seals = [...shield.querySelectorAll('.seal')];
-    const text = shield.querySelector('[data-shield-text]');
-    const INFO = [
-      ['ISO 27001:2022', 'Audited information security across our systems'],
-      ['GDPR', 'Attendee data handled under EU data protection law'],
-      ['SOC 2', 'Independently verified controls for operational integrity'],
-    ];
-    let cur = -1;
-    let timer = 0;
-    let inView = false;
-    let held = false;
-    const pick = (k) => {
-      cur = (k + seals.length) % seals.length;
-      seals.forEach((s, i) => s.classList.toggle('is-on', i === cur));
-      shield.dataset.on = String(cur);
-      text.textContent = `${INFO[cur][0]} verified · ${INFO[cur][1]}`;
-      shield.classList.remove('is-ping');
-      void shield.offsetWidth;
-      shield.classList.add('is-ping');
+  /* ---------- Desktop hero: where the bottom stub (the "Ready to issue" card) tears off ---------- */
+  const heroTkt = document.querySelector('.tkt--hero');
+  const heroEnd = heroTkt?.querySelector('.j-end');
+  if (heroEnd) {
+    const placeStub = () => {
+      const y = heroEnd.getBoundingClientRect().top - heroTkt.getBoundingClientRect().top - 28;
+      heroTkt.style.setProperty('--stub-y', `${Math.round(y)}px`);
     };
-    const play = () => {
-      clearInterval(timer);
-      if (inView && !held && !reduceMotion) timer = setInterval(() => pick(cur + 1), 2600);
+    placeStub();
+    window.addEventListener('load', placeStub);
+    window.addEventListener('resize', placeStub);
+    new ResizeObserver(placeStub).observe(heroTkt);
+  }
+
+  /* ---------- Core strengths: every ticket as tall as the tallest one ---------- */
+  const hfGrid = document.querySelector('.hf-grid');
+  if (hfGrid) {
+    const level = () => {
+      hfGrid.style.removeProperty('--hf-h');
+      const h = Math.max(...[...hfGrid.children].map((c) => c.offsetHeight));
+      hfGrid.style.setProperty('--hf-h', `${h}px`);
     };
-    seals.forEach((s, i) => {
-      const on = () => { held = true; clearInterval(timer); pick(i); };
-      const off = () => { held = false; play(); };
-      s.addEventListener('pointerenter', on);
-      s.addEventListener('pointerleave', off);
-      s.addEventListener('focus', on);
-      s.addEventListener('blur', off);
-      s.addEventListener('click', () => pick(i));
-    });
-    new IntersectionObserver(([e]) => {
-      inView = e.isIntersecting;
-      if (inView) { shield.classList.add('is-armed'); if (cur < 0) pick(0); }
-      play();
-    }, { threshold: 0.45 }).observe(shield);
+    level();
+    window.addEventListener('load', level);
+    window.addEventListener('resize', level);
+    document.fonts?.ready.then(level);
   }
 
   /* ---------- Event page: the cover images slide by themselves; arrows and dots move them ---------- */

@@ -1120,7 +1120,7 @@
   .hfs-head .eyebrow { display: none; }
   .hfs-head h2 { margin-top: 0; font-size: 22px; line-height: 28px; }
   .hfs-head p:last-child { margin-top: 8px; font-size: 15px; line-height: 22px; }
-  .hf-grid { grid-template-columns: minmax(0, 1fr); gap: 14px; margin-top: 14px; padding-bottom: 6px; }
+  .hf-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; margin-top: 14px; padding-bottom: 6px; }
   .hf {
     position: sticky;
     top: calc(78px + var(--i, 0) * 9px);
@@ -1203,8 +1203,8 @@
   .lo-cta { grid-column: 1 / -1; margin: 4px 12px 12px; padding: 10px 12px; font-size: 14px; }
 
   /* clear wins: still a stack; portrait tickets, picture on top, tear line under it */
-  .cw-grid { gap: 14px; margin-top: 14px; }
-  .cw { --cut: 168px; --notch: 10px; top: calc(78px + var(--i, 0) * 9px); grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .cw-grid { gap: 28px; margin-top: 14px; }
+  .cw { --cut: 168px; --notch: 10px; top: calc(78px + var(--i, 0) * 18px); grid-template-columns: minmax(0, 1fr); min-height: 0; }
   .cw::before {
     border-radius: 18px;
     -webkit-mask:
@@ -1224,14 +1224,13 @@
 
 /* Round 22 — phones: core strengths tickets in one column, shield sized down */
 @media (max-width: 768px) {
-  .hf { --cut: 112px; --row: 0; top: calc(78px + var(--i, 0) * 9px); z-index: var(--i, 0); padding: 0; box-shadow: none; }
+  .hf { --cut: 112px; --row: 0; top: calc(78px + var(--i, 0) * 16px); z-index: var(--i, 0); padding: 0; box-shadow: none; }
   .hf-top { padding-top: 16px; padding-bottom: 12px; }
   .hf-top h3 { margin-top: 10px; }
   .hf > p { padding: 12px 16px 16px; min-height: 0; }
   .hf p { margin-top: 0; }
   .shield-stage { padding-top: 10px; overflow: hidden; }
   .shield-bg { width: 168px; height: 196px; }
-  .shield-ring { top: 96px; width: 150px; height: 150px; margin: -75px 0 0 -75px; }
   .shield-stage .seals { margin-top: 34px; }
   .shield-status { margin-top: 14px; font-size: 12px; }
   .seal-label { font-size: 0; }
