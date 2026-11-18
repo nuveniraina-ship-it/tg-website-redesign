@@ -242,7 +242,7 @@ Same fonts as desktop; only the sizes change.
 | Blog | Three slim rows, or the section is removed |
 | Footer | Compact link columns (Product, Resources with Affiliate Program, Comparison) and a row of Trycon product tiles |
 | Pricing: top | Two tickets: the blue headline ticket with three figures, then the white "Estimate" ticket with the calculator |
-| Pricing: features | The blue "1 credit = 1 ticket" ticket, then eight white cards (icon, heading, three lines of text) that stack on scroll |
+| Pricing: features | The blue "1 credit = 1 ticket" ticket, then ten portrait tickets (icon and heading, tear line with side notches, three lines of text) that stack on scroll |
 | Coming soon | Same terminal and printing ticket as desktop, sized to the screen |
 
 ### Mobile copy
