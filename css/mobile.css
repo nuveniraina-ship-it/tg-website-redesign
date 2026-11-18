@@ -1588,3 +1588,8 @@
 @media (max-width: 768px) {
   .m-pass-cat { margin-right: auto; margin-left: 8px; font-family: var(--font-mono); font-size: 9px; letter-spacing: .14em; opacity: .75; }
 }
+
+/* Round 30 — phones: more room between the five step tickets before they stack (as on desktop) */
+@media (max-width: 768px) {
+  .m-steps { gap: 32px; }
+}
