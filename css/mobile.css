@@ -1632,3 +1632,21 @@
   .faq-grid { row-gap: 14px; }
   .faq-side { display: block; }
 }
+
+/* API: the running count is a small pill inside the demo box (bottom right), so the box keeps its size */
+.flow-wrap > .api-count {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 2;
+  margin: 0;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, .85);
+  box-shadow: 0 0 0 1px var(--brand-100);
+  font-size: 12px;
+  line-height: 18px;
+}
+@media (max-width: 768px) {
+  .flow-wrap > .api-count { top: 10px; right: 10px; bottom: auto; white-space: nowrap; font-size: 12px; padding: 4px 10px; }   /* short "0 tickets issued", on the row of the Try it pill */
+}
