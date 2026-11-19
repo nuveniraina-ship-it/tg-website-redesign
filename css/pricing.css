@@ -486,3 +486,8 @@
 @media (min-width: 961px) and (max-width: 1240px) {
   .pr-hero.tkt { --side: 360px; --pgap: var(--space-5xl); }
 }
+
+/* the receipt's printer slot overhangs less here, so it never reaches the hero's tear line */
+@media (min-width: 961px) {
+  .pr-hero .receipt-wrap::before { left: -6px; right: -6px; }
+}

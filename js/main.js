@@ -1,6 +1,17 @@
 (() => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* ---------- Header logo: each click shows the next logo version (three in turn); "Homepage" in the menu goes home ---------- */
+  document.querySelectorAll('[data-logo-cycle]').forEach((btn) => {
+    const vs = [...btn.querySelectorAll('.logo-v')];
+    let n = 0;
+    btn.addEventListener('click', () => {
+      vs[n].classList.remove('is-on');
+      n = (n + 1) % vs.length;
+      vs[n].classList.add('is-on');
+    });
+  });
+
   // offline page: a service worker shows Mira at her laptop when the network can't be reached
   if ('serviceWorker' in navigator && window.isSecureContext) {
     window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));

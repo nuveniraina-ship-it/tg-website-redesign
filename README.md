@@ -136,7 +136,7 @@ Homepage order: hero and five steps, event page, launch options, customer logos,
 
 | Section | What it does |
 | --- | --- |
-| Navigation bar | Floating ticket-shaped bar, same on every page, with Log In and Sign Up on the right |
+| Navigation bar | Floating ticket-shaped bar, same on every page: the logo, then Homepage, How It Works, Features, Use Cases, Resources, Pricing, Support, with Log In and a blue Sign Up on the right. The logo does not link anywhere: each click shows the next of three versions in turn (the original, `assets/logos/logo-2.svg`, `assets/logos/logo-3.svg`, then back to the original). "Homepage" goes to the homepage |
 | Hero | Its own landscape ticket: the copy on the main part and, past the vertical tear line, a still picture of the opening scene (event page card, ticket, chips) on the stub; it follows the colour picked in Get Started (no dots of its own). "First 10 tickets free" and "No credit card required" sit under Create Your Event |
 | Get Started | A separate ticket right under the hero ("Get Started" on its strip): the heading and the five steps on the left (each step is about 430px of scroll, so they are well spaced), the live picture pinned on the right and changing with the step, with a "Try it: pick a colour" bar of five colours in its corner. Ends with the full-width "Ready to issue your first ticket?" card |
 | Numbers | Stats beside a printed receipt; the receipt ends in a QR code that opens the pricing page (scan it, or click or tap it) |
@@ -152,7 +152,7 @@ Homepage order: hero and five steps, event page, launch options, customer logos,
 | Footer | "Keep exploring" in the strip. Under "Download Ticket Validator": the App Store and Google Play buttons, then "Web Application" as a plain grey text link (as on the live site) to validate.ticket-generator.com. Link columns: Product, Resources with Affiliate Program, Comparison |
 | Blog | Three posts, or the section is removed. Never fewer than three. The "Learn best practices" heading and line under it are centred |
 | Closing ticket | Landscape "admission ticket" with Sign Up and Book a Demo |
-| Pricing: estimator | A landscape ticket like the homepage hero: headline, ticket count field and credit packs on the main part; the sticky price receipt is the stub on the right, past the tear line. Under its "Sign up to buy" button sit "First 10 tickets free" and "No credit card required" with check marks, like the homepage hero. "Create your own event" in the event page section opens the app's sign-up |
+| Pricing: estimator | A landscape ticket like the homepage hero: headline, ticket count field and credit packs on the main part; the sticky price receipt is the stub on the right, past the tear line. Under its "Sign up to buy" button sit "First 10 tickets free" and "No credit card required" with check marks, like the homepage hero. "Create your own event" in the event page section opens the app's sign-up. The receipt's printer slot overhangs only 6px here, so it never touches the tear line |
 | Pricing: features | Section pins; the blue "1 credit = 1 ticket" ticket steps back and ten feature tickets slide past sideways (including seating plans and on-ground sales, as on the live pricing page) |
 | Coming soon | Terminal with Mira typing; a portrait ticket prints from the top and names the page. The stub carries a real QR code that opens the homepage |
 
@@ -230,7 +230,7 @@ Same fonts as desktop; only the sizes change.
 
 | Section | What it does |
 | --- | --- |
-| Navigation bar | Floating bar with logo and menu button, same on every page |
+| Navigation bar | Floating bar with the logo and menu button, same on every page; the menu starts with Homepage. Tapping the logo cycles through the same three versions as desktop |
 | Hero | Its own white ticket: headline, button, then the picture as the stub: one tidy portrait event ticket (blue top with the event name, date, time and venue, a tear line with side notches, then the QR code, ticket number and a "Valid ticket" badge). Nothing overlaps. The ticket follows the colour picked in Get Started (colour, event and photo); it has no dots of its own |
 | Five steps | Its own white ticket (like every other section), 14px below the hero ticket: heading, one "Try a colour" row (five colour dots: blue, ink, green, purple, pink; each recolours all five pictures and switches them to its own event), then five step tickets that stack as you scroll. Each is a real ticket: its label and heading on top, a tear line with side notches, a still picture of that step, another tear line with notches, then one line of text. Once stacked, each ticket shows its whole heading row (as tall as the tallest heading, about 64px), so no heading is cut. 32px apart before stacking (more room between the steps, as on desktop), and the stack leaves as one. The colour row has the same five colours as desktop (blue, ink, green, purple, pink), each switching the five pictures to its own event and photo. No timer and no tabs. Ends in a light full-width band ("Ready to issue your first ticket?" with Book a Demo and Create Your Event) |
 | Numbers | Three stats in one row, compact receipt |
