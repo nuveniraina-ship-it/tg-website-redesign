@@ -4,11 +4,15 @@
   /* ---------- Header logo: each click shows the next logo version (three in turn); "Homepage" in the menu goes home ---------- */
   document.querySelectorAll('[data-logo-cycle]').forEach((btn) => {
     const vs = [...btn.querySelectorAll('.logo-v')];
+    // the chosen version is remembered in this browser, so every page shows it until it's clicked again
     let n = 0;
+    try { n = Math.min(vs.length - 1, Math.max(0, Number(localStorage.getItem('tg-logo')) || 0)); } catch (e) { n = 0; }
+    vs.forEach((v, i) => v.classList.toggle('is-on', i === n));
     btn.addEventListener('click', () => {
       vs[n].classList.remove('is-on');
       n = (n + 1) % vs.length;
       vs[n].classList.add('is-on');
+      try { localStorage.setItem('tg-logo', String(n)); } catch (e) { /* storage blocked: it just won't carry over */ }
     });
   });
 
@@ -219,8 +223,8 @@
   flyers.forEach((el, i) => {
     const left = i % 2 === 0;
     el.classList.add('fly');
-    el.style.setProperty('--fx', left ? '-24vw' : '24vw');
-    el.style.setProperty('--fr', left ? '-11deg' : '10deg');
+    el.style.setProperty('--fx', left ? '-6vw' : '6vw');      // a small drift, not a big swing
+    el.style.setProperty('--fr', left ? '-2.5deg' : '2.5deg');
   });
   if (!CSS.supports('animation-timeline: view()') && !reduceMotion) {
     document.documentElement.classList.add('no-sda');
@@ -743,13 +747,29 @@
       const box = wireOut.getBoundingClientRect();
       if (!box.width || !box.height) return;
       const w = box.width;
-      const y0 = core.getBoundingClientRect();
-      const from = y0.top + y0.height / 2 - box.top;
+      // the wires meet the logo (not the middle of the API block, which has text under the logo)
+      const y0 = core.querySelector('.core-ring').getBoundingClientRect();
+      const ringY = y0.top + y0.height / 2;
+      const from = ringY - box.top;
+      // desktop: the line in leaves the registration list at the logo's height too
+      const wide = getComputedStyle(q('.flow')).gridTemplateColumns.split(' ').length >= 5;
+      if (wide) {
+        wireIn.style.alignSelf = 'start';
+        wireIn.style.marginTop = '0px';
+        wireIn.style.marginRight = '0px';
+        const wi = wireIn.getBoundingClientRect();
+        wireIn.style.marginTop = `${Math.round(ringY - wi.top - 1)}px`;
+        wireIn.style.marginRight = `${-Math.max(0, Math.round(y0.left - wi.right - 6))}px`;   // runs right up to the logo
+      } else {
+        ['align-self', 'margin-top', 'margin-right'].forEach((p) => wireIn.style.removeProperty(p));
+      }
+      const startX = wide ? Math.min(0, y0.right + 6 - box.left) : 0;   // the lines out start at the logo's edge
       wireSvg.setAttribute('viewBox', `0 0 ${w} ${box.height}`);
       dests.forEach((d, i) => {
         const r = d.getBoundingClientRect();
         const to = r.top + r.height / 2 - box.top;
-        const path = `M0 ${from} C ${w * 0.55} ${from} ${w * 0.45} ${to} ${w} ${to}`;
+        const span = w - startX;
+        const path = `M${startX} ${from} C ${startX + span * 0.55} ${from} ${startX + span * 0.45} ${to} ${w} ${to}`;
         tracks[i]?.setAttribute('d', path);
         flashes[i]?.setAttribute('d', path);
       });
@@ -758,6 +778,7 @@
     const wireRO = new ResizeObserver(routeWires);
     [q('.flow'), core, q('.node-dests')].forEach((el) => el && wireRO.observe(el));
     window.addEventListener('load', routeWires);
+    window.addEventListener('resize', routeWires);
 
     const ROWS = window.matchMedia('(max-width: 768px)').matches ? 3 : 5;   // registrations shown in the app window
     let idx = 0;
@@ -889,6 +910,7 @@
     ring.addEventListener('click', send);
     ring.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); send(); } });
     if (reduceMotion) enqueue();
+
   }
 
   /* ---------- Journey ---------- */
@@ -1179,6 +1201,14 @@
     for (let i = 1; i <= 5; i++) shotCanvas.classList.remove(`gte-${i}`);
     shotCanvas.querySelector('.ticket')?.classList.remove('is-scanning', 'is-admitted', 'is-torn');
     grid.append(stepsCol, stageCol);
+    // the heading and line sit centred above the steps and the picture, like every other section
+    const introEl = stepsCol.querySelector('.j-intro');
+    if (introEl) {
+      const head = document.createElement('div');
+      head.className = 'container sec-head';
+      head.append(introEl);
+      grid.before(head);
+    }
     if (endWrap) stepsSec.append(endWrap);
     heroSec.after(stepsSec);
     const shot = document.createElement('div');
