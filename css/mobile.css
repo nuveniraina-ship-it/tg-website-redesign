@@ -1608,11 +1608,7 @@
 .sec-head p:not(.eyebrow) { margin-top: var(--space-xl); font-size: 18px; line-height: 28px; color: var(--text-tertiary); }
 .sec-head .j-intro { padding: 0; max-width: none; margin-inline: auto; }
 .sec-head .j-intro h2 { margin-top: 0; }
-/* security: the heading and text above the badges, not beside them */
-.trust-row { grid-template-columns: minmax(0, 1fr); gap: var(--space-4xl); }
-.trust-copy { max-width: 760px; margin-inline: auto; text-align: center; }
-.trust-copy p:last-child { margin-inline: auto; }
-.trust-row > .shield-stage { width: 100%; max-width: 720px; margin-inline: auto; }   /* the badges stay together under the text */
+/* security keeps its own layout: the words on the left, the badges on the right */
 /* API: heading, then text, then the link, all centred */
 .api-head { grid-template-columns: minmax(0, 1fr); gap: var(--space-xl); max-width: 760px; margin-inline: auto; text-align: center; }
 .api-head-copy .text-link { justify-content: center; }

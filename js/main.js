@@ -747,6 +747,17 @@
       const box = wireOut.getBoundingClientRect();
       if (!box.width || !box.height) return;
       const w = box.width;
+      // desktop: lower the logo to the middle of the row (extra space above it), so the line from the
+      // list, the logo and the middle channel card share one centre line
+      const wideRow = getComputedStyle(q('.flow')).gridTemplateColumns.split(' ').length >= 5;
+      core.style.removeProperty('padding-top');
+      if (wideRow) {
+        const cr = core.getBoundingClientRect();
+        const rr = core.querySelector('.core-ring').getBoundingClientRect();
+        const ringMid = rr.top + rr.height / 2;
+        const extra = (cr.bottom - ringMid) - (ringMid - cr.top);
+        if (extra > 0) core.style.paddingTop = `${parseFloat(getComputedStyle(core).paddingTop) + extra}px`;
+      }
       // the wires meet the logo (not the middle of the API block, which has text under the logo)
       const y0 = core.querySelector('.core-ring').getBoundingClientRect();
       const ringY = y0.top + y0.height / 2;
