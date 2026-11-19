@@ -1442,7 +1442,7 @@
 
   /* ---------- security: a lock that fits, a pill that isn't cut ---------- */
   .trust.tkt:not(.api-sec) { padding-bottom: 30px; }
-  .shield-stage { overflow: visible; padding-top: 54px; padding-bottom: 4px; }   /* clear room above the seals for the lines */
+  .shield-stage { overflow: visible; padding-top: 78px; padding-bottom: 18px; }   /* clear room above the seals for the lines */
 
   /* ---------- footer: the strip above the tear line has the same height as the others ---------- */
   .site-footer > .tkt-stub { padding: 14px 18px; }
@@ -1597,4 +1597,7 @@
 @media (max-width: 768px) {
   .m-pass-cat { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .m-pass-type { flex: none; white-space: nowrap; }
+}
+@media (max-width: 768px) {
+  .flow-wrap .flow { padding-top: 74px; }   /* clear space under the "Try it" pill */
 }

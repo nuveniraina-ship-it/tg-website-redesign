@@ -513,25 +513,34 @@
     const NS = 'http://www.w3.org/2000/svg';
     const lockSvg = wireRow.querySelector('[data-lock]');
     // returns the lock's outline box in row coordinates (for keeping lines away from it)
-    const drawLock = (d, room) => {
+    // A padlock drawn from the real layout: its body runs from the middle of the first seal to the
+    // middle of the last (half of ISO, all of GDPR, half of SOC) and from just above the seals to just
+    // below their names, so it frames them; a full U-shaped shackle sits in the clear space above.
+    const drawLock = (d) => {
       if (!lockSvg) return null;
-      const stage = lockSvg.parentElement.getBoundingClientRect();
+      const stageEl = lockSvg.parentElement;
+      const stage = stageEl.getBoundingClientRect();
       const row = wireRow.getBoundingClientRect();
       const ox = stage.left - row.left, oy = stage.top - row.top;   // row → stage coordinates
       const a = d[0], z = d[d.length - 1];
-      const x1 = a.cx - ox, x2 = z.cx - ox;
-      const discH = a.b - a.t;
-      const bh = discH + 34;
-      const bt = a.cy - oy - bh / 2, bb = bt + bh;
-      const bw = x2 - x1, r = Math.min(26, bh / 4);
-      const sh = Math.max(36, Math.min(96, room - 14, bt - 24));   // shackle height: fits the room above, even when open
-      const sw = Math.min(bw * 0.42, 170);
-      const s1 = (x1 + x2) / 2 - sw / 2, s2 = s1 + sw, top = bt - sh, cr = Math.min(sw / 2, sh * 0.55);
+      const x1 = a.cx - ox, x2 = z.cx - ox, bw = x2 - x1;
+      const pill = stageEl.querySelector('.shield-status');
+      const lowest = Math.max(...[...stageEl.querySelectorAll('.seal-label')].map((el) => el.getBoundingClientRect().bottom - stage.top),
+        pill ? pill.getBoundingClientRect().bottom - stage.top : 0);
+      const bt = a.t - oy - 14;                         // body top: just above the seals
+      const bb = lowest + 14;                           // body bottom: just below the button, which sits in it like a keyhole plate
+      const r = Math.min(30, bw / 8);
+      // shackle: a full U, as wide as half the body, fitted to the room above (and its open lift)
+      const room = bt - 22;
+      let sw = Math.min(bw * 0.5, 190);
+      sw = Math.min(sw, 2 * (room - 10));
+      const rad = sw / 2, legs = Math.max(8, Math.min(room - rad, rad * 0.45));
+      const s1 = (x1 + x2) / 2 - rad, s2 = s1 + sw, arcY = bt - legs;
       lockSvg.setAttribute('viewBox', `0 0 ${stage.width.toFixed(1)} ${stage.height.toFixed(1)}`);
       lockSvg.innerHTML = `
-        <g class="lock-shackle"><path pathLength="1" d="M${s1} ${bt} V${top + cr} A${cr} ${cr} 0 0 1 ${s1 + cr} ${top} H${s2 - cr} A${cr} ${cr} 0 0 1 ${s2} ${top + cr} V${bt}"/></g>
+        <g class="lock-shackle"><path pathLength="1" d="M${s1} ${bt + 2} V${arcY} A${rad} ${rad} 0 0 1 ${s2} ${arcY} V${bt + 2}"/></g>
         <path pathLength="1" d="M${x1 + r} ${bt} H${x2 - r} A${r} ${r} 0 0 1 ${x2} ${bt + r} V${bb - r} A${r} ${r} 0 0 1 ${x2 - r} ${bb} H${x1 + r} A${r} ${r} 0 0 1 ${x1} ${bb - r} V${bt + r} A${r} ${r} 0 0 1 ${x1 + r} ${bt} Z"/>`;
-      return { l: x1 + ox - 6, r: x2 + ox + 6, t: top + oy - 26, b: bb + oy + 6 };   // includes room for the open shackle
+      return { l: x1 + ox - 6, r: x2 + ox + 6, t: arcY - rad + oy - 24, b: bb + oy + 6 };
     };
     const drawWires = () => {
       const row = wireRow.getBoundingClientRect();
@@ -565,7 +574,7 @@
       // first seal to the middle of the last, so it covers half of ISO and SOC and all of GDPR;
       // the shackle sits in the clear space above. Lines keep out of the lock's area.
       const last = d[d.length - 1];
-      const lockBox = drawLock(d, sideBySide ? d[0].t : d[0].t - c.b);
+      const lockBox = drawLock(d);
       // Around the badges: a dotted ring just outside each badge's own dashed edge, with a light
       // that circles it (alternate directions), so the lines frame the badges instead of wandering.
       const rings = [];
@@ -855,19 +864,19 @@
       if (visible) { if (!pending()) scheduleAuto(); } else clearTimeout(autoTimer);
     }, { threshold: 0.35 }).observe(q('.flow'));
 
-    const fire = q('[data-api-fire]');
-    fire.addEventListener('click', () => {
+    // the logo in the middle is the only control: click (or tap) it to send a registration
+    const ring = core.querySelector('.core-ring');
+    const send = () => {
       // at most a window-full waiting, so no registration ever scrolls away unsent
-      if (pending() >= ROWS) return restart(fire, 'is-full');
+      if (pending() >= ROWS) return restart(ring, 'is-full');
       clearTimeout(autoTimer);
       enqueue();
-    });
-    const ring = core.querySelector('.core-ring');
+    };
     ring.setAttribute('role', 'button');
     ring.setAttribute('tabindex', '0');
     ring.setAttribute('aria-label', 'Send a test registration');
-    ring.addEventListener('click', () => fire.click());
-    ring.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fire.click(); } });
+    ring.addEventListener('click', send);
+    ring.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); send(); } });
     if (reduceMotion) enqueue();
   }
 

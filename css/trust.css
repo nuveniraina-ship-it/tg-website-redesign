@@ -153,13 +153,13 @@
 .dots { display: flex; gap: 6px; flex: none; }
 .dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--gray-300); }
 
-.reg-list { display: grid; gap: 6px; padding: 10px; min-height: 300px; align-content: start; } /* room for five registrations */
+.reg-list { display: grid; gap: 8px; padding: 12px; min-height: 380px; align-content: start; } /* room for five registrations, with air */
 .reg-list li {
   display: grid;
   grid-template-columns: 32px minmax(0, 1fr) auto;
   align-items: center;
   gap: 10px;
-  padding: 8px 10px;
+  padding: 11px 12px;
   border-radius: 10px;
   transition: background-color .4s;
   animation: row-in .45s cubic-bezier(.2, .8, .2, 1) both;
@@ -235,8 +235,10 @@
   border-radius: 50%;
   background: #fff;
   box-shadow: 0 0 0 6px rgba(46, 144, 250, .14), 0 0 0 13px rgba(46, 144, 250, .06), 0 10px 24px rgba(21, 70, 140, .14);
-  transition: box-shadow .4s;
+  cursor: pointer;   /* it's the button: click it to send a registration */
+  transition: box-shadow .4s, transform .2s;
 }
+.core-ring:hover { transform: scale(1.06); box-shadow: 0 0 0 7px rgba(46, 144, 250, .2), 0 0 0 15px rgba(46, 144, 250, .08), 0 12px 26px rgba(21, 70, 140, .18); }
 .node-core.is-busy .core-ring { animation: core-glow 1s ease-in-out infinite; }
 .core-name { margin-top: 8px; font-size: 15px; line-height: 20px; font-weight: 600; color: var(--text-primary); }
 .core-call { font-size: 12px; color: var(--d-muted); }
@@ -360,7 +362,7 @@
   70%  { opacity: .45; }
   100% { transform: translate(var(--drift, 24px), 250px) rotate(var(--spin, 24deg)); opacity: 0; }
 }
-.api-fire.is-full { animation: fire-full .3s; }
+.core-ring.is-full { animation: fire-full .3s; }
 @keyframes fire-full { 30% { transform: translateX(-3px); } 70% { transform: translateX(3px); } }
 
 /* 3 · channels */
@@ -521,7 +523,7 @@
 .trust-wires circle { fill: #53b1fd; opacity: .8; filter: drop-shadow(0 0 4px rgba(83, 177, 253, .75)); }
 @media (prefers-reduced-motion: reduce) { .trust-wires circle { display: none; } }
 
-.shield-stage { position: relative; display: grid; justify-items: center; padding: 64px 0 0; }   /* room above the seals for the shackle */
+.shield-stage { position: relative; display: grid; justify-items: center; padding: 96px 0 20px; }   /* room above the seals for the shackle, and below the button for the lock's bottom edge */
 .trust-lock {   /* covers the whole badge area; JS draws the lock to fit the seals (js/main.js: drawLock) */
   position: absolute;
   left: 0;
@@ -534,8 +536,8 @@
   opacity: 0;
   transition: opacity .5s ease;
 }
-.trust-lock path { fill: none; stroke: var(--brand-100); stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
-.lock-shackle { transform: translateY(-20px); }   /* open */
+.trust-lock path { fill: none; stroke: var(--brand-200); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.lock-shackle { transform: translateY(-18px); }   /* open */
 .trust-lock.is-on { opacity: 1; }
 .trust-lock.is-on path { animation: lock-draw 1.3s ease-out forwards; }
 .trust-lock.is-on .lock-shackle path { animation-delay: .15s; }
@@ -568,3 +570,7 @@
 .shield-check { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--brand-600); color: #fff; }
 .shield-status:hover { box-shadow: 0 0 0 1px var(--brand-200), 0 8px 18px -6px rgba(21, 112, 239, .3); }
 .shield-status:active { transform: scale(.97); }
+
+/* while the lock is showing, the rings and lights behind the badges step back so the lock reads clearly */
+.trust-wires { transition: opacity .5s ease; }
+.trust-row:has(.trust-lock.is-on) .trust-wires { opacity: .2; }

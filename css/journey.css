@@ -1024,7 +1024,7 @@
 }
 .api-try b { color: var(--brand-700); }
 .api-try-dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--brand-500); box-shadow: 0 0 0 4px rgba(46, 144, 250, .22); }
-.flow-wrap .flow { margin-top: 0; padding-top: calc(var(--space-5xl) + 18px); }
+.flow-wrap .flow { margin-top: 0; padding-top: calc(var(--space-5xl) + 44px); }   /* clear space under the "Try it" pill */
 @media (max-width: 768px) {
   .api-try { top: 10px; left: 10px; font-size: 12px; padding: 4px 10px 4px 8px; }
   .flow-wrap { margin-top: 14px; }
