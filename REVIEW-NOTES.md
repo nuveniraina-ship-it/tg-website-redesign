@@ -112,3 +112,17 @@ Prompts are written. Generation through Codex isn't available on our current pla
 
 ### Follow-up: step tickets still looked dark
 The near-solid wash wasn't enough: the photo's dark parts (crowd silhouettes) still showed through behind the venue, serial and small labels. Now the ticket is a clean solid colour, and the photo sits only on the right as a faint layer blended with "screen", so it can only lighten, never darken. It fades out before the text. Pastel pink uses a softer blend. I checked every event type on phone and desktop.
+
+---
+
+# Round 3 (20 Nov)
+
+| Point | What changed |
+|---|---|
+| "Ready to issue" looked like a ticket | It's now a plain blue band: same width and rounding as the sections, but no strip, notches or tear line. |
+| Pricing still had empty space | The receipt is centred, and the three stats float beside it as plain white cards that just touch its edges: two on the left, one on the right, slightly tilted and gently bobbing. "See pricing →" sits right under the text. **Considered:** points under the text, then the link, then the receipt. **Chose:** the floating layout, because it fills the width and makes the receipt the centrepiece. |
+| Security felt busy | No lines or dots; it's static. The status is now a quiet grey caption with a small lock, not a pill, so it doesn't look clickable. |
+| API demo not working | It had been stuck since the "View request" panel was removed in an earlier round: the script still wrote the request's name and email into that panel, crashed on the first registration and never sent a ticket. That write is now skipped when the panel isn't there. Checked: it runs by itself and the logo click sends more, at 1440 and 375px. |
+| "Still have a question?" looked like a ticket | It's now a plain full-width white box with the heading, text and two buttons centred. |
+
+**QA lesson:** the API crash was in the browser console for several rounds. My checks were visual only. From now on, every QA pass also reads the console and runs each interactive demo (picker, registration, API, carousel) at least once.

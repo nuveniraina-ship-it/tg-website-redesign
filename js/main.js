@@ -541,68 +541,6 @@
     document.fonts?.ready.then(evenAll);
   }
 
-  /* ---------- Security: straight, faint lines from the end of the text through the seals ----------
-     Drawn from the real layout so they never cross any words: two parallel lines into the first seal,
-     one across each gap between seals. Small square blocks (encrypted data) travel along them. */
-  const wireRow = document.querySelector('[data-wires]');
-  if (wireRow) {
-    const svg = wireRow.querySelector('.trust-wires');
-    const copy = wireRow.querySelector('.trust-copy');
-    const discs = [...wireRow.querySelectorAll('.seal-disc')];
-    const NS = 'http://www.w3.org/2000/svg';
-    const drawWires = () => {
-      const row = wireRow.getBoundingClientRect();
-      if (!row.width || discs.length < 2) return;
-      const box = (el) => { const r = el.getBoundingClientRect(); return { l: r.left - row.left, r: r.right - row.left, t: r.top - row.top, b: r.bottom - row.top }; };
-      const c = box(copy);
-      const d = discs.map((el) => { const b = box(el); return { ...b, cx: (b.l + b.r) / 2, cy: (b.t + b.b) / 2, R: (b.r - b.l) / 2 + 12 }; });
-      const cy = d[0].cy;
-      const paths = [];
-      const sideBySide = c.r < d[0].l;                 // desktop: text on the left, seals on the right
-      // where the words actually end (the text column's box is wider than its lines)
-      let textEnd = c.l;
-      copy.querySelectorAll('h2, p').forEach((el) => {
-        if (!el.offsetParent) return;
-        const range = document.createRange();
-        range.selectNodeContents(el);
-        [...range.getClientRects()].forEach((r) => { if (r.width) textEnd = Math.max(textEnd, r.right - row.left); });
-      });
-      const x0 = sideBySide ? textEnd + 24 : 0;
-      const L = d[0].cx - (d[0].r - d[0].l) / 2 - 14;   // meets the ring around the first badge
-      if (L - x0 > 60) {
-        // two straight, parallel lines: the data stream running into the protected zone
-        paths.push(`M${x0} ${cy - 8} H${L}`);
-        paths.push(`M${x0} ${cy + 8} H${L}`);
-      }
-      for (let i = 0; i < d.length - 1; i++) {
-        const a = d[i].cx + (d[i].r - d[i].l) / 2 + 14, b = d[i + 1].cx - (d[i + 1].r - d[i + 1].l) / 2 - 14;
-        if (b - a > 8) paths.push(`M${a} ${d[i].cy} L${b} ${d[i + 1].cy}`);
-      }
-      svg.replaceChildren();
-      paths.forEach((dPath, i) => {
-        const p = document.createElementNS(NS, 'path');
-        p.setAttribute('d', dPath);
-        svg.append(p);
-        if (reduceMotion) return;
-        const len = p.getTotalLength();
-        // a small square block (encrypted data) travels the line; no glow, kept faint
-        const dot = document.createElementNS(NS, 'rect');
-        dot.setAttribute('x', '-2'); dot.setAttribute('y', '-2'); dot.setAttribute('width', '4'); dot.setAttribute('height', '4'); dot.setAttribute('rx', '1');
-        const mo = document.createElementNS(NS, 'animateMotion');
-        const dur = Math.max(2.4, len / 45);
-        mo.setAttribute('dur', `${dur.toFixed(2)}s`);
-        mo.setAttribute('begin', `${(-i * 1.1).toFixed(2)}s`);
-        mo.setAttribute('repeatCount', 'indefinite');
-        mo.setAttribute('path', dPath);
-        dot.append(mo);
-        svg.append(dot);
-      });
-    };
-    drawWires();
-    window.addEventListener('load', drawWires);
-    new ResizeObserver(drawWires).observe(wireRow);
-  }
-
   /* ---------- Event page: registration always closes a week from today ----------
      The festival runs for five days and ends the day registration closes (as on the live demo page). */
   const epCloses = document.querySelector('[data-ep-closes]');
@@ -831,8 +769,10 @@
 
       row.classList.add('is-active');
       tag.textContent = 'Sending…';
-      q('[data-json-name]').textContent = `"${p.name}"`;
-      q('[data-json-email]').textContent = `"${p.email}"`;
+      // (the request panel was removed; write to it only if a page still has one)
+      const jn = q('[data-json-name]'), je = q('[data-json-email]');
+      if (jn) jn.textContent = `"${p.name}"`;
+      if (je) je.textContent = `"${p.email}"`;
       core.classList.remove('is-busy', 'is-done');
       status.textContent = 'Request received';
       dests.forEach((d) => d.classList.remove('is-on'));

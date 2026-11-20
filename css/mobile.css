@@ -1672,29 +1672,30 @@
 .sec-head .numbers-link { margin-top: 14px; justify-content: center; }
 .numbers-copy { align-self: center; }
 
-/* Round 34 — "Ready to issue your first ticket?" is its own blue ticket, right after Backstage Pass */
-.tkt--cta.tkt {
-  padding: 76px 0 0;
+/* Round 36 — "Ready to issue your first ticket?" is a plain blue band (no ticket stub, notches or tear line) */
+.cta-band {
+  width: min(100% - 40px, 1480px);
+  margin: 0 auto 28px;
+  border-radius: 32px;
   background:
     radial-gradient(50% 160% at 100% 0, rgba(255, 255, 255, .14), transparent 60%),
     var(--brand-600);
   color: #fff;
+  box-shadow: 0 30px 60px -30px rgba(10, 13, 18, .22);
 }
-.tkt--cta .tkt-stub { color: rgba(255, 255, 255, .92); border-bottom-color: rgba(255, 255, 255, .35); }
-.tkt--cta .tkt-stub b, .tkt--cta .tkt-eyebrow { color: #fff; }
-.tkt--cta .j-end { margin: 0; padding: 36px 32px 40px; border: 0; border-radius: 0; background: none; color: #fff; }
-.tkt--cta .j-end h3 { font-size: 32px; line-height: 40px; color: #fff; }
-.tkt--cta .j-end-meta { color: rgba(255, 255, 255, .85); }
-.tkt--cta .j-end-meta i { background: rgba(255, 255, 255, .55); }
-.tkt--cta .j-end-cta .btn { min-height: 52px; }
-.tkt--cta .j-end-cta .btn-secondary { background: transparent; color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .7); }
-.tkt--cta .j-end-cta .btn-secondary:hover { background: rgba(255, 255, 255, .1); }
-.tkt--cta .j-end-cta .btn-primary { background: #fff; color: var(--brand-700); box-shadow: 0 6px 16px -6px rgba(10, 13, 18, .35); }
-.tkt--cta .j-end-cta .btn-primary:hover { background: var(--brand-25); }
+.cta-band .j-end { margin: 0; padding: 48px 32px; border: 0; border-radius: 0; background: none; color: #fff; }
+.cta-band .j-end h3 { font-size: 32px; line-height: 40px; color: #fff; }
+.cta-band .j-end-meta { color: rgba(255, 255, 255, .85); }
+.cta-band .j-end-meta i { background: rgba(255, 255, 255, .55); }
+.cta-band .j-end-cta .btn { min-height: 52px; }
+.cta-band .j-end-cta .btn-secondary { background: transparent; color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .7); }
+.cta-band .j-end-cta .btn-secondary:hover { background: rgba(255, 255, 255, .1); }
+.cta-band .j-end-cta .btn-primary { background: #fff; color: var(--brand-700); box-shadow: 0 6px 16px -6px rgba(10, 13, 18, .35); }
+.cta-band .j-end-cta .btn-primary:hover { background: var(--brand-25); }
 @media (max-width: 768px) {
-  .tkt--cta.tkt { padding-top: 60px; }
-  .tkt--cta .j-end { display: block; padding: 20px 20px 22px; background: none; }
-  .tkt--cta .j-end h3 { font-size: 21px; line-height: 28px; }
+  .cta-band { width: calc(100% - 16px); margin-bottom: 14px; border-radius: 22px; }
+  .cta-band .j-end { display: block; padding: 24px 20px; }
+  .cta-band .j-end h3 { font-size: 21px; line-height: 28px; }
 }
 
 /* QA: on phones the "•" separators were left dangling at the end of a line.
@@ -1733,11 +1734,6 @@
 /* the "Try it" bar never grows: the picked type has a fixed slot and never wraps */
 .stage-try, .stage-try-text { white-space: nowrap; }
 .stage-try-now { display: inline-block; min-width: 9.6em; }
-/* Round 34 — pricing: stats and receipt sit together as one centred group (no empty left side) */
-@media (min-width: 961px) {
-  .numbers-grid { grid-template-columns: minmax(0, 500px) minmax(0, 400px); justify-content: center; gap: 64px; }
-  .numbers-copy { justify-self: stretch; width: auto; }
-}
 /* Round 34 — use cases: the pile no longer stacks five full drop-shadows into a dark smudge,
    and a ticket waiting below the pile is hidden, so the section's clip edge never shows as a line */
 @media (min-width: 769px) {
@@ -1748,15 +1744,26 @@
   .uct.is-under .uct-body::after { opacity: .03; }
   .uct.is-under-2 .uct-body::after { opacity: .05; }
 }
-/* Round 34 — security: no lock; straight, very faint lines with small square data blocks */
-.trust-wires path { stroke: rgba(46, 144, 250, .16); stroke-width: 1; stroke-dasharray: none; }
-.trust-wires rect { fill: rgba(46, 144, 250, .38); }
-.trust-wires circle { display: none; }
+/* Round 36 — security: static. No lines or moving dots; the status is a quiet caption, not a pill/button */
+.trust-wires { display: none; }
 .shield-stage { padding-top: 24px; }
-.shield-status { cursor: default; }
-.shield-status:hover { box-shadow: 0 0 0 1px rgba(16, 24, 40, .08), 0 6px 14px -6px rgba(16, 24, 40, .18); }
-.shield-status:active { transform: none; }
-@media (prefers-reduced-motion: reduce) { .trust-wires rect { display: none; } }
+.shield-status, .shield-status:hover, .shield-status:active {
+  margin-top: 18px;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  transform: none;
+  cursor: default;
+  gap: 6px;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+.shield-status .shield-check { width: 16px; height: 16px; background: none; color: var(--success-600, #079455); }
+.shield-status .shield-check svg { width: 14px; height: 14px; }
+
 /* Round 34 — review tickets: no stamp; a faint TG mark in the top-right corner, there but quiet */
 .tq-seal { display: none !important; }
 .tq-mark { position: absolute; top: 16px; right: 16px; width: 22px; height: 22px; opacity: .16; filter: grayscale(1); pointer-events: none; }
@@ -1771,55 +1778,73 @@
   .final-qr-link .final-qr { width: 84px; height: 84px; }
   .final-qr-url { font-size: 10px; }
 }
-/* Round 34 — "Still have a question?" is its own small ticket after the FAQ, everything centred */
-.tkt--help.tkt { padding: 84px 0 44px; background: var(--bg-primary); }
-.tkt--help .faq-help {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 560px;
-  width: auto;
-  margin: 0 auto;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: none;
-  box-shadow: none;
-  text-align: center;
+/* Round 36 — "Still have a question?" is a plain full-width box: heading, text, two buttons */
+.help-band {
+  width: min(100% - 40px, 1480px);
+  margin: 0 auto 28px;
+  padding: 48px 32px;
+  border-radius: 32px;
+  background: var(--bg-primary);
+  box-shadow: 0 1px 2px rgba(10, 13, 18, .05), 0 30px 60px -30px rgba(10, 13, 18, .22);
 }
-.tkt--help .faq-help-icon { display: grid; }
-.tkt--help .faq-help h3 { margin-top: 14px; font-size: 24px; line-height: 32px; }
-.tkt--help .faq-help p { display: block; margin-top: 6px; font-size: 16px; line-height: 24px; }
-.tkt--help .faq-help-actions { display: flex; justify-content: center; gap: 12px; margin-top: 20px; }
-.tkt--help .faq-help .btn { margin: 0; min-width: 150px; justify-content: center; }
+.help-band .faq-help {
+  display: flex; flex-direction: column; align-items: center;
+  max-width: 600px; width: auto; margin: 0 auto; padding: 0;
+  border: 0; border-radius: 0; background: none; box-shadow: none; text-align: center;
+}
+.help-band .faq-help-icon { display: none; }
+.help-band .faq-help h3 { margin: 0; font-size: 28px; line-height: 36px; font-weight: 600; letter-spacing: -0.01em; }
+.help-band .faq-help p { display: block; margin-top: 8px; font-size: 16px; line-height: 24px; }
+.help-band .faq-help-actions { display: flex; justify-content: center; gap: 12px; margin-top: 22px; }
+.help-band .faq-help .btn { margin: 0; min-width: 150px; min-height: 48px; justify-content: center; }
 @media (max-width: 768px) {
-  .tkt--help.tkt { padding: 64px 0 24px; }
-  .tkt--help .faq-help h3 { font-size: 20px; line-height: 28px; }
-  .tkt--help .faq-help p { font-size: 14px; line-height: 21px; }
-  .tkt--help .faq-help-actions { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
-  .tkt--help .faq-help .btn { min-width: 0; }
+  .help-band { width: calc(100% - 16px); margin-bottom: 14px; padding: 28px 20px; border-radius: 22px; }
+  .help-band .faq-help h3 { font-size: 21px; line-height: 28px; }
+  .help-band .faq-help p { font-size: 14px; line-height: 21px; }
+  .help-band .faq-help-actions { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+  .help-band .faq-help .btn { min-width: 0; }
 }
-/* pricing stats (desktop): three landscape stubs stacked beside the receipt */
+/* Round 36 — pricing (desktop): the receipt sits in the centre and the three stats float beside it
+   as plain cards (no ticket shapes), each just touching the receipt's edge */
 @media (min-width: 961px) {
-  .numbers-copy .stats { margin-top: 0; grid-template-columns: minmax(0, 1fr); gap: 14px; }
-  .numbers-copy .stat {
-    --notch: 9px;
-    display: grid;
-    grid-template-columns: 210px minmax(0, 1fr);
-    grid-template-areas: "value no" "value label";
+  .numbers-grid {
+    grid-template-columns: minmax(0, 1fr) 380px minmax(0, 1fr);
+    grid-template-rows: repeat(3, auto);
+    gap: 0;
     align-items: center;
-    padding: 20px 24px;
-    -webkit-mask:
-      radial-gradient(circle var(--notch) at 234px 0, transparent 98%, #000) top / 100% 51% no-repeat,
-      radial-gradient(circle var(--notch) at 234px 100%, transparent 98%, #000) bottom / 100% 51% no-repeat;
-            mask:
-      radial-gradient(circle var(--notch) at 234px 0, transparent 98%, #000) top / 100% 51% no-repeat,
-      radial-gradient(circle var(--notch) at 234px 100%, transparent 98%, #000) bottom / 100% 51% no-repeat;
+    max-width: 1040px;
+    margin-inline: auto;
   }
-  .numbers-copy .stat-value { grid-area: value; align-self: stretch; display: flex; align-items: center; margin: 0; padding: 0 24px 0 0; border-bottom: 0; border-right: 2px dashed var(--gray-200); font-size: 32px; }
-  .numbers-copy .stat-no { grid-area: no; align-self: end; padding-left: 24px; }
-  .numbers-copy .stat-label { grid-area: label; align-self: start; margin-top: 2px; padding-left: 24px; }
+  .numbers-copy, .numbers-copy .stats { display: contents; }
+  .numbers .receipt-wrap { grid-column: 2; grid-row: 1 / span 3; width: 100%; justify-self: center; }
+  .numbers-copy .stat {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 230px;
+    padding: 18px 22px;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 0 0 1px rgba(16, 24, 40, .06), 0 18px 36px -14px rgba(16, 24, 40, .22);
+    -webkit-mask: none;
+            mask: none;
+  }
+  .numbers-copy .stat:nth-child(1) { grid-column: 1; grid-row: 1; justify-self: end; margin-right: -26px; rotate: -3deg; }
+  .numbers-copy .stat:nth-child(2) { grid-column: 3; grid-row: 2; justify-self: start; margin-left: -26px; rotate: 2.5deg; }
+  .numbers-copy .stat:nth-child(3) { grid-column: 1; grid-row: 3; justify-self: end; margin-right: -26px; rotate: 2deg; }
+  .numbers-copy .stat-no { display: none; }
+  .numbers-copy .stat-value { margin: 0; padding: 0; border: 0; font-size: 32px; line-height: 40px; }
+  .numbers-copy .stat-label { margin: 0; padding: 0; font-size: 14px; line-height: 20px; }
 }
+@media (min-width: 961px) and (prefers-reduced-motion: no-preference) {
+  .numbers-copy .stat { animation: stat-float 6s ease-in-out infinite; }
+  .numbers-copy .stat:nth-child(2) { animation-delay: -2s; }
+  .numbers-copy .stat:nth-child(3) { animation-delay: -4s; }
+}
+@keyframes stat-float { 50% { translate: 0 -6px; } }
+
 /* tap targets: the event-type swatches (22px) and cover-image pips (7px) get an invisible ~40px ring */
 .stage-try-dots button, .ep-pips button { position: relative; }
 .stage-try-dots button::before, .ep-pips button::before { content: ""; position: absolute; inset: -9px; }
