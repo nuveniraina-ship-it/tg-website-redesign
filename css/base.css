@@ -274,13 +274,4 @@ html.nav-open .m-cta { transform: translateY(140%); }
 .nav-note { display: none; }
 @media (max-width: 960px) { .nav-note { display: block; } }
 
-/* ---------- Header logo that cycles through three versions on click ---------- */
-.logo-cycle { position: relative; padding: 0; border: 0; background: none; cursor: pointer; font: inherit; }
-.logo-cycle .logo-v { display: none; align-items: center; gap: 6px; }
-.logo-cycle .logo-v.is-on { display: flex; animation: logo-in .35s ease both; }
-.logo-cycle .logo-alt { display: block; width: auto; height: 34px; }
-.logo-cycle:focus-visible { outline: 2px solid var(--brand-500); outline-offset: 4px; border-radius: 8px; }
-@keyframes logo-in { from { opacity: 0; transform: scale(.92); } }
-@media (prefers-reduced-motion: reduce) { .logo-cycle .logo-v.is-on { animation: none; } }
-@media (max-width: 768px) { .logo-cycle .logo-alt { height: 30px; } }
 

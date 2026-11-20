@@ -1,20 +1,8 @@
 (() => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------- Header logo: each click shows the next logo version (three in turn); "Homepage" in the menu goes home ---------- */
-  document.querySelectorAll('[data-logo-cycle]').forEach((btn) => {
-    const vs = [...btn.querySelectorAll('.logo-v')];
-    // the chosen version is remembered in this browser, so every page shows it until it's clicked again
-    let n = 0;
-    try { n = Math.min(vs.length - 1, Math.max(0, Number(localStorage.getItem('tg-logo')) || 0)); } catch (e) { n = 0; }
-    vs.forEach((v, i) => v.classList.toggle('is-on', i === n));
-    btn.addEventListener('click', () => {
-      vs[n].classList.remove('is-on');
-      n = (n + 1) % vs.length;
-      vs[n].classList.add('is-on');
-      try { localStorage.setItem('tg-logo', String(n)); } catch (e) { /* storage blocked: it just won't carry over */ }
-    });
-  });
+  // the old logo-cycle trial is over: forget any saved choice
+  try { localStorage.removeItem('tg-logo'); } catch (e) { /* storage blocked */ }
 
   // offline page: a service worker shows Mira at her laptop when the network can't be reached
   if ('serviceWorker' in navigator && window.isSecureContext) {
@@ -68,8 +56,9 @@
     }
   }
 
-  // Decorative QR-style pattern (not a scannable code), seeded so it's stable.
-  const drawQR = (svg, text) => {
+  // Brand QR: only where scanning is the story (the ticket at the gate, the delivered ticket).
+  // Round dots, soft finder eyes and the TG mark in the middle, in the ticket's own colour.
+  const drawBrandQR = (svg, text) => {
     const SIZE = 25;
     let seed = [...text].reduce((h, c) => Math.imul(h ^ c.charCodeAt(0), 16777619), 2166136261) >>> 0;
     const rand = () => {
@@ -78,28 +67,36 @@
       t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
       return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
     };
-    const reserved = (x, y) =>
-      (x < 8 && y < 8) || (x > SIZE - 9 && y < 8) || (x < 8 && y > SIZE - 9) ||
-      x === 6 || y === 6 || (x >= 16 && x <= 20 && y >= 16 && y <= 20);
-    let d = '';
-    const finder = (ox, oy) => {
-      d += `M${ox} ${oy}h7v7h-7zM${ox + 1} ${oy + 1}v5h5v-5zM${ox + 2} ${oy + 2}h3v3h-3z`;
-    };
-    finder(0, 0);
-    finder(SIZE - 7, 0);
-    finder(0, SIZE - 7);
-    d += 'M16 16h5v5h-5zM17 17v3h3v-3zM18 18h1v1h-1z';
-    for (let i = 8; i < SIZE - 8; i += 2) d += `M${i} 6h1v1h-1zM6 ${i}h1v1h-1z`;
+    const finderAt = (x, y) => (x < 8 && y < 8) || (x > SIZE - 9 && y < 8) || (x < 8 && y > SIZE - 9);
+    const centre = (x, y) => x >= 8 && x <= 16 && y >= 8 && y <= 16;
+    let dots = '';
     for (let y = 0; y < SIZE; y++) {
       for (let x = 0; x < SIZE; x++) {
-        if (!reserved(x, y) && rand() > 0.52) d += `M${x} ${y}h1v1h-1z`;
+        if (!finderAt(x, y) && !centre(x, y) && rand() > 0.5) dots += `<circle cx="${x + 0.5}" cy="${y + 0.5}" r="0.42"/>`;
       }
     }
-    svg.innerHTML = `<path fill="currentColor" fill-rule="evenodd" d="${d}"/>`;
+    const eye = (x, y) => `<rect x="${x + 0.5}" y="${y + 0.5}" width="6" height="6" rx="1.8" fill="none" stroke="currentColor" stroke-width="1"/><rect x="${x + 2}" y="${y + 2}" width="3" height="3" rx="0.9"/>`;
+    svg.setAttribute('shape-rendering', 'geometricPrecision');
+    svg.innerHTML = `<g fill="currentColor">${dots}${eye(0, 0)}${eye(SIZE - 7, 0)}${eye(0, SIZE - 7)}</g>` +
+      `<rect x="8.6" y="8.6" width="7.8" height="7.8" rx="2" fill="#fff"/><rect x="8.6" y="8.6" width="7.8" height="7.8" rx="2" fill="currentColor" opacity=".08"/>` +
+      `<image href="assets/tg-icon.svg" x="9.4" y="9.4" width="6.2" height="6.2"/>`;
   };
 
-  const finalQR = document.querySelector('[data-final-qr]');
-  if (finalQR) drawQR(finalQR, 'Your event');
+  // Seal: the brand's admit stamp. It replaces the decorative QR codes on the CTA ticket,
+  // the review tickets and the receipt, where nothing is actually scanned.
+  let sealN = 0;
+  const drawSeal = (svg, text) => {
+    const id = `seal-path-${sealN++}`;
+    svg.setAttribute('viewBox', '0 0 100 100');
+    svg.removeAttribute('shape-rendering');
+    svg.innerHTML =
+      `<defs><path id="${id}" d="M50 50m-37 0a37 37 0 1 1 74 0a37 37 0 1 1-74 0"/></defs>` +
+      `<circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" stroke-width="1.6"/>` +
+      `<circle cx="50" cy="50" r="27" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2.4" opacity=".55"/>` +
+      `<g class="seal-ring"><text fill="currentColor" font-size="9.2" font-weight="600" letter-spacing="1.6" font-family="'JetBrains Mono', ui-monospace, monospace"><textPath href="#${id}" textLength="230" lengthAdjust="spacing">${text}</textPath></text></g>` +
+      `<image href="assets/tg-icon.svg" x="35" y="35" width="30" height="30"/>`;
+  };
+  document.querySelectorAll('[data-seal]').forEach((s) => drawSeal(s, s.dataset.seal));
 
   /* ---------- Reveal-on-view sections (numbers: stat count-up + receipt print) ---------- */
   const fmt = (n) => n.toLocaleString('en-US');
@@ -249,15 +246,13 @@
     }
   }
 
-  /* ---------- Testimonial stubs: a small QR in the corner of each ---------- */
+  /* ---------- Review stubs: a verified-organizer seal in the corner of each ---------- */
   document.querySelectorAll('.tq-stub').forEach((stub, i) => {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('class', 'tq-qr');
-    svg.setAttribute('viewBox', '0 0 25 25');
-    svg.setAttribute('shape-rendering', 'crispEdges');
+    svg.setAttribute('class', 'tq-seal');
     svg.setAttribute('aria-hidden', 'true');
     stub.prepend(svg);
-    drawQR(svg, `review-${i}`);
+    drawSeal(svg, 'VERIFIED ORGANIZER · 5-STAR REVIEW · ');
   });
 
   /* ---------- Use cases: deal one ticket onto the pile per scroll step ---------- */
@@ -737,7 +732,7 @@
     const wireOut = q('[data-wire-out]');
     const dests = [...api.querySelectorAll('[data-dest]')];
     const countEl = q('[data-api-count]');
-    drawQR(q('[data-mini-qr]'), 'api-ticket');
+    drawBrandQR(q('[data-mini-qr]'), 'api-ticket');
 
     // Route the three delivery wires from the API's centre to the middle of each channel card.
     const wireSvg = wireOut.querySelector('svg');
@@ -937,7 +932,7 @@
   const stepRow = journey.querySelector('[data-step-row]');
   const rowSteps = stepRow ? [...stepRow.querySelectorAll('[data-step]')] : [];
 
-  drawQR(canvas.querySelector('[data-qr]'), 'Neon Nights Live');
+  drawBrandQR(canvas.querySelector('[data-qr]'), 'Neon Nights Live');
 
   // Template swatches: click one and the whole stage (ticket, tracker, cards) takes that colour.
   const picks = [...panel.querySelectorAll('[data-theme-pick]')];   // the corner bar's swatches
@@ -946,7 +941,7 @@
   const EVENTS = {
     blue:   { name: 'Neon Nights Live',     cat: 'CONCERT',        logo: 'NN', venue: 'City Arena',     place: 'City Arena, Downtown',        photo: 'concert' },
     ink:    { name: 'After Dark Live',      cat: 'NIGHT SHOW',     logo: 'AD', venue: 'Club Noir',      place: 'Club Noir, Old Town',         photo: 'night' },
-    green:  { name: 'City Run 10K',         cat: 'MARATHON',       logo: 'CR', venue: 'Riverside Park', place: 'Riverside Park, North Gate',  photo: 'run' },
+    green:  { name: 'City Run 10K',         cat: 'FUN RUN',        logo: 'CR', venue: 'Riverside Park', place: 'Riverside Park, North Gate',  photo: 'run' },
     purple: { name: 'Leaders Summit',       cat: 'CONFERENCE',     logo: 'LD', venue: 'Grand Hall',     place: 'Grand Hall, Convention Centre', photo: 'summit' },
     pink:   { name: 'Love Songs Live',      cat: "VALENTINE'S CONCERT", logo: 'LS', venue: 'Rose Hall',  place: 'Rose Hall, Riverside',        photo: 'valentine' },
     red:    { name: 'Opening Night',        cat: 'THEATRE PREMIERE', logo: 'ON', venue: 'Grand Theatre', place: 'Grand Theatre, Main Street', photo: 'premiere' },
@@ -1019,6 +1014,8 @@
     anyPick?.parentElement.classList.remove('is-on');
     setInk(null);   // the preset colours are all dark enough for white text
     setEvent(theme);
+    const pick = document.querySelector(`[data-theme-pick="${theme}"]`);
+    document.querySelectorAll('[data-ev-type]').forEach((el) => { if (pick) el.textContent = pick.getAttribute('aria-label'); });
     document.querySelectorAll('.stage-canvas, .m-pass').forEach((el) => {
       if (theme === 'blue') el.removeAttribute('data-theme'); else el.dataset.theme = theme;
     });
@@ -1065,7 +1062,7 @@
           </div>
         </div>
       </div>`;
-    drawQR(heroShot.querySelector('.m-pass-qr'), 'Neon Nights Live');
+    drawBrandQR(heroShot.querySelector('.m-pass-qr'), 'Neon Nights Live');
 
   }
   const STEP_NAMES = ['Create', 'Sell', 'Send', 'Scan', 'Report'];

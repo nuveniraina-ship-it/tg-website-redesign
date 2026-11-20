@@ -57,15 +57,13 @@
   <!-- ================= Header ================= -->
   <header class="site-header" data-header>
     <div class="container header-inner">
-      <button type="button" class="logo logo-cycle" data-logo-cycle aria-label="Ticket Generator logo. Click to see another version">
-        <span class="logo-v is-on"><img src="assets/tg-icon.svg" alt="" width="32" height="32"><img src="assets/tg-logotype.svg" alt="Ticket Generator" class="logo-type" width="150" height="14"></span>
-        <span class="logo-v"><img src="assets/logos/logo-2.svg" alt="Ticket Generator" class="logo-alt" width="296" height="70"></span>
-        <span class="logo-v"><img src="assets/logos/logo-3.svg" alt="Ticket Generator" class="logo-alt" width="296" height="84"></span>
-      </button>
+      <a href="/" class="logo" aria-label="Ticket Generator home">
+        <img src="assets/tg-icon.svg" alt="" width="32" height="32">
+        <img src="assets/tg-logotype.svg" alt="Ticket Generator" class="logo-type" width="150" height="14">
+      </a>
 
       <nav class="main-nav" id="main-nav" aria-label="Main">
         <ul>
-          <li><a href="/">Homepage</a></li>
           <li><a href="how-it-works.html">How It Works</a></li>
           <li><a href="features.html">Features</a></li>
           <li><a href="use-cases.html">Use Cases</a></li>
@@ -422,13 +420,13 @@
         </div>
         <div class="faq-help">
             <span class="faq-help-icon" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
-            <h3>Didn't find your query?</h3>
-            <p>Still searching for a query? Explore our FAQs for more help.</p>
+            <h3>Still have a question?</h3>
+            <p>Talk to our team. We'll help you set up your event and answer anything the FAQs don't.</p>
             <div class="faq-help-actions">
-              <a href="faqs.html" class="btn btn-secondary">See All FAQs</a>
               <a href="support.html" class="btn btn-primary">Contact us</a>
+              <a href="demo.html" class="btn btn-secondary">Book a Demo</a>
             </div>
           </div>
       </div>
@@ -592,7 +590,7 @@
           <div class="final-main">
             <p class="final-kicker mono">ADMIT ONE · YOUR EVENT</p>
             <h2 id="final-title">Get started with Ticket&nbsp;Generator</h2>
-            <p class="final-meta">First 10 tickets free <i></i> Free account <i></i> No credit card required</p>
+            <p class="final-meta"><span>First 10 tickets free</span><i></i><span>Free account</span><i></i><span>No credit card required</span></p>
             <div class="final-cta">
               <a href="https://tg-full-revamp.vercel.app/signup" class="btn btn-light btn-xl">Sign Up</a>
               <a href="demo.html" class="btn btn-ghost-light btn-xl">Book a Demo</a>
@@ -600,7 +598,7 @@
           </div>
           <div class="final-stub" aria-hidden="true">
             <span class="final-free"><b>10</b><span class="mono">TICKETS<br>FREE</span></span>
-            <svg class="final-qr" viewBox="0 0 25 25" shape-rendering="crispEdges" data-final-qr></svg>
+            <svg class="final-seal" data-seal="ADMIT ONE · YOUR EVENT · TICKET GENERATOR · "></svg>
             <span class="final-no mono">No. 000001</span>
           </div>
         </div>

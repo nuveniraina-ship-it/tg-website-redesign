@@ -1046,3 +1046,7 @@
   .tkt--steps .step { min-height: 48vh; padding: var(--space-6xl) 0; }
 }
 
+
+/* the picked event type, named beside the swatches so it's clear what the dots change */
+.stage-try-now { padding-left: 10px; border-left: 1px solid var(--border-secondary); font-weight: 600; color: var(--text-primary); white-space: nowrap; }
+@media (max-width: 768px) { .stage-try-now { display: none; } }

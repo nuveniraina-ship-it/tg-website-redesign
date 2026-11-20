@@ -1650,3 +1650,102 @@
 @media (max-width: 768px) {
   .flow-wrap > .api-count { top: 10px; right: 10px; bottom: auto; white-space: nowrap; font-size: 12px; padding: 4px 10px; }   /* short "0 tickets issued", on the row of the Try it pill */
 }
+
+/* =========================================================
+   Round 33 — QR codes only where scanning is the story
+   ========================================================= */
+/* the ticket at the gate and the delivered ticket: brand QR in the ticket's own colour */
+.ticket-qr, .m-pass-qr, .mt-qr { color: var(--brand-700); }
+/* the admit seal that replaces decorative QRs (CTA stub, reviews, receipt) */
+.final-seal, .tq-seal, .receipt-seal { display: block; flex: none; color: var(--brand-600); overflow: visible; }
+.final-seal { width: 112px; height: 112px; }
+.tq-seal { align-self: flex-end; width: 58px; height: 58px; color: var(--ink); opacity: .85; }
+.receipt-seal { width: 74px; height: 74px; transform: rotate(-12deg); opacity: .9; }
+@media (prefers-reduced-motion: no-preference) {
+  .final-seal .seal-ring { transform-origin: 50px 50px; animation: seal-spin 24s linear infinite; }
+}
+@keyframes seal-spin { to { transform: rotate(360deg); } }
+@media (max-width: 720px) { .final-seal { width: 76px; height: 76px; } }
+@media (max-width: 960px) { .tq-seal { display: none; } }
+
+/* Round 33 — "See pricing" sits right under its line of copy, not adrift in the grid */
+.sec-head .numbers-link { margin-top: 14px; justify-content: center; }
+.numbers-copy { align-self: center; }
+
+/* Round 33 — "Ready to issue your first ticket?" is a full-width brand band that closes
+   the steps ticket edge to edge (the ticket's tear-off stub), not a dashed card inside it */
+@media (min-width: 961px) {
+  .tkt--steps > .container:has(> .j-end) { max-width: none; padding: 0; }
+  .tkt--steps.tkt { padding-bottom: 0; }
+  .tkt--steps .j-end {
+    position: relative;
+    margin: var(--space-6xl) 0 0;
+    padding: 44px max(48px, calc((100% - 1280px) / 2 + 32px));
+    border: 0;
+    border-radius: 0 0 32px 32px;
+    background:
+      radial-gradient(60% 140% at 100% 0, rgba(255, 255, 255, .14), transparent 60%),
+      var(--brand-600);
+    color: #fff;
+  }
+  /* perforation where the stub tears off */
+  .tkt--steps .j-end::before {
+    content: "";
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    top: -1px;
+    border-top: 2px dashed rgba(255, 255, 255, .5);
+  }
+  .tkt--steps .j-end h3 { font-size: 32px; line-height: 40px; color: #fff; }
+  .tkt--steps .j-end-meta { color: rgba(255, 255, 255, .82); }
+  .tkt--steps .j-end-meta i { background: rgba(255, 255, 255, .55); }
+  .tkt--steps .j-end-cta .btn { min-height: 52px; }
+  .tkt--steps .j-end-cta .btn-secondary { background: transparent; color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .7); }
+  .tkt--steps .j-end-cta .btn-secondary:hover { background: rgba(255, 255, 255, .1); }
+  .tkt--steps .j-end-cta .btn-primary { background: #fff; color: var(--brand-700); box-shadow: 0 6px 16px -6px rgba(10, 13, 18, .35); }
+  .tkt--steps .j-end-cta .btn-primary:hover { background: var(--brand-25); }
+}
+@media (max-width: 768px) {
+  .m-card--steps .j-end { background: var(--brand-600); border-top: 0; color: #fff; }
+  .m-card--steps .j-end h3 { color: #fff; }
+  .m-card--steps .j-end-meta { color: rgba(255, 255, 255, .82); }
+  .m-card--steps .j-end-meta i { background: rgba(255, 255, 255, .55); }
+  .m-card--steps .j-end-cta .btn-secondary { background: transparent; color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .7); }
+  .m-card--steps .j-end-cta .btn-primary { background: #fff; color: var(--brand-700); }
+}
+/* QA: with the copy now in the centred head, the stats lost their top margin's reason and sat
+   low under a big empty gap. On desktop they stack as three landscape stubs beside the receipt. */
+@media (min-width: 961px) {
+  .numbers-copy { justify-self: end; width: min(100%, 480px); }
+  .numbers-copy .stats { margin-top: 0; grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .numbers-copy .stat {
+    --notch: 9px;
+    display: grid;
+    grid-template-columns: 210px minmax(0, 1fr);
+    grid-template-areas: "value no" "value label";
+    align-items: center;
+    padding: 20px 24px;
+    -webkit-mask:
+      radial-gradient(circle var(--notch) at 234px 0, transparent 98%, #000) top / 100% 51% no-repeat,
+      radial-gradient(circle var(--notch) at 234px 100%, transparent 98%, #000) bottom / 100% 51% no-repeat;
+            mask:
+      radial-gradient(circle var(--notch) at 234px 0, transparent 98%, #000) top / 100% 51% no-repeat,
+      radial-gradient(circle var(--notch) at 234px 100%, transparent 98%, #000) bottom / 100% 51% no-repeat;
+  }
+  .numbers-copy .stat-value { grid-area: value; align-self: stretch; display: flex; align-items: center; margin: 0; padding: 0 24px 0 0; border-bottom: 0; border-right: 2px dashed var(--gray-200); font-size: 32px; }
+  .numbers-copy .stat-no { grid-area: no; align-self: end; padding-left: 24px; }
+  .numbers-copy .stat-label { grid-area: label; align-self: start; margin-top: 2px; padding-left: 24px; }
+}
+/* QA: the event-type swatches (22px) and cover-image pips (7px) were too small to tap;
+   an invisible ring gives each a ~40px touch target without changing how they look */
+.stage-try-dots button, .ep-pips button { position: relative; }
+.stage-try-dots button::before, .ep-pips button::before { content: ""; position: absolute; inset: -9px; }
+.ep-pips button::before { inset: -16px -4px; }
+/* QA: on phones the "•" separators were left dangling at the end of a line.
+   Phones get two clean lines: "First 10 tickets free • Free account" / "No credit card required" */
+@media (max-width: 768px) {
+  .j-end-meta, .final-meta { display: flex; flex-wrap: wrap; align-items: center; column-gap: 10px; }
+  .j-end-meta i:last-of-type, .final-meta i:last-of-type { display: none; }
+  .j-end-meta span:last-child, .final-meta span:last-child { flex-basis: 100%; }
+}
