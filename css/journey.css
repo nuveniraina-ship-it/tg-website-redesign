@@ -361,7 +361,7 @@
   background:
     radial-gradient(120% 95% at 92% 0%, rgba(255, 255, 255, .18), transparent 58%),
     linear-gradient(100deg, color-mix(in srgb, var(--t-bg) 76%, transparent) 0%, color-mix(in srgb, var(--t-bg) 60%, transparent) 45%, color-mix(in srgb, var(--t-bg) 38%, transparent) 100%),
-    var(--t-photo, url("../assets/tickets/concert.webp")) center / cover no-repeat,
+    var(--t-photo, url("../assets/tickets/summit.webp")) center / cover no-repeat,
     var(--t-bg);
   color: var(--t-ink, #fff);
   -webkit-mask:
@@ -559,7 +559,7 @@
   /* the same event photo as the ticket, lightly tinted with the event's colour */
   background:
     linear-gradient(120deg, color-mix(in srgb, var(--brand-700) 30%, transparent), color-mix(in srgb, var(--brand-500) 8%, transparent)),
-    var(--t-photo, url("../assets/tickets/concert.webp")) center / cover no-repeat,
+    var(--t-photo, url("../assets/tickets/summit.webp")) center / cover no-repeat,
     linear-gradient(120deg, var(--brand-700), var(--brand-500));
 }
 .ev-date {
@@ -650,8 +650,10 @@
   --brand-500: #7a5af8; --brand-600: #6938ef; --brand-700: #5925dc; --brand-800: #4a1fb8;
 }
 .stage-canvas[data-theme="pink"], .m-pass[data-theme="pink"] {
-  --brand-25: #fef6fb; --brand-50: #fdf2fa; --brand-100: #fce7f6; --brand-200: #fcceee; --brand-300: #faa7e0;
-  --brand-500: #ee46bc; --brand-600: #dd2590; --brand-700: #c11574; --brand-800: #9e165f;
+  /* pastel pink: a light, soft ticket with dark-rose text */
+  --brand-25: #fff7fa; --brand-50: #fff0f6; --brand-100: #ffe4ef; --brand-200: #fcd0e2; --brand-300: #f8b4d0;
+  --brand-500: #f08cb8; --brand-600: #f4a7c8; --brand-700: #c2407e; --brand-800: #9c2f63;
+  --t-ink: #5a1838; --t-ink-soft: rgba(90, 24, 56, .72); --t-line: rgba(90, 24, 56, .25);
 }
 
 /* any colour the visitor picks: the whole scale is mixed from --pick */

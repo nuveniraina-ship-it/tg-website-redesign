@@ -1581,7 +1581,7 @@
     background:
       radial-gradient(120% 95% at 92% 0%, rgba(255, 255, 255, .18), transparent 58%),
       linear-gradient(100deg, color-mix(in srgb, var(--brand-600) 76%, transparent) 0%, color-mix(in srgb, var(--brand-600) 60%, transparent) 45%, color-mix(in srgb, var(--brand-600) 38%, transparent) 100%),
-      var(--t-photo, url("../assets/tickets/concert.webp")) center / cover no-repeat,
+      var(--t-photo, url("../assets/tickets/summit.webp")) center / cover no-repeat,
       var(--brand-600);
   }
 }
@@ -1672,52 +1672,135 @@
 .sec-head .numbers-link { margin-top: 14px; justify-content: center; }
 .numbers-copy { align-self: center; }
 
-/* Round 33 — "Ready to issue your first ticket?" is a full-width brand band that closes
-   the steps ticket edge to edge (the ticket's tear-off stub), not a dashed card inside it */
-@media (min-width: 961px) {
-  .tkt--steps > .container:has(> .j-end) { max-width: none; padding: 0; }
-  .tkt--steps.tkt { padding-bottom: 0; }
-  .tkt--steps .j-end {
-    position: relative;
-    margin: var(--space-6xl) 0 0;
-    padding: 44px max(48px, calc((100% - 1280px) / 2 + 32px));
-    border: 0;
-    border-radius: 0 0 32px 32px;
-    background:
-      radial-gradient(60% 140% at 100% 0, rgba(255, 255, 255, .14), transparent 60%),
-      var(--brand-600);
-    color: #fff;
-  }
-  /* perforation where the stub tears off */
-  .tkt--steps .j-end::before {
-    content: "";
-    position: absolute;
-    left: 24px;
-    right: 24px;
-    top: -1px;
-    border-top: 2px dashed rgba(255, 255, 255, .5);
-  }
-  .tkt--steps .j-end h3 { font-size: 32px; line-height: 40px; color: #fff; }
-  .tkt--steps .j-end-meta { color: rgba(255, 255, 255, .82); }
-  .tkt--steps .j-end-meta i { background: rgba(255, 255, 255, .55); }
-  .tkt--steps .j-end-cta .btn { min-height: 52px; }
-  .tkt--steps .j-end-cta .btn-secondary { background: transparent; color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .7); }
-  .tkt--steps .j-end-cta .btn-secondary:hover { background: rgba(255, 255, 255, .1); }
-  .tkt--steps .j-end-cta .btn-primary { background: #fff; color: var(--brand-700); box-shadow: 0 6px 16px -6px rgba(10, 13, 18, .35); }
-  .tkt--steps .j-end-cta .btn-primary:hover { background: var(--brand-25); }
+/* Round 34 — "Ready to issue your first ticket?" is its own blue ticket, right after Backstage Pass */
+.tkt--cta.tkt {
+  padding: 76px 0 0;
+  background:
+    radial-gradient(50% 160% at 100% 0, rgba(255, 255, 255, .14), transparent 60%),
+    var(--brand-600);
+  color: #fff;
 }
+.tkt--cta .tkt-stub { color: rgba(255, 255, 255, .92); border-bottom-color: rgba(255, 255, 255, .35); }
+.tkt--cta .tkt-stub b, .tkt--cta .tkt-eyebrow { color: #fff; }
+.tkt--cta .j-end { margin: 0; padding: 36px 32px 40px; border: 0; border-radius: 0; background: none; color: #fff; }
+.tkt--cta .j-end h3 { font-size: 32px; line-height: 40px; color: #fff; }
+.tkt--cta .j-end-meta { color: rgba(255, 255, 255, .85); }
+.tkt--cta .j-end-meta i { background: rgba(255, 255, 255, .55); }
+.tkt--cta .j-end-cta .btn { min-height: 52px; }
+.tkt--cta .j-end-cta .btn-secondary { background: transparent; color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .7); }
+.tkt--cta .j-end-cta .btn-secondary:hover { background: rgba(255, 255, 255, .1); }
+.tkt--cta .j-end-cta .btn-primary { background: #fff; color: var(--brand-700); box-shadow: 0 6px 16px -6px rgba(10, 13, 18, .35); }
+.tkt--cta .j-end-cta .btn-primary:hover { background: var(--brand-25); }
 @media (max-width: 768px) {
-  .m-card--steps .j-end { background: var(--brand-600); border-top: 0; color: #fff; }
-  .m-card--steps .j-end h3 { color: #fff; }
-  .m-card--steps .j-end-meta { color: rgba(255, 255, 255, .82); }
-  .m-card--steps .j-end-meta i { background: rgba(255, 255, 255, .55); }
-  .m-card--steps .j-end-cta .btn-secondary { background: transparent; color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .7); }
-  .m-card--steps .j-end-cta .btn-primary { background: #fff; color: var(--brand-700); }
+  .tkt--cta.tkt { padding-top: 60px; }
+  .tkt--cta .j-end { display: block; padding: 20px 20px 22px; background: none; }
+  .tkt--cta .j-end h3 { font-size: 21px; line-height: 28px; }
 }
-/* QA: with the copy now in the centred head, the stats lost their top margin's reason and sat
-   low under a big empty gap. On desktop they stack as three landscape stubs beside the receipt. */
+
+/* QA: on phones the "•" separators were left dangling at the end of a line.
+   Phones get two clean lines: "First 10 tickets free • Free account" / "No credit card required" */
+@media (max-width: 768px) {
+  .j-end-meta, .final-meta { display: flex; flex-wrap: wrap; align-items: center; column-gap: 10px; }
+  .j-end-meta i:last-of-type, .final-meta i:last-of-type { display: none; }
+  .j-end-meta span:last-child, .final-meta span:last-child { flex-basis: 100%; }
+}
+
+/* =========================================================
+   Round 34 — readable event tickets. The photo is now a hint on the right;
+   the words sit on a near-solid wash of the ticket colour (was murky and dark)
+   ========================================================= */
+.ticket-main {
+  background:
+    radial-gradient(120% 95% at 92% 0%, rgba(255, 255, 255, .16), transparent 58%),
+    linear-gradient(100deg, color-mix(in srgb, var(--t-bg) 94%, transparent) 0%, color-mix(in srgb, var(--t-bg) 88%, transparent) 48%, color-mix(in srgb, var(--t-bg) 62%, transparent) 100%),
+    var(--t-photo, url("../assets/tickets/summit.webp")) center / cover no-repeat,
+    var(--t-bg);
+}
+.ticket-event, .ticket-meta dd { text-shadow: 0 1px 2px rgba(10, 13, 18, .18); }
+.stage-canvas[data-theme="pink"] .ticket-event, .stage-canvas[data-theme="pink"] .ticket-meta dd { text-shadow: none; }
+@media (max-width: 768px) {
+  .m-pass-top {
+    background:
+      radial-gradient(120% 95% at 92% 0%, rgba(255, 255, 255, .16), transparent 58%),
+      linear-gradient(100deg, color-mix(in srgb, var(--brand-600) 94%, transparent) 0%, color-mix(in srgb, var(--brand-600) 88%, transparent) 48%, color-mix(in srgb, var(--brand-600) 62%, transparent) 100%),
+      var(--t-photo, url("../assets/tickets/summit.webp")) center / cover no-repeat,
+      var(--brand-600);
+    color: var(--t-ink, #fff);
+  }
+  .m-pass[data-theme="pink"] .m-pass-type { box-shadow: inset 0 0 0 1px var(--t-line); }
+}
+
+/* the "Try it" bar never grows: the picked type has a fixed slot and never wraps */
+.stage-try, .stage-try-text { white-space: nowrap; }
+.stage-try-now { display: inline-block; min-width: 9.6em; }
+/* Round 34 — pricing: stats and receipt sit together as one centred group (no empty left side) */
 @media (min-width: 961px) {
-  .numbers-copy { justify-self: end; width: min(100%, 480px); }
+  .numbers-grid { grid-template-columns: minmax(0, 500px) minmax(0, 400px); justify-content: center; gap: 64px; }
+  .numbers-copy { justify-self: stretch; width: auto; }
+}
+/* Round 34 — use cases: the pile no longer stacks five full drop-shadows into a dark smudge,
+   and a ticket waiting below the pile is hidden, so the section's clip edge never shows as a line */
+@media (min-width: 769px) {
+  .uct { transition: transform .9s cubic-bezier(.2, .85, .25, 1.04), opacity .35s ease, filter .6s ease; }
+  .uct:not(.is-in) { opacity: 0; }
+  .uct.is-under { filter: drop-shadow(0 6px 10px rgba(20, 22, 28, .05)); }
+  .uct.is-under-2 { filter: none; }
+  .uct.is-under .uct-body::after { opacity: .03; }
+  .uct.is-under-2 .uct-body::after { opacity: .05; }
+}
+/* Round 34 — security: no lock; straight, very faint lines with small square data blocks */
+.trust-wires path { stroke: rgba(46, 144, 250, .16); stroke-width: 1; stroke-dasharray: none; }
+.trust-wires rect { fill: rgba(46, 144, 250, .38); }
+.trust-wires circle { display: none; }
+.shield-stage { padding-top: 24px; }
+.shield-status { cursor: default; }
+.shield-status:hover { box-shadow: 0 0 0 1px rgba(16, 24, 40, .08), 0 6px 14px -6px rgba(16, 24, 40, .18); }
+.shield-status:active { transform: none; }
+@media (prefers-reduced-motion: reduce) { .trust-wires rect { display: none; } }
+/* Round 34 — review tickets: no stamp; a faint TG mark in the top-right corner, there but quiet */
+.tq-seal { display: none !important; }
+.tq-mark { position: absolute; top: 16px; right: 16px; width: 22px; height: 22px; opacity: .16; filter: grayscale(1); pointer-events: none; }
+@media (max-width: 960px) { .tq-mark { top: 12px; right: 12px; width: 18px; height: 18px; } }
+/* Round 34 — closing ticket: a real, branded QR that opens the app (scan or click), with the link under it */
+.final-qr-link { display: grid; justify-items: center; gap: 8px; color: var(--brand-700); text-decoration: none; border-radius: 10px; }
+.final-qr-link .final-qr { display: block; width: 112px; height: 112px; color: var(--brand-700); }
+.final-qr-url { font-size: 11px; line-height: 16px; letter-spacing: .02em; color: var(--brand-700); white-space: nowrap; }
+.final-qr-link:hover .final-qr-url { text-decoration: underline; text-underline-offset: 3px; }
+.final-qr-link:focus-visible { outline: 2px solid var(--brand-500); outline-offset: 4px; }
+@media (max-width: 720px) {
+  .final-qr-link .final-qr { width: 84px; height: 84px; }
+  .final-qr-url { font-size: 10px; }
+}
+/* Round 34 — "Still have a question?" is its own small ticket after the FAQ, everything centred */
+.tkt--help.tkt { padding: 84px 0 44px; background: var(--bg-primary); }
+.tkt--help .faq-help {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 560px;
+  width: auto;
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  text-align: center;
+}
+.tkt--help .faq-help-icon { display: grid; }
+.tkt--help .faq-help h3 { margin-top: 14px; font-size: 24px; line-height: 32px; }
+.tkt--help .faq-help p { display: block; margin-top: 6px; font-size: 16px; line-height: 24px; }
+.tkt--help .faq-help-actions { display: flex; justify-content: center; gap: 12px; margin-top: 20px; }
+.tkt--help .faq-help .btn { margin: 0; min-width: 150px; justify-content: center; }
+@media (max-width: 768px) {
+  .tkt--help.tkt { padding: 64px 0 24px; }
+  .tkt--help .faq-help h3 { font-size: 20px; line-height: 28px; }
+  .tkt--help .faq-help p { font-size: 14px; line-height: 21px; }
+  .tkt--help .faq-help-actions { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+  .tkt--help .faq-help .btn { min-width: 0; }
+}
+/* pricing stats (desktop): three landscape stubs stacked beside the receipt */
+@media (min-width: 961px) {
   .numbers-copy .stats { margin-top: 0; grid-template-columns: minmax(0, 1fr); gap: 14px; }
   .numbers-copy .stat {
     --notch: 9px;
@@ -1737,15 +1820,9 @@
   .numbers-copy .stat-no { grid-area: no; align-self: end; padding-left: 24px; }
   .numbers-copy .stat-label { grid-area: label; align-self: start; margin-top: 2px; padding-left: 24px; }
 }
-/* QA: the event-type swatches (22px) and cover-image pips (7px) were too small to tap;
-   an invisible ring gives each a ~40px touch target without changing how they look */
+/* tap targets: the event-type swatches (22px) and cover-image pips (7px) get an invisible ~40px ring */
 .stage-try-dots button, .ep-pips button { position: relative; }
 .stage-try-dots button::before, .ep-pips button::before { content: ""; position: absolute; inset: -9px; }
 .ep-pips button::before { inset: -16px -4px; }
-/* QA: on phones the "•" separators were left dangling at the end of a line.
-   Phones get two clean lines: "First 10 tickets free • Free account" / "No credit card required" */
-@media (max-width: 768px) {
-  .j-end-meta, .final-meta { display: flex; flex-wrap: wrap; align-items: center; column-gap: 10px; }
-  .j-end-meta i:last-of-type, .final-meta i:last-of-type { display: none; }
-  .j-end-meta span:last-child, .final-meta span:last-child { flex-basis: 100%; }
-}
+.final-stub .final-no { display: none; }   /* the stub carries the offer and the QR; the serial was clutter */
+@media (max-width: 768px) { .stage-try-now { display: none; } }   /* phones: the label and dots fit; the ticket itself names the type */

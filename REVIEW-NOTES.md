@@ -51,3 +51,61 @@ I checked both pages at 1440px, 1024px and 375px. I took screenshots section by 
 Prompts are written. Generation through Codex isn't available on our current plan. The options are to generate with our Magnific credits, or for design to supply a shoot or stock set.
 
 **Judgement call to confirm:** the coming-soon page still has a real, scannable QR code that opens the homepage. I kept it because scanning there does something: it moves you to your phone.
+
+---
+
+# Round 2: Nuveni's 11 points (20 Nov)
+
+## What changed and why
+
+| # | Point | What changed | Why this way |
+|---|---|---|---|
+| 1 | Event names; pink too strong; "Try it" bar wraps | Each colour has a new event and its own type label. The picked type sits in a fixed-width slot and the bar never wraps; on phones only the label and swatches show. | Each colour now reads as a kind of event, not a theme. |
+| 2 | "Ready to issue" stuck inside Get Started; rename Get Started | The CTA is now its own blue ticket, labelled "Your turn", straight after the steps. The steps ticket is renamed "Backstage Pass". | Its own ticket reads as a CTA but stays in the ticket-stack language. "Backstage Pass" is ticket vocabulary and hints at "see how it works behind the scenes". |
+| 3 | Pricing: empty left side | Stats and receipt are now one centred group (500 + 400px, 64px gap). | The old grid stretched to full width, which left a dead band on the left. |
+| 4 | Use cases: shadow darkens, line visible | Only the top ticket casts a full shadow; the ones underneath barely cast any. Tickets waiting below the pile are hidden until dealt. | Five stacked drop-shadows added up to a dark smudge. The "line" was the section's clip edge cutting through the next ticket on its way in. |
+| 5 | Security: remove lock; straight, light lines | Lock removed. Two very faint parallel lines run from the text into the first badge, and one straight line crosses each gap between badges. Small square blocks (encrypted data) travel along them. The pill is now a plain label. | Straight lines read as a data path through the protection layers. Square blocks suggest data that is packaged, not open. |
+| 6 | Registration not working | It did open, but into a tall, mostly empty dark frame, with the page left scrolled to the bottom. To a user that looked like nothing happened. Now the step keeps the event cover on top, is capped in height, and scrolls into view below the header. The confirmation has a "Back to event page" button. Tested with real clicks at 1440 and 375px. | |
+| 7 | Testimonial stamp | The stamp is removed. A faint grey TG mark sits in each ticket's top-right corner. | |
+| 8 | FAQ help box | It is now its own small ticket, labelled "Need a hand?", after the FAQ on both pages, with everything centred. | |
+| 9 | Closing ticket | A real, scannable QR code that opens the app, with "tg-full-revamp.vercel.app →" under it. The QR, the link, a click or a scan all go to the app. Rounded modules and eyes, TG mark in the centre, error correction H. | |
+| 10 | Same QR, only the colour changed | Each event type now has its own QR design (module shape + eye shape), so switching type shows the QR is customisable too. | |
+| 11 | Ticket text not readable | The photo is now only a hint on the right. The words sit on a near-solid wash of the ticket colour (94% → 88% → 62%), with a soft text shadow on the light-on-dark types. Pastel pink uses dark-rose text. | |
+
+**New events (point 1)**
+
+| Colour | Event | Type label |
+|---|---|---|
+| Blue (formal) | Leaders Summit | Conference |
+| Black | Midnight Soirée | Private party |
+| Green | Earth Day Run 10K | Eco run |
+| Purple | Neon Nights Live | Concert |
+| Pink (pastel, dark-rose text) | Valentine's Brunch | Brunch party |
+
+**QR designs per event type (point 10)**
+
+| Event type | QR design |
+|---|---|
+| Conference | Square, formal |
+| Private party | Dots |
+| Eco run | Leaf |
+| Concert | Diamonds |
+| Valentine's brunch | Soft rounded |
+
+## Issues I found and fixed in QA
+
+1. **Pricing layout wiped while editing.** Cleaning up the old CTA band also deleted the pricing stats layout and the tap-target rules. Caught on the desktop pass; both restored.
+2. **Phone picker text cut off.** The event-type name squeezed "Pick your event type" down to "F…". It is now hidden on phones.
+3. **Closing ticket QR not scanning.** My first styled QR (gapped rounded dots, very round eyes) didn't decode. I tested module and eye shapes against a strict decoder and kept the most rounded style that still decodes. The final QR was also read with the browser's barcode decoder at 600, 200 and 120px, including the logo.
+4. **Serial number clutter.** "No. 000001" on the closing stub competed with the QR and link, so it's hidden.
+
+## Alternatives considered
+
+- **Mid-page CTA:**
+  - Considered: a section-wide band with no ticket shape.
+  - Chose: its own ticket, because it matches every other section and still stands out in blue.
+- **Pricing:** I first stacked the stats beside the receipt but left the column right-aligned to it, which still left space on the left. A centred two-column group fixed it.
+- **QR per event:** a caption naming each style ("QR style: Dots") was tempting. I kept "Scan at entry", because the ticket also plays the Scan step.
+- **Security motion:**
+  - Considered: glowing dots (too busy) and dashed flowing lines (read as "loading").
+  - Chose: small square blocks.

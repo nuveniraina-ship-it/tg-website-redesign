@@ -58,7 +58,17 @@
 
   // Brand QR: only where scanning is the story (the ticket at the gate, the delivered ticket).
   // Round dots, soft finder eyes and the TG mark in the middle, in the ticket's own colour.
-  const drawBrandQR = (svg, text) => {
+  // Brand QR, in one of several designs (module shape + eye shape), to show QR codes are
+  // customisable too. Each event type on the demo ticket gets its own design.
+  const QR_STYLES = {
+    square:  { mod: 'square',  eye: 'square' },   // conference: crisp and formal
+    dots:    { mod: 'dot',     eye: 'circle' },   // private party: round and playful
+    leaf:    { mod: 'leaf',    eye: 'leaf' },     // eco run: leaf-shaped modules
+    diamond: { mod: 'diamond', eye: 'frame' },    // concert: sharp, stage-light diamonds
+    soft:    { mod: 'soft',    eye: 'soft' },     // valentine's brunch: soft rounded squares
+  };
+  const drawBrandQR = (svg, text, styleKey = 'soft') => {
+    const st = QR_STYLES[styleKey] || QR_STYLES.soft;
     const SIZE = 25;
     let seed = [...text].reduce((h, c) => Math.imul(h ^ c.charCodeAt(0), 16777619), 2166136261) >>> 0;
     const rand = () => {
@@ -69,14 +79,33 @@
     };
     const finderAt = (x, y) => (x < 8 && y < 8) || (x > SIZE - 9 && y < 8) || (x < 8 && y > SIZE - 9);
     const centre = (x, y) => x >= 8 && x <= 16 && y >= 8 && y <= 16;
+    const mod = (x, y) => {
+      switch (st.mod) {
+        case 'square': return `<rect x="${x}" y="${y}" width="1.02" height="1.02"/>`;
+        case 'dot': return `<circle cx="${x + 0.5}" cy="${y + 0.5}" r="0.44"/>`;
+        case 'leaf': return `<path d="M${x + 0.5} ${y + 0.04}h0.46v0.46a0.46 0.46 0 0 1-0.46 0.46h-0.46v-0.46a0.46 0.46 0 0 1 0.46-0.46z"/>`;
+        case 'diamond': return `<path d="M${x + 0.5} ${y + 0.02}l0.48 0.48-0.48 0.48-0.48-0.48z"/>`;
+        default: return `<rect x="${x + 0.06}" y="${y + 0.06}" width="0.88" height="0.88" rx="0.3"/>`;
+      }
+    };
     let dots = '';
     for (let y = 0; y < SIZE; y++) {
       for (let x = 0; x < SIZE; x++) {
-        if (!finderAt(x, y) && !centre(x, y) && rand() > 0.5) dots += `<circle cx="${x + 0.5}" cy="${y + 0.5}" r="0.42"/>`;
+        if (!finderAt(x, y) && !centre(x, y) && rand() > 0.5) dots += mod(x, y);
       }
     }
-    const eye = (x, y) => `<rect x="${x + 0.5}" y="${y + 0.5}" width="6" height="6" rx="1.8" fill="none" stroke="currentColor" stroke-width="1"/><rect x="${x + 2}" y="${y + 2}" width="3" height="3" rx="0.9"/>`;
+    const eye = (x, y) => {
+      const o = `fill="none" stroke="currentColor" stroke-width="1"`;
+      switch (st.eye) {
+        case 'square': return `<rect x="${x + 0.5}" y="${y + 0.5}" width="6" height="6" ${o}/><rect x="${x + 2}" y="${y + 2}" width="3" height="3"/>`;
+        case 'circle': return `<circle cx="${x + 3.5}" cy="${y + 3.5}" r="3" ${o}/><circle cx="${x + 3.5}" cy="${y + 3.5}" r="1.5"/>`;
+        case 'leaf': return `<path d="M${x + 3.5} ${y + 0.5}h3v3a3 3 0 0 1-3 3h-3v-3a3 3 0 0 1 3-3z" ${o}/><path d="M${x + 3.5} ${y + 2}h1.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-1.5v-1.5a1.5 1.5 0 0 1 1.5-1.5z"/>`;
+        case 'frame': return `<rect x="${x + 0.5}" y="${y + 0.5}" width="6" height="6" rx="0.6" ${o}/><path d="M${x + 3.5} ${y + 1.8}l1.7 1.7-1.7 1.7-1.7-1.7z"/>`;
+        default: return `<rect x="${x + 0.5}" y="${y + 0.5}" width="6" height="6" rx="1.8" ${o}/><rect x="${x + 2}" y="${y + 2}" width="3" height="3" rx="0.9"/>`;
+      }
+    };
     svg.setAttribute('shape-rendering', 'geometricPrecision');
+    svg.dataset.qrStyle = styleKey;
     svg.innerHTML = `<g fill="currentColor">${dots}${eye(0, 0)}${eye(SIZE - 7, 0)}${eye(0, SIZE - 7)}</g>` +
       `<rect x="8.6" y="8.6" width="7.8" height="7.8" rx="2" fill="#fff"/><rect x="8.6" y="8.6" width="7.8" height="7.8" rx="2" fill="currentColor" opacity=".08"/>` +
       `<image href="assets/tg-icon.svg" x="9.4" y="9.4" width="6.2" height="6.2"/>`;
@@ -246,13 +275,14 @@
     }
   }
 
-  /* ---------- Review stubs: a verified-organizer seal in the corner of each ---------- */
-  document.querySelectorAll('.tq-stub').forEach((stub, i) => {
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('class', 'tq-seal');
-    svg.setAttribute('aria-hidden', 'true');
-    stub.prepend(svg);
-    drawSeal(svg, 'VERIFIED ORGANIZER · 5-STAR REVIEW · ');
+  /* ---------- Review tickets: a faint TG mark in the top-right corner of each ---------- */
+  document.querySelectorAll('.tq-body').forEach((body) => {
+    const mark = document.createElement('img');
+    mark.className = 'tq-mark';
+    mark.src = 'assets/tg-icon.svg';
+    mark.alt = '';
+    mark.width = 22; mark.height = 22;
+    body.append(mark);
   });
 
   /* ---------- Use cases: deal one ticket onto the pile per scroll step ---------- */
@@ -511,47 +541,15 @@
     document.fonts?.ready.then(evenAll);
   }
 
-  /* ---------- Security: lines from the end of the text into the seals, with lights on them ----------
-     Drawn from the real layout so they never cross any words: two lines from where the text column
-     ends into the first seal, one across each gap between seals, and an arc over the top only when
-     there's clear room above the seals. */
+  /* ---------- Security: straight, faint lines from the end of the text through the seals ----------
+     Drawn from the real layout so they never cross any words: two parallel lines into the first seal,
+     one across each gap between seals. Small square blocks (encrypted data) travel along them. */
   const wireRow = document.querySelector('[data-wires]');
   if (wireRow) {
     const svg = wireRow.querySelector('.trust-wires');
     const copy = wireRow.querySelector('.trust-copy');
     const discs = [...wireRow.querySelectorAll('.seal-disc')];
     const NS = 'http://www.w3.org/2000/svg';
-    const lockSvg = wireRow.querySelector('[data-lock]');
-    // returns the lock's outline box in row coordinates (for keeping lines away from it)
-    // A padlock drawn from the real layout: its body runs from the middle of the first seal to the
-    // middle of the last (half of ISO, all of GDPR, half of SOC) and from just above the seals to just
-    // below their names, so it frames them; a full U-shaped shackle sits in the clear space above.
-    const drawLock = (d) => {
-      if (!lockSvg) return null;
-      const stageEl = lockSvg.parentElement;
-      const stage = stageEl.getBoundingClientRect();
-      const row = wireRow.getBoundingClientRect();
-      const ox = stage.left - row.left, oy = stage.top - row.top;   // row → stage coordinates
-      const a = d[0], z = d[d.length - 1];
-      const x1 = a.cx - ox, x2 = z.cx - ox, bw = x2 - x1;
-      const pill = stageEl.querySelector('.shield-status');
-      const lowest = Math.max(...[...stageEl.querySelectorAll('.seal-label')].map((el) => el.getBoundingClientRect().bottom - stage.top),
-        pill ? pill.getBoundingClientRect().bottom - stage.top : 0);
-      const bt = a.t - oy - 14;                         // body top: just above the seals
-      const bb = lowest + 14;                           // body bottom: just below the button, which sits in it like a keyhole plate
-      const r = Math.min(30, bw / 8);
-      // shackle: a full U, as wide as half the body, fitted to the room above (and its open lift)
-      const room = bt - 22;
-      let sw = Math.min(bw * 0.5, 190);
-      sw = Math.min(sw, 2 * (room - 10));
-      const rad = sw / 2, legs = Math.max(8, Math.min(room - rad, rad * 0.45));
-      const s1 = (x1 + x2) / 2 - rad, s2 = s1 + sw, arcY = bt - legs;
-      lockSvg.setAttribute('viewBox', `0 0 ${stage.width.toFixed(1)} ${stage.height.toFixed(1)}`);
-      lockSvg.innerHTML = `
-        <g class="lock-shackle"><path pathLength="1" d="M${s1} ${bt + 2} V${arcY} A${rad} ${rad} 0 0 1 ${s2} ${arcY} V${bt + 2}"/></g>
-        <path pathLength="1" d="M${x1 + r} ${bt} H${x2 - r} A${r} ${r} 0 0 1 ${x2} ${bt + r} V${bb - r} A${r} ${r} 0 0 1 ${x2 - r} ${bb} H${x1 + r} A${r} ${r} 0 0 1 ${x1} ${bb - r} V${bt + r} A${r} ${r} 0 0 1 ${x1 + r} ${bt} Z"/>`;
-      return { l: x1 + ox - 6, r: x2 + ox + 6, t: arcY - rad + oy - 24, b: bb + oy + 6 };
-    };
     const drawWires = () => {
       const row = wireRow.getBoundingClientRect();
       if (!row.width || discs.length < 2) return;
@@ -572,28 +570,14 @@
       const x0 = sideBySide ? textEnd + 24 : 0;
       const L = d[0].cx - (d[0].r - d[0].l) / 2 - 14;   // meets the ring around the first badge
       if (L - x0 > 60) {
-        const m = (x0 + L) / 2;
-        paths.push(`M${x0} ${cy - 34} C${m} ${cy - 34} ${m} ${cy - 10} ${L} ${cy - 10}`);
-        paths.push(`M${x0} ${cy + 30} C${m} ${cy + 30} ${m} ${cy + 10} ${L} ${cy + 10}`);
+        // two straight, parallel lines: the data stream running into the protected zone
+        paths.push(`M${x0} ${cy - 8} H${L}`);
+        paths.push(`M${x0} ${cy + 8} H${L}`);
       }
       for (let i = 0; i < d.length - 1; i++) {
         const a = d[i].cx + (d[i].r - d[i].l) / 2 + 14, b = d[i + 1].cx - (d[i + 1].r - d[i + 1].l) / 2 - 14;
         if (b - a > 8) paths.push(`M${a} ${d[i].cy} L${b} ${d[i + 1].cy}`);
       }
-      // The lock (drawn on click) is built from the seals: its body runs from the middle of the
-      // first seal to the middle of the last, so it covers half of ISO and SOC and all of GDPR;
-      // the shackle sits in the clear space above. Lines keep out of the lock's area.
-      const last = d[d.length - 1];
-      const lockBox = drawLock(d);
-      // Around the badges: a dotted ring just outside each badge's own dashed edge, with a light
-      // that circles it (alternate directions), so the lines frame the badges instead of wandering.
-      const rings = [];
-      d.forEach((k, i) => {
-        const rr = (k.r - k.l) / 2 + 14;
-        const sweep = i % 2 ? 0 : 1;
-        rings.push(`M${k.cx - rr} ${k.cy} A${rr} ${rr} 0 1 ${sweep} ${k.cx + rr} ${k.cy} A${rr} ${rr} 0 1 ${sweep} ${k.cx - rr} ${k.cy}`);
-      });
-      paths.push(...rings);
       svg.replaceChildren();
       paths.forEach((dPath, i) => {
         const p = document.createElementNS(NS, 'path');
@@ -601,12 +585,13 @@
         svg.append(p);
         if (reduceMotion) return;
         const len = p.getTotalLength();
-        const dot = document.createElementNS(NS, 'circle');
-        dot.setAttribute('r', '3');
+        // a small square block (encrypted data) travels the line; no glow, kept faint
+        const dot = document.createElementNS(NS, 'rect');
+        dot.setAttribute('x', '-2'); dot.setAttribute('y', '-2'); dot.setAttribute('width', '4'); dot.setAttribute('height', '4'); dot.setAttribute('rx', '1');
         const mo = document.createElementNS(NS, 'animateMotion');
-        const dur = Math.max(1.6, len / 70);
+        const dur = Math.max(2.4, len / 45);
         mo.setAttribute('dur', `${dur.toFixed(2)}s`);
-        mo.setAttribute('begin', `${(-i * 0.9).toFixed(2)}s`);
+        mo.setAttribute('begin', `${(-i * 1.1).toFixed(2)}s`);
         mo.setAttribute('repeatCount', 'indefinite');
         mo.setAttribute('path', dPath);
         dot.append(mo);
@@ -616,21 +601,6 @@
     drawWires();
     window.addEventListener('load', drawWires);
     new ResizeObserver(drawWires).observe(wireRow);
-  }
-
-  /* Security: click the status pill → a faint lock draws in, open, then snaps shut */
-  const lockBtn = document.querySelector('[data-lock-btn]');
-  const lockArt = document.querySelector('[data-lock]');
-  if (lockBtn && lockArt) {
-    let shutTimer;
-    lockBtn.addEventListener('click', () => {
-      clearTimeout(shutTimer);
-      lockArt.classList.remove('is-on', 'is-shut');
-      void lockArt.getBoundingClientRect();          // restart the drawing
-      lockArt.classList.add('is-on');
-      lockBtn.setAttribute('aria-pressed', 'true');
-      shutTimer = setTimeout(() => lockArt.classList.add('is-shut'), reduceMotion ? 0 : 1450);
-    });
   }
 
   /* ---------- Event page: registration always closes a week from today ----------
@@ -664,13 +634,16 @@
     const opts = [...epReg.querySelectorAll('.ep-opt')];
     const prices = ['$25', '$60'];
     const showReg = (on) => {
-      if (on) epReg.style.minHeight = `${epPage.offsetHeight}px`;   // same height, so the page doesn't jump
+      // about the same height as the event page (capped, so the step never sits in a big empty frame)
+      if (on) epReg.style.minHeight = `${Math.min(epPage.offsetHeight, 640)}px`;
       epPage.hidden = on;
       epReg.hidden = !on;
       if (on) { form.hidden = false; done.hidden = true; epReg.querySelector('[data-ep-back]').focus({ preventScroll: true }); }
       else epOpen.focus({ preventScroll: true });
+      // bring the top of the window into view, clear of the floating header
       const frame = epReg.closest('.ep-frame');
-      if (frame.getBoundingClientRect().top < 70) frame.scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' });
+      const top = frame.getBoundingClientRect().top;
+      if (top < 90 || top > innerHeight * 0.4) window.scrollTo({ top: scrollY + top - 110, behavior: reduceMotion ? 'auto' : 'smooth' });
     };
     epOpen.addEventListener('click', () => showReg(true));
     epReg.querySelector('[data-ep-back]').addEventListener('click', () => showReg(false));
@@ -679,6 +652,7 @@
       total.textContent = prices[i];
     }));
     epReg.querySelector('[data-ep-confirm]').addEventListener('click', () => { form.hidden = true; done.hidden = false; });
+    epReg.querySelector('[data-ep-again]')?.addEventListener('click', () => showReg(false));
   }
 
   /* ---------- Event page: the cover images slide by themselves; arrows and dots move them ---------- */
@@ -932,18 +906,18 @@
   const stepRow = journey.querySelector('[data-step-row]');
   const rowSteps = stepRow ? [...stepRow.querySelectorAll('[data-step]')] : [];
 
-  drawBrandQR(canvas.querySelector('[data-qr]'), 'Neon Nights Live');
+  drawBrandQR(canvas.querySelector('[data-qr]'), 'Leaders Summit', 'square');
 
   // Template swatches: click one and the whole stage (ticket, tracker, cards) takes that colour.
   const picks = [...panel.querySelectorAll('[data-theme-pick]')];   // the corner bar's swatches
   // Every colour has its own event: pink is a Valentine's night, green a city run, and so on.
   // The name, category, logo letters, venue and the faded photo behind the ticket all change with it.
   const EVENTS = {
-    blue:   { name: 'Neon Nights Live',     cat: 'CONCERT',        logo: 'NN', venue: 'City Arena',     place: 'City Arena, Downtown',        photo: 'concert' },
-    ink:    { name: 'After Dark Live',      cat: 'NIGHT SHOW',     logo: 'AD', venue: 'Club Noir',      place: 'Club Noir, Old Town',         photo: 'night' },
-    green:  { name: 'City Run 10K',         cat: 'FUN RUN',        logo: 'CR', venue: 'Riverside Park', place: 'Riverside Park, North Gate',  photo: 'run' },
-    purple: { name: 'Leaders Summit',       cat: 'CONFERENCE',     logo: 'LD', venue: 'Grand Hall',     place: 'Grand Hall, Convention Centre', photo: 'summit' },
-    pink:   { name: 'Love Songs Live',      cat: "VALENTINE'S CONCERT", logo: 'LS', venue: 'Rose Hall',  place: 'Rose Hall, Riverside',        photo: 'valentine' },
+    blue:   { name: 'Leaders Summit',       cat: 'CONFERENCE',     logo: 'LS', venue: 'Grand Hall',     place: 'Grand Hall, Convention Centre', photo: 'summit' },
+    ink:    { name: 'Midnight Soirée',      cat: 'PRIVATE PARTY',  logo: 'MS', venue: 'The Loft',       place: 'The Loft, Old Town',          photo: 'night' },
+    green:  { name: 'Earth Day Run 10K',    cat: 'ECO RUN',        logo: 'ED', venue: 'Riverside Park', place: 'Riverside Park, North Gate',  photo: 'run' },
+    purple: { name: 'Neon Nights Live',     cat: 'CONCERT',        logo: 'NN', venue: 'City Arena',     place: 'City Arena, Downtown',        photo: 'concert' },
+    pink:   { name: 'Valentine’s Brunch',   cat: 'BRUNCH PARTY',   logo: 'VB', venue: 'Rose Terrace',   place: 'Rose Terrace, Harbour Tower', photo: 'rooftop' },
     red:    { name: 'Opening Night',        cat: 'THEATRE PREMIERE', logo: 'ON', venue: 'Grand Theatre', place: 'Grand Theatre, Main Street', photo: 'premiere' },
     yellow: { name: 'Charity Fun Day',      cat: 'CHARITY',        logo: 'CF', venue: 'Central Square', place: 'Central Square, City Centre', photo: 'charity' },
     teal:   { name: 'Rooftop Beats',        cat: 'DJ PARTY',       logo: 'RB', venue: 'Sky Terrace',    place: 'Sky Terrace, Harbour Tower',  photo: 'rooftop' },
@@ -1016,6 +990,8 @@
     setEvent(theme);
     const pick = document.querySelector(`[data-theme-pick="${theme}"]`);
     document.querySelectorAll('[data-ev-type]').forEach((el) => { if (pick) el.textContent = pick.getAttribute('aria-label'); });
+    const qrStyle = { blue: 'square', ink: 'dots', green: 'leaf', purple: 'diamond', pink: 'soft' }[theme] || 'soft';
+    document.querySelectorAll('.ticket-qr, .m-pass-qr').forEach((q) => drawBrandQR(q, (EVENTS[theme] || EVENTS.blue).name, qrStyle));
     document.querySelectorAll('.stage-canvas, .m-pass').forEach((el) => {
       if (theme === 'blue') el.removeAttribute('data-theme'); else el.dataset.theme = theme;
     });
@@ -1045,12 +1021,12 @@
     heroShot.innerHTML = `
       <div class="m-pass-tkt">
         <div class="m-pass-top">
-          <div class="m-pass-row"><span class="m-pass-logo" data-ev="logo">NN</span><span class="m-pass-cat" data-ev="cat">CONCERT</span><span class="m-pass-type">General Admission</span></div>
-          <p class="m-pass-title" data-ev="name">Neon Nights Live</p>
+          <div class="m-pass-row"><span class="m-pass-logo" data-ev="logo">LS</span><span class="m-pass-cat" data-ev="cat">CONFERENCE</span><span class="m-pass-type">General Admission</span></div>
+          <p class="m-pass-title" data-ev="name">Leaders Summit</p>
           <dl class="m-pass-meta">
             <div><dt>Date</dt><dd>Sat, 14 Mar</dd></div>
             <div><dt>Time</dt><dd>7:00 PM</dd></div>
-            <div><dt>Venue</dt><dd data-ev="venue">City Arena</dd></div>
+            <div><dt>Venue</dt><dd data-ev="venue">Grand Hall</dd></div>
           </dl>
         </div>
         <div class="m-pass-stub">
@@ -1062,7 +1038,7 @@
           </div>
         </div>
       </div>`;
-    drawBrandQR(heroShot.querySelector('.m-pass-qr'), 'Neon Nights Live');
+    drawBrandQR(heroShot.querySelector('.m-pass-qr'), 'Leaders Summit', 'square');
 
   }
   const STEP_NAMES = ['Create', 'Sell', 'Send', 'Scan', 'Report'];
@@ -1191,7 +1167,7 @@
     const stepsSec = document.createElement('section');
     stepsSec.className = 'tkt tkt--steps';
     stepsSec.setAttribute('aria-labelledby', 'steps-title');
-    stepsSec.innerHTML = '<div class="tkt-stub" aria-hidden="true"><span class="tkt-eyebrow">Get Started</span></div>';
+    stepsSec.innerHTML = '<div class="tkt-stub" aria-hidden="true"><span class="tkt-eyebrow">Backstage Pass</span></div>';
     const grid = document.createElement('div');
     grid.className = 'container journey journey--steps';
     stepsSec.append(grid);
@@ -1246,7 +1222,7 @@
     const stub = document.createElement('div');
     stub.className = 'tkt-stub';
     stub.setAttribute('aria-hidden', 'true');
-    stub.innerHTML = '<span class="tkt-eyebrow is-light">Get Started</span>';
+    stub.innerHTML = '<span class="tkt-eyebrow is-light">Backstage Pass</span>';
     stepsCard.append(stub, stepsCol);
 
     // Phones: the five steps are five tickets that stack as you scroll. Each one has its label and
@@ -1303,8 +1279,6 @@
     });
     new MutationObserver(syncTheme).observe(canvas, { attributes: true, attributeFilter: ['data-theme', 'style'] });
 
-    const end = document.querySelector('.j-end');
-    if (end) stepsCol.append(end);
 
     stacks.push(list);
     // the stacked edge of each ticket is as tall as the tallest heading row, so no heading is cut;

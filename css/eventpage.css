@@ -375,3 +375,20 @@ button.ep-btn { border: 0; cursor: pointer; font-family: inherit; }
 /* ---------- Core strengths: a plain grid of tickets (no stacking) ---------- */
 .hf, .hf:nth-child(n) { position: relative; top: auto; z-index: auto; }
 .hf-grid { row-gap: 28px; }
+
+/* the registration step keeps the event's cover on top, so it reads as the same event page */
+.ep-reg-cover {
+  display: flex;
+  align-items: flex-end;
+  height: 150px;
+  margin-top: 12px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(10, 13, 18, 0) 30%, rgba(10, 13, 18, .8)), url("../assets/eventpage/banner.webp") center 30% / cover no-repeat;
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 700;
+  color: #fff;
+}
+@media (max-width: 768px) { .ep-reg-cover { height: 96px; padding: 12px 14px; font-size: 16px; line-height: 22px; } }
+.ep-reg-again { display: inline-flex; margin-top: 16px; border: 0; cursor: pointer; }
