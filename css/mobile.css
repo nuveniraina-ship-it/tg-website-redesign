@@ -1826,3 +1826,30 @@
 .ep-pips button::before { inset: -16px -4px; }
 .final-stub .final-no { display: none; }   /* the stub carries the offer and the QR; the serial was clutter */
 @media (max-width: 768px) { .stage-try-now { display: none; } }   /* phones: the label and dots fit; the ticket itself names the type */
+
+/* Round 35 — no dark overlay on the event tickets. The ticket is a clean, solid colour; the event photo
+   sits only on the right, blended with "screen" so it can only lighten (stage lights, sky), never darken,
+   and fades out before the words */
+.ticket-main, .m-pass-top { isolation: isolate; }
+.ticket-main {
+  background:
+    radial-gradient(120% 95% at 92% 0%, rgba(255, 255, 255, .16), transparent 58%),
+    var(--t-bg);
+}
+.ticket-main::before, .m-pass-top::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 0 42%;
+  z-index: -1;
+  background: var(--t-photo, url("../assets/tickets/summit.webp")) center / cover no-repeat;
+  mix-blend-mode: screen;
+  opacity: .3;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 70%);
+          mask-image: linear-gradient(90deg, transparent, #000 70%);
+  pointer-events: none;
+}
+.stage-canvas[data-theme="pink"] .ticket-main::before, .m-pass[data-theme="pink"] .m-pass-top::before { opacity: .25; mix-blend-mode: soft-light; }
+.ticket-event, .ticket-meta dd { text-shadow: none; }
+@media (max-width: 768px) {
+  .m-pass-top { position: relative; background: radial-gradient(120% 95% at 92% 0%, rgba(255, 255, 255, .16), transparent 58%), var(--brand-600); }
+}

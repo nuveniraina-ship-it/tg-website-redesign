@@ -109,3 +109,6 @@ Prompts are written. Generation through Codex isn't available on our current pla
 - **Security motion:**
   - Considered: glowing dots (too busy) and dashed flowing lines (read as "loading").
   - Chose: small square blocks.
+
+### Follow-up: step tickets still looked dark
+The near-solid wash wasn't enough: the photo's dark parts (crowd silhouettes) still showed through behind the venue, serial and small labels. Now the ticket is a clean solid colour, and the photo sits only on the right as a faint layer blended with "screen", so it can only lighten, never darken. It fades out before the text. Pastel pink uses a softer blend. I checked every event type on phone and desktop.
