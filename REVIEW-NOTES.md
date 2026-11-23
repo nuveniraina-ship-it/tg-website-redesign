@@ -129,3 +129,32 @@ The near-solid wash wasn't enough: the photo's dark parts (crowd silhouettes) st
 
 ### Follow-up: event type cut off in the "Try it" bar
 On narrower pictures, the picked type was clipped at the bar's right edge ("Conferenc…"). It now sits in its own small box under the bar ("Event type: Conference"), so the bar holds only the prompt and swatches. Checked with the longest name ("Valentine's brunch") at 1440 and 1024px. On phones it stays hidden: the row there is full width and the ticket itself shows the type.
+
+---
+
+# Round 4 (23 Nov): hero motion, new imagery
+
+## Hero: "keep the image, make it motion-y"
+Done in code, with no video and no credits:
+- **Floating tickets.** Small ticket shapes (with notched sides) and dots drift up behind the picture in the picked event's colour.
+- **Photo.** The event photo on the event-page card slowly pans, and a soft stage light sweeps across it.
+- **Ticket.** It floats gently, and a glossy sheen passes over it every few seconds.
+- **Live numbers.** Registrations count up (412 → ~496, then loop), the progress bar follows, a new buyer pops into "Ticket sold / VIP Pass sold", and the check-in chip moves to the next ticket number and gate.
+- **Phones.** The hero ticket floats over the same floating tickets, with the same sheen.
+
+Everything stops for visitors with reduced motion turned on, and the counter pauses when the hero is off screen or the tab is hidden.
+
+**Alternatives considered:**
+- AI video loops of each event photo (about 1,600 credits). Heavier to load, and the motion would sit behind a picture that is mostly covered by cards.
+- Code motion that tells the product story (tickets selling and scanning live). Chosen.
+
+**QA:**
+- Checked at 1440, 1024 and 375 px, and switched to purple: the particles follow the colour.
+- Console clean; registration and API demos still run.
+
+**Fixes found in QA:**
+- The counter first ran on the live stage instead of the hero's still copy. It now targets the hero picture.
+- Particles first travelled by viewport height, so they crossed the panel too fast and were barely visible. They now travel by the panel's own height and are a bit larger.
+
+## New imagery
+One sample made first, for style approval: the event-page festival banner (Magnific One, 180 credits). The rest of the set waits for approval of this look.

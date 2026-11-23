@@ -936,6 +936,7 @@
       if (theme === 'blue') el.removeAttribute('data-theme'); else el.dataset.theme = theme;
     });
     document.querySelectorAll('[data-theme-pick]').forEach((b) => b.classList.toggle('is-on', b.dataset.themePick === theme));
+    if (pick) document.querySelectorAll('.stage-panel').forEach((p) => p.style.setProperty('--fx-c', pick.style.getPropertyValue('--c')));   // floating tickets take the event's colour
   };
   document.addEventListener('click', (e) => {
     const b = e.target.closest('[data-theme-pick]');
@@ -981,6 +982,7 @@
     drawBrandQR(heroShot.querySelector('.m-pass-qr'), 'Leaders Summit', 'square');
 
   }
+
   const STEP_NAMES = ['Create', 'Sell', 'Send', 'Scan', 'Report'];
   let tabBtns = [];
   let nextStepBtn = null;
@@ -1144,6 +1146,54 @@
     journey.dataset.split = '1';
     heroSec.style.removeProperty('--stub-y');
     onScroll();
+  }
+
+  /* Hero motion (code only): mini tickets float up behind the hero picture in the event's colour,
+     and the opening scene's numbers tick along as if the event were selling right now.
+     Desktop: the hero picture is the still copy (.j-shot); tablet: the live stage while it shows the opening scene. */
+  if (!reduceMotion) {
+    const heroPanel = heroShot || journey.querySelector('.j-shot .stage-panel') || panel;
+    const fx = document.createElement('div');
+    fx.className = 'hero-fx';
+    fx.setAttribute('aria-hidden', 'true');
+    for (let i = 0; i < 14; i++) {
+      const t = document.createElement('i');
+      const size = 20 + Math.round(Math.random() * 16);
+      t.style.cssText = `--x:${Math.round(2 + i * 7 + Math.random() * 4)}%;--s:${size}px;--d:${(11 + Math.random() * 9).toFixed(1)}s;--dl:-${(Math.random() * 20).toFixed(1)}s;--r:${Math.round(Math.random() * 60 - 30)}deg;--o:${(0.35 + Math.random() * 0.3).toFixed(2)}`;
+      if (i % 3 === 0) t.className = 'dot';
+      fx.append(t);
+    }
+    heroPanel.prepend(fx);
+
+    const cv = heroPanel.querySelector('.stage-canvas');
+    if (cv) {
+      const reg = cv.querySelector('.c-event .ev-cap b');
+      const bar = cv.querySelector('.c-event .mini-progress i');
+      const sale = cv.querySelector('.chip-sale');
+      const scan = cv.querySelector('.chip-scan');
+      const buyers = [['VIP Pass sold', 'Marcus L. · $25'], ['Ticket sold', 'Aiko T. · $12'], ['VIP Pass sold', 'Sofia M. · $25'], ['Ticket sold', 'Daniel R. · $12'], ['VIP Pass sold', 'Priya S. · $25']];
+      let n = 412, b = 0, no = 539, live = true;
+      new IntersectionObserver(([e]) => { live = e.isIntersecting; }).observe(heroPanel);
+      const pop = (el) => { el.classList.remove('is-pop'); void el.offsetWidth; el.classList.add('is-pop'); };
+      setInterval(() => {
+        if (!live || document.hidden || cv.dataset.state !== '0') return;
+        n = n >= 496 ? 412 : n + 1 + Math.round(Math.random() * 2);
+        if (reg) reg.textContent = n;
+        if (bar) bar.style.width = `${(n / 5).toFixed(1)}%`;
+        if (sale) {
+          const [title, who] = buyers[b++ % buyers.length];
+          sale.querySelector('.c-title').textContent = title;
+          sale.querySelector('.c-meta').textContent = `${who} · just now`;
+          pop(sale);
+        }
+        if (scan && b % 2 === 0) {
+          no += 1;
+          scan.querySelector('.c-title').textContent = `Checked in at Gate ${no % 2 ? 'B' : 'A'}`;
+          scan.querySelector('.c-meta').textContent = `No. ${String(no).padStart(6, '0')} · valid`;
+          pop(scan);
+        }
+      }, 2600);
+    }
   }
 
   /* Phones: the hero and the five steps become two tickets; the steps stack as you scroll. */
