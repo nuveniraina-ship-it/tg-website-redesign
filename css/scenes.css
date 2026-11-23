@@ -330,6 +330,13 @@
 .lo3-art {
   padding: 26px 28px 24px;
   border-radius: 20px 20px 0 0;
+  /* the same half-circle cuts as the ticket, so the tinted panel doesn't paint over them */
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000) right / 51% 100% no-repeat;
+          mask:
+    radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000) right / 51% 100% no-repeat;
   background:
     radial-gradient(circle at 1px 1px, #e4e7ec 1px, transparent 1.5px) 0 0 / 20px 20px,
     linear-gradient(180deg, #f5f8ff, #fafbff);

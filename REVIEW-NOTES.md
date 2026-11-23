@@ -248,3 +248,6 @@ As asked, the hero app now shows three guest rows. The validator phone, the "Try
 - **QR code.** The ticket's QR has no TG mark in the middle now; it's a plain code. The helper still adds the mark wherever else it's used.
 - **Guest rows.** A row is green only while that guest is checked in. Before, a row stayed green after switching back to "Sent".
 - **Checked:** 1440 and 1024 px, clean console.
+
+### Follow-up: launch ticket notches and buttons
+The notches at the tear line were covered by the scene panel's tinted background, so they read as bumps. The panel now has the same half-circle cuts. Both "Get Started" buttons are the solid blue primary button used everywhere else.
