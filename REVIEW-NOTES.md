@@ -242,3 +242,9 @@ As asked, the hero app now shows three guest rows. The validator phone, the "Try
 - **Lost layout rule.** A cleanup removed the 50/50 Clear Wins split, which made the scenes tiny. Restored.
 - **Receipt scene.** Its heading wrapped and the zigzag edge cut off the last line; both fixed.
 - **Launch guest list on phones.** It touched the tear line, so the scene got more height.
+
+### Follow-up: hero ticket and guest rows
+- **Ticket.** It no longer gets cut off at the panel's edge: it hangs out past the panel at the bottom-left, so it reads as something you can pick up and edit. It also sits lower, overlapping only the window's bottom edge, which leaves the window less cluttered.
+- **QR code.** The ticket's QR has no TG mark in the middle now; it's a plain code. The helper still adds the mark wherever else it's used.
+- **Guest rows.** A row is green only while that guest is checked in. Before, a row stayed green after switching back to "Sent".
+- **Checked:** 1440 and 1024 px, clean console.

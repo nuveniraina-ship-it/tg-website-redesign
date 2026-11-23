@@ -67,7 +67,7 @@
     diamond: { mod: 'diamond', eye: 'frame' },    // concert: sharp, stage-light diamonds
     soft:    { mod: 'soft',    eye: 'soft' },     // valentine's brunch: soft rounded squares
   };
-  const drawBrandQR = (svg, text, styleKey = 'soft') => {
+  const drawBrandQR = (svg, text, styleKey = 'soft', logo = true) => {
     const st = QR_STYLES[styleKey] || QR_STYLES.soft;
     const SIZE = 25;
     let seed = [...text].reduce((h, c) => Math.imul(h ^ c.charCodeAt(0), 16777619), 2166136261) >>> 0;
@@ -78,7 +78,7 @@
       return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
     };
     const finderAt = (x, y) => (x < 8 && y < 8) || (x > SIZE - 9 && y < 8) || (x < 8 && y > SIZE - 9);
-    const centre = (x, y) => x >= 8 && x <= 16 && y >= 8 && y <= 16;
+    const centre = (x, y) => logo && x >= 8 && x <= 16 && y >= 8 && y <= 16;
     const mod = (x, y) => {
       switch (st.mod) {
         case 'square': return `<rect x="${x}" y="${y}" width="1.02" height="1.02"/>`;
@@ -106,9 +106,9 @@
     };
     svg.setAttribute('shape-rendering', 'geometricPrecision');
     svg.dataset.qrStyle = styleKey;
-    svg.innerHTML = `<g fill="currentColor">${dots}${eye(0, 0)}${eye(SIZE - 7, 0)}${eye(0, SIZE - 7)}</g>` +
+    svg.innerHTML = `<g fill="currentColor">${dots}${eye(0, 0)}${eye(SIZE - 7, 0)}${eye(0, SIZE - 7)}</g>` + (logo ?
       `<rect x="8.6" y="8.6" width="7.8" height="7.8" rx="2" fill="#fff"/><rect x="8.6" y="8.6" width="7.8" height="7.8" rx="2" fill="currentColor" opacity=".08"/>` +
-      `<image href="assets/tg-icon.svg" x="9.4" y="9.4" width="6.2" height="6.2"/>`;
+      `<image href="assets/tg-icon.svg" x="9.4" y="9.4" width="6.2" height="6.2"/>` : '');
   };
 
   // Seal: the brand's admit stamp. It replaces the decorative QR codes on the CTA ticket,
@@ -1260,7 +1260,7 @@
     const all = (sel) => app.querySelectorAll(sel);
     const val = { name: 'Riverside Music Festival', date: '12 Dec, 2026', venue: 'Riverside Park', guest: 'Priya Shah' };
     const initials = (n) => n.trim().split(/\s+/).slice(0, 2).map((w) => w[0] || '').join('').toUpperCase() || '?';
-    const drawQRs = () => all('[data-ha-qr]').forEach((q) => drawBrandQR(q, `${val.name} · ${val.guest}`, 'square'));
+    const drawQRs = () => all('[data-ha-qr]').forEach((q) => drawBrandQR(q, `${val.name} · ${val.guest}`, 'square', false));
     let qrTimer = 0;
     const fit = (inp) => { if (!CSS.supports('field-sizing', 'content') && inp.dataset.haInput !== 'name') inp.size = Math.max(inp.value.length, 2); };
     all('[data-ha-input]').forEach((inp) => {
@@ -1336,7 +1336,6 @@
             const wasIn = st.classList.contains('is-in');
             st.classList.toggle('is-in', !wasIn);
             st.innerHTML = wasIn ? 'Sent' : `${tickSvg}Checked in`;
-            if (!wasIn) flash(r, 'is-flash');
           }
           const sn = one('[data-ha-scan-name]'), sty = one('[data-ha-scan-type]');
           if (sn && r) sn.textContent = r.querySelector('.ha-who b').textContent;

@@ -144,7 +144,7 @@
   background: #f9fafb;
   transition: background-color .4s;
 }
-.ha-row.is-flash { background: #ecfdf3; }
+.ha-row:has(.ha-st.is-in) { background: #ecfdf3; }   /* green only while the guest is checked in */
 .ha-av {
   display: grid; place-items: center;
   width: 30px; height: 30px;
@@ -403,7 +403,7 @@
     background:
       radial-gradient(circle at 1px 1px, var(--gray-200) 1px, transparent 1.5px) 0 0 / 22px 22px,
       var(--bg-secondary);
-    overflow: hidden;
+    overflow: visible;   /* the ticket hangs out past the panel */
   }
   .hero-app--stub {
     position: absolute;
@@ -412,7 +412,7 @@
     width: 620px;
     max-width: none;
     margin: 0;
-    padding: 70px 28px 128px 28px;       /* the window across the stub; the toast on its top edge; the ticket over the bottom */
+    padding: 70px 28px 64px 28px;        /* the window across the stub; the toast on its top edge; the ticket hangs below */
     transform: scale(var(--ha-s, 1));
     transform-origin: 0 0;
   }
@@ -434,7 +434,7 @@
   .hero-app--stub .ha-toast-ic { width: 28px; height: 28px; }
   .hero-app--stub .ha-phone { right: 20px; top: 96px; width: 158px; }
   .hero-app--stub .ha-ph-screen { min-height: 286px; }
-  .hero-app--stub .ha-ticket-wrap { left: 18px; bottom: 6px; width: 392px; }
+  .hero-app--stub .ha-ticket-wrap { left: -26px; bottom: -78px; width: 392px; }
   .hero-app--stub .ha-f-name input { font-size: 19px; line-height: 26px; }
   .hero-app--stub .ha-ticket { transform: rotate(-3deg); }
 }
