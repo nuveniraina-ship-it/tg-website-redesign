@@ -306,3 +306,13 @@ On phones the tabs scroll sideways, and the ticket sits just below the app so no
 ### Follow-up: ticket placement and cursor glow
 - **Ticket placement.** The ticket covered the guest list's "Live" label. The app now takes the left 60% and the ticket sits beside it, lower down, with a clear gap at 1440 and 1024 px.
 - **Cursor glow.** A soft, blurred blue glow follows the cursor around the hero. It trails slightly behind, fades in on entry and out on leaving. It's for mouse users only, sits behind the content and doesn't run with reduced motion.
+
+### Follow-up: one event across the page, softer glow, tighter steps
+- **One event, one design, three sections.** The visit's event is picked once, never the same as last time. The hero ticket, the Backstage Pass picture and the Event Page section all show it.
+  - **Backstage Pass:** the ticket and cards use the design's colours, pattern, typeface and designed QR, with the same name, category, initials and venue.
+  - **Event Page:** the page title, link, date, time and venue match. The cover posters use the design's colours with the event name. Music events show the performer cut-outs and a "Lineup"; other events show the organiser cut-outs and "Hosts".
+  - **Switching:** "New design" or a template in the hero changes all three at once, on phones too.
+- **Picker removed.** The "Preview as: Conference" menu is gone.
+- **Cursor glow.** It's now a soft, pale light (low opacity, more blur) instead of a bright blue spot.
+- **Backstage Pass spacing.** The five steps sit closer together, with each step's height and padding reduced.
+- **Checked:** 1440 and 375 px, clean console. New design was confirmed to update all three sections.

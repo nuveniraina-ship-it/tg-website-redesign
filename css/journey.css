@@ -1045,7 +1045,7 @@
   .journey--steps { grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); grid-template-areas: "steps stage"; }
   .tkt--steps .j-end { margin-top: var(--space-4xl); }
   /* more room between the five steps */
-  .tkt--steps .step { min-height: 48vh; padding: var(--space-6xl) 0; }
+  .tkt--steps .step { min-height: 30vh; padding: var(--space-2xl) 0; }   /* the steps sit closer together */
 }
 
 

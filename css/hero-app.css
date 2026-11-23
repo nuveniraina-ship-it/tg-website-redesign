@@ -929,8 +929,8 @@
   height: 460px;
   margin: -230px 0 0 -230px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(83, 177, 253, .6) 0%, rgba(21, 112, 239, .3) 38%, rgba(21, 112, 239, 0) 70%);
-  filter: blur(40px);
+  background: radial-gradient(circle, rgba(196, 215, 255, .38) 0%, rgba(196, 215, 255, .14) 42%, rgba(196, 215, 255, 0) 70%);   /* a soft, pale light, not a blue spot */
+  filter: blur(56px);
   opacity: 0;
   transform: translate3d(var(--gx, 50vw), var(--gy, 300px), 0);
   transition: opacity .5s;
@@ -939,3 +939,13 @@
 }
 .tkt--hero.is-glowing .hx-glow { opacity: 1; }
 .tkt--hero:has(.hx) > .journey { position: relative; z-index: 1; }
+
+/* ---------- Backstage Pass picture in the hero's design ---------- */
+.stage-canvas[data-theme="custom"] .ticket-main {
+  background: var(--pattern, linear-gradient(transparent, transparent)), linear-gradient(135deg, var(--d-bg, var(--pick)), var(--d-bg2, var(--pick)));
+}
+.stage-canvas[data-theme="custom"] .ticket-main::before { display: none; }
+.stage-canvas.font-serif .ticket-event { font-family: 'Fraunces', Georgia, serif; letter-spacing: -.01em; }
+.stage-canvas.font-grotesk .ticket-event { font-family: 'Space Grotesk', Inter, sans-serif; letter-spacing: -.03em; }
+.stage-canvas.font-mono .ticket-event { font-family: var(--font-mono); letter-spacing: -.04em; }
+.stage-canvas .ticket-qr { color: inherit; }

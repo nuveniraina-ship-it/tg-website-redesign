@@ -111,6 +111,56 @@
       `<image href="assets/tg-icon.svg" x="9.4" y="9.4" width="6.2" height="6.2"/>` : '');
   };
 
+  // a real QR matrix, drawn in a designed style
+  const drawDesignQR = (svg, d) => {
+    const q = d.qr, n = q.n;
+    const bits = q.m.map((h) => [...h].map((c) => parseInt(c, 16).toString(2).padStart(4, '0')).join('').slice(-n));
+    const on = (x, y) => bits[y] && bits[y][x] === '1';
+    const inEye = (x, y) => (x < 7 && y < 7) || (x >= n - 7 && y < 7) || (x < 7 && y >= n - 7);
+    const c0 = Math.floor(n / 2) - 4, c1 = c0 + 8;                 // the middle 9x9 holds the badge
+    const inBadge = (x, y) => x >= c0 && x <= c1 && y >= c0 && y <= c1;
+    const mod = (x, y) => {
+      switch (q.mod) {
+        case 'dot': return `<circle cx="${x + .5}" cy="${y + .5}" r=".46"/>`;
+        case 'rounded': return `<rect x="${x + .06}" y="${y + .06}" width=".88" height=".88" rx=".32"/>`;
+        case 'diamond': return `<path d="M${x + .5} ${y - .04}l.54 .54-.54 .54-.54-.54z"/>`;
+        case 'leaf': return `<path d="M${x + .5} ${y + .02}h.48v.48a.48 .48 0 0 1-.48 .48h-.48v-.48a.48 .48 0 0 1 .48-.48z"/>`;
+        default: return `<rect x="${x}" y="${y}" width="1.02" height="1.02"/>`;
+      }
+    };
+    let dots = '';
+    for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (on(x, y) && !inEye(x, y) && !inBadge(x, y)) dots += mod(x, y);
+    const eye = (x, y) => {
+      const ring = `fill="none" stroke="${q.eye_c}" stroke-width="1"`;
+      const ball = `fill="${q.ball_c}"`;
+      switch (q.eye) {
+        case 'circle': return `<circle cx="${x + 3.5}" cy="${y + 3.5}" r="3" ${ring}/><circle cx="${x + 3.5}" cy="${y + 3.5}" r="1.55" ${ball}/>`;
+        case 'rounded': return `<rect x="${x + .5}" y="${y + .5}" width="6" height="6" rx="1.9" ${ring}/><rect x="${x + 2}" y="${y + 2}" width="3" height="3" rx=".95" ${ball}/>`;
+        case 'leaf': return `<path d="M${x + 3.5} ${y + .5}h3v3a3 3 0 0 1-3 3h-3v-3a3 3 0 0 1 3-3z" ${ring}/><path d="M${x + 3.5} ${y + 2}h1.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-1.5v-1.5a1.5 1.5 0 0 1 1.5-1.5z" ${ball}/>`;
+        case 'frame': return `<rect x="${x + .5}" y="${y + .5}" width="6" height="6" rx=".7" ${ring}/><circle cx="${x + 3.5}" cy="${y + 3.5}" r="1.6" ${ball}/>`;
+        default: return `<rect x="${x + .5}" y="${y + .5}" width="6" height="6" ${ring}/><rect x="${x + 2}" y="${y + 2}" width="3" height="3" ${ball}/>`;
+      }
+    };
+    const b0 = c0 + .6, bs = 7.8;
+    svg.setAttribute('viewBox', `-2 -2 ${n + 4} ${n + 4}`);
+    svg.innerHTML =
+      `<rect x="-2" y="-2" width="${n + 4}" height="${n + 4}" rx="2.4" fill="#fff"/>` +
+      `<g fill="${q.fg}">${dots}</g>${eye(0, 0)}${eye(n - 7, 0)}${eye(0, n - 7)}` +
+      `<rect x="${b0}" y="${b0}" width="${bs}" height="${bs}" rx="2" fill="${d.bg}"/>` +
+      `<text x="${b0 + bs / 2}" y="${b0 + bs / 2 + 1.35}" text-anchor="middle" font-size="3.6" font-weight="700" font-family="Inter, sans-serif" fill="${d.ink}">${String(d.logo).replace(/[&<>"]/g, '')}</text>`;
+  };
+
+
+  // One event and design for the whole visit: the hero's ticket, the Backstage Pass picture and the
+  // event page all show it. A different one from last time; "New design" changes it everywhere.
+  const TG_DESIGNS = window.TG_TICKET_DESIGNS || [];
+  const pickDesign = (not) => { const pool = TG_DESIGNS.filter((d) => d.id !== not); return pool[Math.floor(Math.random() * pool.length)]; };
+  let lastDesign = null;
+  try { lastDesign = Number(localStorage.getItem('tg-hero-design')); } catch (e) { /* private mode */ }
+  const startDesign = TG_DESIGNS.length ? pickDesign(lastDesign) : null;
+  const onDesign = (fn) => document.addEventListener('tg:design', (e) => fn(e.detail));
+  const MUSIC = /MUSIC|CONCERT|JAZZ|PARTY|FORMAL|GAMING/;
+
   // Seal: the brand's admit stamp. It replaces the decorative QR codes on the CTA ticket,
   // the review tickets and the receipt, where nothing is actually scanned.
   let sealN = 0;
@@ -565,6 +615,49 @@
     if (startEl) startEl.textContent = `${M(start, 'short')} ${start.getDate()}`;
   }
 
+
+  /* ---------- Event page: the same event and design as the hero ---------- */
+  const applyEventPage = (d) => {
+    if (!d) return;
+    const music = MUSIC.test(d.cat);
+    const set = (sel, v) => document.querySelectorAll(sel).forEach((el) => { el.textContent = v; });
+    const slug = d.name.toLowerCase().replace(/[’']/g, '').replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    set('.ep-main h3', d.name);
+    set('.ep-url', `ticket-generator.com/p/${slug}`);
+    set('[data-ep-dates]', d.date);
+    set('[data-ep-time]', d.time);
+    set('[data-ep-venue]', d.venue);
+    set('.ep-reg-cover span', d.name);
+    set('[data-ep-name]', d.name);
+    document.querySelector('.ep-frame')?.setAttribute('aria-label', `Example event page: ${d.name}`);
+    const words = d.name.split(' ');
+    const cut = Math.ceil(words.length / 2);
+    const title = `${words.slice(0, cut).join(' ')}<br>${words.slice(cut).join(' ')}`.replace(/&(?!amp;)/g, '&amp;');
+    const people = music ? ['eventpage/ep-singer', 'eventpage/ep-dj', 'eventpage/lu-1'] : ['blog/blog-why', 'blog/blog-entry', 'blog/blog-custom'];
+    const kickers = [d.cat, 'Tickets on sale now', d.type];
+    document.querySelectorAll('.ep-poster').forEach((pst, i) => {
+      pst.style.setProperty('--pc', i === 1 ? d.bg2 : d.bg);
+      pst.style.color = d.ink;
+      const t = pst.querySelector('.ep-poster-t'); if (t) t.innerHTML = title;
+      const k = pst.querySelector('.ep-poster-k'); if (k) k.textContent = kickers[i] || d.cat;
+      const dd = pst.querySelector('.ep-poster-d'); if (dd) dd.textContent = `${d.date.toUpperCase()} · ${d.venue}`;
+      const bg = pst.querySelector('.ep-poster-bg'); if (bg) bg.textContent = `${words[0].toUpperCase()} `.repeat(4);
+      const img = pst.querySelector('img'); if (img) { img.src = `assets/${people[i]}.webp`; img.alt = `Poster for ${d.name}`; }
+    });
+    const cover = document.querySelector('.ep-reg-cover');
+    if (cover) { cover.style.backgroundColor = d.bg; cover.style.color = d.ink; }
+    set('[data-ep-lineup]', music ? 'Lineup' : 'Hosts');
+    const roles = music ? null : ['Host', 'Speaker', 'Speaker', 'Panelist'];
+    document.querySelectorAll('.ep-lineup li').forEach((li, i) => {
+      li.style.setProperty('--pc', [d.bg, d.bg2, d.accent, d.bg][i] || d.bg);
+      if (!li.dataset.role) li.dataset.role = li.querySelector('span:not(.ep-av)')?.textContent || '';
+      const r = li.querySelector('span:not(.ep-av)'); if (r) r.textContent = roles ? roles[i] : li.dataset.role;
+      const band = li.querySelector('i'); if (band) band.hidden = !music;
+    });
+  };
+  applyEventPage(startDesign);
+  onDesign(applyEventPage);
+
   /* ---------- Event page: "Register Now" opens the registration step inside the frame, with a way back ---------- */
   const epReg = document.querySelector('[data-ep-reg]');
   const epOpen = document.querySelector('[data-ep-register]');
@@ -947,6 +1040,28 @@
   // the quiet "Preview as" menu in the picture's corner switches the event type
   document.querySelectorAll('[data-ev-select]').forEach((sel) => sel.addEventListener('change', () => applyTheme(sel.value)));
 
+  // the Backstage Pass picture shows the hero's event, in the same design (colours, pattern, type, QR)
+  const applyDesign = (d) => {
+    if (!d) return;
+    document.querySelectorAll('.stage-canvas').forEach((cv) => {
+      cv.dataset.theme = 'custom';
+      cv.className = cv.className.replace(/\s?(pat|font)-\S+/g, '') + ` pat-${d.pattern} font-${d.font}`;
+      cv.style.setProperty('--pick', d.bg);
+      cv.style.setProperty('--d-bg', d.bg);
+      cv.style.setProperty('--d-bg2', d.bg2);
+      cv.style.setProperty('--t-photo', 'none');
+      cv.style.setProperty('--t-ink', d.ink);
+      cv.style.setProperty('--t-ink-soft', `color-mix(in srgb, ${d.ink} 70%, transparent)`);
+      cv.style.setProperty('--t-line', `color-mix(in srgb, ${d.ink} 26%, transparent)`);
+      const vals = { name: d.name, cat: d.cat, logo: d.logo, venue: d.venue, place: d.venue };
+      Object.entries(vals).forEach(([f, v]) => cv.querySelectorAll(`[data-ev="${f}"]`).forEach((el) => { el.textContent = v; }));
+      cv.querySelectorAll('.ticket-qr').forEach((q) => drawDesignQR(q, d));
+    });
+  };
+  applyDesign(startDesign);
+  onDesign(applyDesign);
+
+
   // Scale the fixed-size canvas to whatever space the panel has.
   const fitTo = (box, cv) => {
     const { width, height } = box.getBoundingClientRect();
@@ -1251,44 +1366,6 @@
     let nGen = 1251, nIn = 814, cur = null, scanned = false, busy = false;
     const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-    // a real QR matrix, drawn in a designed style
-    const drawDesignQR = (svg, d) => {
-      const q = d.qr, n = q.n;
-      const bits = q.m.map((h) => [...h].map((c) => parseInt(c, 16).toString(2).padStart(4, '0')).join('').slice(-n));
-      const on = (x, y) => bits[y] && bits[y][x] === '1';
-      const inEye = (x, y) => (x < 7 && y < 7) || (x >= n - 7 && y < 7) || (x < 7 && y >= n - 7);
-      const c0 = Math.floor(n / 2) - 4, c1 = c0 + 8;                 // the middle 9x9 holds the badge
-      const inBadge = (x, y) => x >= c0 && x <= c1 && y >= c0 && y <= c1;
-      const mod = (x, y) => {
-        switch (q.mod) {
-          case 'dot': return `<circle cx="${x + .5}" cy="${y + .5}" r=".46"/>`;
-          case 'rounded': return `<rect x="${x + .06}" y="${y + .06}" width=".88" height=".88" rx=".32"/>`;
-          case 'diamond': return `<path d="M${x + .5} ${y - .04}l.54 .54-.54 .54-.54-.54z"/>`;
-          case 'leaf': return `<path d="M${x + .5} ${y + .02}h.48v.48a.48 .48 0 0 1-.48 .48h-.48v-.48a.48 .48 0 0 1 .48-.48z"/>`;
-          default: return `<rect x="${x}" y="${y}" width="1.02" height="1.02"/>`;
-        }
-      };
-      let dots = '';
-      for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (on(x, y) && !inEye(x, y) && !inBadge(x, y)) dots += mod(x, y);
-      const eye = (x, y) => {
-        const ring = `fill="none" stroke="${q.eye_c}" stroke-width="1"`;
-        const ball = `fill="${q.ball_c}"`;
-        switch (q.eye) {
-          case 'circle': return `<circle cx="${x + 3.5}" cy="${y + 3.5}" r="3" ${ring}/><circle cx="${x + 3.5}" cy="${y + 3.5}" r="1.55" ${ball}/>`;
-          case 'rounded': return `<rect x="${x + .5}" y="${y + .5}" width="6" height="6" rx="1.9" ${ring}/><rect x="${x + 2}" y="${y + 2}" width="3" height="3" rx=".95" ${ball}/>`;
-          case 'leaf': return `<path d="M${x + 3.5} ${y + .5}h3v3a3 3 0 0 1-3 3h-3v-3a3 3 0 0 1 3-3z" ${ring}/><path d="M${x + 3.5} ${y + 2}h1.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-1.5v-1.5a1.5 1.5 0 0 1 1.5-1.5z" ${ball}/>`;
-          case 'frame': return `<rect x="${x + .5}" y="${y + .5}" width="6" height="6" rx=".7" ${ring}/><circle cx="${x + 3.5}" cy="${y + 3.5}" r="1.6" ${ball}/>`;
-          default: return `<rect x="${x + .5}" y="${y + .5}" width="6" height="6" ${ring}/><rect x="${x + 2}" y="${y + 2}" width="3" height="3" ${ball}/>`;
-        }
-      };
-      const b0 = c0 + .6, bs = 7.8;
-      svg.setAttribute('viewBox', `-2 -2 ${n + 4} ${n + 4}`);
-      svg.innerHTML =
-        `<rect x="-2" y="-2" width="${n + 4}" height="${n + 4}" rx="2.4" fill="#fff"/>` +
-        `<g fill="${q.fg}">${dots}</g>${eye(0, 0)}${eye(n - 7, 0)}${eye(0, n - 7)}` +
-        `<rect x="${b0}" y="${b0}" width="${bs}" height="${bs}" rx="2" fill="${d.bg}"/>` +
-        `<text x="${b0 + bs / 2}" y="${b0 + bs / 2 + 1.35}" text-anchor="middle" font-size="3.6" font-weight="700" font-family="Inter, sans-serif" fill="${d.ink}">${esc(d.logo)}</text>`;
-    };
 
     // long event names shrink to fit the ticket instead of being cut off
     const fitName = () => {
@@ -1327,13 +1404,12 @@
         inp.addEventListener('keydown', (e) => { if (e.key === 'Enter') inp.blur(); });
       });
       try { localStorage.setItem('tg-hero-design', String(d.id)); } catch (e) { /* private mode */ }
+      document.dispatchEvent(new CustomEvent('tg:design', { detail: d }));   // the steps picture and the event page follow
     };
 
     // a different design on every visit
-    let last = null;
-    try { last = Number(localStorage.getItem('tg-hero-design')); } catch (e) { /* private mode */ }
-    const pick = (not) => { const pool = DESIGNS.filter((d) => d.id !== not); return pool[Math.floor(Math.random() * pool.length)]; };
-    render(pick(last));
+    const pick = pickDesign;
+    render(startDesign);
     document.fonts?.ready.then(fitName);   // the display fonts arrive after the first draw
 
     const toast = (html, kind) => {
