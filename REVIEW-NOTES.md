@@ -302,3 +302,7 @@ The five tabs in the hero app are real buttons. The breadcrumb follows the open 
 - **Analytics:** ticket sales by day (hover a bar for its number), the check-in rate and the top channel.
 
 On phones the tabs scroll sideways, and the ticket sits just below the app so no pane content is hidden. Checked at 1440 and 375 px with a clean console; every tab, the template swap and Register now were clicked and confirmed.
+
+### Follow-up: ticket placement and cursor glow
+- **Ticket placement.** The ticket covered the guest list's "Live" label. The app now takes the left 60% and the ticket sits beside it, lower down, with a clear gap at 1440 and 1024 px.
+- **Cursor glow.** A soft, blurred blue glow follows the cursor around the hero. It trails slightly behind, fades in on entry and out on leaving. It's for mouse users only, sits behind the content and doesn't run with reduced motion.

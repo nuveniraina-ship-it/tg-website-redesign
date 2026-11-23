@@ -530,9 +530,9 @@
 /* the app: Guest Tickets, as in the product */
 .hx-app {
   position: absolute;
-  left: 3%;
+  left: 1%;
   top: 34px;
-  width: 64%;
+  width: 60%;   /* leaves the right side to the ticket, so it never covers the app's controls */
   border-radius: 16px;
   background: #fff;
   overflow: hidden;
@@ -615,8 +615,8 @@
 .hx-tk-wrap {
   --rx: 0deg; --ry: 0deg;
   position: absolute;
-  right: 1%;
-  top: 118px;
+  right: -1%;
+  top: 150px;
   z-index: 3;
   width: 440px;
   perspective: 1000px;
@@ -758,8 +758,8 @@
 /* ---------- mid widths ---------- */
 @media (min-width: 961px) and (max-width: 1180px) {
   .hx { height: 600px; }
-  .hx-app { width: 62%; left: 1%; }
-  .hx-tk-wrap { width: 390px; right: 0; }
+  .hx-app { width: 58%; left: 0; }
+  .hx-tk-wrap { width: 380px; right: -1%; }
   .hx-name input { font-size: 21px; }
 }
 
@@ -918,3 +918,24 @@
   .hx-an-bars { height: 96px; }
   .hx-an-side { grid-template-columns: 1fr 1fr; }
 }
+
+/* ---------- a soft glow follows the cursor around the hero ---------- */
+.hx-glow {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  width: 460px;
+  height: 460px;
+  margin: -230px 0 0 -230px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(83, 177, 253, .6) 0%, rgba(21, 112, 239, .3) 38%, rgba(21, 112, 239, 0) 70%);
+  filter: blur(40px);
+  opacity: 0;
+  transform: translate3d(var(--gx, 50vw), var(--gy, 300px), 0);
+  transition: opacity .5s;
+  pointer-events: none;
+  will-change: transform;
+}
+.tkt--hero.is-glowing .hx-glow { opacity: 1; }
+.tkt--hero:has(.hx) > .journey { position: relative; z-index: 1; }

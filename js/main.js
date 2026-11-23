@@ -1540,4 +1540,26 @@
       box.querySelectorAll('[data-sc-set]').forEach((x) => x.classList.toggle('is-on', x === b));
     }));
   });
+  /* ---------- Hero: a soft blurred glow follows the cursor (mouse only, not with reduced motion) ---------- */
+  const glowHost = document.querySelector('.tkt--hero');
+  if (glowHost && document.querySelector('[data-hx]') && !reduceMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const glow = document.createElement('div');
+    glow.className = 'hx-glow';
+    glow.setAttribute('aria-hidden', 'true');
+    glowHost.prepend(glow);
+    let tx = 0, ty = 0, x = 0, y = 0, raf = 0;
+    const step = () => {                                  // eases toward the cursor, so it trails a little
+      x += (tx - x) * .12; y += (ty - y) * .12;
+      glow.style.setProperty('--gx', `${x.toFixed(1)}px`);
+      glow.style.setProperty('--gy', `${y.toFixed(1)}px`);
+      raf = Math.abs(tx - x) + Math.abs(ty - y) > .5 ? requestAnimationFrame(step) : 0;
+    };
+    glowHost.addEventListener('pointermove', (e) => {
+      const r = glowHost.getBoundingClientRect();
+      tx = e.clientX - r.left; ty = e.clientY - r.top;
+      if (!glowHost.classList.contains('is-glowing')) { x = tx; y = ty; glowHost.classList.add('is-glowing'); }
+      if (!raf) raf = requestAnimationFrame(step);
+    });
+    glowHost.addEventListener('pointerleave', () => glowHost.classList.remove('is-glowing'));
+  }
 })();
