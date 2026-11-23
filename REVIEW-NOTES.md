@@ -272,3 +272,23 @@ The notches at the tear line were covered by the scene panel's tinted background
 - The ticket covered the "Ticket revenue" label. Lifted to the panel's corner.
 - The ticket name was cut off. Wider ticket, slightly smaller type.
 - At 1024 px the bar card ran past the hero's bottom edge. The hero is taller there now.
+
+## Round 8 (23 Nov): full-width hero, 24 ticket designs, designed QR codes, real interactions
+
+| Point | What changed | Why this way |
+|---|---|---|
+| Hero should be full width | It now runs edge to edge (no card, no rounded corners) and slides up under the floating nav. The festival-lawn photo fills the whole width. Phones too. | |
+| Something interactive, not just floating cards | The floating cards are gone. Instead: **tap the QR to scan the ticket** (a green laser sweeps, an "Admitted" stamp lands, the guest appears checked in at the top of the list, the Checked in count goes up and a toast confirms it). **Scan again** and entry is refused ("Already scanned"), which shows fraud protection without saying it. **New design** flips the ticket to another design. The ticket tilts with the cursor. While nobody is interacting, new tickets keep arriving in the guest list. | Each interaction demonstrates a real feature: scanning, duplicate protection, design freedom, automatic sending. |
+| QR code should be designed | Every design has its own QR: module shape (square, dots, rounded, diamonds, leaves), eye shape (square, circle, rounded, leaf, framed), its own colours, and the event's initials in the middle. They are **real codes**, error correction H, that open the app. All 24 were decoded with the browser's barcode reader. | QR codes are the product, so the hero shows they can be on-brand and still scan. |
+| 20+ ticket designs, a new one on every refresh | 24 designs (`js/ticket-designs.js`): music festival, concert, conference, private party, eco run, Valentine's brunch, comic con, jazz, pitch night, charity gala, food festival, film premiere, art fair, tech expo, yoga retreat, marathon, Diwali market, kids' science day, wine & paint, Halloween, graduation ball, esports, book launch, ice skating. Each has its own colours, gradient, pattern (waves, grid, sunburst, halftone, mandala, film strip, snow, and more), typeface (Inter, Fraunces, Space Grotesk or JetBrains Mono) and QR style. A visit never shows the same design as the last one. The event name and guest stay editable. | |
+| Dashboard looked technical, not like TG | The panel is now the TG app's Guest Tickets screen, as in the app screenshot shared earlier: breadcrumb with the event's name, the Event Details / Ticket Design / Event Page / Guest Tickets / Analytics tabs, Tickets generated / Checked in / Platform commission, and the guest list with delivery channel and status. I couldn't open the live dashboard (it needs a sign-in), so it follows that screenshot. | |
+
+**QA:**
+- Checked at 1440, 1024 and 375 px, with a clean console.
+- All 24 QR codes decode.
+- Scan, double-scan refusal, new design, refresh-to-a-different-design and the live list all work.
+
+**Fixes found in QA:**
+- **Long names.** Long event names were cut off; they now shrink to fit, and re-fit once the display fonts load.
+- **Long venues.** Three venues were too long and are shortened.
+- **App cut off at the bottom.** The app window ran past the hero's bottom at 1024 px, so the stage is taller there.

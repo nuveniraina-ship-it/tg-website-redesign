@@ -1234,102 +1234,190 @@
     window.addEventListener('resize', evenSteps);
     document.fonts?.ready.then(evenSteps);
   }
-  /* ---------- Hero: the live app with an editable ticket ----------
-     Typing on the ticket updates the dashboard, the scanner phone and the QR codes.
-     The app "runs" (tickets go out, guests check in) and pauses while you hover or edit. */
-  const app = document.querySelector('[data-hero-app]');
-  if (app) {
-    const one = (sel) => app.querySelector(sel);
-    const all = (sel) => app.querySelectorAll(sel);
-    const val = { name: 'Riverside Music Festival', date: '12 Dec, 2026', venue: 'Riverside Park', guest: 'Priya Shah' };
-    const initials = (n) => n.trim().split(/\s+/).slice(0, 2).map((w) => w[0] || '').join('').toUpperCase() || '?';
-    const drawQRs = () => all('[data-ha-qr]').forEach((q) => drawBrandQR(q, `${val.name} · ${val.guest}`, 'square', false));
-    let qrTimer = 0;
-    const fit = (inp) => { if (!CSS.supports('field-sizing', 'content') && inp.dataset.haInput !== 'name') inp.size = Math.max(inp.value.length, 2); };
-    all('[data-ha-input]').forEach((inp) => {
-      fit(inp);
-      inp.addEventListener('input', () => {
-        const key = inp.dataset.haInput;
-        const fallback = { name: 'Your Event', date: 'Date', venue: 'Venue', guest: 'Guest' }[key];
-        val[key] = inp.value.trim() || fallback;
-        fit(inp);
-        if (key === 'name') all('[data-ha="name"]').forEach((el) => { el.textContent = val.name; });
-        if (key === 'guest') {
-          all('[data-ha="guest"]').forEach((el) => { el.textContent = val.guest; });
-          all('[data-ha="initials"]').forEach((el) => { el.textContent = initials(val.guest); });
-          const sn = one('[data-ha-scan-name]'); if (sn) sn.textContent = val.guest;
-        }
-        clearTimeout(qrTimer);
-        qrTimer = setTimeout(drawQRs, 250);
-      });
-      inp.addEventListener('keydown', (e) => { if (e.key === 'Enter') inp.blur(); });
-    });
-    all('[data-ha-colour]').forEach((b) => b.addEventListener('click', () => {
-      app.style.setProperty('--ha-t', b.dataset.haColour);
-      all('[data-ha-colour]').forEach((x) => { const on = x === b; x.classList.toggle('is-on', on); x.setAttribute('aria-checked', String(on)); });
-    }));
-    drawQRs();
+  /* ---------- Hero: the app, and a ticket in one of many designs ----------
+     A different design on every visit (never the same as last time). Its QR is a real code, drawn in
+     the design's own style (module shape, eye shape, colours, the event's initials in the middle).
+     Tap the QR: it scans, the guest checks in on the dashboard; scan again: "already scanned".
+     "New design" swaps the ticket. New tickets keep arriving in the guest list. */
+  const hx = document.querySelector('[data-hx]');
+  const DESIGNS = window.TG_TICKET_DESIGNS || [];
+  if (hx && DESIGNS.length) {
+    const one = (sel) => hx.querySelector(sel);
+    const tkEl = one('[data-hx-ticket]');
+    const list = one('[data-hx-list]');
+    const gen = one('[data-hx-gen]'), chk = one('[data-hx-in]'), evName = one('[data-hx-event]');
+    const toastEl = one('[data-hx-toast]');
+    const fmt = (n) => n.toLocaleString('en-US');
+    let nGen = 1251, nIn = 814, cur = null, scanned = false, busy = false;
+    const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-    // the live loop
-    const status = one('[data-ha-status]');
-    let paused = false, editing = false, visible = true;
-    const setPaused = () => {
-      const p = paused || editing;
-      app.classList.toggle('is-paused', p);
-      const touch = window.matchMedia('(hover: none)').matches;
-      if (status) status.textContent = editing ? 'Paused while you edit' : p ? 'Paused · move away to resume' : touch ? 'Live demo · tap the ticket to edit' : 'Live demo · hover to pause';
+    // a real QR matrix, drawn in a designed style
+    const drawDesignQR = (svg, d) => {
+      const q = d.qr, n = q.n;
+      const bits = q.m.map((h) => [...h].map((c) => parseInt(c, 16).toString(2).padStart(4, '0')).join('').slice(-n));
+      const on = (x, y) => bits[y] && bits[y][x] === '1';
+      const inEye = (x, y) => (x < 7 && y < 7) || (x >= n - 7 && y < 7) || (x < 7 && y >= n - 7);
+      const c0 = Math.floor(n / 2) - 4, c1 = c0 + 8;                 // the middle 9x9 holds the badge
+      const inBadge = (x, y) => x >= c0 && x <= c1 && y >= c0 && y <= c1;
+      const mod = (x, y) => {
+        switch (q.mod) {
+          case 'dot': return `<circle cx="${x + .5}" cy="${y + .5}" r=".46"/>`;
+          case 'rounded': return `<rect x="${x + .06}" y="${y + .06}" width=".88" height=".88" rx=".32"/>`;
+          case 'diamond': return `<path d="M${x + .5} ${y - .04}l.54 .54-.54 .54-.54-.54z"/>`;
+          case 'leaf': return `<path d="M${x + .5} ${y + .02}h.48v.48a.48 .48 0 0 1-.48 .48h-.48v-.48a.48 .48 0 0 1 .48-.48z"/>`;
+          default: return `<rect x="${x}" y="${y}" width="1.02" height="1.02"/>`;
+        }
+      };
+      let dots = '';
+      for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (on(x, y) && !inEye(x, y) && !inBadge(x, y)) dots += mod(x, y);
+      const eye = (x, y) => {
+        const ring = `fill="none" stroke="${q.eye_c}" stroke-width="1"`;
+        const ball = `fill="${q.ball_c}"`;
+        switch (q.eye) {
+          case 'circle': return `<circle cx="${x + 3.5}" cy="${y + 3.5}" r="3" ${ring}/><circle cx="${x + 3.5}" cy="${y + 3.5}" r="1.55" ${ball}/>`;
+          case 'rounded': return `<rect x="${x + .5}" y="${y + .5}" width="6" height="6" rx="1.9" ${ring}/><rect x="${x + 2}" y="${y + 2}" width="3" height="3" rx=".95" ${ball}/>`;
+          case 'leaf': return `<path d="M${x + 3.5} ${y + .5}h3v3a3 3 0 0 1-3 3h-3v-3a3 3 0 0 1 3-3z" ${ring}/><path d="M${x + 3.5} ${y + 2}h1.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-1.5v-1.5a1.5 1.5 0 0 1 1.5-1.5z" ${ball}/>`;
+          case 'frame': return `<rect x="${x + .5}" y="${y + .5}" width="6" height="6" rx=".7" ${ring}/><circle cx="${x + 3.5}" cy="${y + 3.5}" r="1.6" ${ball}/>`;
+          default: return `<rect x="${x + .5}" y="${y + .5}" width="6" height="6" ${ring}/><rect x="${x + 2}" y="${y + 2}" width="3" height="3" ${ball}/>`;
+        }
+      };
+      const b0 = c0 + .6, bs = 7.8;
+      svg.setAttribute('viewBox', `-2 -2 ${n + 4} ${n + 4}`);
+      svg.innerHTML =
+        `<rect x="-2" y="-2" width="${n + 4}" height="${n + 4}" rx="2.4" fill="#fff"/>` +
+        `<g fill="${q.fg}">${dots}</g>${eye(0, 0)}${eye(n - 7, 0)}${eye(0, n - 7)}` +
+        `<rect x="${b0}" y="${b0}" width="${bs}" height="${bs}" rx="2" fill="${d.bg}"/>` +
+        `<text x="${b0 + bs / 2}" y="${b0 + bs / 2 + 1.35}" text-anchor="middle" font-size="3.6" font-weight="700" font-family="Inter, sans-serif" fill="${d.ink}">${esc(d.logo)}</text>`;
     };
-    app.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') { paused = true; setPaused(); } });
-    app.addEventListener('pointerleave', () => { paused = false; setPaused(); });
-    app.addEventListener('focusin', () => { editing = true; setPaused(); });
-    app.addEventListener('focusout', () => { setTimeout(() => { editing = app.contains(document.activeElement); setPaused(); }, 0); });
-    new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(app);
-    setPaused();
 
-    if (!reduceMotion) {
-      const gen = one('[data-ha-gen]'), chk = one('[data-ha-in]');
-      const rows = [...all('[data-ha-row]')];
-      const bars = [...all('[data-ha-bars] > span')];
-      const toast = one('.ha-toast'), phoneEl = one('.ha-phone');
-      const tTitle = one('[data-ha-toast-title]'), tMeta = one('[data-ha-toast-meta]'), tIc = one('[data-ha-toast-ic]');
-      const chIcons = Object.fromEntries([...all('.ha-ch')].map((c) => [c.textContent.trim(), c.querySelector('svg')?.outerHTML || '']));
-      const people = [['Sam Rivera', 'Email'], ['Jordan Lee', 'SMS'], ['Alex Morgan', 'WhatsApp'], ['Maya Chen', 'Email'], ['Leo Okafor', 'WhatsApp'], ['Nina Park', 'SMS']];
-      const tickSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-      let nGen = 1251, nIn = 814, tick = 0;
-      const fmt = (n) => n.toLocaleString('en-US');
-      const flash = (el, cls) => { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); };
-      setInterval(() => {
-        if (paused || editing || !visible || document.hidden) return;
-        tick++;
-        // a ticket goes out
-        const [who, ch] = people[tick % people.length];
-        nGen += 1 + (tick % 3);
-        if (gen) gen.textContent = fmt(nGen);
-        if (tTitle) tTitle.textContent = `Ticket sent via ${ch}`;
-        if (tMeta) tMeta.textContent = `${who} · just now`;
-        if (tIc && chIcons[ch]) tIc.innerHTML = chIcons[ch];
-        if (toast) flash(toast, 'is-pop');
-        // every other beat a guest checks in at the door
-        if (tick % 2 === 0) {
-          nIn += 1;
-          if (chk) chk.textContent = fmt(nIn);
-          const r = rows[(tick / 2) % rows.length];
-          const st = r && r.querySelector('.ha-st');
-          if (st) {
-            const wasIn = st.classList.contains('is-in');
-            st.classList.toggle('is-in', !wasIn);
-            st.innerHTML = wasIn ? 'Sent' : `${tickSvg}Checked in`;
-          }
-          const sn = one('[data-ha-scan-name]'), sty = one('[data-ha-scan-type]');
-          if (sn && r) sn.textContent = r.querySelector('.ha-who b').textContent;
-          if (sty && r) sty.textContent = r.querySelector('.ha-who small').textContent;
-          if (phoneEl) flash(phoneEl, 'is-scan');
-          const peak = bars.find((b) => b.classList.contains('is-peak'));
-          if (peak) { const h = parseFloat(peak.style.getPropertyValue('--h')); peak.style.setProperty('--h', `${h >= 98 ? 86 : h + 2}%`); }
-        }
-      }, 2200);
+    // long event names shrink to fit the ticket instead of being cut off
+    const fitName = () => {
+      const inp = tkEl.querySelector('[data-hx-edit="name"]');
+      if (!inp) return;
+      inp.style.fontSize = '';
+      let fs = parseFloat(getComputedStyle(inp).fontSize);
+      while (inp.scrollWidth > inp.clientWidth + 1 && fs > 13) { fs -= 1; inp.style.fontSize = `${fs}px`; }
+    };
+    const render = (d) => {
+      cur = d; scanned = false;
+      tkEl.className = `hx-ticket pat-${d.pattern} font-${d.font}`;
+      tkEl.style.cssText = `--bg:${d.bg};--bg2:${d.bg2};--ink:${d.ink};--accent:${d.accent};--stub:${d.qr.stub}`;
+      tkEl.innerHTML = `
+        <div class="hx-tk-main">
+          <div class="hx-tk-top"><span class="hx-logo">${esc(d.logo)}</span><span class="hx-cat">${esc(d.cat)}</span><span class="hx-type">${esc(d.type)}</span></div>
+          <label class="hx-name"><span class="sr-only">Event name</span><input type="text" value="${esc(d.name)}" maxlength="30" spellcheck="false" autocomplete="off" data-hx-edit="name"></label>
+          <p class="hx-meta"><span><small>Date</small>${esc(d.date)}</span><span><small>Time</small>${esc(d.time)}</span><span><small>Venue</small>${esc(d.venue)}</span></p>
+          <p class="hx-guest">Guest <label><span class="sr-only">Guest name</span><input type="text" value="${esc(d.guest)}" maxlength="22" spellcheck="false" autocomplete="off" data-hx-edit="guest"></label></p>
+          <span class="hx-stamp" aria-hidden="true">Admitted</span>
+        </div>
+        <div class="hx-tk-stub">
+          <button type="button" class="hx-qr-btn" data-hx-scan aria-label="Scan this ticket"><svg class="hx-qr" aria-hidden="true"></svg><i class="hx-laser"></i><span class="hx-ok" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <small class="mono">SCAN AT ENTRY</small>
+          <b class="mono">${esc(d.code)}</b>
+        </div>`;
+      drawDesignQR(tkEl.querySelector('.hx-qr'), d);
+      if (evName) evName.textContent = d.name;
+      fitName();
+      tkEl.querySelectorAll('[data-hx-edit]').forEach((inp) => {
+        inp.addEventListener('input', () => {
+          const v = inp.value.trim();
+          if (inp.dataset.hxEdit === 'name') { if (evName) evName.textContent = v || 'Your Event'; fitName(); }
+          if (inp.dataset.hxEdit === 'guest') cur = { ...cur, guest: v || 'Guest' };
+        });
+        inp.addEventListener('keydown', (e) => { if (e.key === 'Enter') inp.blur(); });
+      });
+      try { localStorage.setItem('tg-hero-design', String(d.id)); } catch (e) { /* private mode */ }
+    };
+
+    // a different design on every visit
+    let last = null;
+    try { last = Number(localStorage.getItem('tg-hero-design')); } catch (e) { /* private mode */ }
+    const pick = (not) => { const pool = DESIGNS.filter((d) => d.id !== not); return pool[Math.floor(Math.random() * pool.length)]; };
+    render(pick(last));
+    document.fonts?.ready.then(fitName);   // the display fonts arrive after the first draw
+
+    const toast = (html, kind) => {
+      if (!toastEl) return;
+      toastEl.className = `hx-toast is-on${kind ? ' is-' + kind : ''}`;
+      toastEl.innerHTML = html;
+      clearTimeout(toastEl._t);
+      toastEl._t = setTimeout(() => toastEl.classList.remove('is-on'), 2600);
+    };
+    const initials = (nm) => nm.trim().split(/\s+/).slice(0, 2).map((w) => w[0] || '').join('').toUpperCase();
+    const TICK = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    const addRow = (name, type, ch, checked) => {
+      const li = document.createElement('li');
+      li.className = 'hx-row is-new';
+      li.innerHTML = `<span class="hx-av">${esc(initials(name))}</span><span class="hx-who"><b>${esc(name)}</b><small>${esc(type)}</small></span>` +
+        `<span class="hx-ch hx-ch--${ch === 'SMS' ? 'sms' : ch === 'WhatsApp' ? 'wa' : 'mail'}">${esc(ch)}</span>` +
+        (checked ? `<span class="hx-st is-in">${TICK}Checked in</span>` : '<span class="hx-st">Sent</span>');
+      list.prepend(li);
+      while (list.children.length > 3) list.lastElementChild.remove();
+      requestAnimationFrame(() => li.classList.remove('is-new'));
+    };
+
+    // tap the QR: it scans
+    hx.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-hx-scan]');
+      if (!btn || busy) return;
+      busy = true;
+      tkEl.classList.add('is-scanning');
+      setTimeout(() => {
+        tkEl.classList.remove('is-scanning');
+        busy = false;
+        if (scanned) { toast(`<b>Already scanned</b><span>${esc(cur.guest)} came in a minute ago · entry refused</span>`, 'warn'); tkEl.classList.add('is-refused'); setTimeout(() => tkEl.classList.remove('is-refused'), 700); return; }
+        scanned = true;
+        tkEl.classList.add('is-admitted');
+        nIn += 1; if (chk) chk.textContent = fmt(nIn);
+        addRow(cur.guest, cur.type, 'Email', true);
+        toast(`<b>${TICK} Checked in</b><span>${esc(cur.guest)} · Gate A · just now</span>`, 'ok');
+      }, reduceMotion ? 50 : 900);
+    });
+
+    // "New design": swap the ticket
+    one('[data-hx-next]')?.addEventListener('click', () => {
+      if (busy) return;
+      const next = pick(cur.id);
+      if (reduceMotion) { render(next); return; }
+      busy = true;
+      tkEl.classList.add('is-flip-out');
+      setTimeout(() => {
+        render(next);
+        tkEl.classList.add('is-flip-in');
+        requestAnimationFrame(() => requestAnimationFrame(() => tkEl.classList.remove('is-flip-in')));
+        busy = false;
+      }, 260);
+    });
+
+    // the ticket follows the cursor a little
+    const wrap = one('[data-hx-tilt]');
+    if (wrap && !reduceMotion && window.matchMedia('(hover: hover)').matches) {
+      wrap.addEventListener('pointermove', (e) => {
+        const r = wrap.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+        wrap.style.setProperty('--rx', `${(-y * 10).toFixed(2)}deg`);
+        wrap.style.setProperty('--ry', `${(x * 12).toFixed(2)}deg`);
+      });
+      wrap.addEventListener('pointerleave', () => { wrap.style.setProperty('--rx', '0deg'); wrap.style.setProperty('--ry', '0deg'); });
     }
+
+    // tickets keep going out while nobody is busy with the hero
+    let visible = true, hovering = false, editing = false;
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(hx);
+    hx.addEventListener('pointerenter', () => { hovering = true; });
+    hx.addEventListener('pointerleave', () => { hovering = false; });
+    hx.addEventListener('focusin', () => { editing = true; });
+    hx.addEventListener('focusout', () => { setTimeout(() => { editing = hx.contains(document.activeElement); }, 0); });
+    const people = [['Maya Chen', 'General Admission', 'Email'], ['Leo Okafor', 'VIP Pass', 'WhatsApp'], ['Nina Park', 'General Admission', 'SMS'], ['Ravi Menon', 'Early Bird', 'Email'], ['Zoe Martin', 'General Admission', 'WhatsApp'], ['Ethan Wright', 'VIP Pass', 'SMS']];
+    let k = 0;
+    if (!reduceMotion) setInterval(() => {
+      if (!visible || hovering || editing || document.hidden) return;
+      const [nm, ty, ch] = people[k++ % people.length];
+      nGen += 1; if (gen) gen.textContent = fmt(nGen);
+      addRow(nm, ty, ch, false);
+    }, 3600);
   }
+
   /* ---------- Product scenes (Clear Wins, Launch Options) ----------
      Each scene is laid out at a fixed size and scaled to its box. The ticket that holds it learns the
      scene's height (--art-h) so its tear line sits right under it. Small interactions, quiet reveals. */
