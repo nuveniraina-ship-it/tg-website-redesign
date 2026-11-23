@@ -125,68 +125,36 @@
             <li>No credit card required</li>
           </ul>
         </div>
-        <!-- The hero picture: the app itself, with a ticket you can edit (js/main.js keeps it in sync) -->
-        <div class="hero-app" data-hero-app>
-          <div class="ha-window" aria-hidden="true">
-            <div class="ha-bar">
-              <span class="ha-lights"><i></i><i></i><i></i></span>
-              <span class="ha-url"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="currentColor" stroke-width="2"/></svg>app.ticket-generator.com</span>
+        <!-- The hero picture: a frosted dashboard over the photo, with cards floating around it.
+             The ticket is editable (js/main.js keeps the QR in sync, and the numbers tick up while it runs). -->
+        <div class="hx" data-hero-app>
+          <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="hx-g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1570ef" stop-opacity=".28"/><stop offset="1" stop-color="#1570ef" stop-opacity="0"/></linearGradient></defs></svg>
+          <div class="hx-panel" aria-hidden="true">
+            <div class="hx-kpi">
+              <small>Tickets sold</small>
+              <b data-ha-gen>1,251</b>
+              <span class="hx-up"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 1.5 9 8H1z" fill="currentColor"/></svg>18%</span>
+              <svg class="hx-spark" viewBox="0 0 200 56" preserveAspectRatio="none" aria-hidden="true"><path d="M0 46 C 20 40, 35 44, 55 34 S 85 30, 105 20 S 140 26, 160 14 S 185 8, 200 6 L200 56 L0 56 Z" fill="url(#hx-g)"/></svg>
             </div>
-            <div class="ha-body">
-              <div class="ha-side">
-                <span class="ha-brand"><img src="assets/tg-icon.svg" alt="" width="18" height="18">Ticket Generator</span>
-                <span class="is-on">Manage Events</span><span>API</span><span>Ticket Validator</span><span>Venue Layout</span><span>Settings</span>
-              </div>
-              <div class="ha-main">
-                <p class="ha-crumb">Manage Events / <b data-ha="name">Riverside Music Festival</b> / <span>Guest Tickets</span></p>
-                <div class="ha-tabs"><span>Event Details</span><span>Ticket Design</span><span>Event Page</span><span class="is-on">Guest Tickets</span><span>Box Office</span><span>Analytics</span></div>
-                <div class="ha-stats">
-                  <div class="ha-card"><small>Tickets generated</small><b data-ha-gen>1,251</b></div>
-                  <div class="ha-card"><small>Checked in</small><b class="is-green" data-ha-in>814</b></div>
-                  <div class="ha-card"><small>Platform commission</small><b>$0.00</b></div>
-                </div>
-                <div class="ha-grid">
-                  <div class="ha-card ha-guests">
-                    <p class="ha-h">Guest tickets <span class="ha-live"><i></i>Live</span></p>
-                    <ul>
-                <li class="ha-row" data-ha-row>
-                  <span class="ha-av">SR</span>
-                  <span class="ha-who"><b>Sam Rivera</b><small>General Admission</small></span>
-                  <span class="ha-ch ha-ch--mail"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="m3 7 9 6 9-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Email</span>
-                  <span class="ha-st">Sent</span>
-                </li>
-                <li class="ha-row" data-ha-row>
-                  <span class="ha-av">JL</span>
-                  <span class="ha-who"><b>Jordan Lee</b><small>General Admission</small></span>
-                  <span class="ha-ch ha-ch--sms"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>SMS</span>
-                  <span class="ha-st">Sent</span>
-                </li>
-                <li class="ha-row" data-ha-row data-ha-guest-row>
-                  <span class="ha-av" data-ha="initials">PS</span>
-                  <span class="ha-who"><b data-ha="guest">Priya Shah</b><small>General Admission</small></span>
-                  <span class="ha-ch ha-ch--mail"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="m3 7 9 6 9-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Email</span>
-                  <span class="ha-st is-in"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Checked in</span>
-                </li>
-                    </ul>
-                  </div>
-                  <div class="ha-card ha-chart">
-                    <p class="ha-h">Check-ins by hour</p>
-                    <div class="ha-bars" data-ha-bars>
-                      <span style="--h:38%"><i></i>4 PM</span><span style="--h:62%"><i></i>5 PM</span><span class="is-peak" style="--h:94%"><i></i>6 PM</span><span style="--h:78%"><i></i>7 PM</span><span style="--h:48%"><i></i>8 PM</span><span style="--h:22%"><i></i>9 PM</span>
-                    </div>
-                    <p class="ha-peak"><span>Peak entry</span><b>6 PM · Gate A</b></p>
-                  </div>
-                </div>
-              </div>
+            <div class="hx-kpi">
+              <small>Checked in</small>
+              <b data-ha-in>814</b>
+              <span class="hx-up"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 1.5 9 8H1z" fill="currentColor"/></svg>65% <em>of guests</em></span>
+              <svg class="hx-spark" viewBox="0 0 200 56" preserveAspectRatio="none" aria-hidden="true"><path d="M0 42 C 22 36, 40 44, 62 36 S 92 18, 118 24 S 150 34, 172 22 S 192 16, 200 14 L200 56 L0 56 Z" fill="url(#hx-g)"/></svg>
+            </div>
+            <div class="hx-kpi">
+              <small>Ticket revenue</small>
+              <b>$18,420</b>
+              <span class="hx-up"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 1.5 9 8H1z" fill="currentColor"/></svg>12% <em>past 7 days</em></span>
+              <svg class="hx-spark" viewBox="0 0 200 56" preserveAspectRatio="none" aria-hidden="true"><path d="M0 44 C 25 40, 35 22, 60 26 S 95 50, 120 40 S 160 10, 182 14" fill="none" stroke="#1570ef" stroke-width="2.2" stroke-linecap="round" vector-effect="non-scaling-stroke"/><rect x="182" y="14" width="18" height="42" fill="#1570ef" opacity=".08"/><circle cx="182" cy="14" r="4.5" fill="#fff" stroke="#1570ef" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>
             </div>
           </div>
-
-          <div class="ha-toast" aria-hidden="true">
-            <span class="ha-toast-ic" data-ha-toast-ic><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="m3 7 9 6 9-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
-            <span><b data-ha-toast-title>Ticket sent via Email</b><small data-ha-toast-meta>Sam Rivera · just now</small></span>
+          <span class="hx-bubble" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1.5a2.5 2.5 0 0 0 0 5V16a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1.5a2.5 2.5 0 0 0 0-5V8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14 6v12" stroke="currentColor" stroke-width="2" stroke-dasharray="2 2.5"/></svg></span>
+          <div class="hx-card hx-bars" aria-hidden="true">
+            <p>Sales by day</p>
+            <div class="hx-bars-row"><span style="--h:46%"><i></i>Mon</span><span style="--h:62%"><i></i>Tue</span><span style="--h:40%"><i></i>Wed</span><span style="--h:74%"><i></i>Thu</span><span style="--h:58%"><i></i>Fri</span><span style="--h:92%"><i></i>Sat</span></div>
           </div>
-
-          <!-- the editable ticket -->
+          <div class="hx-tk">
           <div class="ha-ticket-wrap">
             <figure class="ha-ticket" data-ha-ticket>
               <div class="ha-tk-main">
@@ -206,7 +174,8 @@
               </div>
             </figure>
           </div>
-
+          </div>
+          <span class="hx-chip" aria-hidden="true"><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></i><span>Commission</span><b>$0.00</b></span>
         </div>
       </div>
 

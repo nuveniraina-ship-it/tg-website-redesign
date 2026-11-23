@@ -1132,25 +1132,8 @@
     }
     if (endWrap) stepsSec.append(endWrap);
     heroSec.after(stepsSec);
-    // the hero's picture is the live app (built in index.html inside .j-hero), moved onto the stub and scaled to fit it
-    const heroApp = journey.querySelector('[data-hero-app]');
-    if (heroApp) {
-      const shot = document.createElement('div');
-      shot.className = 'j-shot ha-shot';
-      const frame = document.createElement('div');
-      frame.className = 'ha-frame';
-      heroApp.classList.add('hero-app--stub');
-      frame.append(heroApp);
-      shot.append(frame);
-      journey.append(shot);
-      const fitApp = () => {
-        const sc = Math.min(1, frame.clientWidth / heroApp.offsetWidth);
-        heroApp.style.setProperty('--ha-s', sc.toFixed(4));
-        frame.style.height = `${Math.round(heroApp.offsetHeight * sc)}px`;
-      };
-      new ResizeObserver(fitApp).observe(frame);
-      fitApp();
-    }
+    // the hero is one centred column over its photo: copy, then the frosted dashboard (css/hero-app.css, .hx)
+    heroSec.classList.remove('tkt--land');
     journey.dataset.split = '1';
     heroSec.style.removeProperty('--stub-y');
     onScroll();

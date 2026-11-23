@@ -251,3 +251,24 @@ As asked, the hero app now shows three guest rows. The validator phone, the "Try
 
 ### Follow-up: launch ticket notches and buttons
 The notches at the tear line were covered by the scene panel's tinted background, so they read as bumps. The panel now has the same half-circle cuts. Both "Get Started" buttons are the solid blue primary button used everywhere else.
+
+## Round 7 (23 Nov): hero in the style of the reference
+
+| What | How it's done |
+|---|---|
+| Layout | Centred copy over a light photo, as in the reference. The photo is a new image of a festival lawn at dawn, with a distant stage and tents (about 180 credits). It fades to white behind the headline and is lightened at the bottom so the hero stays airy. |
+| Centrepiece | A frosted-glass panel with three live numbers, each with a small chart: Tickets sold, Checked in, Ticket revenue. The first two tick up while the page is open. |
+| Floating pieces | A round ticket icon, a tilted "Sales by day" bar card, a "Commission $0.00" chip, and the editable Riverside ticket in brand blue in the spot where the reference has its wallet card. They drift slightly, with no motion for reduced-motion users. |
+| Kept from before | The real-site copy and both buttons. The ticket is still editable, and its QR still has no TG mark. The buttons stay brand blue rather than the reference's black. |
+| Phones | The same photo behind the hero card. The panel's numbers become rows (number on the left, chart on the right), with the ticket under them. The floating icon, chart card and chip are left out to keep it calm. |
+
+**Adapted, not copied:** the reference is a finance product. Its layout and feel are borrowed, but every number, card and label is Ticket Generator's own.
+
+**QA:**
+- Checked at 1440, 1024 and 375 px: no overflow, clean console, and the numbers tick up.
+
+**Fixes found in QA:**
+- The bar card covered the first number. Moved down.
+- The ticket covered the "Ticket revenue" label. Lifted to the panel's corner.
+- The ticket name was cut off. Wider ticket, slightly smaller type.
+- At 1024 px the bar card ran past the hero's bottom edge. The hero is taller there now.
