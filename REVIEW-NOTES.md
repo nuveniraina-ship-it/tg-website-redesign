@@ -224,3 +224,21 @@ One sample made first, for style approval: the event-page festival banner (Magni
 
 ### Follow-up: simpler hero picture
 As asked, the hero app now shows three guest rows. The validator phone, the "Try it: edit the ticket" row with its colour dots, and the "Live demo / Paused" pill are removed. The window now spans the stub, with the check-ins chart beside the guest list and the toast on its top edge. The ticket is still editable by clicking its text. Checked at 1440, 1024 and 375px, with a clean console.
+
+## Round 6 (23 Nov)
+
+| Point | What changed | Why this way |
+|---|---|---|
+| Launch options don't feel right | Two **portrait** tickets side by side. On top of each, a small product scene in the hero's style replaces the old faint illustrations: (1) a guest list sending tickets to Email, SMS and WhatsApp; (2) a Riverside event page with a working **Free / Paid** switch, which changes the price, the button and the payout note. Below a tear line: number, title, text, two steps, Get Started. | The landscape shape squeezed the copy, and the old art didn't match anything around it. The switch shows the merged "Free & Paid" card's point in one click. |
+| Clear Wins images not good enough | All five visuals are rebuilt in HTML, as real UI rather than drawn shapes, with the same cards, type and colours as the hero app. They're laid out at a fixed size and scaled to fit. The interactions stay: template recolours the ticket; gateway selection with the payout counting up; ticket types pull out on hover; the chart draws in, with each day on hover; the receipt ticks in, then the stamp lands. | The SVG drawings read as illustrations; these read as the product. |
+| Blog: outlined text doesn't look nice | No outlines anywhere: the keyword rows are now soft tone-on-tone fills, with the middle row in white. The event page posters' RIVERSIDE word is tone-on-tone too. | |
+
+**QA:**
+- Checked at 1440, 1024 and 375 px.
+- No overflow, no broken images, equal button heights, clean console.
+- Demos and interactions all run: registration, "Preview as" menu, gateway pick, template recolour and the Free / Paid switch.
+
+**Fixes found in QA:**
+- **Lost layout rule.** A cleanup removed the 50/50 Clear Wins split, which made the scenes tiny. Restored.
+- **Receipt scene.** Its heading wrapped and the zigzag edge cut off the last line; both fixed.
+- **Launch guest list on phones.** It touched the tear line, so the scene got more height.

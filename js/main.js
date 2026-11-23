@@ -1348,38 +1348,51 @@
       }, 2200);
     }
   }
-  /* ---------- Clear Wins: small interactions inside the collages ---------- */
-  document.querySelectorAll('.cw-art').forEach((art) => {
-    const svg = art.querySelector('.cw-svg');
-    if (!svg) return;
+  /* ---------- Product scenes (Clear Wins, Launch Options) ----------
+     Each scene is laid out at a fixed size and scaled to its box. The ticket that holds it learns the
+     scene's height (--art-h) so its tear line sits right under it. Small interactions, quiet reveals. */
+  document.querySelectorAll('[data-fit]').forEach((box) => {
+    const sc = box.firstElementChild;
+    const holder = box.closest('.cw, .lo3');
+    const art = box.closest('.cw-art, .lo3-art');
+    const fitScene = () => {
+      const k = Math.min(1.15, box.clientWidth / sc.offsetWidth);
+      sc.style.setProperty('--fit', k.toFixed(4));
+      box.style.height = `${Math.round(sc.offsetHeight * k)}px`;
+      if (holder && art) holder.style.setProperty('--art-h', `${art.offsetHeight}px`);
+    };
+    new ResizeObserver(fitScene).observe(box);
+    fitScene();
+
     new IntersectionObserver((entries, io) => {
-      entries.forEach((e) => {
-        if (!e.isIntersecting) return;
-        art.classList.add('is-in');
-        io.disconnect();
-        const amt = svg.querySelector('.cw2-amt');          // the payout counts up once
-        if (amt && !reduceMotion) {
-          const to = Number(amt.dataset.to), t0 = performance.now();
-          const step = (now) => {
-            const k = Math.min(1, (now - t0) / 1200);
-            const v = Math.round(to * (1 - Math.pow(1 - k, 3)));
-            amt.textContent = '$' + v.toLocaleString('en-US') + '.00';
-            if (k < 1) requestAnimationFrame(step);
-          };
-          requestAnimationFrame(step);
-        }
+      if (!entries.some((e) => e.isIntersecting)) return;
+      box.classList.add('is-in');
+      io.disconnect();
+      box.querySelectorAll('[data-sc-count]').forEach((el) => {        // the payout counts up once
+        const to = Number(el.dataset.scCount);
+        if (reduceMotion) return;
+        const t0 = performance.now();
+        const step = (now) => {
+          const k = Math.min(1, (now - t0) / 1200);
+          el.textContent = '$' + Math.round(to * (1 - Math.pow(1 - k, 3))).toLocaleString('en-US') + '.00';
+          if (k < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
       });
-    }, { threshold: 0.35 }).observe(art);
-    const act = (sel, fn) => svg.querySelectorAll(sel).forEach((el) => {
-      el.addEventListener('click', () => fn(el));
-      el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn(el); } });
-    });
-    act('.cw1-tpl', (el) => {                                 // a template recolours the preview
-      const prev = svg.querySelector('.cw1-prev');
-      if (prev) prev.setAttribute('fill', el.dataset.c);
-      const sel = svg.querySelector('.cw1-sel');
-      if (sel) sel.style.transform = 'translateX(' + (Number(el.dataset.x) - 40) + 'px)';
-    });
-    act('.cw2-gw', (el) => svg.querySelectorAll('.cw2-gw').forEach((g) => g.classList.toggle('is-on', g === el)));
+    }, { threshold: 0.3 }).observe(box);
+
+    box.querySelectorAll('[data-sc-qr]').forEach((q) => drawBrandQR(q, q.dataset.scQr, 'square'));
+    box.querySelectorAll('[data-sc-tpl]').forEach((b) => b.addEventListener('click', () => {   // a template recolours the ticket
+      box.querySelector('[data-sc-ticket]')?.style.setProperty('--tc', b.dataset.scTpl);
+      box.querySelectorAll('[data-sc-tpl]').forEach((x) => x.classList.toggle('is-on', x === b));
+    }));
+    box.querySelectorAll('.sc2-gw').forEach((g) => g.addEventListener('click', () => {         // pick a gateway
+      box.querySelectorAll('.sc2-gw').forEach((x) => x.classList.toggle('is-on', x === g));
+    }));
+    box.querySelectorAll('[data-sc-set]').forEach((b) => b.addEventListener('click', () => {   // free or paid event page
+      const page = box.querySelector('[data-sc-mode]');
+      if (page) page.dataset.scMode = b.dataset.scSet;
+      box.querySelectorAll('[data-sc-set]').forEach((x) => x.classList.toggle('is-on', x === b));
+    }));
   });
 })();
