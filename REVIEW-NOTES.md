@@ -126,3 +126,6 @@ The near-solid wash wasn't enough: the photo's dark parts (crowd silhouettes) st
 | "Still have a question?" looked like a ticket | It's now a plain full-width white box with the heading, text and two buttons centred. |
 
 **QA lesson:** the API crash was in the browser console for several rounds. My checks were visual only. From now on, every QA pass also reads the console and runs each interactive demo (picker, registration, API, carousel) at least once.
+
+### Follow-up: event type cut off in the "Try it" bar
+On narrower pictures, the picked type was clipped at the bar's right edge ("Conferenc…"). It now sits in its own small box under the bar ("Event type: Conference"), so the bar holds only the prompt and swatches. Checked with the longest name ("Valentine's brunch") at 1440 and 1024px. On phones it stays hidden: the row there is full width and the ticket itself shows the type.

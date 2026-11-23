@@ -1878,3 +1878,22 @@
 @media (max-width: 768px) {
   .m-pass-top { position: relative; background: radial-gradient(120% 95% at 92% 0%, rgba(255, 255, 255, .16), transparent 58%), var(--brand-600); }
 }
+
+/* Round 37 — the picked event type sits in its own small box under the "Try it" bar (it was cut off at the bar's end) */
+.stage-try .stage-try-now {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 0;
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(16, 24, 40, .08), 0 6px 14px -6px rgba(16, 24, 40, .2);
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.stage-try .stage-try-now::before { content: "Event type: "; font-weight: 400; color: var(--text-tertiary); }
+@media (max-width: 768px) { .stage-try .stage-try-now { display: none; } }
