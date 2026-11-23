@@ -221,3 +221,6 @@ One sample made first, for style approval: the event-page festival banner (Magni
 - **Hero stub.** The stub app was crowded (the phone covered a stat, the name was cut off, the toast overlapped the status pill), so it was recomposed.
 - **Poster arrows on phones.** The slider arrows covered the poster titles; they're hidden there now.
 - **Launch art.** The illustrations were faint on the stub; they now sit on a white card.
+
+### Follow-up: simpler hero picture
+As asked, the hero app now shows three guest rows. The validator phone, the "Try it: edit the ticket" row with its colour dots, and the "Live demo / Paused" pill are removed. The window now spans the stub, with the check-ins chart beside the guest list and the toast on its top edge. The ticket is still editable by clicking its text. Checked at 1440, 1024 and 375px, with a clean console.
