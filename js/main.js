@@ -1321,7 +1321,7 @@
       tkEl.querySelectorAll('[data-hx-edit]').forEach((inp) => {
         inp.addEventListener('input', () => {
           const v = inp.value.trim();
-          if (inp.dataset.hxEdit === 'name') { if (evName) evName.textContent = v || 'Your Event'; fitName(); }
+          if (inp.dataset.hxEdit === 'name') { if (evName) evName.textContent = v || 'Your Event'; cur = { ...cur, name: v || 'Your Event' }; fitName(); }
           if (inp.dataset.hxEdit === 'guest') cur = { ...cur, guest: v || 'Guest' };
         });
         inp.addEventListener('keydown', (e) => { if (e.key === 'Enter') inp.blur(); });
@@ -1374,19 +1374,93 @@
       }, reduceMotion ? 50 : 900);
     });
 
-    // "New design": swap the ticket
-    one('[data-hx-next]')?.addEventListener('click', () => {
-      if (busy) return;
-      const next = pick(cur.id);
-      if (reduceMotion) { render(next); return; }
+    // swap the ticket to another design (with a flip)
+    const swapTo = (next) => {
+      if (busy || !next || next.id === cur.id) return;
+      if (reduceMotion) { render(next); refreshPane(); return; }
       busy = true;
       tkEl.classList.add('is-flip-out');
       setTimeout(() => {
         render(next);
+        refreshPane();
         tkEl.classList.add('is-flip-in');
         requestAnimationFrame(() => requestAnimationFrame(() => tkEl.classList.remove('is-flip-in')));
         busy = false;
       }, 260);
+    };
+    one('[data-hx-next]')?.addEventListener('click', () => swapTo(pick(cur.id)));
+
+    /* ---- the app's tabs: each one shows its own part of the event ---- */
+    const dyn = one('[data-hx-dyn]'), guestsPane = one('[data-hx-guests]');
+    let tab = 'guests';
+    const daySales = [38, 64, 52, 81, 70, 96, 58];
+    const qrNames = { square: 'Square', dot: 'Dots', rounded: 'Rounded', diamond: 'Diamonds', leaf: 'Leaves' };
+    const eyeNames = { square: 'square', circle: 'circle', rounded: 'rounded', leaf: 'leaf', frame: 'framed' };
+    const panes = {
+      details: (d) => `
+        <dl class="hx-dl">
+          <div><dt>Event name</dt><dd>${esc(d.name)}</dd></div>
+          <div><dt>Status</dt><dd><span class="hx-pill is-green">Published</span></dd></div>
+          <div><dt>Date &amp; time</dt><dd>${esc(d.date)} · ${esc(d.time)}</dd></div>
+          <div><dt>Venue</dt><dd>${esc(d.venue)}</dd></div>
+          <div><dt>Category</dt><dd>${esc(d.cat.charAt(0) + d.cat.slice(1).toLowerCase())}</dd></div>
+          <div><dt>Ticket types</dt><dd>${esc(d.type)} · General Admission</dd></div>
+        </dl>`,
+      design: (d) => {
+        const others = [d, ...DESIGNS.filter((x) => x.id !== d.id).sort((a, b) => ((a.id * 7 + d.id) % 24) - ((b.id * 7 + d.id) % 24)).slice(0, 4)];
+        return `
+        <p class="hx-sub">Templates <span>click one to use it</span></p>
+        <div class="hx-tpls">${others.map((x) => `<button type="button" class="hx-tpl${x.id === d.id ? ' is-on' : ''}" data-hx-use="${x.id}" style="--bg:${x.bg};--bg2:${x.bg2};--ink:${x.ink}" title="${esc(x.name)}"><b>${esc(x.logo)}</b><span>${esc(x.name)}</span></button>`).join('')}</div>
+        <div class="hx-design-row">
+          <span><small>Colours</small><i style="background:${d.bg}"></i><i style="background:${d.bg2}"></i><i style="background:${d.accent}"></i></span>
+          <span><small>QR code</small>${qrNames[d.qr.mod] || 'Custom'} · ${eyeNames[d.qr.eye] || 'custom'} eyes</span>
+          <span><small>Centre</small>${esc(d.logo)} logo</span>
+        </div>`;
+      },
+      page: (d) => `
+        <div class="hx-page" style="--bg:${d.bg};--bg2:${d.bg2};--ink:${d.ink}">
+          <div class="hx-page-cover"><small>${esc(d.cat)}</small><b>${esc(d.name)}</b></div>
+          <div class="hx-page-body">
+            <p>${esc(d.date)} · ${esc(d.time)} · ${esc(d.venue)}</p>
+            <div class="hx-page-cta"><span><b>${fmt(nGen)}</b> registered</span><button type="button" class="hx-reg" data-hx-register>Register now</button></div>
+          </div>
+        </div>`,
+      analytics: () => {
+        const max = Math.max(...daySales);
+        const rate = Math.round(nIn / nGen * 100);
+        return `
+        <div class="hx-an">
+          <div class="hx-an-chart"><p class="hx-sub">Ticket sales <span>this week</span></p>
+            <div class="hx-an-bars">${daySales.map((v, i) => `<span style="--h:${Math.round(v / max * 100)}%" data-v="${v * 3}"><i></i>${['M', 'T', 'W', 'T', 'F', 'S', 'S'][i]}</span>`).join('')}</div></div>
+          <div class="hx-an-side">
+            <div><small>Check-in rate</small><b>${rate}%</b><span class="hx-an-meter"><i style="width:${rate}%"></i></span></div>
+            <div><small>Top channel</small><b>Email</b><span class="hx-muted">62% of tickets</span></div>
+          </div>
+        </div>`;
+      },
+    };
+    const refreshPane = () => { if (tab !== 'guests' && dyn) dyn.innerHTML = panes[tab](cur); };
+    const showTab = (key) => {
+      tab = key;
+      hx.querySelectorAll('[data-hx-tab]').forEach((b) => { const on = b.dataset.hxTab === key; b.classList.toggle('is-on', on); b.setAttribute('aria-selected', String(on)); });
+      const crumb = hx.querySelector('.hx-crumb em'), btn = hx.querySelector(`[data-hx-tab="${key}"]`);
+      if (crumb && btn) crumb.textContent = btn.textContent;
+      if (key === 'guests') { dyn.hidden = true; guestsPane.hidden = false; return; }
+      guestsPane.hidden = true;
+      dyn.hidden = false;
+      refreshPane();
+      dyn.classList.remove('is-in'); void dyn.offsetWidth; dyn.classList.add('is-in');
+    };
+    hx.querySelectorAll('[data-hx-tab]').forEach((b) => b.addEventListener('click', () => showTab(b.dataset.hxTab)));
+    hx.addEventListener('click', (e) => {
+      const use = e.target.closest('[data-hx-use]');
+      if (use) { swapTo(DESIGNS.find((x) => x.id === Number(use.dataset.hxUse))); return; }
+      if (e.target.closest('[data-hx-register]')) {          // a guest registers on the event page
+        nGen += 1; if (gen) gen.textContent = fmt(nGen);
+        addRow('You', 'General Admission', 'Email', false);
+        refreshPane();
+        toast(`<b>${TICK} You're registered</b><span>Your ticket for ${esc(cur.name)} is on its way by email</span>`, 'ok');
+      }
     });
 
     // the ticket follows the cursor a little
@@ -1415,6 +1489,7 @@
       const [nm, ty, ch] = people[k++ % people.length];
       nGen += 1; if (gen) gen.textContent = fmt(nGen);
       addRow(nm, ty, ch, false);
+      if (tab === 'page') refreshPane();   // the page's registered count keeps up
     }, 3600);
   }
 

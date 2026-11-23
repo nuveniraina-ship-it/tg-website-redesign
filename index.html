@@ -129,17 +129,18 @@
              The ticket is one of many designs (js/ticket-designs.js), a different one on every visit.
              Tap its QR to scan it in; "New design" swaps it; new tickets keep arriving in the list. -->
         <div class="hx" data-hx>
-          <div class="hx-app" aria-hidden="true">
+          <div class="hx-app">
             <div class="hx-bar"><span class="hx-lights"><i></i><i></i><i></i></span><span class="hx-url">app.ticket-generator.com</span></div>
             <div class="hx-body">
               <p class="hx-crumb">Manage Events <span>/</span> <b data-hx-event>Riverside Music Festival</b> <span>/</span> <em>Guest Tickets</em></p>
-              <div class="hx-tabs"><span>Event Details</span><span>Ticket Design</span><span>Event Page</span><span class="is-on">Guest Tickets</span><span>Analytics</span></div>
+              <div class="hx-tabs" role="tablist" aria-label="Event sections"><button type="button" role="tab" aria-selected="false" data-hx-tab="details">Event Details</button><button type="button" role="tab" aria-selected="false" data-hx-tab="design">Ticket Design</button><button type="button" role="tab" aria-selected="false" data-hx-tab="page">Event Page</button><button type="button" role="tab" aria-selected="true" class="is-on" data-hx-tab="guests">Guest Tickets</button><button type="button" role="tab" aria-selected="false" data-hx-tab="analytics">Analytics</button></div>
               <div class="hx-stats">
                 <div><small>Tickets generated</small><b data-hx-gen>1,251</b></div>
                 <div><small>Checked in</small><b class="is-green" data-hx-in>814</b></div>
                 <div><small>Platform commission</small><b>$0.00</b></div>
               </div>
-              <div class="hx-guests">
+              <div class="hx-pane hx-dyn" data-hx-dyn hidden></div>
+              <div class="hx-guests hx-pane" data-hx-guests>
                 <p class="hx-h">Guest tickets <span class="hx-live"><i></i>Live</span></p>
                 <ul data-hx-list><li class="hx-row"><span class="hx-av">SR</span><span class="hx-who"><b>Sam Rivera</b><small>General Admission</small></span><span class="hx-ch hx-ch--mail"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="m3 7 9 6 9-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Email</span><span class="hx-st">Sent</span></li><li class="hx-row"><span class="hx-av">JL</span><span class="hx-who"><b>Jordan Lee</b><small>VIP Pass</small></span><span class="hx-ch hx-ch--sms"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>SMS</span><span class="hx-st is-in"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Checked in</span></li><li class="hx-row"><span class="hx-av">AM</span><span class="hx-who"><b>Alex Morgan</b><small>General Admission</small></span><span class="hx-ch hx-ch--mail"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="m3 7 9 6 9-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Email</span><span class="hx-st is-in"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Checked in</span></li></ul>
               </div>

@@ -292,3 +292,13 @@ The notches at the tear line were covered by the scene panel's tinted background
 - **Long names.** Long event names were cut off; they now shrink to fit, and re-fit once the display fonts load.
 - **Long venues.** Three venues were too long and are shortened.
 - **App cut off at the bottom.** The app window ran past the hero's bottom at 1024 px, so the stage is taller there.
+
+### Follow-up: the app's tabs work
+The five tabs in the hero app are real buttons. The breadcrumb follows the open tab, and every tab keeps the same height so the window never jumps.
+- **Event Details:** the current ticket's event name, status (Published), date and time, venue, category and ticket types.
+- **Ticket Design:** template thumbnails (the current design plus four others). Click one and the hero ticket flips to it. It also lists the design's colours, QR style (module and eye shape) and centre logo.
+- **Event Page:** a mini event page in the ticket's colours with a live "registered" count. "Register now" sends a ticket: the count rises, a row appears in Guest Tickets and a toast confirms it.
+- **Guest Tickets:** the live list, as before.
+- **Analytics:** ticket sales by day (hover a bar for its number), the check-in rate and the top channel.
+
+On phones the tabs scroll sideways, and the ticket sits just below the app so no pane content is hidden. Checked at 1440 and 375 px with a clean console; every tab, the template swap and Register now were clicked and confirmed.
