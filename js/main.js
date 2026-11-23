@@ -936,7 +936,6 @@
       if (theme === 'blue') el.removeAttribute('data-theme'); else el.dataset.theme = theme;
     });
     document.querySelectorAll('[data-theme-pick]').forEach((b) => b.classList.toggle('is-on', b.dataset.themePick === theme));
-    if (pick) document.querySelectorAll('.stage-panel').forEach((p) => p.style.setProperty('--fx-c', pick.style.getPropertyValue('--c')));   // floating tickets take the event's colour
   };
   document.addEventListener('click', (e) => {
     const b = e.target.closest('[data-theme-pick]');
@@ -1117,15 +1116,6 @@
     stepsCol.querySelector('.j-intro .eyebrow')?.classList.add('is-in-stub');
     stepsCol.querySelector('.j-intro h2')?.setAttribute('id', 'steps-title');
     const endWrap = heroSec.querySelector('.j-end')?.parentElement;
-    // a still copy of the opening scene for the hero, taken before the live picture moves
-    const shotPanel = panel.cloneNode(true);
-    shotPanel.querySelector('.stage-try')?.remove();   // no dots here: the hero follows the colour picked in Get Started
-    shotPanel.querySelectorAll('[id]').forEach((el) => el.removeAttribute('id'));
-    const shotCanvas = shotPanel.querySelector('.stage-canvas');
-    shotCanvas.removeAttribute('data-stage');
-    shotCanvas.dataset.state = '0';
-    for (let i = 1; i <= 5; i++) shotCanvas.classList.remove(`gte-${i}`);
-    shotCanvas.querySelector('.ticket')?.classList.remove('is-scanning', 'is-admitted', 'is-torn');
     grid.append(stepsCol, stageCol);
     // the heading and line sit centred above the steps and the picture, like every other section
     const introEl = stepsCol.querySelector('.j-intro');
@@ -1137,63 +1127,10 @@
     }
     if (endWrap) stepsSec.append(endWrap);
     heroSec.after(stepsSec);
-    const shot = document.createElement('div');
-    shot.className = 'j-stage j-shot';
-    shot.setAttribute('aria-hidden', 'true');
-    shot.append(shotPanel);
-    journey.append(shot);
-    new ResizeObserver(() => fitTo(shotPanel, shotCanvas)).observe(shotPanel);
+    heroSec.classList.remove('tkt--land');   // the hero is now one centred column: copy, then the app
     journey.dataset.split = '1';
     heroSec.style.removeProperty('--stub-y');
     onScroll();
-  }
-
-  /* Hero motion (code only): mini tickets float up behind the hero picture in the event's colour,
-     and the opening scene's numbers tick along as if the event were selling right now.
-     Desktop: the hero picture is the still copy (.j-shot); tablet: the live stage while it shows the opening scene. */
-  if (!reduceMotion) {
-    const heroPanel = heroShot || journey.querySelector('.j-shot .stage-panel') || panel;
-    const fx = document.createElement('div');
-    fx.className = 'hero-fx';
-    fx.setAttribute('aria-hidden', 'true');
-    for (let i = 0; i < 14; i++) {
-      const t = document.createElement('i');
-      const size = 20 + Math.round(Math.random() * 16);
-      t.style.cssText = `--x:${Math.round(2 + i * 7 + Math.random() * 4)}%;--s:${size}px;--d:${(11 + Math.random() * 9).toFixed(1)}s;--dl:-${(Math.random() * 20).toFixed(1)}s;--r:${Math.round(Math.random() * 60 - 30)}deg;--o:${(0.35 + Math.random() * 0.3).toFixed(2)}`;
-      if (i % 3 === 0) t.className = 'dot';
-      fx.append(t);
-    }
-    heroPanel.prepend(fx);
-
-    const cv = heroPanel.querySelector('.stage-canvas');
-    if (cv) {
-      const reg = cv.querySelector('.c-event .ev-cap b');
-      const bar = cv.querySelector('.c-event .mini-progress i');
-      const sale = cv.querySelector('.chip-sale');
-      const scan = cv.querySelector('.chip-scan');
-      const buyers = [['VIP Pass sold', 'Marcus L. · $25'], ['Ticket sold', 'Aiko T. · $12'], ['VIP Pass sold', 'Sofia M. · $25'], ['Ticket sold', 'Daniel R. · $12'], ['VIP Pass sold', 'Priya S. · $25']];
-      let n = 412, b = 0, no = 539, live = true;
-      new IntersectionObserver(([e]) => { live = e.isIntersecting; }).observe(heroPanel);
-      const pop = (el) => { el.classList.remove('is-pop'); void el.offsetWidth; el.classList.add('is-pop'); };
-      setInterval(() => {
-        if (!live || document.hidden || cv.dataset.state !== '0') return;
-        n = n >= 496 ? 412 : n + 1 + Math.round(Math.random() * 2);
-        if (reg) reg.textContent = n;
-        if (bar) bar.style.width = `${(n / 5).toFixed(1)}%`;
-        if (sale) {
-          const [title, who] = buyers[b++ % buyers.length];
-          sale.querySelector('.c-title').textContent = title;
-          sale.querySelector('.c-meta').textContent = `${who} · just now`;
-          pop(sale);
-        }
-        if (scan && b % 2 === 0) {
-          no += 1;
-          scan.querySelector('.c-title').textContent = `Checked in at Gate ${no % 2 ? 'B' : 'A'}`;
-          scan.querySelector('.c-meta').textContent = `No. ${String(no).padStart(6, '0')} · valid`;
-          pop(scan);
-        }
-      }, 2600);
-    }
   }
 
   /* Phones: the hero and the five steps become two tickets; the steps stack as you scroll. */
@@ -1205,7 +1142,7 @@
 
     const heroCard = card('m-card--hero');
     hero.before(heroCard);
-    heroCard.append(hero, heroShot);
+    heroCard.append(hero);   // the hero's picture is the app (inside .j-hero), not the still ticket
 
     const stepsCard = card('m-card--steps');
     stepsCol.before(stepsCard);
@@ -1290,5 +1227,102 @@
     window.addEventListener('load', evenSteps);
     window.addEventListener('resize', evenSteps);
     document.fonts?.ready.then(evenSteps);
+  }
+  /* ---------- Hero: the live app with an editable ticket ----------
+     Typing on the ticket updates the dashboard, the scanner phone and the QR codes.
+     The app "runs" (tickets go out, guests check in) and pauses while you hover or edit. */
+  const app = document.querySelector('[data-hero-app]');
+  if (app) {
+    const one = (sel) => app.querySelector(sel);
+    const all = (sel) => app.querySelectorAll(sel);
+    const val = { name: 'Riverside Music Festival', date: '12 Dec, 2026', venue: 'Riverside Park', guest: 'Priya Shah' };
+    const initials = (n) => n.trim().split(/\s+/).slice(0, 2).map((w) => w[0] || '').join('').toUpperCase() || '?';
+    const drawQRs = () => all('[data-ha-qr]').forEach((q) => drawBrandQR(q, `${val.name} · ${val.guest}`, 'square'));
+    let qrTimer = 0;
+    const fit = (inp) => { if (!CSS.supports('field-sizing', 'content') && inp.dataset.haInput !== 'name') inp.size = Math.max(inp.value.length, 2); };
+    all('[data-ha-input]').forEach((inp) => {
+      fit(inp);
+      inp.addEventListener('input', () => {
+        const key = inp.dataset.haInput;
+        const fallback = { name: 'Your Event', date: 'Date', venue: 'Venue', guest: 'Guest' }[key];
+        val[key] = inp.value.trim() || fallback;
+        fit(inp);
+        if (key === 'name') all('[data-ha="name"]').forEach((el) => { el.textContent = val.name; });
+        if (key === 'guest') {
+          all('[data-ha="guest"]').forEach((el) => { el.textContent = val.guest; });
+          all('[data-ha="initials"]').forEach((el) => { el.textContent = initials(val.guest); });
+          const sn = one('[data-ha-scan-name]'); if (sn) sn.textContent = val.guest;
+        }
+        clearTimeout(qrTimer);
+        qrTimer = setTimeout(drawQRs, 250);
+      });
+      inp.addEventListener('keydown', (e) => { if (e.key === 'Enter') inp.blur(); });
+    });
+    all('[data-ha-colour]').forEach((b) => b.addEventListener('click', () => {
+      app.style.setProperty('--ha-t', b.dataset.haColour);
+      all('[data-ha-colour]').forEach((x) => { const on = x === b; x.classList.toggle('is-on', on); x.setAttribute('aria-checked', String(on)); });
+    }));
+    drawQRs();
+
+    // the live loop
+    const status = one('[data-ha-status]');
+    let paused = false, editing = false, visible = true;
+    const setPaused = () => {
+      const p = paused || editing;
+      app.classList.toggle('is-paused', p);
+      const touch = window.matchMedia('(hover: none)').matches;
+      if (status) status.textContent = editing ? 'Paused while you edit' : p ? 'Paused · move away to resume' : touch ? 'Live demo · tap the ticket to edit' : 'Live demo · hover to pause';
+    };
+    app.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') { paused = true; setPaused(); } });
+    app.addEventListener('pointerleave', () => { paused = false; setPaused(); });
+    app.addEventListener('focusin', () => { editing = true; setPaused(); });
+    app.addEventListener('focusout', () => { setTimeout(() => { editing = app.contains(document.activeElement); setPaused(); }, 0); });
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(app);
+    setPaused();
+
+    if (!reduceMotion) {
+      const gen = one('[data-ha-gen]'), chk = one('[data-ha-in]');
+      const rows = [...all('[data-ha-row]')];
+      const bars = [...all('[data-ha-bars] > span')];
+      const toast = one('.ha-toast'), phoneEl = one('.ha-phone');
+      const tTitle = one('[data-ha-toast-title]'), tMeta = one('[data-ha-toast-meta]'), tIc = one('[data-ha-toast-ic]');
+      const chIcons = Object.fromEntries([...all('.ha-ch')].map((c) => [c.textContent.trim(), c.querySelector('svg')?.outerHTML || '']));
+      const people = [['Sam Rivera', 'Email'], ['Jordan Lee', 'SMS'], ['Alex Morgan', 'WhatsApp'], ['Maya Chen', 'Email'], ['Leo Okafor', 'WhatsApp'], ['Nina Park', 'SMS']];
+      const tickSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      let nGen = 1251, nIn = 814, tick = 0;
+      const fmt = (n) => n.toLocaleString('en-US');
+      const flash = (el, cls) => { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); };
+      setInterval(() => {
+        if (paused || editing || !visible || document.hidden) return;
+        tick++;
+        // a ticket goes out
+        const [who, ch] = people[tick % people.length];
+        nGen += 1 + (tick % 3);
+        if (gen) gen.textContent = fmt(nGen);
+        if (tTitle) tTitle.textContent = `Ticket sent via ${ch}`;
+        if (tMeta) tMeta.textContent = `${who} · just now`;
+        if (tIc && chIcons[ch]) tIc.innerHTML = chIcons[ch];
+        if (toast) flash(toast, 'is-pop');
+        // every other beat a guest checks in at the door
+        if (tick % 2 === 0) {
+          nIn += 1;
+          if (chk) chk.textContent = fmt(nIn);
+          const r = rows[(tick / 2) % rows.length];
+          const st = r && r.querySelector('.ha-st');
+          if (st) {
+            const wasIn = st.classList.contains('is-in');
+            st.classList.toggle('is-in', !wasIn);
+            st.innerHTML = wasIn ? 'Sent' : `${tickSvg}Checked in`;
+            if (!wasIn) flash(r, 'is-flash');
+          }
+          const sn = one('[data-ha-scan-name]'), sty = one('[data-ha-scan-type]');
+          if (sn && r) sn.textContent = r.querySelector('.ha-who b').textContent;
+          if (sty && r) sty.textContent = r.querySelector('.ha-who small').textContent;
+          if (phoneEl) flash(phoneEl, 'is-scan');
+          const peak = bars.find((b) => b.classList.contains('is-peak'));
+          if (peak) { const h = parseFloat(peak.style.getPropertyValue('--h')); peak.style.setProperty('--h', `${h >= 98 ? 86 : h + 2}%`); }
+        }
+      }, 2200);
+    }
   }
 })();

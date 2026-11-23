@@ -42,6 +42,7 @@
   <link rel="stylesheet" href="css/closing.css">
   <link rel="stylesheet" href="css/footer.css">
   <link rel="stylesheet" href="css/mobile.css">
+  <link rel="stylesheet" href="css/hero-app.css">
 </head>
 <body>
   <!-- loading screen: Mira at her laptop until the page is ready (never longer than 2.5s) -->
@@ -70,20 +71,20 @@
           <li><a href="how-it-works.html">How It Works</a></li>
           <li><a href="features.html">Features</a></li>
           <li><a href="use-cases.html">Use Cases</a></li>
-          <li><a href="resources.html">Resources</a></li>
           <li><a href="pricing.html">Pricing</a></li>
           <li><a href="support.html">Support</a></li>
+          <li><a href="resources.html">Resources</a></li>
         </ul>
         <div class="nav-actions nav-actions--mobile">
-          <a href="https://tg-full-revamp.vercel.app/signup" class="btn btn-primary">Sign Up Free</a>
-          <a href="https://tg-full-revamp.vercel.app/login" class="btn btn-secondary">Log In</a>
+          <a href="https://tg-full-revamp.vercel.app/signup" class="btn btn-primary">Sign up</a>
+          <a href="https://tg-full-revamp.vercel.app/login" class="btn btn-secondary">Log in</a>
           <p class="nav-note">First 10 tickets free · No credit card required</p>
         </div>
       </nav>
 
       <div class="nav-actions">
-        <a href="https://tg-full-revamp.vercel.app/login" class="btn btn-link">Log In</a>
-        <a href="https://tg-full-revamp.vercel.app/signup" class="btn btn-primary">Sign Up</a>
+        <a href="https://tg-full-revamp.vercel.app/login" class="btn btn-link">Log in</a>
+        <a href="https://tg-full-revamp.vercel.app/signup" class="btn btn-primary">Sign up</a>
       </div>
 
       <button class="menu-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Open menu" data-menu-toggle>
@@ -108,19 +109,133 @@
           </span>
           <span class="hero-stat-label">tickets generated<span class="d-only">&nbsp;and counting</span></span>
         </p>
-        <h1 class="hero-title">Your <span class="nowrap">all-in-one</span> event ticketing platform</h1>
+        <h1 class="hero-title">Sell out your next event with <span class="nowrap">Ticket Generator</span></h1>
         <p class="hero-lede">
-          <span class="d-only">Whether hosting small gatherings or large-scale extravaganzas, Ticket&nbsp;Generator empowers event organizers to effortlessly create, sell, distribute, and validate personalized tickets. With predictable pricing, no hidden fees, and no commissions, Ticket&nbsp;Generator puts organizers in full control.</span><span class="m-only">Create, sell, send, and validate event tickets in one place. No hidden fees. No commissions.</span>
+          <span class="d-only">Create, sell, and validate event tickets with zero commissions and no hidden fees. Ticket&nbsp;Generator has put 30,000+ organizers in full control.</span><span class="m-only">Create, sell, and validate event tickets. Zero commissions, no hidden fees.</span>
         </p>
         <div class="hero-cta">
           <a href="https://tg-full-revamp.vercel.app/signup" class="btn btn-primary btn-xl">
-            Create Your Event
+            Create Event
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4.167 10h11.666M10 4.167 15.833 10 10 15.833" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
+          <a href="demo.html" class="btn btn-secondary btn-xl">Book a Demo</a>
           <ul class="assurances">
             <li>First 10 tickets free</li>
             <li>No credit card required</li>
           </ul>
+        </div>
+        <!-- The hero picture: the app itself, with a ticket you can edit (js/main.js keeps it in sync) -->
+        <div class="hero-app" data-hero-app>
+          <p class="ha-status" aria-live="polite"><i></i><span data-ha-status>Live demo · hover to pause</span></p>
+          <div class="ha-window" aria-hidden="true">
+            <div class="ha-bar">
+              <span class="ha-lights"><i></i><i></i><i></i></span>
+              <span class="ha-url"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="currentColor" stroke-width="2"/></svg>app.ticket-generator.com</span>
+            </div>
+            <div class="ha-body">
+              <div class="ha-side">
+                <span class="ha-brand"><img src="assets/tg-icon.svg" alt="" width="18" height="18">Ticket Generator</span>
+                <span class="is-on">Manage Events</span><span>API</span><span>Ticket Validator</span><span>Venue Layout</span><span>Settings</span>
+              </div>
+              <div class="ha-main">
+                <p class="ha-crumb">Manage Events / <b data-ha="name">Riverside Music Festival</b> / <span>Guest Tickets</span></p>
+                <div class="ha-tabs"><span>Event Details</span><span>Ticket Design</span><span>Event Page</span><span class="is-on">Guest Tickets</span><span>Box Office</span><span>Analytics</span></div>
+                <div class="ha-stats">
+                  <div class="ha-card"><small>Tickets generated</small><b data-ha-gen>1,251</b></div>
+                  <div class="ha-card"><small>Checked in</small><b class="is-green" data-ha-in>814</b></div>
+                  <div class="ha-card"><small>Platform commission</small><b>$0.00</b></div>
+                </div>
+                <div class="ha-grid">
+                  <div class="ha-card ha-guests">
+                    <p class="ha-h">Guest tickets <span class="ha-live"><i></i>Live</span></p>
+                    <ul>
+                <li class="ha-row" data-ha-row>
+                  <span class="ha-av">SR</span>
+                  <span class="ha-who"><b>Sam Rivera</b><small>General Admission</small></span>
+                  <span class="ha-ch ha-ch--mail"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="m3 7 9 6 9-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Email</span>
+                  <span class="ha-st">Sent</span>
+                </li>
+                <li class="ha-row" data-ha-row>
+                  <span class="ha-av">JL</span>
+                  <span class="ha-who"><b>Jordan Lee</b><small>General Admission</small></span>
+                  <span class="ha-ch ha-ch--sms"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>SMS</span>
+                  <span class="ha-st">Sent</span>
+                </li>
+                <li class="ha-row" data-ha-row data-ha-guest-row>
+                  <span class="ha-av" data-ha="initials">PS</span>
+                  <span class="ha-who"><b data-ha="guest">Priya Shah</b><small>General Admission</small></span>
+                  <span class="ha-ch ha-ch--mail"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="m3 7 9 6 9-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Email</span>
+                  <span class="ha-st is-in"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Checked in</span>
+                </li>
+                <li class="ha-row" data-ha-row>
+                  <span class="ha-av">AM</span>
+                  <span class="ha-who"><b>Alex Morgan</b><small>VIP Pass</small></span>
+                  <span class="ha-ch ha-ch--wa"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.3Z"/></svg>WhatsApp</span>
+                  <span class="ha-st is-in"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Checked in</span>
+                </li>
+                    </ul>
+                  </div>
+                  <div class="ha-card ha-chart">
+                    <p class="ha-h">Check-ins by hour</p>
+                    <div class="ha-bars" data-ha-bars>
+                      <span style="--h:38%"><i></i>4 PM</span><span style="--h:62%"><i></i>5 PM</span><span class="is-peak" style="--h:94%"><i></i>6 PM</span><span style="--h:78%"><i></i>7 PM</span><span style="--h:48%"><i></i>8 PM</span><span style="--h:22%"><i></i>9 PM</span>
+                    </div>
+                    <p class="ha-peak"><span>Peak entry</span><b>6 PM · Gate A</b></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ha-toast" aria-hidden="true">
+            <span class="ha-toast-ic" data-ha-toast-ic><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="m3 7 9 6 9-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
+            <span><b data-ha-toast-title>Ticket sent via Email</b><small data-ha-toast-meta>Sam Rivera · just now</small></span>
+          </div>
+
+          <!-- the editable ticket -->
+          <div class="ha-ticket-wrap">
+            <figure class="ha-ticket" data-ha-ticket>
+              <div class="ha-tk-main">
+                <span class="ha-tk-type">General Admission</span>
+                <label class="ha-field ha-f-name"><span class="sr-only">Event name</span><input type="text" value="Riverside Music Festival" maxlength="30" data-ha-input="name" spellcheck="false" autocomplete="off"></label>
+                <span class="ha-tk-line">
+                  <label class="ha-field"><span class="sr-only">Date</span><input type="text" value="12 Dec, 2026" maxlength="14" data-ha-input="date" spellcheck="false" autocomplete="off"></label>
+                  <span aria-hidden="true">·</span>
+                  <label class="ha-field"><span class="sr-only">Venue</span><input type="text" value="Riverside Park" maxlength="22" data-ha-input="venue" spellcheck="false" autocomplete="off"></label>
+                </span>
+                <span class="ha-tk-guest">Guest <label class="ha-field"><span class="sr-only">Guest name</span><input type="text" value="Priya Shah" maxlength="20" data-ha-input="guest" spellcheck="false" autocomplete="off"></label></span>
+              </div>
+              <div class="ha-tk-stub">
+                <svg class="ha-qr" viewBox="0 0 25 25" shape-rendering="crispEdges" data-ha-qr aria-hidden="true"></svg>
+                <small>Ticket Code</small>
+                <b class="mono">2580279042</b>
+              </div>
+            </figure>
+            <div class="ha-edit">
+              <span class="ha-edit-hint"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m4 20 4.5-1L19 8.5 15.5 5 5 15.5 4 20Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Try it: edit the ticket</span>
+              <span class="ha-swatches" role="radiogroup" aria-label="Ticket colour">
+                <button type="button" role="radio" aria-checked="true" class="is-on" style="--c:#181d27" data-ha-colour="#181d27" aria-label="Midnight"></button>
+                <button type="button" role="radio" aria-checked="false" style="--c:#1570ef" data-ha-colour="#1570ef" aria-label="Blue"></button>
+                <button type="button" role="radio" aria-checked="false" style="--c:#079455" data-ha-colour="#079455" aria-label="Green"></button>
+                <button type="button" role="radio" aria-checked="false" style="--c:#6938ef" data-ha-colour="#6938ef" aria-label="Purple"></button>
+                <button type="button" role="radio" aria-checked="false" style="--c:#c2407e" data-ha-colour="#c2407e" aria-label="Rose"></button>
+              </span>
+            </div>
+          </div>
+
+          <div class="ha-phone" aria-hidden="true">
+            <div class="ha-ph-screen">
+              <small>Ticket Validator</small>
+              <b data-ha="name">Riverside Music Festival</b>
+              <span class="ha-ph-scan"><svg class="ha-qr" viewBox="0 0 25 25" shape-rendering="crispEdges" data-ha-qr></svg><i></i></span>
+              <div class="ha-ph-ok">
+                <p><b>VALID TICKET</b><span class="ha-ph-tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></p>
+                <small data-ha-scan-name>Priya Shah</small>
+                <small data-ha-scan-type>General Admission</small>
+                <span class="ha-ph-btn">SCAN NEW TICKET</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -336,15 +451,15 @@
         <header class="j-intro" id="features">
           <p class="eyebrow">Backstage Pass</p>
           <h2>5 easy steps to get started<span class="d-only"> with event Ticket&nbsp;Generator</span></h2>
-          <p>From setup to ticketing, manage your entire event in five easy steps.</p>
+          <p>From setup to ticketing, manage your entire event in five easy steps</p>
         </header>
 
         <!-- on phones this is one swipe row; on desktop the wrapper is invisible -->
         <div class="step-row" data-step-row>
         <article class="step" id="step-1" data-step="1">
           <span class="step-num mono">01 · Create</span>
-          <h3>Who needs a designer?</h3>
-          <p><span class="d-only">Sign up free, click <strong>Create New Event</strong>, and design visually appealing tickets without a graphic designer. Add a background image or color, your logo, and event details — or upload your own design.</span><span class="m-only">Design your tickets and event page in minutes. Pick a template or upload your own design.</span></p>
+          <h3>Create Event</h3>
+          <p><span class="d-only">Create a free account, no credit card required. Once logged in, click on <strong>Create New Event</strong>. Enter event details and design your tickets.</span><span class="m-only">Design your tickets and event page in minutes. Pick a template or upload your own design.</span></p>
           <ul class="checks">
             <li>Ready-made templates or your own artwork</li>
             <li>Custom event registration page with images, venue, and contact details</li>
@@ -353,8 +468,8 @@
 
         <article class="step" data-step="2">
           <span class="step-num mono">02 · Sell</span>
-          <h3>Pocket every penny</h3>
-          <p><span class="d-only">Connect your Stripe, PayPal, or Razorpay account and payments go directly to you. Keep 100% of your ticket sales — no hidden charges or platform fees.</span><span class="m-only">Connect Stripe, PayPal, or Razorpay. Payments go straight to you and you keep 100% of sales.</span></p>
+          <h3>Payment</h3>
+          <p><span class="d-only">Connect a payment gateway (Stripe, PayPal, or Razorpay) to start selling tickets</span><span class="m-only">Connect Stripe, PayPal, or Razorpay. Payments go straight to you and you keep 100% of sales.</span></p>
           <ul class="checks">
             <li>General Admission, Early Bird, VIP — as many ticket types as you need</li>
             <li>Pay-as-you-go: no subscriptions, no recurring costs</li>
@@ -363,8 +478,8 @@
 
         <article class="step" data-step="3">
           <span class="step-num mono">03 · Send</span>
-          <h3>Say goodbye to ticketing headaches</h3>
-          <p><span class="d-only">Digital tickets go out automatically to every guest who registers. Send them via email, SMS, or WhatsApp — or export secure, printable files.</span><span class="m-only">Every guest gets a ticket automatically by email, SMS, or WhatsApp.</span></p>
+          <h3>Distribute Tickets</h3>
+          <p><span class="d-only">Send tickets via SMS, email, or WhatsApp</span><span class="m-only">Every guest gets a ticket automatically by email, SMS, or WhatsApp.</span></p>
           <ul class="checks">
             <li>Sent automatically to every registered guest</li>
             <li>Lost a ticket? Find it and resend in seconds</li>
@@ -373,8 +488,8 @@
 
         <article class="step" data-step="4">
           <span class="step-num mono">04 · Scan</span>
-          <h3>Bouncer-level security</h3>
-          <p><span class="d-only">Add multiple coordinators to validate entries with the free Ticket Validator app or its web version. Scan the QR Code or enter the ticket code, and monitor every scan in real time.</span><span class="m-only">Scan QR Codes at the gate with the free Ticket Validator app. Duplicates are blocked instantly.</span></p>
+          <h3>Validate Entries</h3>
+          <p><span class="d-only">Use either Ticket Validator mobile app or web version to validate entries</span><span class="m-only">Scan QR Codes at the gate with the free Ticket Validator app. Duplicates are blocked instantly.</span></p>
           <ul class="checks">
             <li>Unique QR Code on every ticket</li>
             <li>Duplicate and fraudulent entries blocked instantly</li>
@@ -403,12 +518,12 @@
       <div class="container">
         <div class="j-end">
           <div>
-            <h3 id="cta-mid-title">Ready to issue your first ticket?</h3>
+            <h3 id="cta-mid-title">Ready to try event ticket generator?</h3>
             <p class="j-end-meta"><span>First 10 tickets free</span><i></i><span>Free account</span><i></i><span>No credit card required</span></p>
           </div>
           <div class="j-end-cta">
             <a href="demo.html" class="btn btn-secondary btn-lg">Book a Demo</a>
-            <a href="https://tg-full-revamp.vercel.app/signup" class="btn btn-primary btn-lg">Create Your Event</a>
+            <a href="https://tg-full-revamp.vercel.app/signup" class="btn btn-primary btn-lg">Try Ticket Generator</a>
           </div>
         </div>
       </div>
@@ -513,7 +628,7 @@
         <header class="hfs-head">
           <p class="eyebrow">Launch Options</p>
           <h2 id="lo-title">What kind of event are you planning?</h2>
-          <p>Launch your first event in minutes. Pick the ticket that fits and tear it off.</p>
+          <p>Launch your first event in minutes. Select the best-fit and get started.</p>
         </header>
         <ul class="lo-grid">
           <li class="lo" style="--tint: #e6f0ff; --accent: #175cd3;">
@@ -528,18 +643,12 @@
           <li class="lo" style="--tint: #e6f0ff; --accent: #175cd3;">
             <div class="lo-art"><img src="assets/launch/free.svg" alt="An event page with guests registering" width="377" height="252" loading="lazy" decoding="async"></div>
             <div class="lo-body">
-              <h3 class="lo-title">Free Registrations</h3>
-              <p class="lo-text">Create an event page and let guests register for free.</p>
-              <ol class="lo-steps"><li>Publish an event page</li><li>Guests sign up for free</li></ol>
+              <h3 class="lo-title">Free &amp; Paid Registrations</h3>
+              <p class="lo-text">Create an event page and let guests register for free, or sell tickets, collect payments, and keep 100% of your earnings.</p>
+              <ol class="lo-steps"><li>Publish an event page</li><li>Guests register free, or pay to your account</li></ol>
             </div>
             <a class="lo-cta" href="https://tg-full-revamp.vercel.app/signup">Get Started <span aria-hidden="true">→</span></a>
-          </li>
-          <li class="lo" style="--tint: #e6f0ff; --accent: #175cd3;">
-            <div class="lo-art"><img src="assets/launch/paid.svg" alt="A ticket sales dashboard showing earnings" width="377" height="252" loading="lazy" decoding="async"></div>
-            <div class="lo-body">
-              <h3 class="lo-title">Paid Registrations</h3>
-              <p class="lo-text">Sell tickets, collect payments, and keep 100% of your earnings.</p>
-              <ol class="lo-steps"><li>Set ticket prices</li><li>Payments go to your account</li></ol>
+          </li><li>Payments go to your account</li></ol>
             </div>
             <a class="lo-cta" href="https://tg-full-revamp.vercel.app/signup">Get Started <span aria-hidden="true">→</span></a>
           </li>
@@ -593,35 +702,35 @@
               <h3>Setup event tickets in a minute</h3>
               <p><span class="d-only">Customize tickets with your branding, logos, and event details using ready-made templates or upload your own designs. Send tickets automatically via SMS, WhatsApp, or email.</span><span class="m-only">Brand your tickets with a template or your own design, then send them automatically by SMS, WhatsApp or email.</span></p>
             </div>
-            <div class="cw-art"><img src="assets/clearwins/win-1.webp" alt="Create customized tickets with ease and send them automatically via SMS, WhatsApp, or email" width="1120" height="692" loading="lazy" decoding="async"></div>
+            <div class="cw-art"><svg class="cw-svg" viewBox="0 0 560 360" role="img" aria-label="Pick a ticket template, add your logo and colours, then send tickets by email, SMS or WhatsApp" font-family="Inter, system-ui, sans-serif"><defs><filter id="cw-sh0" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#1a1f33" flood-opacity=".07"/></filter></defs><rect x="20" y="40" width="300" height="280" rx="14" fill="#fff" stroke="#e5e8f0" filter="url(#cw-sh0)"/><text x="40" y="70" font-size="14" font-weight="600" fill="#181d27" text-anchor="start">Ticket Design</text><text x="40" y="92" font-size="11" font-weight="400" fill="#9e9da4" text-anchor="start">Templates</text><rect x="40" y="102" width="80" height="46" rx="8" fill="#1570ef" opacity="1"/><rect x="50" y="114" width="40" height="6" rx="3.0" fill="#fff" opacity="0.9"/><rect x="50" y="126" width="26" height="5" rx="2.5" fill="#fff" opacity="0.6"/><rect x="100" y="110" width="14" height="14" rx="3" fill="#fff" opacity=".9"/><rect x="37" y="99" width="86" height="52" rx="10" fill="none" stroke="#1570ef" stroke-width="2"/><rect x="130" y="102" width="80" height="46" rx="8" fill="#6938ef" opacity="0.85"/><rect x="140" y="114" width="40" height="6" rx="3.0" fill="#fff" opacity="0.9"/><rect x="140" y="126" width="26" height="5" rx="2.5" fill="#fff" opacity="0.6"/><rect x="190" y="110" width="14" height="14" rx="3" fill="#fff" opacity=".9"/><rect x="220" y="102" width="80" height="46" rx="8" fill="#079455" opacity="0.85"/><rect x="230" y="114" width="40" height="6" rx="3.0" fill="#fff" opacity="0.9"/><rect x="230" y="126" width="26" height="5" rx="2.5" fill="#fff" opacity="0.6"/><rect x="280" y="110" width="14" height="14" rx="3" fill="#fff" opacity=".9"/><rect x="40" y="168" width="196" height="128" rx="12" fill="#1570ef"/><rect x="236" y="168" width="64" height="128" rx="12" fill="#fff" stroke="#e9eaeb"/><line x1="236" y1="176" x2="236" y2="288" stroke="#d5d7da" stroke-width="2" stroke-dasharray="4 4"/><rect x="54" y="182" width="30" height="30" rx="8" fill="#fff" fill-opacity=".2" stroke="#fff" stroke-dasharray="3 3"/><text x="69" y="202" font-size="16" font-weight="500" fill="#fff" text-anchor="middle">+</text><text x="92" y="201" font-size="11" font-weight="500" fill="#fff" text-anchor="start">Add logo</text><text x="54" y="238" font-size="16" font-weight="600" fill="#fff" text-anchor="start">Leaders Summit</text><rect x="54" y="252" width="120" height="7" rx="3.5" fill="#fff" opacity="0.55"/><rect x="54" y="266" width="80" height="7" rx="3.5" fill="#fff" opacity="0.35"/><rect x="246" y="208" width="44" height="44" rx="4" fill="#fff"/><rect x="247.2" y="209.2" width="9.6" height="9.6" rx="2.0" fill="none" stroke="#181d27" stroke-width="2.4"/><rect x="250.0" y="212.0" width="4.0" height="4.0" rx="1.0" fill="#181d27"/><rect x="279.2" y="209.2" width="9.6" height="9.6" rx="2.0" fill="none" stroke="#181d27" stroke-width="2.4"/><rect x="282.0" y="212.0" width="4.0" height="4.0" rx="1.0" fill="#181d27"/><rect x="247.2" y="241.2" width="9.6" height="9.6" rx="2.0" fill="none" stroke="#181d27" stroke-width="2.4"/><rect x="250.0" y="244.0" width="4.0" height="4.0" rx="1.0" fill="#181d27"/><rect x="262.0" y="208.0" width="3.6" height="3.6" rx="1.0" fill="#181d27"/><rect x="266.0" y="212.0" width="3.6" height="3.6" rx="1.0" fill="#181d27"/><rect x="262.0" y="216.0" width="3.6" height="3.6" rx="1.0" fill="#181d27"/><rect x="270.0" y="216.0" width="3.6" height="3.6" rx="1.0" fill="#181d27"/><rect x="262.0" y="224.0" width="3.6" height="3.6" rx="1.0" fill="#181d27"/><rect x="266.0" y="224.0" width="3.6" height="3.6" rx="1.0" fill="#181d27"/><rect x="274.0" y="224.0" width="3.6" height="3.6" rx="1.0" fill="#181d27"/><rect x="282.0" y="224.0" width="3.6" height="3.6" rx="1.0" fill="#181d27"/><rect x="246.0" y="224.0" width="3.6" height="3.6" rx="1.0" fill="#181d27"/><rect x="254.0" y="228.0" width="3.6" height="3.6" rx="1.0" fill="#181d27"/><rect x="262.0" y="232.0" width="3.6" height="3.6" rx="1.0" fill="#181d27"/><rect x="270.0" y="232.0" width="3.6" height="3.6" rx="1.0" fill="#181d27"/><rect x="278.0" y="232.0" width="3.6" height="3.6" rx="1.0" fill="#181d27"/><rect x="286.0" y="232.0" width="3.6" height="3.6" rx="1.0" fill="#181d27"/><rect x="266.0" y="236.0" width="3.6" height="3.6" rx="1.0" fill="#181d27"/><rect x="282.0" y="240.0" width="3.6" height="3.6" rx="1.0" fill="#181d27"/><rect x="262.0" y="240.0" width="3.6" height="3.6" rx="1.0" fill="#181d27"/><rect x="270.0" y="244.0" width="3.6" height="3.6" rx="1.0" fill="#181d27"/><rect x="278.0" y="248.0" width="3.6" height="3.6" rx="1.0" fill="#181d27"/><rect x="286.0" y="248.0" width="3.6" height="3.6" rx="1.0" fill="#181d27"/><rect x="262.0" y="248.0" width="3.6" height="3.6" rx="1.0" fill="#181d27"/><rect x="286.0" y="240.0" width="3.6" height="3.6" rx="1.0" fill="#181d27"/><rect x="258.0" y="224.0" width="3.6" height="3.6" rx="1.0" fill="#181d27"/><rect x="250.0" y="232.0" width="3.6" height="3.6" rx="1.0" fill="#181d27"/><rect x="196" y="16" width="112" height="34" rx="17" fill="#fff" stroke="#e5e8f0" filter="url(#cw-sh0)"/><circle cx="216" cy="33" r="8" fill="#1570ef"/><circle cx="240" cy="33" r="8" fill="#6938ef"/><circle cx="264" cy="33" r="8" fill="#079455"/><circle cx="288" cy="33" r="8" fill="#f4a7c8"/><circle cx="216" cy="33" r="11" fill="none" stroke="#1570ef" stroke-width="1.5"/><path d="M322 230 C 350 230, 352 190, 378 178" fill="none" stroke="#98a2b3" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="0"/><circle cx="378" cy="178" r="3" fill="#98a2b3"/><rect x="384" y="110" width="158" height="176" rx="14" fill="#fff" stroke="#e5e8f0" filter="url(#cw-sh0)"/><text x="402" y="140" font-size="14" font-weight="600" fill="#181d27" text-anchor="start">Send via</text><rect x="400" y="156" width="126" height="32" rx="8" fill="#fafafa" opacity="1"/><circle cx="418" cy="172" r="11" fill="#eff4ff"/><g transform="translate(411 165) scale(.58)" fill="none" stroke="#175cd3" stroke-width="2.4" stroke-linejoin="round"><path d="M3 6h18v12H3zM3 7l9 6 9-6"/></g><text x="436" y="176" font-size="11.5" font-weight="500" fill="#414651" text-anchor="start">Email</text><circle cx="514" cy="172" r="6" fill="#067647"/><path d="M511 172 l2 2 4-4" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round"/><rect x="400" y="196" width="126" height="32" rx="8" fill="#fafafa" opacity="0.85"/><circle cx="418" cy="212" r="11" fill="#fef6ee"/><g transform="translate(411 205) scale(.58)" fill="none" stroke="#b93815" stroke-width="2.4" stroke-linejoin="round"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 20 12Z"/></g><text x="436" y="216" font-size="11.5" font-weight="500" fill="#414651" text-anchor="start">SMS</text><circle cx="514" cy="212" r="6" fill="#067647"/><path d="M511 212 l2 2 4-4" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round"/><rect x="400" y="236" width="126" height="32" rx="8" fill="#fafafa" opacity="0.7"/><circle cx="418" cy="252" r="11" fill="#ecfdf3"/><g transform="translate(411 245) scale(.58)" fill="none" stroke="#067647" stroke-width="2.4" stroke-linejoin="round"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z"/></g><text x="436" y="256" font-size="11.5" font-weight="500" fill="#414651" text-anchor="start">WhatsApp</text><circle cx="514" cy="252" r="6" fill="#067647"/><path d="M511 252 l2 2 4-4" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></div>
           </li>
           <li class="cw">
             <div class="cw-copy">
               <h3>Keep 100% of your ticket sales revenue</h3>
-              <p><span class="d-only">Ticket&nbsp;Generator integrates with your Stripe, PayPal, or Razorpay account so payments go directly to you. No hidden charges or platform fees.</span><span class="m-only">Payments go straight to your Stripe, PayPal or Razorpay account. No hidden charges or platform fees.</span></p>
+              <p><span class="d-only">Keep 100% of your ticket sales. Ticket&nbsp;Generator integrates with your Stripe, PayPal, or Razorpay account so payments go directly to you. No hidden charges or platform fees.</span><span class="m-only">Payments go straight to your Stripe, PayPal or Razorpay account. No hidden charges or platform fees.</span></p>
             </div>
-            <div class="cw-art"><img src="assets/clearwins/win-2.webp" alt="Select a payment gateway and keep 100% of your ticket sales" width="1120" height="746" loading="lazy" decoding="async"></div>
+            <div class="cw-art"><svg class="cw-svg" viewBox="0 0 560 360" role="img" aria-label="Connect Stripe, PayPal or Razorpay; ticket sales pay out to your account with zero commission" font-family="Inter, system-ui, sans-serif"><defs><filter id="cw-sh1" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#1a1f33" flood-opacity=".07"/></filter></defs><rect x="20" y="50" width="250" height="250" rx="14" fill="#fff" stroke="#e5e8f0" filter="url(#cw-sh1)"/><text x="40" y="80" font-size="14" font-weight="600" fill="#181d27" text-anchor="start">Select payment gateway</text><rect x="38" y="98" width="214" height="50" rx="10" fill="#f5f8ff" stroke="#1570ef" stroke-width="1.5"/><circle cx="64" cy="123" r="14" fill="#635bff"/><text x="64" y="128" font-size="13" font-weight="600" fill="#fff" text-anchor="middle">S</text><text x="88" y="121" font-size="13" font-weight="600" fill="#181d27" text-anchor="start">Stripe</text><text x="88" y="136" font-size="10.5" font-weight="400" fill="#067647" text-anchor="start">Connected</text><circle cx="232" cy="123" r="8" fill="#fff" stroke="#1570ef" stroke-width="1.5"/><circle cx="232" cy="123" r="4" fill="#1570ef"/><rect x="38" y="160" width="214" height="50" rx="10" fill="#fff" stroke="#e9eaeb" stroke-width="1"/><circle cx="64" cy="185" r="14" fill="#003087"/><text x="64" y="190" font-size="13" font-weight="600" fill="#fff" text-anchor="middle">P</text><text x="88" y="183" font-size="13" font-weight="600" fill="#181d27" text-anchor="start">PayPal</text><text x="88" y="198" font-size="10.5" font-weight="400" fill="#9e9da4" text-anchor="start">Connect</text><circle cx="232" cy="185" r="8" fill="#fff" stroke="#d5d7da" stroke-width="1.5"/><rect x="38" y="222" width="214" height="50" rx="10" fill="#fff" stroke="#e9eaeb" stroke-width="1"/><circle cx="64" cy="247" r="14" fill="#0c2451"/><text x="64" y="252" font-size="13" font-weight="600" fill="#fff" text-anchor="middle">R</text><text x="88" y="245" font-size="13" font-weight="600" fill="#181d27" text-anchor="start">Razorpay</text><text x="88" y="260" font-size="10.5" font-weight="400" fill="#9e9da4" text-anchor="start">Connect</text><circle cx="232" cy="247" r="8" fill="#fff" stroke="#d5d7da" stroke-width="1.5"/><path d="M272 124 C 300 124, 306 150, 328 150" fill="none" stroke="#98a2b3" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="0"/><circle cx="328" cy="150" r="3" fill="#98a2b3"/><rect x="334" y="70" width="206" height="200" rx="14" fill="#fff" stroke="#e5e8f0" filter="url(#cw-sh1)"/><text x="354" y="100" font-size="12" font-weight="500" fill="#717680" text-anchor="start">Payout to your account</text><text x="354" y="132" font-size="26" font-weight="600" fill="#181d27" text-anchor="start">$12,480.00</text><text x="354" y="156" font-size="11" font-weight="400" fill="#717680" text-anchor="start">Ticket sales</text><text x="520" y="156" font-size="11" font-weight="500" fill="#181d27" text-anchor="end">$12,480.00</text><text x="354" y="178" font-size="11" font-weight="400" fill="#717680" text-anchor="start">Platform commission</text><text x="520" y="178" font-size="11" font-weight="600" fill="#067647" text-anchor="end">$0.00</text><line x1="354" y1="190" x2="520" y2="190" stroke="#f1f2f3" stroke-width=".6"/><rect x="354" y="204" width="166" height="10" rx="5.0" fill="#e9eaeb" opacity="1"/><rect x="354" y="204" width="166" height="10" rx="5.0" fill="#17b26a" opacity="1"/><text x="354" y="234" font-size="11" font-weight="400" fill="#717680" text-anchor="start">You keep</text><text x="520" y="234" font-size="13" font-weight="600" fill="#067647" text-anchor="end">100%</text><rect x="392" y="286" width="108" height="26" rx="13.0" fill="#ecfdf3" stroke="#abefc6"/><text x="446.0" y="303.14" font-size="11.5" font-weight="500" fill="#067647" text-anchor="middle">No hidden fees</text></svg></div>
           </li>
           <li class="cw">
             <div class="cw-copy">
               <h3>Your tickets, your way</h3>
               <p><span class="d-only">Easily create multiple ticket types such as General Admission, VIP Passes, Early Bird Specials, and more. Tailor each ticket to meet your event's specific needs.</span><span class="m-only">Create General Admission, VIP, Early Bird and other ticket types, each tailored to your event.</span></p>
             </div>
-            <div class="cw-art"><img src="assets/clearwins/win-3.webp" alt="Choose from ticket categories like early bird, VIP, or general admission" width="1120" height="736" loading="lazy" decoding="async"></div>
+            <div class="cw-art"><svg class="cw-svg" viewBox="0 0 560 360" role="img" aria-label="Early Bird, General Admission and VIP ticket types, each with its own price and quantity" font-family="Inter, system-ui, sans-serif"><defs><filter id="cw-sh2" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#1a1f33" flood-opacity=".07"/></filter></defs><g opacity="0.55"><rect x="60" y="46" width="300" height="118" rx="14" fill="#fff" stroke="#e5e8f0" filter="url(#cw-sh2)"/><rect x="60" y="46" width="8" height="118" rx="4" fill="#079455"/><text x="86" y="78" font-size="15" font-weight="600" fill="#181d27" text-anchor="start">Early Bird</text><text x="86" y="98" font-size="11" font-weight="400" fill="#9e9da4" text-anchor="start">Ends 1 Mar</text><text x="340" y="80" font-size="18" font-weight="600" fill="#181d27" text-anchor="end">$15</text><rect x="86" y="118" width="150" height="8" rx="4.0" fill="#f5f5f5" opacity="0.9"/><rect x="86" y="134" width="96" height="8" rx="4.0" fill="#f5f5f5" opacity="0.6"/></g><g opacity="0.8"><rect x="86" y="116" width="300" height="118" rx="14" fill="#fff" stroke="#e5e8f0" filter="url(#cw-sh2)"/><rect x="86" y="116" width="8" height="118" rx="4" fill="#1570ef"/><text x="112" y="148" font-size="15" font-weight="600" fill="#181d27" text-anchor="start">General Admission</text><text x="112" y="168" font-size="11" font-weight="400" fill="#9e9da4" text-anchor="start">412 left</text><text x="366" y="150" font-size="18" font-weight="600" fill="#181d27" text-anchor="end">$25</text><rect x="112" y="188" width="150" height="8" rx="4.0" fill="#f5f5f5" opacity="0.9"/><rect x="112" y="204" width="96" height="8" rx="4.0" fill="#f5f5f5" opacity="0.6"/></g><g opacity="1"><rect x="112" y="186" width="300" height="118" rx="14" fill="#fff" stroke="#e5e8f0" filter="url(#cw-sh2)"/><rect x="112" y="186" width="8" height="118" rx="4" fill="#6938ef"/><text x="138" y="218" font-size="15" font-weight="600" fill="#181d27" text-anchor="start">VIP Pass</text><text x="138" y="238" font-size="11" font-weight="400" fill="#9e9da4" text-anchor="start">Backstage access</text><text x="392" y="220" font-size="18" font-weight="600" fill="#181d27" text-anchor="end">$60</text><rect x="138" y="258" width="150" height="8" rx="4.0" fill="#f5f5f5" opacity="0.9"/><rect x="138" y="274" width="96" height="8" rx="4.0" fill="#f5f5f5" opacity="0.6"/></g><rect x="150" y="312" width="150" height="30" rx="15.0" fill="#fff" stroke="#d5d7da"/><text x="225.0" y="331.32" font-size="12" font-weight="500" fill="#175cd3" text-anchor="middle">+ Add ticket type</text><path d="M440 120 C 470 118, 476 150, 456 176" fill="none" stroke="#98a2b3" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="0"/><circle cx="456" cy="176" r="3" fill="#98a2b3"/><rect x="400" y="40" width="140" height="70" rx="14" fill="#fff" stroke="#e5e8f0" filter="url(#cw-sh2)"/><text x="416" y="64" font-size="11" font-weight="400" fill="#717680" text-anchor="start">Ticket types</text><text x="416" y="92" font-size="18" font-weight="600" fill="#181d27" text-anchor="start">3 active</text><rect x="420" y="190" width="120" height="96" rx="14" fill="#fff" stroke="#e5e8f0" filter="url(#cw-sh2)"/><text x="436" y="214" font-size="11" font-weight="400" fill="#9e9da4" text-anchor="start">Quantity</text><text x="436" y="240" font-size="18" font-weight="600" fill="#181d27" text-anchor="start">500</text><rect x="436" y="256" width="88" height="8" rx="4.0" fill="#e9eaeb" opacity="1"/><rect x="436" y="256" width="62" height="8" rx="4.0" fill="#1570ef" opacity="1"/></svg></div>
           </li>
           <li class="cw">
             <div class="cw-copy">
               <h3>Run smarter events with real-time insights</h3>
               <p><span class="d-only">Get live insights on attendee registrations, ticket sales, and event check-ins. Export comprehensive reports to measure success, identify trends, and plan smarter for future events.</span><span class="m-only">Watch registrations, sales and check-ins live, and export reports to plan your next event.</span></p>
             </div>
-            <div class="cw-art"><img src="assets/clearwins/win-4.webp" alt="Analyze event data to plan better events" width="1120" height="686" loading="lazy" decoding="async"></div>
+            <div class="cw-art"><svg class="cw-svg" viewBox="0 0 560 360" role="img" aria-label="A live registrations chart, check-in split and one-click report export" font-family="Inter, system-ui, sans-serif"><defs><filter id="cw-sh3" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#1a1f33" flood-opacity=".07"/></filter></defs><rect x="20" y="36" width="340" height="250" rx="14" fill="#fff" stroke="#e5e8f0" filter="url(#cw-sh3)"/><text x="40" y="66" font-size="14" font-weight="600" fill="#181d27" text-anchor="start">Registrations</text><circle cx="300" cy="62" r="4" fill="#17b26a"/><text x="310" y="66" font-size="11" font-weight="500" fill="#067647" text-anchor="start">Live</text><text x="40" y="98" font-size="26" font-weight="600" fill="#181d27" text-anchor="start">1,251</text><rect x="118" y="82" width="58" height="20" rx="10.0" fill="#ecfdf3" stroke="#abefc6"/><text x="147.0" y="95.78" font-size="10.5" font-weight="500" fill="#067647" text-anchor="middle">+18%</text><text x="40" y="134" font-size="10" font-weight="400" fill="#9e9da4" text-anchor="start">500</text><line x1="66" y1="130" x2="340" y2="130" stroke="#f1f2f3" stroke-width=".8"/><text x="40" y="184" font-size="10" font-weight="400" fill="#9e9da4" text-anchor="start">250</text><line x1="66" y1="180" x2="340" y2="180" stroke="#f1f2f3" stroke-width=".8"/><text x="40" y="234" font-size="10" font-weight="400" fill="#9e9da4" text-anchor="start">0</text><line x1="66" y1="230" x2="340" y2="230" stroke="#f1f2f3" stroke-width=".8"/><path d="M70 222 C 100 214, 120 200, 150 196 S 200 170, 230 160 S 290 128, 336 120 L336 230 L70 230 Z" fill="#1570ef" opacity=".08"/><path d="M70 222 C 100 214, 120 200, 150 196 S 200 170, 230 160 S 290 128, 336 120" fill="none" stroke="#1570ef" stroke-width="2.2" stroke-linecap="round"/><circle cx="336" cy="120" r="4.5" fill="#fff" stroke="#1570ef" stroke-width="2"/><text x="74" y="252" font-size="10" font-weight="400" fill="#9e9da4" text-anchor="start">Mon</text><text x="126" y="252" font-size="10" font-weight="400" fill="#9e9da4" text-anchor="start">Tue</text><text x="178" y="252" font-size="10" font-weight="400" fill="#9e9da4" text-anchor="start">Wed</text><text x="230" y="252" font-size="10" font-weight="400" fill="#9e9da4" text-anchor="start">Thu</text><text x="282" y="252" font-size="10" font-weight="400" fill="#9e9da4" text-anchor="start">Fri</text><text x="334" y="252" font-size="10" font-weight="400" fill="#9e9da4" text-anchor="start">Sat</text><rect x="380" y="36" width="160" height="168" rx="14" fill="#fff" stroke="#e5e8f0" filter="url(#cw-sh3)"/><text x="396" y="62" font-size="12" font-weight="600" fill="#181d27" text-anchor="start">Check-ins</text><circle cx="430" cy="118" r="30" fill="none" stroke="#c3d7fb" stroke-width="12"/><path d="M430.0 88.0 A30 30 0 1 1 405.7 135.6" fill="none" stroke="#1570ef" stroke-width="12"/><text x="430" y="122" font-size="11" font-weight="600" fill="#181d27" text-anchor="middle">65%</text><circle cx="474" cy="104" r="4" fill="#1570ef"/><text x="482" y="108" font-size="10.5" font-weight="400" fill="#414651" text-anchor="start">In</text><circle cx="474" cy="126" r="4" fill="#c3d7fb"/><text x="482" y="130" font-size="10.5" font-weight="400" fill="#414651" text-anchor="start">Pending</text><rect x="396" y="168" width="128" height="8" rx="4.0" fill="#f5f5f5" opacity="0.9"/><rect x="396" y="182" width="90" height="8" rx="4.0" fill="#f5f5f5" opacity="0.5"/><path d="M460 206 C 460 232, 470 244, 470 262" fill="none" stroke="#98a2b3" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="0"/><circle cx="470" cy="262" r="3" fill="#98a2b3"/><rect x="400" y="268" width="140" height="44" rx="22" fill="#fff" stroke="#e5e8f0" filter="url(#cw-sh3)"/><g transform="translate(418 280)" fill="none" stroke="#175cd3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v12M5 9l5 5 5-5M3 18h14"/></g><text x="444" y="295" font-size="12" font-weight="600" fill="#175cd3" text-anchor="start">Export report</text></svg></div>
           </li>
           <li class="cw">
             <div class="cw-copy">
               <h3>Zero commissions, no hidden fees</h3>
               <p><span class="d-only">No subscriptions. No recurring costs. Just a simple, pay-as-you-go model that grows with your event needs. Pay only for what you use. Nothing more, nothing less.</span><span class="m-only">No subscriptions or recurring costs. Pay as you go, only for the tickets you use.</span></p>
             </div>
-            <div class="cw-art"><img src="assets/clearwins/win-5.webp" alt="No subscriptions with Ticket Generator" width="1120" height="684" loading="lazy" decoding="async"></div>
+            <div class="cw-art"><svg class="cw-svg" viewBox="0 0 560 360" role="img" aria-label="A receipt showing pay-as-you-go credits with no subscription, no commission and no hidden fees" font-family="Inter, system-ui, sans-serif"><defs><filter id="cw-sh4" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#1a1f33" flood-opacity=".07"/></filter></defs><rect x="150" y="24" width="260" height="312" rx="14" fill="#fff" stroke="#e5e8f0" filter="url(#cw-sh4)"/><path d="M150 302 l13 12 13-12 13 12 13-12 13 12 13-12 13 12 13-12 13 12 13-12 13 12 13-12 13 12 13-12 13 12 13-12 13 12 13-12 13 12 13-12" fill="none" stroke="#f1f2f3"/><text x="280" y="58" font-size="11" font-weight="500" fill="#717680" text-anchor="middle" font-family="JetBrains Mono, monospace">RECEIPT</text><text x="280" y="84" font-size="16" font-weight="600" fill="#181d27" text-anchor="middle">Pay as you go</text><text x="174" y="124" font-size="12" font-weight="400" fill="#414651" text-anchor="start">500 ticket credits</text><text x="386" y="124" font-size="12" font-weight="600" fill="#181d27" text-anchor="end">$250.00</text><line x1="174" y1="136" x2="386" y2="136" stroke="#f1f2f3" stroke-width=".6"/><text x="174" y="158" font-size="12" font-weight="400" fill="#414651" text-anchor="start">Monthly subscription</text><text x="386" y="158" font-size="12" font-weight="600" fill="#067647" text-anchor="end">$0.00</text><line x1="174" y1="170" x2="386" y2="170" stroke="#f1f2f3" stroke-width=".6"/><text x="174" y="192" font-size="12" font-weight="400" fill="#414651" text-anchor="start">Platform commission</text><text x="386" y="192" font-size="12" font-weight="600" fill="#067647" text-anchor="end">$0.00</text><line x1="174" y1="204" x2="386" y2="204" stroke="#f1f2f3" stroke-width=".6"/><text x="174" y="226" font-size="12" font-weight="400" fill="#414651" text-anchor="start">Hidden fees</text><text x="386" y="226" font-size="12" font-weight="600" fill="#067647" text-anchor="end">$0.00</text><line x1="174" y1="238" x2="386" y2="238" stroke="#f1f2f3" stroke-width=".6"/><text x="174" y="270" font-size="13" font-weight="600" fill="#181d27" text-anchor="start">Total</text><text x="386" y="270" font-size="18" font-weight="600" fill="#181d27" text-anchor="end">$250.00</text><text x="280" y="292" font-size="11" font-weight="400" fill="#9e9da4" text-anchor="middle">Credits never expire</text><g transform="rotate(-12 470 110)"><rect x="420" y="84" width="104" height="44" rx="8" fill="none" stroke="#067647" stroke-width="2"/><text x="472" y="104" font-size="13" font-weight="700" fill="#067647" text-anchor="middle" font-family="JetBrains Mono, monospace">ZERO</text><text x="472" y="119" font-size="9" font-weight="600" fill="#067647" text-anchor="middle" font-family="JetBrains Mono, monospace">COMMISSION</text></g><rect x="20" y="120" width="112" height="64" rx="14" fill="#fff" stroke="#e5e8f0" filter="url(#cw-sh4)"/><text x="36" y="144" font-size="11" font-weight="400" fill="#717680" text-anchor="start">Subscription</text><text x="36" y="168" font-size="16" font-weight="600" fill="#181d27" text-anchor="start">None</text><rect x="20" y="200" width="112" height="64" rx="14" fill="#fff" stroke="#e5e8f0" filter="url(#cw-sh4)"/><text x="36" y="224" font-size="11" font-weight="400" fill="#717680" text-anchor="start">You pay for</text><text x="36" y="248" font-size="13" font-weight="600" fill="#181d27" text-anchor="start">Tickets used</text><path d="M134 152 C 144 152, 146 140, 158 138" fill="none" stroke="#98a2b3" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="0"/><circle cx="158" cy="138" r="3" fill="#98a2b3"/></svg></div>
           </li>
         </ul>
       </div>
@@ -712,63 +821,63 @@
               <span class="hf-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span>
               <h3>Create buzz before the big day</h3>
             </div>
-            <p><span class="d-only">Share detailed information about your event with potential guests. Design a custom event registration page to accept registrations and payments. Add images, event venue, contact details, and more.</span><span class="m-only">Build an event page with images and venue details, and take registrations and payments on it.</span></p>
+            <p><span class="d-only">Share detailed information about your event with potential guests. With event Ticket&nbsp;Generator, design a custom event registration page to accept registrations and payments. Add images, event venue, contact details, and more.</span><span class="m-only">Build an event page with images and venue details, and take registrations and payments on it.</span></p>
           </li>
           <li class="hf" style="--tint: #fff1dc; --accent: #b54708;">
             <div class="hf-top">
               <span class="hf-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9a3 3 0 0 0 0 6v4h18v-4a3 3 0 0 1 0-6V5H3v4Z"/><path d="M14 5v2M14 11v2M14 17v2"/></svg></span>
               <h3>Branded tickets without a designer</h3>
             </div>
-            <p><span class="d-only">Create visually appealing tickets without a graphic designer. Customize your ticket design by adding a background image or color, logo and basic event details. Upload your own design or choose from templates.</span><span class="m-only">Add your background, logo and event details, upload your own design or pick a template. No designer needed.</span></p>
+            <p><span class="d-only">Create visually appealing tickets for an event, without a graphic designer. Customize your ticket design by adding a background image/color, logo, basic event details, etc. You can upload your own ticket design or choose from templates.</span><span class="m-only">Add your background, logo and event details, upload your own design or pick a template. No designer needed.</span></p>
           </li>
           <li class="hf" style="--tint: #e3f6ec; --accent: #067647;">
             <div class="hf-top">
               <span class="hf-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"/><path d="M3 16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V11a2 2 0 0 0-4 0z"/><path d="M5 18v2M19 18v2"/></svg></span>
               <h3>Seating plans for smarter events</h3>
             </div>
-            <p><span class="d-only">Create custom seat maps, assign sections, and let guests select their preferred seats. Whether it's a stadium or a custom venue, deliver a smooth booking experience without complex tools or manual work.</span><span class="m-only">Create custom seat maps, assign sections and let guests pick their seats, for a stadium or any custom venue.</span></p>
+            <p><span class="d-only">Create custom seat maps, assign sections, and let guests select their preferred seats. Whether it’s a stadium or a custom venue, Ticket&nbsp;Generator helps you deliver a smooth booking experience. All without complex tools or manual work.</span><span class="m-only">Create custom seat maps, assign sections and let guests pick their seats, for a stadium or any custom venue.</span></p>
           </li>
           <li class="hf" style="--tint: #efeaff; --accent: #5925dc;">
             <div class="hf-top">
               <span class="hf-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9h18v1.5a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0z"/><path d="M5 13v7h14v-7"/><path d="M10 20v-4h4v4"/></svg></span>
               <h3>Sell smarter at the counter</h3>
             </div>
-            <p><span class="d-only">Manage on-site ticket sales with Ticket&nbsp;Generator's box office software. Run a live box office alongside online sales, manage counters and agents, and control capacity, refunds and ticket availability.</span><span class="m-only">Run a live box office next to online sales, manage counters and agents, and control capacity and refunds.</span></p>
+            <p><span class="d-only">Manage on-site ticket sales effortlessly with Ticket&nbsp;Generator’s advanced box office software. Run a live box office alongside online sales, manage counters, and agents. Easily control capacity, refunds, and ticket availability as well.</span><span class="m-only">Run a live box office next to online sales, manage counters and agents, and control capacity and refunds.</span></p>
           </li>
           <li class="hf" style="--tint: #ffe9e3; --accent: #c4320a;">
             <div class="hf-top">
               <span class="hf-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4 20-7Z"/><path d="M22 2 11 13"/></svg></span>
               <h3>Say goodbye to ticketing headaches</h3>
             </div>
-            <p><span class="d-only">Export secure event tickets as printable files or send them to guests via email, SMS, and WhatsApp. Digital tickets are sent automatically to guests who have registered and provided contact details.</span><span class="m-only">Export printable tickets or send them by email, SMS and WhatsApp, automatically to every registered guest.</span></p>
+            <p><span class="d-only">Export secure event tickets as printable files or send them to guests via email, SMS, and WhatsApp. Digital event tickets will be sent automatically to guests who have registered and provided contact details.</span><span class="m-only">Export printable tickets or send them by email, SMS and WhatsApp, automatically to every registered guest.</span></p>
           </li>
           <li class="hf" style="--tint: #e6f0ff; --accent: #175cd3;">
             <div class="hf-top">
               <span class="hf-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><rect x="7" y="7" width="4" height="4"/><rect x="13" y="13" width="4" height="4"/><path d="M13 7h4v2M7 15v2h2"/></svg></span>
               <h3>QR Code ticket validation you can rely on</h3>
             </div>
-            <p><span class="d-only">Add multiple coordinators to validate tickets using the free Ticket Validator app. They can scan the QR Code or enter the ticket code. Monitor all scans in real time to prevent fraud and keep entry smooth.</span><span class="m-only">Coordinators scan QR Codes with the free Ticket Validator app, and you watch every scan live to stop fraud.</span></p>
+            <p><span class="d-only">Add multiple coordinators to validate tickets using the free Ticket Validator app. They can quickly scan the QR Code or enter the ticket code for validation. Monitor all scans in real time to prevent fraud and ensure smooth entry management.</span><span class="m-only">Coordinators scan QR Codes with the free Ticket Validator app, and you watch every scan live to stop fraud.</span></p>
           </li>
           <li class="hf" style="--tint: #fff1dc; --accent: #b54708;">
             <div class="hf-top">
               <span class="hf-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></span>
-              <h3>Know and grow from one dashboard</h3>
+              <h3>Know and grow from one event registration dashboard</h3>
             </div>
-            <p><span class="d-only">Make informed decisions with real-time data on tickets generated, registrations, attendance, total scans, and more. Track trends and use actionable insights for future event success.</span><span class="m-only">See tickets generated, registrations, attendance and scans in real time, and spot trends for your next event.</span></p>
+            <p><span class="d-only">Optimize your events and make informed decisions with real-time data on total tickets generated, total registrations, attendance, total scans, and more. Track trends and use actionable insights for future event success.</span><span class="m-only">See tickets generated, registrations, attendance and scans in real time, and spot trends for your next event.</span></p>
           </li>
           <li class="hf" style="--tint: #e3f6ec; --accent: #067647;">
             <div class="hf-top">
               <span class="hf-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg></span>
               <h3>One pass, endless experiences</h3>
             </div>
-            <p><span class="d-only">Add-ons let a single ticket cover more than entry: goodies, lunch or other exclusive perks, either bundled into the main ticket or sold as optional paid add-ons.</span><span class="m-only">Add-ons let one ticket cover goodies, lunch or exclusive perks, bundled in or sold as optional extras.</span></p>
+            <p><span class="d-only">Add-ons enable a single ticket to cover multiple event services and experiences. Beyond basic entry access, the same ticket can include additional components such as goodies, lunch, or other exclusive perks—either bundled within the main ticket or available as optional paid add-ons.</span><span class="m-only">Add-ons let one ticket cover goodies, lunch or exclusive perks, bundled in or sold as optional extras.</span></p>
           </li>
           <li class="hf" style="--tint: #efeaff; --accent: #5925dc;">
             <div class="hf-top">
               <span class="hf-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg></span>
               <h3>Automate with Ticket&nbsp;Generator API</h3>
             </div>
-            <p><span class="d-only">Integrate your event management system with the Ticket&nbsp;Generator API for real-time ticket generation and distribution. Automate workflows and deliver a smooth, branded ticketing experience.</span><span class="m-only">Connect your event system to the Ticket&nbsp;Generator API to generate and send branded tickets in real time.</span></p>
+            <p><span class="d-only">Integrate your event management system with Ticket&nbsp;Generator API to enable real-time ticket generation and distribution. Automate workflows seamlessly and deliver a smooth, branded ticketing experience to your attendees.</span><span class="m-only">Connect your event system to the Ticket&nbsp;Generator API to generate and send branded tickets in real time.</span></p>
           </li>
         </ul>
       </div>
@@ -778,7 +887,7 @@
     <section class="uc tkt" id="use-cases" aria-labelledby="uc-title" data-tkt="Use cases" data-uc>
       <header class="container sec-head">
         <p class="eyebrow">Use Cases</p>
-        <h2 id="uc-title">How organizers use Ticket&nbsp;Generator</h2>
+        <h2 id="uc-title">How Ticket&nbsp;Generator software is used in different areas?</h2>
       </header>
       <div class="uc-scroll" data-uc-scroll>
         <div class="uc-pin">
@@ -797,7 +906,7 @@
             <div class="uc-pile" data-uc-pile>
               <article class="uct is-in" style="--paper: #fff7e3; --r: -5deg; --x: -10px; --y: 8px; --from-r: 14deg;" data-uct>
                 <div class="uct-body">
-                  <div class="uct-media"><img src="assets/usecases/corporate.jpg" alt="Audience watching a speaker on stage at a corporate conference" width="1000" height="667" loading="lazy" decoding="async"></div>
+                  <div class="uct-media"><img src="assets/usecases/corporate.webp" alt="A speaker on a bright conference stage with the audience in the foreground" width="1200" height="800" loading="lazy" decoding="async"></div>
                   <div class="uct-main">
                     <h3 class="uct-title">Corporate Conferences &amp; Networking Events</h3>
                     <p class="uct-desc"><a href="https://ticket-generator.com/corporate-event-industry">Enterprises can rely on Ticket&nbsp;Generator</a> for managing internal and external events like annual meets, offsites, and client summits. Each ticket carries a unique QR Code for fast, secure check-ins, while post-event reports help track engagement and ROI.</p>
@@ -808,7 +917,7 @@
 
               <article class="uct" style="--paper: #e9f7ef; --r: 4deg; --x: 14px; --y: -6px; --from-r: -16deg;" data-uct>
                 <div class="uct-body">
-                  <div class="uct-media"><img src="assets/usecases/nonprofit.jpg" alt="Volunteers packing donation boxes at a charity drive" width="1000" height="667" loading="lazy" decoding="async"></div>
+                  <div class="uct-media"><img src="assets/usecases/nonprofit.webp" alt="Guests arriving at a candle-lit charity gala" width="1200" height="800" loading="lazy" decoding="async"></div>
                   <div class="uct-main">
                     <h3 class="uct-title">Non-Profit Fundraisers</h3>
                     <p class="uct-desc"><a href="https://ticket-generator.com/entertainment-industry">NGOs</a> can leverage QR Code Ticket&nbsp;Generator to run charity events, awareness campaigns, and donor galas. Issue tickets with QR Codes to track attendee engagement. Built-in data collection helps capture donor details and follow up post-event.</p>
@@ -819,7 +928,7 @@
 
               <article class="uct" style="--paper: #fff0e9; --r: -2deg; --x: -4px; --y: 14px; --from-r: 18deg;" data-uct>
                 <div class="uct-body">
-                  <div class="uct-media"><img src="assets/usecases/concerts.jpg" alt="A DJ performing at a rooftop party" width="1000" height="667" loading="lazy" decoding="async"></div>
+                  <div class="uct-media"><img src="assets/usecases/concerts.webp" alt="A festival crowd with raised hands in front of the main stage at golden hour" width="1200" height="800" loading="lazy" decoding="async"></div>
                   <div class="uct-main">
                     <h3 class="uct-title">Concerts, Festivals &amp; Entertainment Shows</h3>
                     <p class="uct-desc">From indie music nights to large-scale film screenings, <a href="https://ticket-generator.com/entertainment-industry">entertainment organizers</a> can rely on online Ticket&nbsp;Generator to create branded, scannable tickets. Distribute them via email, SMS, or WhatsApp, validate them at entry points, and avoid ticket fraud.</p>
@@ -830,7 +939,7 @@
 
               <article class="uct" style="--paper: #f2efff; --r: 6deg; --x: 10px; --y: 4px; --from-r: -12deg;" data-uct>
                 <div class="uct-body">
-                  <div class="uct-media"><img src="assets/usecases/training.jpg" alt="An instructor guiding a drawing workshop" width="1000" height="667" loading="lazy" decoding="async"></div>
+                  <div class="uct-media"><img src="assets/usecases/training.webp" alt="A trainer at a whiteboard with a small group of learners at laptops" width="1200" height="800" loading="lazy" decoding="async"></div>
                   <div class="uct-main">
                     <h3 class="uct-title">Professional Training &amp; Certification Events</h3>
                     <p class="uct-desc"><a href="https://ticket-generator.com/professional-training-industry">Training providers and consultants</a> can create secure, personalized tickets for skill-building workshops and certification programs. They can track attendee presence, issue post-event credentials, and maintain accurate participation records with ease.</p>
@@ -841,7 +950,7 @@
 
               <article class="uct" style="--paper: #e9f3ff; --r: -4deg; --x: -12px; --y: -4px; --from-r: 15deg;" data-uct>
                 <div class="uct-body">
-                  <div class="uct-media"><img src="assets/usecases/sports.jpg" alt="Runners with race bibs at a city marathon" width="1000" height="667" loading="lazy" decoding="async"></div>
+                  <div class="uct-media"><img src="assets/usecases/sports.webp" alt="Players mid-match on a local football pitch with families in the stands" width="1200" height="800" loading="lazy" decoding="async"></div>
                   <div class="uct-main">
                     <h3 class="uct-title">Sports Tournaments &amp; Local Leagues</h3>
                     <p class="uct-desc">Local clubs, <a href="https://ticket-generator.com/education-industry">schools</a>, and amateur sports leagues can use Ticket&nbsp;Generator software to issue entry passes, sell tickets online, and track attendance. Organizers can control access to specific stands or zones and ensure smooth check-ins on match day.</p>
@@ -865,7 +974,7 @@
           <div class="trust-copy">
             <p class="eyebrow eyebrow--dark">Trusted Protection</p>
             <h2 id="trust-title">Iron-clad security and privacy for every event, every ticket</h2>
-            <p><span class="d-only">At Ticket&nbsp;Generator, your data privacy and event security are non-negotiable. Our QR Code Ticket&nbsp;Generator adheres to globally recognized standards: ISO 27001:2022 for information security, GDPR for data protection compliance, and SOC 2 for operational integrity.</span><span class="m-only">Your data and your event stay protected, to ISO 27001:2022, GDPR, and SOC 2 standards.</span></p>
+            <p><span class="d-only">At Ticket&nbsp;Generator, your data privacy and event security are non-negotiable. Our QR Code Ticket&nbsp;Generator adheres to globally recognized standards. ISO 27001:2022 for information security, GDPR for data protection compliance, and SOC2 for operational integrity.</span><span class="m-only">Your data and your event stay protected, to ISO 27001:2022, GDPR, and SOC2 standards.</span></p>
           </div>
 
           <div class="shield-stage" data-shield>
@@ -992,7 +1101,7 @@
             <div class="tm-side">
               <p class="eyebrow">Top-Rated</p>
               <h2 id="tm-title">Why do organizers choose us?</h2>
-              <p class="tm-sub">Hear straight from the event pros.</p>
+              <p class="tm-sub">Hear straight from the event pros</p>
             </div>
 
             <div class="tm-deck" data-tm-deck>
@@ -1108,47 +1217,63 @@
         <div class="faq-side">
           <p class="eyebrow">Have a Question?</p>
           <h2 id="faq-title">Frequently asked questions</h2>
-          <p class="faq-sub">Get answers to commonly asked questions about QR Code Ticket&nbsp;Generator.</p>
+          <p class="faq-sub">Get answers to commonly asked questions about QR Code Ticket&nbsp;Generator</p>
         </div>
 
         <div class="faq-list">
           <details class="faq-item" name="faq" open>
             <summary><span class="faq-q mono">Q.01</span><span class="faq-title">What is Ticket&nbsp;Generator?</span><i class="faq-icon" aria-hidden="true"></i></summary>
             <div class="faq-a">
-              <p>Ticket&nbsp;Generator is an online platform that allows event organizers to easily create, customize, distribute, and validate event tickets with secure QR Code verification. It also streamlines event management by facilitating registration, payment processing, real-time attendance tracking, and detailed post-event analytics, making it ideal for events of any scale.</p>
+              <p>Ticket&nbsp;Generator is an online platform that lets event organizers create, sell, distribute, and validate event tickets with secure and verified QR Code. Manage registrations, payments, attendance, and analytics — without any commissions or subscriptions with online Ticket&nbsp;Generator.</p>
             </div>
           </details>
 
           <details class="faq-item" name="faq">
-            <summary><span class="faq-q mono">Q.02</span><span class="faq-title">I don't know how many people will show up directly at the event. How can I use Ticket&nbsp;Generator for events?</span><i class="faq-icon" aria-hidden="true"></i></summary>
+            <summary><span class="faq-q mono">Q.02</span><span class="faq-title">I am organizing an event. What can I use Ticket&nbsp;Generator for?</span><i class="faq-icon" aria-hidden="true"></i></summary>
             <div class="faq-a">
-              <p>Create an event page and let guests register — for free or with paid tickets. Each registration gets a ticket automatically, so your guest list builds itself, and live insights show registrations and check-ins as they happen. With pay-as-you-go pricing, you only pay for the tickets you actually issue.</p>
+              <p>Whether you are organizing an event for 20 people or 10,000 people, you can sell event tickets directly without paying any commission. Ticket&nbsp;Generator is an easy-to-use online tool to create an event page, get registrations/payments, approve registrations, design tickets, download/send tickets, validate tickets at entry, get attendance data, and more. You can create standard tickets, reserved seating tickets, luxury tickets, and other custom ticket categories for single-day and multi-day events. Collect varying prices for each ticket category. Compared to standard ticketing platforms, Ticket&nbsp;Generator is highly affordable and helps you increase event margins.</p>
             </div>
           </details>
 
           <details class="faq-item" name="faq">
-            <summary><span class="faq-q mono">Q.03</span><span class="faq-title">I have a ticket design. How can Ticket&nbsp;Generator help?</span><i class="faq-icon" aria-hidden="true"></i></summary>
+            <summary><span class="faq-q mono">Q.03</span><span class="faq-title">I don't know how many people will show up directly at the event. How can I use Ticket&nbsp;Generator for events?</span><i class="faq-icon" aria-hidden="true"></i></summary>
             <div class="faq-a">
-              <p>Upload your own ticket design and Ticket&nbsp;Generator adds a unique QR Code to every ticket. You can then send the tickets via email, SMS, or WhatsApp, or export them as printable files — and validate each one at entry with the Ticket Validator app.</p>
+              <p>You can use e-ticket generator to generate and download ticket images/PDFs. You can print these tickets and sell them directly at the box office. Alternatively, you can use the web application in real-time to generate and send the tickets one-by-one at the box office.</p>
             </div>
           </details>
 
           <details class="faq-item" name="faq">
-            <summary><span class="faq-q mono">Q.04</span><span class="faq-title">I don't even have a ticket design. How can Ticket&nbsp;Generator help?</span><i class="faq-icon" aria-hidden="true"></i></summary>
+            <summary><span class="faq-q mono">Q.04</span><span class="faq-title">How do ticket add-ons work?</span><i class="faq-icon" aria-hidden="true"></i></summary>
             <div class="faq-a">
-              <p>No designer needed. Pick a ready-made template and customize it with a background image or color, your logo, and basic event details. Your branded tickets are ready to send in minutes.</p>
+              <p>Add-ons can be:</p>
+              <p><strong>Bundled</strong> – Included as part of the main ticket package.<br><strong>Optional</strong> – Selected during purchase for an additional payment.</p>
+              <p>Organizers can configure which add-ons are available and how they are priced. The same ticket can be scanned at different checkpoints (e.g., entry gate, parking area, lunch counter) via Ticket Validator to verify the services included.</p>
             </div>
           </details>
 
           <details class="faq-item" name="faq">
-            <summary><span class="faq-q mono">Q.05</span><span class="faq-title">I already have an events app to get registrations and payments. How can I use Ticket&nbsp;Generator?</span><i class="faq-icon" aria-hidden="true"></i></summary>
+            <summary><span class="faq-q mono">Q.05</span><span class="faq-title">I have a ticket design. How can Ticket&nbsp;Generator help?</span><i class="faq-icon" aria-hidden="true"></i></summary>
             <div class="faq-a">
-              <p>Keep your existing app and connect it to the Ticket&nbsp;Generator API. Tickets are generated and distributed in real time as registrations come in, and you can still validate entries and track attendance with Ticket&nbsp;Generator.</p>
+              <p>You can upload your own ticket design (created using Canva, Adobe Spark, or any other tool). Ticket&nbsp;Generator will help you add a unique QR Code, ticket code, and other information (guest name, hall number, seat number, and more). Event coordinators can validate these tickets at the entry using Ticket Validator mobile app.</p>
             </div>
           </details>
 
           <details class="faq-item" name="faq">
-            <summary><span class="faq-q mono">Q.06</span><span class="faq-title">If I have the guest list, can I directly send tickets without any event page or registrations?</span><i class="faq-icon" aria-hidden="true"></i></summary>
+            <summary><span class="faq-q mono">Q.06</span><span class="faq-title">I don't even have a ticket design. How can Ticket&nbsp;Generator help?</span><i class="faq-icon" aria-hidden="true"></i></summary>
+            <div class="faq-a">
+              <p>Use Ticket&nbsp;Generator's standard template to quickly generate tickets. Simply provide event details (name, description, venue, date, and timings), and branding (logo, background color/image). You can also add unique ticket information such as guest name, hall number, seat number, and more as per your needs. Each ticket will have a QR Code that can be validated at the entry using Ticket Validator.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" name="faq">
+            <summary><span class="faq-q mono">Q.07</span><span class="faq-title">I already have an events app to get registrations and payments. How can I use Ticket&nbsp;Generator?</span><i class="faq-icon" aria-hidden="true"></i></summary>
+            <div class="faq-a">
+              <p>If you have an event registration website that allows attendees to register for your event and purchase tickets, you can use Ticket&nbsp;Generator API. It will help you programmatically generate secure tickets in real-time. As soon as ticket purchase is successful, make a POST call to Ticket&nbsp;Generator API and get a QR Code ticket that can be shown in the app or sent directly to the attendee.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" name="faq">
+            <summary><span class="faq-q mono">Q.08</span><span class="faq-title">If I have the guest list, can I directly send tickets without any event page or registrations?</span><i class="faq-icon" aria-hidden="true"></i></summary>
             <div class="faq-a">
               <p>Yes. With Direct Ticketing, you can send ready-made or customized tickets automatically to everyone on your guest list — no event page or registration form required.</p>
             </div>
@@ -1179,16 +1304,16 @@
       <div class="container">
         <header class="blogs-head">
           <h2 id="blogs-title">Learn best practices</h2>
-          <p>See our helpful guides to become an expert in event management.</p>
+          <p>See our helpful guides to become an expert in event management</p>
         </header>
 
         <div class="blog-grid">
           <article class="post">
             <a href="https://ticket-generator.com/blog/why-ticket-generator" class="post-link">
-              <div class="post-cover"><img src="assets/blog/why-ticket-generator.webp" alt="Event host speaking into a microphone" width="768" height="480" loading="lazy" decoding="async"></div>
+              <div class="post-cover"><img src="assets/blog/why-ticket-generator.webp" alt="An event organiser backstage with a phone and tablet" width="1536" height="960" loading="lazy" decoding="async"></div>
               <div class="post-body">
                 <h3>Why choose Ticket&nbsp;Generator for your next events?</h3>
-                <p>Discover how Ticket&nbsp;Generator simplifies every aspect of event ticketing.</p>
+                <p>Discover how Ticket&nbsp;Generator simplifies every aspect of event ticketing</p>
                 <span class="post-more">Read article <span aria-hidden="true">→</span></span>
               </div>
             </a>
@@ -1196,10 +1321,10 @@
 
           <article class="post">
             <a href="https://ticket-generator.com/blog/entry-pass-maker" class="post-link">
-              <div class="post-cover"><img src="assets/blog/entry-pass-maker.webp" alt="Security guard holding up a hand at an event entrance" width="768" height="480" loading="lazy" decoding="async"></div>
+              <div class="post-cover"><img src="assets/blog/entry-pass-maker.webp" alt="Staff scanning a QR ticket on a guest’s phone at an event entrance" width="1536" height="960" loading="lazy" decoding="async"></div>
               <div class="post-body">
                 <h3>Entry pass maker: Create secure tickets in no time</h3>
-                <p>Learn to design, generate, and validate QR code–based tickets with Ticket&nbsp;Generator.</p>
+                <p>Learn to design, generate, and validate QR code–based tickets with Ticket&nbsp;Generator</p>
                 <span class="post-more">Read article <span aria-hidden="true">→</span></span>
               </div>
             </a>
@@ -1207,10 +1332,10 @@
 
           <article class="post">
             <a href="https://ticket-generator.com/blog/printable-customizable-tickets-custom-tickets" class="post-link">
-              <div class="post-cover"><img src="assets/blog/custom-tickets.webp" alt="Event organiser holding a printed ticket design" width="768" height="480" loading="lazy" decoding="async"></div>
+              <div class="post-cover"><img src="assets/blog/custom-tickets.webp" alt="Colourful printed tickets fanned out on a designer’s desk" width="1536" height="960" loading="lazy" decoding="async"></div>
               <div class="post-body">
                 <h3>How to print custom tickets for your event?</h3>
-                <p>Design branded tickets like a pro using customizable templates.</p>
+                <p>Design branded tickets like a pro using customizable templates</p>
                 <span class="post-more">Read article <span aria-hidden="true">→</span></span>
               </div>
             </a>
@@ -1251,7 +1376,7 @@
             <img src="assets/tg-icon.svg" alt="" width="32" height="32">
             <img src="assets/tg-logotype.svg" alt="Ticket Generator" class="logo-type" width="150" height="14">
           </a>
-          <p class="footer-tagline">Event ticketing made easy!</p>
+          <p class="footer-tagline">Event ticketing made easy</p>
 
           <div class="footer-validator">
             <span class="footer-label">Download Ticket Validator</span>
@@ -1270,8 +1395,8 @@
         <nav class="footer-col" aria-label="Product">
           <h3 class="footer-label">Product</h3>
           <ul>
-            <li><a href="demo.html">Book a Demo</a></li>
-            <li><a href="how-it-works.html">How It Works</a></li>
+            <li><a href="demo.html">Book a demo</a></li>
+            <li><a href="how-it-works.html">How it works</a></li>
             <li><a href="features.html">Features</a></li>
             <li><a href="pricing.html">Pricing</a></li>
             <li><a href="legal.html">Legal</a></li>
@@ -1322,7 +1447,7 @@
   <!-- Phone only: a sticky action bar once the first button has scrolled away -->
   <div class="m-cta" data-m-cta>
     <p class="m-cta-text"><b>First 10 tickets free</b>No credit card required</p>
-    <a href="https://tg-full-revamp.vercel.app/signup" class="btn btn-primary">Create Your Event</a>
+    <a href="https://tg-full-revamp.vercel.app/signup" class="btn btn-primary">Create Event</a>
   </div>
 
   <script src="js/main.js" defer></script>

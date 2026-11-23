@@ -158,3 +158,36 @@ Everything stops for visitors with reduced motion turned on, and the counter pau
 
 ## New imagery
 One sample made first, for style approval: the event-page festival banner (Magnific One, 180 credits). The rest of the set waits for approval of this look.
+
+## Round 4, part 2 (23 Nov): app hero, new imagery, two launch options, copy synced to the live site
+
+| Point | What changed | Why this way |
+|---|---|---|
+| Hero like the app screenshot, but editable | The last round's motion is replaced. The hero is now one centred column: copy, then the app (browser window: Guest Tickets screen with stats, guest list and check-ins chart; a "Ticket sent via…" toast; a validator phone). The ticket in front is **editable**: click the event name, date, venue or guest, or pick one of five colours. Every edit flows into the breadcrumb, the guest list, the phone and both QR codes. The app runs live (tickets go out by Email/SMS/WhatsApp, guests check in, counts rise) and pauses on hover or while you edit, with the status pill saying so. On phones the window keeps stats and three guest rows, and the ticket sits under it. | Like a free ticket generator: the visitor makes "their" ticket in the first screen, and sees where it goes next (sent, scanned). Built in code, so it's crisp, light and editable, with no video. |
+| New images: Clear Wins | Five code-built product-UI collages (inline SVG) in the TG illustration house style: ticket design → send via; payment gateway → payout with $0.00 commission; ticket types (stacked, fading); live chart, check-in split and export; a zero-commission receipt. Desktop gives the art half of each ticket so its UI labels stay legible. | The TG illustration style says feature visuals are built from UI parts, not photos. Collages also explain the feature, where a photo can't. |
+| New images: Use Cases, Blog | Eight new photos (Magnific One, about 1,440 credits): conference, charity gala, festival, training workshop, local football; organiser backstage, QR scan at the door, printed tickets. No text or logos in any of them. | Same light, airy, candid look as the approved sample. |
+| Launch options: 3 → 2 cards | Direct Ticketing, and **Free & Paid Registrations** (one event page: free sign-up or paid tickets). Grid is two columns, centred. | As asked: free and paid are the same flow with or without a price. |
+| Copy same as the live site | A content pass compared both pages with ticket-generator.com line by line. Hero title, lede and buttons; step names and texts; Core Strengths; Use Cases heading; FAQ (two added: "I am organizing an event…" and "How do ticket add-ons work?"); security wording; footer; pricing packs and labels now match. **Prices changed:** $6 / $50 / $400 / $2,500 for 10 / 100 / 1,000 / 10,000 credits (we had $10 / $50 / $500 / $3,000); the estimator uses the same values. The mid-page band now says "Ready to try event ticket generator?" with "Try Ticket Generator". The hero gained "Book a Demo". | |
+
+**Kept different from the live site on purpose** (to confirm):
+- **Labels.** "Backstage Pass" (live: "Get Started") and "Reading Room" (live: "Our Blogs") were your renames.
+- **"Still have a question?" box.** It leads with Contact us, per the manager's feedback. The live site says "Didn't find your query?" with "See All FAQs".
+- **Hero chip.** "1,000,000+ tickets generated" isn't on the live hero.
+- **Step 5 "Report".** The live site has no report step.
+- **Event page section.** Not on the live homepage.
+- **Live prices.** Read from the US-dollar page. The site shows Indian visitors ₹ prices that aren't a straight conversion.
+
+**QA:**
+- Checked at 1440, 1024 and 375 px.
+- No horizontal overflow, no broken images, equal button heights (hero 52/52), and the console is clean.
+- Picker, registration and API demos all run.
+- Editing tested by typing into the ticket: the breadcrumb and phone update.
+- Pricing estimate checked: 10 + 1,000 credits = $406.
+
+**Fixes found in QA:**
+- **Guest names cut off.** The window was too narrow, so guest names were truncated; it's wider now.
+- **Phone ticket name.** The event name was cut off on phones; there's more room now.
+- **Clear Wins legibility.** The collages were illegible in the narrow stub, so the split is now 50/50.
+- **Phone tear line.** On phones the tear line cut through the collage; the stub is now 212px and the line moved with it.
+- **Touch wording.** On touch screens "hover to pause" made no sense; it now says "tap the ticket to edit".
+- **Stamp overlap.** A connector dot sat on the "Zero commission" stamp; that arrow is removed.
