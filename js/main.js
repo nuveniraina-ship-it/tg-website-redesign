@@ -557,6 +557,10 @@
         ? `${M(start, 'long')} ${start.getDate()}–${close.getDate()}, ${close.getFullYear()}`
         : `${M(start, 'short')} ${start.getDate()} – ${M(close, 'short')} ${close.getDate()}, ${close.getFullYear()}`;
     }
+    const pd = start.getMonth() === close.getMonth()
+      ? `${M(start, 'short')} ${start.getDate()}–${close.getDate()}`
+      : `${M(start, 'short')} ${start.getDate()} – ${M(close, 'short')} ${close.getDate()}`;
+    document.querySelectorAll('[data-ep-pdate]').forEach((el) => { el.textContent = pd.toUpperCase(); });   // the cover posters
     const startEl = document.querySelector('[data-ep-start]');
     if (startEl) startEl.textContent = `${M(start, 'short')} ${start.getDate()}`;
   }
@@ -928,8 +932,7 @@
     anyPick?.parentElement.classList.remove('is-on');
     setInk(null);   // the preset colours are all dark enough for white text
     setEvent(theme);
-    const pick = document.querySelector(`[data-theme-pick="${theme}"]`);
-    document.querySelectorAll('[data-ev-type]').forEach((el) => { if (pick) el.textContent = pick.getAttribute('aria-label'); });
+    document.querySelectorAll('[data-ev-select]').forEach((sel) => { if (sel.value !== theme) sel.value = theme; });
     const qrStyle = { blue: 'square', ink: 'dots', green: 'leaf', purple: 'diamond', pink: 'soft' }[theme] || 'soft';
     document.querySelectorAll('.ticket-qr, .m-pass-qr').forEach((q) => drawBrandQR(q, (EVENTS[theme] || EVENTS.blue).name, qrStyle));
     document.querySelectorAll('.stage-canvas, .m-pass').forEach((el) => {
@@ -941,6 +944,8 @@
     const b = e.target.closest('[data-theme-pick]');
     if (b) applyTheme(b.dataset.themePick);
   });
+  // the quiet "Preview as" menu in the picture's corner switches the event type
+  document.querySelectorAll('[data-ev-select]').forEach((sel) => sel.addEventListener('change', () => applyTheme(sel.value)));
 
   // Scale the fixed-size canvas to whatever space the panel has.
   const fitTo = (box, cv) => {
@@ -1127,7 +1132,25 @@
     }
     if (endWrap) stepsSec.append(endWrap);
     heroSec.after(stepsSec);
-    heroSec.classList.remove('tkt--land');   // the hero is now one centred column: copy, then the app
+    // the hero's picture is the live app (built in index.html inside .j-hero), moved onto the stub and scaled to fit it
+    const heroApp = journey.querySelector('[data-hero-app]');
+    if (heroApp) {
+      const shot = document.createElement('div');
+      shot.className = 'j-shot ha-shot';
+      const frame = document.createElement('div');
+      frame.className = 'ha-frame';
+      heroApp.classList.add('hero-app--stub');
+      frame.append(heroApp);
+      shot.append(frame);
+      journey.append(shot);
+      const fitApp = () => {
+        const sc = Math.min(1, frame.clientWidth / heroApp.offsetWidth);
+        heroApp.style.setProperty('--ha-s', sc.toFixed(4));
+        frame.style.height = `${Math.round(heroApp.offsetHeight * sc)}px`;
+      };
+      new ResizeObserver(fitApp).observe(frame);
+      fitApp();
+    }
     journey.dataset.split = '1';
     heroSec.style.removeProperty('--stub-y');
     onScroll();
@@ -1325,4 +1348,38 @@
       }, 2200);
     }
   }
+  /* ---------- Clear Wins: small interactions inside the collages ---------- */
+  document.querySelectorAll('.cw-art').forEach((art) => {
+    const svg = art.querySelector('.cw-svg');
+    if (!svg) return;
+    new IntersectionObserver((entries, io) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        art.classList.add('is-in');
+        io.disconnect();
+        const amt = svg.querySelector('.cw2-amt');          // the payout counts up once
+        if (amt && !reduceMotion) {
+          const to = Number(amt.dataset.to), t0 = performance.now();
+          const step = (now) => {
+            const k = Math.min(1, (now - t0) / 1200);
+            const v = Math.round(to * (1 - Math.pow(1 - k, 3)));
+            amt.textContent = '$' + v.toLocaleString('en-US') + '.00';
+            if (k < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+        }
+      });
+    }, { threshold: 0.35 }).observe(art);
+    const act = (sel, fn) => svg.querySelectorAll(sel).forEach((el) => {
+      el.addEventListener('click', () => fn(el));
+      el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn(el); } });
+    });
+    act('.cw1-tpl', (el) => {                                 // a template recolours the preview
+      const prev = svg.querySelector('.cw1-prev');
+      if (prev) prev.setAttribute('fill', el.dataset.c);
+      const sel = svg.querySelector('.cw1-sel');
+      if (sel) sel.style.transform = 'translateX(' + (Number(el.dataset.x) - 40) + 'px)';
+    });
+    act('.cw2-gw', (el) => svg.querySelectorAll('.cw2-gw').forEach((g) => g.classList.toggle('is-on', g === el)));
+  });
 })();

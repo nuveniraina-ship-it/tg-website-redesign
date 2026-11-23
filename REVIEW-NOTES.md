@@ -191,3 +191,33 @@ One sample made first, for style approval: the event-page festival banner (Magni
 - **Phone tear line.** On phones the tear line cut through the collage; the stub is now 212px and the line moved with it.
 - **Touch wording.** On touch screens "hover to pause" made no sense; it now says "tap the ticket to edit".
 - **Stamp overlap.** A connector dot sat on the "Zero commission" stamp; that arrow is removed.
+
+## Round 5 (23 Nov)
+
+| Point | What changed | Why this way |
+|---|---|---|
+| Hero layout as before, with the new picture | The landscape hero ticket is back: copy on the left, the picture on the stub past the tear line, on the dotted panel. The picture is the live app, recomposed for the narrower stub: the window shows the stats and guest list, the phone sits to the right, the toast at the top and the editable ticket in front. It is laid out at 620px and scaled to fit, so it stays sharp and editable at every desktop width. | The earlier layout was right; only the picture needed to change. Scaling one fixed composition keeps every overlap exactly placed instead of re-flowing. |
+| "Pick your event type" and colours were distracting | Replaced with one quiet menu in the picture's corner: "Preview as: Conference ⌄". There are no coloured dots and no separate event-type box. On phones it's a full-width row. | A menu shows the choice exists without asking for attention; the colour still changes with the event type. |
+| Event page: new design and images | It's now a light page for Riverside Music Festival, the same event as the hero. The cover slides are designed posters: duotone cut-out performers on blue, orange and violet fields, with the name set large and RIVERSIDE outlined behind. The lineup is duotone cut-outs on colour discs. Phones swipe or use the dots; there are no arrows over the title. | One art direction ("festival print run") makes the images look made, not found. Reusing the hero's event ties the page together. |
+| Launch options broken and the wrong layout | Fixed the leftover "Payments go to your account / Get Started" under the cards (a fragment of the old third card). The section is now two separate landscape tickets: copy and Get Started on the main part, the illustration on the stub. | |
+| Clear Wins: interactive, polished, subtle | Each collage has one small interaction and a quiet reveal: (1) click a template to recolour the ticket, with send ticks landing in turn; (2) choose a payment gateway, while the payout counts up; (3) hover a ticket type to lift it; (4) the line draws in, with each day's count on hover; (5) the receipt lines tick in, then the stamp lands. No motion with reduced motion. | |
+| Blog images looked AI or stock | Designed covers in the same direction as the event posters: duotone cut-out studio portraits on a colour field, with the post's keyword (EVENTS, ENTRY, PRINT) set outlined, filled, outlined. The words slide apart on hover. | The old covers worked because they were art-directed (cut-out person, type behind). This follows that thinking in the new palette. |
+
+**Images used:**
+- Ten studio portraits, about 1,800 credits plus 30 for background removal. One (saxophonist, open shirt) was left out.
+- Each is cut out and graded the same way: navy shadows, paper-white highlights.
+
+**QA:**
+- Checked at 1440, 1024 and 375 px.
+- No overflow, no broken images, equal button heights, clean console.
+- Demos all run:
+  - "Preview as" menu: switches the event type.
+  - Registration: open, register, back to the page.
+  - API demo.
+  - Hero editing: initials, phone and QR follow.
+  - Template click recolours the ticket.
+
+**Fixes found in QA:**
+- **Hero stub.** The stub app was crowded (the phone covered a stat, the name was cut off, the toast overlapped the status pill), so it was recomposed.
+- **Poster arrows on phones.** The slider arrows covered the poster titles; they're hidden there now.
+- **Launch art.** The illustrations were faint on the stub; they now sit on a white card.

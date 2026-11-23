@@ -384,7 +384,7 @@ button.ep-btn { border: 0; cursor: pointer; font-family: inherit; }
   margin-top: 12px;
   padding: 16px 20px;
   border-radius: 12px;
-  background: linear-gradient(180deg, rgba(10, 13, 18, 0) 30%, rgba(10, 13, 18, .8)), url("../assets/eventpage/banner.webp") center 30% / cover no-repeat;
+  background: linear-gradient(180deg, rgba(10, 13, 18, 0) 30%, rgba(10, 13, 18, .8)), url("../assets/eventpage/ep-singer.webp") right 8% top 12% / auto 170% no-repeat, #1570ef;
   font-size: 20px;
   line-height: 26px;
   font-weight: 700;
