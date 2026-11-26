@@ -344,3 +344,27 @@ On phones the tabs scroll sideways, and the ticket sits just below the app so no
   - **Closing:** the confirmation closes by itself after a few seconds, on "Back", or when switching Free/Paid.
 - **Checked:** 1440 px, clean console.
 - **Content sync still open:** the updated homepage and pricing copy pages (trycon-website…workers.dev) need a login, so they couldn't be read.
+
+### Follow-up: copy synced to the team's updated content (26 Nov)
+Source: the team's content pages for the homepage and pricing (trycon-website…workers.dev, read while signed in).
+
+**Pricing:**
+- **New pack prices:** 10 credits $5, 100 $40, 1,000 $300, 10,000 $2,000. The per-ticket rates are $0.50, $0.40, $0.30 and $0.20, and the "lowest per ticket" chip now says $0.20. The estimator uses the same values: 10 + 1,000 credits = $305.
+- **Lede:** the hero lede is the new one.
+- **Labels:** "Get price estimate", "(One ticket = One credit)", "Pricing Breakdown".
+- **Feature cards:** reordered to the new order, each keeping its icon (security, red carpet, tickets that do more, seating, deliver, gatecrashers, on-ground sales, crystal ball, automate, sidekick).
+
+**Homepage:**
+- **Clear Wins sub-heading:** "The smart, secure, and affordable online ticket generator".
+- **Other copy:** FAQ heading "FAQs", blog heading "Learn Best Practices", and the API feature text. The FAQ answers and small wording fixes now match the source.
+- **Steps:** these already matched the new copy. Step 1 combines "Sign Up" and "Create Event", and steps 2–4 are Payment, Distribute Tickets and Validate Entries.
+
+**In the source but not built** (they need new sections, or an element we don't have):
+- **Homepage:** the stats heading "Launch faster, smarter, anywhere, profitably, securely", "1 Mn+" (we show the 1,000,000+ counter), and the "Learn More" link on "Say goodbye to ticketing headaches".
+- **New CTA blocks:** "Get your ticket to effortless ticketing today!" after features, and the "Create Tickets" CTA after use cases.
+- **Pricing:** the "Credit Packs" sub-heading and the final CTA line "Sign up to start generating tickets for your event".
+- **Help boxes:** both pages keep "Still have a question?" (manager's call). The source has "Didn't find your query?" / "Have specific questions or custom requirements?".
+
+**Ours, not in the source, left in place:** step 5 "Report", the Event Page and API sections, the eyebrows, the pricing chips and footnotes.
+
+**Checked:** pricing card order and icons, pack prices, homepage headings; clean console.
