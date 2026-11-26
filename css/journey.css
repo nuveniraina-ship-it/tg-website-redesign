@@ -1042,7 +1042,8 @@
   .j-shot .stage-panel > .stage-canvas { top: 50%; }
 
   .tkt--steps.tkt { padding: 104px 0 8px; background: var(--bg-primary); }
-  .journey--steps { grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); grid-template-areas: "steps stage"; }
+  .journey--steps { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); grid-template-areas: "steps stage"; column-gap: var(--space-6xl); }
+  .tkt--steps .step { max-width: 660px; }   /* wider text, no empty band before the picture */
   .tkt--steps .j-end { margin-top: var(--space-4xl); }
   /* more room between the five steps */
   .tkt--steps .step { min-height: 30vh; padding: var(--space-2xl) 0; }   /* the steps sit closer together */

@@ -1603,6 +1603,33 @@
       box.querySelector('[data-sc-ticket]')?.style.setProperty('--tc', b.dataset.scTpl);
       box.querySelectorAll('[data-sc-tpl]').forEach((x) => x.classList.toggle('is-on', x === b));
     }));
+    // ticket types: "+ Add ticket type" adds one at the bottom of a scrolling stack; the others slide up
+    const stack = box.querySelector('.sc3-stack'), addBtn = box.querySelector('[data-sc-add]');
+    const extras = [['Student Pass', 'Valid student ID', '$10', '#0e9384', 64, 120], ['Group of 4', 'Save 20% together', '$80', '#dc6803', 22, 40], ['Backstage Tour', 'Meet the crew', '$35', '#c11574', 9, 20], ['Family Day Pass', '2 adults + 2 kids', '$55', '#2e90fa', 31, 60]];
+    if (stack && addBtn) addBtn.addEventListener('click', () => {
+      const next = extras.shift();
+      if (!next) return;
+      const [n, perk, price, c, sold, qty] = next;
+      const i = stack.children.length;
+      const el = document.createElement('div');
+      el.className = 'sc3-tk is-new';
+      el.style.cssText = `--c:${c}; --i:${i % 3}`;
+      el.innerHTML = `<div class="sc3-main"><span class="sc3-dot"></span><span><b>${n}</b><small>${perk}</small></span><span class="sc3-sold"><span class="sc-bar"><i style="width:${Math.round(sold / qty * 100)}%"></i></span><small>${sold} / ${qty} sold</small></span></div><div class="sc3-stub"><b>${price}</b><small>per ticket</small></div>`;
+      stack.append(el);
+      requestAnimationFrame(() => { stack.scrollTop = stack.scrollHeight; });
+      if (!extras.length) { addBtn.disabled = true; addBtn.textContent = 'All ticket types added'; }
+    });
+    // Export report: a small pop-up that "exports" the PDF
+    const exp = box.querySelector('[data-sc-export]'), pop = box.querySelector('[data-sc-pop]');
+    if (exp && pop) exp.addEventListener('click', () => {
+      const title = pop.querySelector('[data-sc-pop-title]'), bar = pop.querySelector('[data-sc-pop-bar]');
+      clearTimeout(pop._t1); clearTimeout(pop._t2);
+      pop.classList.remove('is-done'); title.textContent = 'Exporting report…'; bar.style.width = '0';
+      pop.hidden = false;
+      requestAnimationFrame(() => requestAnimationFrame(() => { bar.style.width = '100%'; }));
+      pop._t1 = setTimeout(() => { pop.classList.add('is-done'); title.textContent = 'Report exported as PDF'; }, 950);
+      pop._t2 = setTimeout(() => { pop.hidden = true; }, 2900);
+    });
     box.querySelectorAll('.sc2-gw').forEach((g) => g.addEventListener('click', () => {         // pick a gateway
       box.querySelectorAll('.sc2-gw').forEach((x) => x.classList.toggle('is-on', x === g));
     }));

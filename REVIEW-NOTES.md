@@ -368,3 +368,34 @@ Source: the team's content pages for the homepage and pricing (trycon-website…
 **Ours, not in the source, left in place:** step 5 "Report", the Event Page and API sections, the eyebrows, the pricing chips and footnotes.
 
 **Checked:** pricing card order and icons, pack prices, homepage headings; clean console.
+
+## Round 10 (26 Nov): content additions, new use-case art, Clear Wins fixes, full QA
+
+**Content added (from the team's content pages):**
+- **Numbers section:** it now leads with "Launch faster, smarter, anywhere, profitably, securely", and the first stat reads "1 Mn+".
+- **Two new call-to-action bands** in the same style as the mid-page band:
+  - after Core Strengths: "Get your ticket to effortless ticketing today!", with Sign Up and the footnote "…Just pure ticketing magic";
+  - after Use Cases: "Ready to try event ticket generator?" with Create Tickets.
+- **"Learn More":** a link on "Say goodbye to ticketing headaches", going to /send-tickets.
+- **Pricing:** a "Credit Packs" sub-heading above the packs, and the line "Sign up to start generating tickets for your event" in the closing ticket.
+
+**Use cases: new images.**
+- The earlier photos were too close to the old ones. The five cards now use clay 3D dioramas in the same family as the icons Nuveni liked: conference, charity dinner, festival, training workshop, football match.
+- Three first came back with printed words ("CHARITY GALA", "WORKSHOP", "ENTRY") and were regenerated blank.
+
+**Backstage Pass:** the text column is wider (up to 660 px) and the columns are rebalanced, so there's no empty band between the text and the picture.
+
+**Clear Wins:**
+- **Setup tickets:** "General Admission" stays on one line, and "Sent to 412 guests" no longer breaks.
+- **Your tickets, your way:** "+ Add ticket type" works. Each click adds a ticket (Student Pass, Group of 4, Backstage Tour, Family Day Pass) at the bottom of a scrolling stack. The earlier tickets slide up, you can scroll back to them, and the stack never gets taller. After four, it reads "All ticket types added".
+- **Real-time insights:** "Export report" opens a small pop-up in the middle of the dashboard. It shows a PDF icon, the file name and a progress bar, then "Report exported as PDF", and closes itself.
+
+**QA, design audit and debugging (desktop):**
+- **Images that loaded late or blank:** the image files were all present (66 homepage assets fetched fine, and the live site returns 200). The cause was lazy loading inside moving or stacked containers: the logo carousel, testimonials, event posters, use-case pile and pricing feature carousel. Those images only started loading as they slid in, so they showed blank or popped in. All 107 images on both pages now load with the page at low priority, so the first screen still comes first.
+- **Equal button heights:** the closing CTA buttons differed (54 vs 56 px); both are now 56 px.
+- **Accessibility:** four template swatches in Clear Wins had no name for screen readers; each now has one ("Blue template" and so on).
+- **Checked on both pages:** no horizontal overflow, no broken or unloaded images, no empty links or unnamed buttons, no duplicate ids, all images have alt text, every button pair the same height, clean console.
+- **Demos run:** hero scan, event page registration, launch Register, API demo, template click, gateway pick, add ticket type, export report, pricing estimator.
+- **Mobile:** not reviewed this round; to follow after Nuveni's go-ahead.
+
+**Credits:** about 830 (8 use-case renders).

@@ -416,3 +416,48 @@
 .lo-s2-back { margin-top: 4px; padding: 4px 10px !important; border-radius: 7px; font-size: 11px !important; font-weight: 600; color: #175cd3 !important; }
 .lo-s2-back:hover { background: #eff4ff !important; }
 @media (prefers-reduced-motion: reduce) { .lo-s2-done, .lo-s2-tick { animation: none; } }
+
+/* ===== Round 10: Clear Wins fixes ===== */
+/* 1 · the ticket type stays on one line; the send card's footer doesn't break */
+.sc-tk-type { white-space: nowrap; padding: 1px 6px; font-size: 8.5px; }
+.sc-tk-top { min-width: 0; }
+.sc1-send .sc-foot { white-space: nowrap; font-size: 11px !important; line-height: 16px; }
+/* 3 · ticket types: a scrolling stack. Adding one slides the others up; scroll back to see them */
+.sc3-stack {
+  height: 288px;
+  padding: 2px 8px 0 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -webkit-mask: linear-gradient(transparent, #000 10px, #000 calc(100% - 14px), transparent);
+          mask: linear-gradient(transparent, #000 10px, #000 calc(100% - 14px), transparent);
+}
+.sc3-stack::-webkit-scrollbar { display: none; }
+.sc3-tk.is-new { animation: sc3-in .5s cubic-bezier(.2, .8, .2, 1); }
+@keyframes sc3-in { from { opacity: 0; transform: translateY(24px); } }
+.sc3-add { cursor: pointer; transition: background-color .2s, border-color .2s; }
+.sc3-add:hover { background: #eff4ff; border-color: #84adff; }
+.sc3-add:disabled { cursor: default; color: #98a2b3; }
+/* 4 · Export report gives a small pop-up in the middle */
+.sc4-export { cursor: pointer; transition: border-color .2s, background-color .2s; }
+.sc4-export:hover { border-color: #1570ef; background: #f5f8ff; color: #175cd3; }
+.sc4-dash { overflow: hidden; }
+.sc4-pop { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; background: rgba(252, 252, 253, .72); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); animation: sc-fade .25s; }
+.sc4-pop[hidden] { display: none; }
+@keyframes sc-fade { from { opacity: 0; } }
+.sc4-pop-card {
+  display: grid; justify-items: center; gap: 6px;
+  width: 240px; padding: 18px 18px 16px;
+  border: 1px solid #eaecf0; border-radius: 14px; background: #fff;
+  box-shadow: 0 20px 40px -16px rgba(16, 24, 40, .3);
+  text-align: center;
+  animation: sc-pop .35s cubic-bezier(.3, 1.4, .5, 1);
+}
+@keyframes sc-pop { from { transform: scale(.9); opacity: 0; } }
+.sc4-pdf { display: grid; place-items: center; width: 40px; height: 48px; border-radius: 6px 14px 6px 6px; background: #fee4e2; color: #d92d20; font-size: 10px; font-weight: 700; letter-spacing: .04em; }
+.sc4-pop-card b { font-size: 14px; font-weight: 600; }
+.sc4-pop-card small { font-size: 10.5px; color: #667085; }
+.sc4-pop-card .sc-bar { width: 100%; margin-top: 4px; }
+.sc4-pop-card .sc-bar i { width: 0; transition: width .9s cubic-bezier(.4, 0, .2, 1); }
+.sc4-pop.is-done .sc-bar i { background: #17b26a; }
