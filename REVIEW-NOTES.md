@@ -333,3 +333,14 @@ On phones the tabs scroll sideways, and the ticket sits just below the app so no
 - **Checked:** 1440 and 375 px, clean console.
 
 **Decided:** the pixel-art mascot on the loading screen stays (confirmed 26 Nov).
+
+### Follow-up: launch options copy and a working Register
+- **Copy.** Updated to the team's text:
+  - Direct Ticketing: "Send ready-made or customized tickets automatically to your guests via multiple channels."
+  - Free and Paid Registrations: "Create an event page, let guests register for free, or sell tickets and keep 100% of your earnings."
+- **Register works.** The Register button in the Free & Paid picture did nothing, which was misleading. It's now a real button.
+  - **Free:** a confirmation slides up inside the mini event page: "You're registered!", the ticket on its way to your inbox, a ticket chip, and "Back to event page".
+  - **Paid:** the button reads "Buy ticket" and shows "Payment received: $25 paid to the organiser, 0% commission".
+  - **Closing:** the confirmation closes by itself after a few seconds, on "Back", or when switching Free/Paid.
+- **Checked:** 1440 px, clean console.
+- **Content sync still open:** the updated homepage and pricing copy pages (trycon-website…workers.dev) need a login, so they couldn't be read.

@@ -1606,9 +1606,22 @@
     box.querySelectorAll('.sc2-gw').forEach((g) => g.addEventListener('click', () => {         // pick a gateway
       box.querySelectorAll('.sc2-gw').forEach((x) => x.classList.toggle('is-on', x === g));
     }));
+    // Register / Buy ticket: a confirmation appears in place, then the page comes back
+    const done = box.querySelector('[data-sc-done]');
+    let doneT = 0;
+    const closeDone = () => { if (done) done.hidden = true; clearTimeout(doneT); };
+    box.querySelector('[data-sc-reg]')?.addEventListener('click', () => {
+      if (!done) return;
+      done.hidden = false;
+      done.querySelector('[data-sc-back]')?.focus({ preventScroll: true });
+      clearTimeout(doneT);
+      doneT = setTimeout(closeDone, 4500);
+    });
+    box.querySelector('[data-sc-back]')?.addEventListener('click', () => { closeDone(); box.querySelector('[data-sc-reg]')?.focus({ preventScroll: true }); });
     box.querySelectorAll('[data-sc-set]').forEach((b) => b.addEventListener('click', () => {   // free or paid event page
       const page = box.querySelector('[data-sc-mode]');
       if (page) page.dataset.scMode = b.dataset.scSet;
+      closeDone();
       box.querySelectorAll('[data-sc-set]').forEach((x) => x.classList.toggle('is-on', x === b));
     }));
   });
