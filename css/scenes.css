@@ -488,3 +488,12 @@
 .sc .lo-s2-go svg { transition: transform .2s; }
 .sc .lo-s2-go:hover svg { transform: translateX(2px); }
 .sc .lo-s2-go:active { transform: scale(.97); }
+
+/* ===== Round 12 ===== */
+/* use cases: every rail row is the same height (room for two lines), so each blue segment is the same length */
+@media (min-width: 961px) {
+  .uc-rail li { height: 84px; min-height: 0; }
+}
+@media (min-width: 961px) and (max-width: 1100px) {
+  .uc-rail li { height: 72px; }
+}

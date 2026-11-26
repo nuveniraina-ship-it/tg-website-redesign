@@ -436,3 +436,8 @@ I checked them for printed words and odd AI artefacts and found none. Alt texts 
 - I could not watch the scroll smoothness or the hover live in the preview pane, because it pauses rendering while hidden. Please check both on the live site.
 
 **Credits:** 500 (5 renders).
+
+## Round 12 (26 Nov): use-case rail, security section
+
+- **Use cases, blue progress lines:** every row in the left-hand list is now the same height, with room for two lines of text (84 px at desktop, 72 px at 1024). The one-line items, Non-Profit Fundraisers and Sports Tournaments, used to get shorter lines. Now all five lines are the same length. I checked the row heights at 1440 and 1024. Phones don't show this list.
+- **Security section (homepage):** the 3D clay shield is removed. The section shows the copy beside the ISO 27001, GDPR and SOC 2 seals, centred with the copy. The pricing page still uses the shield, because the pricing page is not being changed. Clean console.
