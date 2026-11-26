@@ -441,3 +441,17 @@ I checked them for printed words and odd AI artefacts and found none. Alt texts 
 
 - **Use cases, blue progress lines:** every row in the left-hand list is now the same height, with room for two lines of text (84 px at desktop, 72 px at 1024). The one-line items, Non-Profit Fundraisers and Sports Tournaments, used to get shorter lines. Now all five lines are the same length. I checked the row heights at 1440 and 1024. Phones don't show this list.
 - **Security section (homepage):** the 3D clay shield is removed. The section shows the copy beside the ISO 27001, GDPR and SOC 2 seals, centred with the copy. The pricing page still uses the shield, because the pricing page is not being changed. Clean console.
+
+## Round 13 (26 Nov): the ticket in the guest's hand
+
+- **The problem:** on the event page, the third cover image for every non-music event (17 of the 24 events, including Tech Expo 2026) shows a guest holding a completely blank paper ticket. Music events use a singer photo there, and no other event-page photo shows a held ticket.
+- **The fix:** the page now prints the current event onto that ticket.
+  - It's drawn in code on top of the photo, at the ticket's exact position and tilt, in ink that blends into the paper.
+  - It shows only: the event's real QR code (the same scannable matrix as the hero ticket), the event name (up to two lines), the venue, and the date and time. There's no barcode and no made-up text, because nothing is AI-generated.
+  - It changes with the event, so "New design" in the hero updates it too.
+  - The guest's thumbs stay in front of the ticket.
+- **Checked:**
+  - Tech Expo 2026, and the longest name ("Book Launch & Reading", which wraps to two lines and fits).
+  - The poster at its real size on the event page.
+  - Clean console.
+  - The blog section's copy of that photo is unchanged, as asked.

@@ -279,6 +279,8 @@ QR codes: the demo ticket's QR changes design with the event type (see the table
 
 Touch targets: the event-type swatches and the event page's cover-image dots have an invisible ring around them so each is about 40px to tap, without looking bigger.
 
+Event page, third poster (non-music events): the blank ticket in `assets/blog/blog-custom.webp` gets the event's QR, name, venue, date and time printed on a canvas in `heldTicket()` (js/main.js).
+
 Imagery: Use Cases use five photorealistic generated shots (`assets/usecases/*.webp`, Round 11); Blog uses `assets/blog/*.webp`; Clear Wins uses code-built UI collages. The event page photos and the Launch Options art are unchanged.
 
 ### Mobile copy

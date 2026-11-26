@@ -624,6 +624,57 @@
 
 
   /* ---------- Event page: the same event and design as the hero ---------- */
+  /* ---------- The ticket in the guest's hand (event page, third poster) ----------
+     The photo has a blank paper ticket. We print the event onto it on a canvas: its real QR code
+     (the same matrix as the hero ticket), the event name, venue, date and time. Nothing else. */
+  const heldCache = new Map();
+  let heldBase;
+  const heldTicket = (d) => {
+    if (!d || !d.qr) return Promise.resolve(null);
+    if (heldCache.has(d.name)) return heldCache.get(d.name);
+    heldBase ||= new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = 'assets/blog/blog-custom.webp'; });
+    const job = Promise.all([heldBase, document.fonts ? document.fonts.ready : null]).then(([base]) => {
+      const c = document.createElement('canvas');
+      c.width = base.naturalWidth; c.height = base.naturalHeight;
+      const x = c.getContext('2d');
+      x.drawImage(base, 0, 0);
+      // the ticket's top-left corner and tilt, measured on the photo (803 x 1100)
+      x.save();
+      x.translate(113, 395);
+      x.rotate(Math.atan2(-12, 240));
+      x.globalCompositeOperation = 'multiply';           // reads as ink on the paper, not a sticker
+      const ink = '#1b2440';
+      // QR code: every module of the event's real matrix (error correction H)
+      const q = d.qr, n = q.n, size = 56, m = size / n, qx = 36, qy = 5;
+      const bits = q.m.map((h) => [...h].map((ch) => parseInt(ch, 16).toString(2).padStart(4, '0')).join('').slice(-n));
+      x.fillStyle = ink;
+      for (let r = 0; r < n; r++) for (let k = 0; k < n; k++) if (bits[r][k] === '1') x.fillRect(qx + k * m, qy + r * m, m + .15, m + .15);
+      // a thin dashed line, then the details
+      x.strokeStyle = 'rgba(27, 36, 64, .35)'; x.setLineDash([3, 3]); x.lineWidth = 1;
+      x.beginPath(); x.moveTo(100, 5); x.lineTo(100, 62); x.stroke(); x.setLineDash([]);
+      const tx = 108, maxW = 114;
+      const font = (w, s) => `${w} ${s}px Inter, system-ui, sans-serif`;
+      // the event name: up to two lines, shrinking a little if it must
+      let fs = 12, lines;
+      const wrap = () => {
+        x.font = font(700, fs);
+        const words = d.name.split(' '); lines = [''];
+        words.forEach((w) => { const t = lines[lines.length - 1] ? `${lines[lines.length - 1]} ${w}` : w; if (x.measureText(t).width <= maxW || !lines[lines.length - 1]) lines[lines.length - 1] = t; else lines.push(w); });
+      };
+      wrap();
+      while ((lines.length > 2 || lines.some((l) => x.measureText(l).width > maxW)) && fs > 8.5) { fs -= .5; wrap(); }
+      x.fillStyle = ink; x.textBaseline = 'alphabetic';
+      lines.slice(0, 2).forEach((l, i) => x.fillText(l, tx, 18 + i * (fs + 1.5)));
+      const y0 = 18 + Math.min(2, lines.length) * (fs + 1.5) + 4;
+      x.font = font(500, 8.5); x.fillStyle = 'rgba(27, 36, 64, .82)';
+      x.fillText(d.venue, tx, y0, maxW);
+      x.fillText(`${d.date} · ${d.time}`, tx, y0 + 11, maxW);
+      x.restore();
+      return new Promise((res) => c.toBlob((b) => res(b ? URL.createObjectURL(b) : c.toDataURL('image/webp', .86)), 'image/webp', .86));
+    }).catch(() => null);
+    heldCache.set(d.name, job);
+    return job;
+  };
   const applyEventPage = (d) => {
     if (!d) return;
     const music = MUSIC.test(d.cat);
@@ -649,7 +700,17 @@
       const k = pst.querySelector('.ep-poster-k'); if (k) k.textContent = kickers[i] || d.cat;
       const dd = pst.querySelector('.ep-poster-d'); if (dd) dd.textContent = `${d.date.toUpperCase()} · ${d.venue}`;
       const bg = pst.querySelector('.ep-poster-bg'); if (bg) bg.textContent = `${words[0].toUpperCase()} `.repeat(4);
-      const img = pst.querySelector('img'); if (img) { img.src = `assets/${people[i]}.webp`; img.alt = `Poster for ${d.name}`; }
+      const img = pst.querySelector('img');
+      if (img) {
+        img.src = `assets/${people[i]}.webp`;
+        img.alt = `Poster for ${d.name}`;
+        // the guest in the third poster holds a blank ticket: print this event's real details on it
+        if (!music && people[i] === 'blog/blog-custom') {
+          heldTicket(d).then((url) => { if (url && pst.dataset.for === d.name) img.src = url; });
+          img.alt = `Poster for ${d.name}: a guest holding a ticket with the event's QR code, venue, date and time`;
+        }
+      }
+      pst.dataset.for = d.name;
     });
     const cover = document.querySelector('.ep-reg-cover');
     if (cover) { cover.style.backgroundColor = d.bg; cover.style.color = d.ink; }
