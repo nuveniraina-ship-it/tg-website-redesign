@@ -332,4 +332,4 @@ On phones the tabs scroll sideways, and the ticket sits just below the app so no
 - **Credits:** about 1,500 (14 icon renders, 1 illustration and background removal).
 - **Checked:** 1440 and 375 px, clean console.
 
-**To confirm:** the pixel-art mascot on the loading screen was added earlier in this redesign, so it was left as is.
+**Decided:** the pixel-art mascot on the loading screen stays (confirmed 26 Nov).
