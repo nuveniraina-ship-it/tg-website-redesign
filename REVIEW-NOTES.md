@@ -316,3 +316,20 @@ On phones the tabs scroll sideways, and the ticket sits just below the app so no
 - **Cursor glow.** It's now a soft, pale light (low opacity, more blur) instead of a bright blue spot.
 - **Backstage Pass spacing.** The five steps sit closer together, with each step's height and padding reduced.
 - **Checked:** 1440 and 375 px, clean console. New design was confirmed to update all three sections.
+
+## Round 9 (26 Nov): every visual is new
+
+**Audit (both pages):** every picture was checked against what the old site used.
+- **Already new from this redesign:** hero photo and app, the 24 ticket designs and their QR codes, Backstage Pass picture, event page posters and lineup, launch options scenes, Clear Wins scenes, use-case photos, blog covers, pricing receipt.
+- **Kept on purpose because they're real, and generating them would mislead:** customer logos, the testimonial headshots of real customers, the ISO/GDPR/SOC 2 certificate seals, the App Store/Google Play badges and the partner logos in the footer.
+- **Replaced this round:**
+  - **New 3D icon set** (`assets/icons3d/`): eleven icons in one family, soft matte clay in brand blue and white, generated with Magnific One. The first icon set the style and every other one used it as the style reference. Event page (megaphone), ticket design, seating, box office, sending, QR validation, analytics, add-ons, API, support, security.
+    - **Core Strengths:** all nine stock line icons replaced with the 3D set, larger, lifting slightly on hover.
+    - **Pricing feature cards:** all ten replaced (security, design, validation, seating, on-ground sales, event page, delivery, analytics, support, API).
+  - **Security section:** a new 3D illustration of a shield and padlock guarding a QR ticket, floating above the certificate seals.
+- **Cleanup:** the old launch-option illustrations are deleted from the repo, and the old event photos are no longer downloaded in the background.
+- **QA fixes:** three icons first came back with fake printed text ("Dashboard 128", "BOX OFFICE", "TICKET") and were regenerated blank. The box office sign that remained was cropped off. The feature cards got more top room so the bigger icons don't touch the edge.
+- **Credits:** about 1,500 (14 icon renders, 1 illustration and background removal).
+- **Checked:** 1440 and 375 px, clean console.
+
+**To confirm:** the pixel-art mascot on the loading screen was added earlier in this redesign, so it was left as is.

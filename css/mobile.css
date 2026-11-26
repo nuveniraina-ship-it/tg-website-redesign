@@ -2140,3 +2140,42 @@
 @media (max-width: 768px) {
   .post-cover.pc img { right: 4%; height: 92%; }
 }
+
+/* ===== Round 9: the new 3D icon set (assets/icons3d) in Core Strengths, the pricing feature cards
+   and the Security section. One family: soft matte clay in brand blue and white. ===== */
+.hf-icon.hf-3d, .fc-icon.fc-3d {
+  width: 76px;
+  height: 76px;
+  margin: 0 0 -4px -8px;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+.hf:has(.hf-3d) { --cut: 164px; }   /* room for the bigger icon above the title */
+.hf-3d img, .fc-3d img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 12px rgba(21, 112, 239, .16));
+  transition: transform .35s cubic-bezier(.2, .8, .2, 1);
+}
+.hf:hover .hf-3d img, .fc:hover .fc-3d img { transform: translateY(-4px) rotate(-4deg) scale(1.04); }
+.fc-icon.fc-3d { width: 84px; height: 84px; }
+.shield-art {
+  display: block;
+  width: min(240px, 60%);
+  height: auto;
+  margin: 0 auto 6px;
+  filter: drop-shadow(0 24px 28px rgba(21, 112, 239, .2));
+}
+@media (prefers-reduced-motion: no-preference) {
+  .shield-art { animation: shield-float 6s ease-in-out infinite; }
+  @keyframes shield-float { 50% { translate: 0 -8px; } }
+}
+@media (max-width: 768px) {
+  .hf-icon.hf-3d { width: 56px; height: 56px; margin: 0 0 -2px -6px; }
+  .hf:has(.hf-3d) { --cut: 132px; }
+  .fc-icon.fc-3d { width: 52px; height: 52px; margin: -4px 0 -4px -4px; }
+  .shield-art { width: 160px; }
+}

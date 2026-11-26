@@ -984,10 +984,6 @@
       ['name', 'cat', 'logo', 'venue', 'place'].forEach((f) => cv.querySelectorAll(`[data-ev="${f}"]`).forEach((el) => { el.textContent = ev[f]; }));
     });
   };
-  // fetch the photos ahead of time, so a colour change swaps them at once
-  window.addEventListener('load', () => setTimeout(() => {
-    Object.values(EVENTS).filter((ev) => ev.photo).forEach((ev) => { const im = new Image(); im.src = `${location.origin}/assets/tickets/${ev.photo}.webp`; });
-  }, 1500));
 
   // the ticket's text turns dark on a light colour, so it always stays readable
   const setInk = (hex) => {
