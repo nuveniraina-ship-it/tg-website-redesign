@@ -279,7 +279,7 @@ QR codes: the demo ticket's QR changes design with the event type (see the table
 
 Touch targets: the event-type swatches and the event page's cover-image dots have an invisible ring around them so each is about 40px to tap, without looking bigger.
 
-Imagery: Use Cases and Blog use a new generated photo set (`assets/usecases/*.webp`, `assets/blog/*.webp`); Clear Wins uses code-built UI collages. The event page photos and the Launch Options art are unchanged.
+Imagery: Use Cases use five photorealistic generated shots (`assets/usecases/*.webp`, Round 11); Blog uses `assets/blog/*.webp`; Clear Wins uses code-built UI collages. The event page photos and the Launch Options art are unchanged.
 
 ### Mobile copy
 
@@ -364,7 +364,9 @@ Used by both versions. All values live in [`css/tokens.css`](css/tokens.css).
 
 ## Loading and offline
 
-- **Loading screen:** every page opens with Mira (the pixel host) typing at her laptop on the desk background, no text. It's inline in each page, so it shows before anything else loads, and it fades out when the page has finished loading, or after 2.5 seconds at most.
+Performance rules (Round 11): no `background-attachment: fixed`; the loader closes on DOM + fonts ready (max 1.2 s); below-fold icons and footer images are `loading="lazy"`, carousel/slider images stay eager; sections off screen get `.is-off`, which pauses their CSS animations; prefer one drop-shadow per moving element and no live `filter: blur`.
+
+- **Loading screen:** every page opens with Mira (the pixel host) typing at her laptop on the desk background, no text. It's inline in each page, so it shows before anything else loads, and it fades out as soon as the page and fonts are ready, or after 1.2 seconds at most.
 - **Offline:** [`sw.js`](sw.js) is a small service worker. If a page can't be reached (no network or an unstable one), it shows [`offline.html`](offline.html) instead of the browser's error page: the same Mira at her laptop, with a short note on top ("Looks like your Wi-Fi took an intermission"). The loading screen itself has no text. That page reloads itself as soon as the connection is back. Everything else loads from the network as normal.
 
 ## Ticket rules

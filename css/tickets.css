@@ -13,7 +13,7 @@ body { overflow-x: clip; }
 
 /* the desk texture is pinned to the viewport so the notch "holes" below can show
    exactly the same dots and read as real cut-outs, not painted circles */
-:root { --desk-paper: radial-gradient(circle at 1px 1px, rgba(21, 112, 239, .09) 1px, transparent 1.5px) 0 0 / 22px 22px fixed, var(--desk); }
+:root { --desk-paper: radial-gradient(circle at 1px 1px, rgba(21, 112, 239, .09) 1px, transparent 1.5px) 0 0 / 22px 22px, var(--desk); }
 body { background: var(--desk-paper); }
 main { padding-top: 20px; }
 

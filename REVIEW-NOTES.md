@@ -399,3 +399,40 @@ Source: the team's content pages for the homepage and pricing (trycon-website…
 - **Mobile:** not reviewed this round; to follow after Nuveni's go-ahead.
 
 **Credits:** about 830 (8 use-case renders).
+
+## Round 11 (26 Nov): speed, real use-case photos, Clear Wins and Launch fixes
+
+**The site felt stuck and heavy. What was slowing it down, and the fix:**
+- **The dotted page background was "fixed".** That made the browser repaint the whole screen on every scroll step. It now scrolls with the page and looks the same.
+- **The loading screen waited for every picture on the page** (up to 2.5 s). It now closes as soon as the page and fonts are ready (about 0.2 s after that, never later than 1.2 s). Both pages.
+- **Pictures far down the page loaded at the start.** The 3D icons, the security shield and the footer images load again as you get close. Carousels, sliders and use cases still load up front, so nothing shows blank.
+- **Looping animations ran all the time**, even in sections off screen (logo marquee, pulses, floating art). Each section now pauses its loops while it's off screen and resumes when it comes back.
+- **Heavy shadows and blur:** the hero's cursor light used a live 56 px blur. It is now a plain soft gradient that looks the same. Big or moving tickets had two or three stacked shadow filters. They now have one, or two where the thin outline is needed: logos, testimonials, use cases, Clear Wins, Core Strengths, Launch, receipt. The header no longer animates its shadow.
+
+**Use cases: real photos.** The clay dioramas are replaced by five new photorealistic shots, none from earlier rounds:
+- check-in at a conference desk;
+- volunteers at a charity fair;
+- a ticket scanned at a concert door;
+- a hands-on training workshop;
+- a ticket scanned at a basketball game.
+
+I checked them for printed words and odd AI artefacts and found none. Alt texts are rewritten. Clay stays only on the icons.
+
+**Clear Wins:**
+- **Keep 100%:** the gateway card is smaller. "Payments go straight to your account" is now 9.5 px (it was 11 px), and the card sits clear of the ticket's edges.
+- **Your tickets, your way:** back to the original three tickets (Early Bird, General Admission, VIP). The "+ Add ticket type" button is removed, along with its scrolling stack and fade mask. The fade mask was what cut the top ticket.
+
+**Launch options, Free & Paid:**
+- "Register" / "Buy ticket" is now a proper primary button: larger, with white text in every state and a soft lift and arrow nudge on hover.
+- The old hover was unreadable because a general scene rule overrode the white text colour.
+
+**Pricing page:** no changes, apart from the shared speed fixes (background, loading screen).
+
+**QA:**
+- Checked at 1440, 1024 and 375.
+- Clean console on both pages, and no horizontal overflow at 375.
+- Ran the Register, Export report and gateway demos.
+- Use-case images all load at 1200 × 800.
+- I could not watch the scroll smoothness or the hover live in the preview pane, because it pauses rendering while hidden. Please check both on the live site.
+
+**Credits:** 500 (5 renders).

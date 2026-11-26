@@ -13,7 +13,7 @@
   min-height: 100svh;
   display: flex;
   flex-direction: column;
-  background: radial-gradient(circle at 1px 1px, rgba(21, 112, 239, .09) 1px, transparent 1.5px) 0 0 / 22px 22px fixed, var(--desk);
+  background: radial-gradient(circle at 1px 1px, rgba(21, 112, 239, .09) 1px, transparent 1.5px) 0 0 / 22px 22px, var(--desk);
 }
 
 .cs { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 28px 16px 44px; }
